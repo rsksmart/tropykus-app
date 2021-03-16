@@ -24,53 +24,53 @@
       color: #FFFFFF;
       letter-spacing: -0.005em;
     }
-}
-.card-title {
-  position: absolute;
-  top: 28px;
-  left:93px;
-  width: 110px;
-  height: 41px;
-  font-weight: bold;
-  font-size: 40px;
-  color: #000000;
-}
-.card-rate{
-  position: absolute;
-  width: 90px;
-  height: 29px;
-  left: 363px;
-  top: 28px;
-  font-weight: bold;
-  font-size: 28px;
-  color: #000000;  
-}
-.card-description{
-  position: absolute;
-  width: 146px;
-  height: 13px;
-  left: 298px;
-  top: 61px;
-  font-size: 16px;
-  color: #000000;
-}
-.card-price-description{
-  position: absolute;
-  width: 162px;
-  height: 15px;
-  left: 33px;
-  top: 120px;
-  font-weight: 300;
-  font-size: 16px;
-}
-.card-price{   
-  position: absolute;
-  width: 197px;
-  height: 29px;
-  left: 33px;
-  top: 139px;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
+    .card-title {
+      position: absolute;
+      top: 28px;
+      left:93px;
+      width: 110px;
+      height: 41px;
+      font-weight: bold;
+      font-size: 40px;
+      color: #000000;
+    }
+    .card-rate{
+      position: absolute;
+      width: 90px;
+      height: 29px;
+      left: 363px;
+      top: 28px;
+      font-weight: bold;
+      font-size: 28px;
+      color: #000000;  
+    }
+    .card-description{
+      position: absolute;
+      width: 146px;
+      height: 13px;
+      left: 298px;
+      top: 61px;
+      font-size: 16px;
+      color: #000000;
+    }
+    .card-price-description{
+      position: absolute;
+      width: 162px;
+      height: 15px;
+      left: 33px;
+      top: 120px;
+      font-weight: 300;
+      font-size: 16px;
+    }
+    .card-price{   
+      position: absolute;
+      width: 197px;
+      height: 29px;
+      left: 33px;
+      top: 139px;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      color: #000000;
+    }
 }
