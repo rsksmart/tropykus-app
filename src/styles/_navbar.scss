@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+div, p, h1, h2, h3, h4, h5, h6, body, button {
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+}
+$color-background:#E5E5E5;
+body {
+  background-color: $color-background;
+}
+.navbar-title{
+  position: absolute;
+  width: 258px;
+  height: 76px;
+  left: 2.7%; 
+  top: 33px;
+  color: #FF9153;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 73px;
+  border: 0px;
+}
+.navbar-home{
+  position: absolute;
+  width: 82px;
+  height: 23px;
+  left: 42%;
+  top: 67px;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+  color: #000000;
+  border: 0px;
+  background-color: $color-background;
+  padding:0px;
+}
+.navbar-balance{
+  position: absolute;
+  width: 211;
+  height: 23;
+  right: 41%;
+  top: 66px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 26px;
+  color: #000000;
+  border: 0px;
+  background-color: $color-background;
+  padding:0px;
+
+}
+.navbar-about{
+  position: absolute;
+  width: 211;
+  height: 25;
+  right: 27%;
+  top: 66px;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 26px;
+  color: #000000;
+  border: 0px;
+  background-color: $color-background;
+  padding:0px;
+
+}
+.navbar-wallet{
+  position: absolute;
+  width: 295px;
+  height: 60px;
+  right: 2%;
+  top: 52px;
+  background: #51C1AF;
+  border: 1px solid #51C1AF;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color:#FFFFFF;
+  font-size: 25px;
+  padding: 0px;
+ 
+}
