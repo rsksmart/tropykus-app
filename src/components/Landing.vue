@@ -3,10 +3,10 @@
       <h1 class="landing-title">
           Saca rendimiento de tus Bitcoins
       </h1>
-      <button class="landing-lend" @click="onSaving">
+      <button class="landing-save" :class="{'landing-save-click':!hidden}" @click="onSaving">
         Ahorrar
       </button>
-      <button class="landing-borrow" @click="onBorrow">
+      <button class="landing-borrow" :class="{'landing-borrow-click':!hidden}" @click="onBorrow">
         Pedir prestado
       </button>
       <h2 class="landing-title-card">Mercados de cryptos</h2>
@@ -18,6 +18,7 @@
        v-for="data in saving"
       :key="data.id"
       :data="data"
+      :hidden="hidden"
      />
       </div>
       <div

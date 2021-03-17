@@ -5,6 +5,7 @@
       width: 951px;
       height: 78px;
       top: 165px;
+      font-style: normal;
       font-weight: bold;
       font-size: 50px;
       line-height: 55px;
@@ -14,26 +15,49 @@
       margin-left:-475.5px;
       text-align: center
     }
-    .landing-lend{
+    .landing-save{
       position: absolute;
-      width: 300px;
-      height: 26px;
+      width: 152px;
+      height: 46px;
       top: 297px;
       left:50%;
-      margin-left:-300px;
+      margin-left:-250px;
+      font-weight: bold;
       font-size: 35px;
       line-height: 42px;
       color: #000000;
       border:0px;
       background-color: $color-background;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid #A8A8A8;
+    }
+    .landing-save-click {
+      position: absolute;
+      width: 152px;
+      height: 46px;
+      top: 297px;
+      left:50%;
+      margin-left:-250px;
+      font-weight: normal;
+      font-size: 35px;
+      line-height: 42px;
+      color: #000000;
+      border:0px;
+      background-color: $color-background;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      // border-bottom: 2px solid #A8A8A8;
     }
     .landing-borrow{
       position: absolute;
-      width: 300px;
-      height: 35px;
+      width: 272px;
+      height: 46px;
       top: 297px;
       left:50%;
-      margin-right:-300px;
+      margin-right:-272px;
       font-style: normal;
       font-weight: 300;
       font-size: 35px;
@@ -41,6 +65,29 @@
       color: #000000;
       border:0px;
       background-color: $color-background;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .landing-borrow-click {
+      position: absolute;
+      width: 272px;
+      height: 46px;
+      top: 297px;
+      left:50%;
+      margin-right:-272px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 35px;
+      line-height: 42px;
+      color: #000000;
+      border:0px;
+      background-color: $color-background;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid #A8A8A8;
+
     }
     .landing-saving{
       position: absolute;

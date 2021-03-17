@@ -11,7 +11,7 @@
         top:28.5px;
         left:35.5px;
     }
-    button {
+    .card-saving {
       position: absolute;
       width: 172px;
       height: 36px;
@@ -24,11 +24,24 @@
       color: #FFFFFF;
       letter-spacing: -0.005em;
     }
+    .card-lending{
+      position: absolute;
+      width: 172px;
+      height: 36px;
+      left: 272px;
+      top: 125px;
+      background: #FF9153;
+      border-radius: 5px;
+      border:0px;
+      font-size: 20px;
+      color: #FFFFFF;
+      letter-spacing: -0.005em;
+    }
     .card-title {
       position: absolute;
       top: 28px;
       left:93px;
-      width: 110px;
+      width: 120px;
       height: 41px;
       font-weight: bold;
       font-size: 40px;
@@ -52,6 +65,26 @@
       top: 61px;
       font-size: 16px;
       color: #000000;
+      text-align: right;
+
+    }
+    .card-description-lending{
+      position: absolute;
+      width: 146px;
+      height: 13px;
+      left: 298px;
+      top: 61px;
+      font-size: 16px;
+      color: #000000;
+      text-align: right;
+    }
+    .card-line{
+      position: absolute;
+      width: 411px;
+      height: 0px;
+      left: 31px;
+      top: 86px;
+      border: 0.5px solid #BEBEBE;
     }
     .card-price-description{
       position: absolute;
