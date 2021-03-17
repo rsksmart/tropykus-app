@@ -3,20 +3,20 @@
     width: 477px;
     height: 192px;
     border-radius: 10px;
-    
+    background-color: #FFFFFF;
     img {
         position: absolute;
         width:40px;
         height:40px;
-        top:28.5px;
-        left:35.5px;
+        top:41.5px;
+        left:48.5px;
     }
     .card-saving {
       position: absolute;
       width: 172px;
       height: 36px;
-      left: 272px;
-      top: 125px;
+      left: 285px;
+      top: 138px;
       background: #51C1AF;
       border-radius: 5px;
       border:0px;
@@ -28,8 +28,8 @@
       position: absolute;
       width: 172px;
       height: 36px;
-      left: 272px;
-      top: 125px;
+      left: 285px;
+      top: 138px;
       background: #FF9153;
       border-radius: 5px;
       border:0px;
@@ -39,8 +39,8 @@
     }
     .card-title {
       position: absolute;
-      top: 28px;
-      left:93px;
+      top: 41px;
+      left:106px;
       width: 120px;
       height: 41px;
       font-weight: bold;
@@ -51,8 +51,8 @@
       position: absolute;
       width: 90px;
       height: 29px;
-      left: 363px;
-      top: 28px;
+      left: 376px;
+      top: 41px;
       font-weight: bold;
       font-size: 28px;
       color: #000000;  
@@ -61,8 +61,8 @@
       position: absolute;
       width: 146px;
       height: 13px;
-      left: 298px;
-      top: 61px;
+      left: 311px;
+      top: 74px;
       font-size: 16px;
       color: #000000;
       text-align: right;
@@ -72,8 +72,8 @@
       position: absolute;
       width: 146px;
       height: 13px;
-      left: 298px;
-      top: 61px;
+      left: 311px;
+      top: 74px;
       font-size: 16px;
       color: #000000;
       text-align: right;
@@ -82,16 +82,16 @@
       position: absolute;
       width: 411px;
       height: 0px;
-      left: 31px;
-      top: 86px;
+      left: 43px;
+      top: 99px;
       border: 0.5px solid #BEBEBE;
     }
     .card-price-description{
       position: absolute;
       width: 162px;
       height: 15px;
-      left: 33px;
-      top: 120px;
+      left: 46px;
+      top: 133px;
       font-weight: 300;
       font-size: 16px;
     }
@@ -99,8 +99,8 @@
       position: absolute;
       width: 197px;
       height: 29px;
-      left: 33px;
-      top: 139px;
+      left: 46px;
+      top: 152px;
       font-weight: 600;
       font-size: 20px;
       line-height: 24px;

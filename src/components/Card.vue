@@ -11,11 +11,11 @@
     <div class="card-line"></div>
     <p class="card-price">{{ `1 ${data.name} = $${data.price} USD` }}</p>
     <p class="card-price-description">Precio actual</p>
-    <button class="card-saving" v-if="hidden" @click="onSaving">Ahorrar</button>
+    <!-- <button class="card-saving" v-if="hidden" @click="onSaving">Ahorrar</button> -->
+    <Modal class="card-saving" v-if="hidden" @click="onSaving"/>
     <button class="card-lending" v-if="!hidden" @click="onLending">
       Pedir prestado
     </button>
-    <Modal v-if="hiddenSave" :hiddenSave="hiddenSave" @close="hiddenSave = false"/>
   </div>
 </template>
 <script>

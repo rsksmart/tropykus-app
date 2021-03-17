@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
 
 div, p, h1, h2, h3, h4, h5, h6, body, button {
-  // font-family: 'Quicksand', sans-serif;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
 }
 $color-background:#E5E5E5;
@@ -12,7 +11,7 @@ body {
 .navbar{
   .navbar-title{
     position: absolute;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     width: 258px;
     height: 76px;
@@ -27,7 +26,7 @@ body {
   .navbar-home{
     position: absolute;
     width: 82px;
-    height: 23px;
+    height: 28px;
     left: 42%;
     top: 67px;
     font-weight: bold;

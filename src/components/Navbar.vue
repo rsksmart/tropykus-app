@@ -1,20 +1,10 @@
 <template>
   <div class="navbar">
-    <div class="navbar-title">
-    Tropyco
-    </div>
-     <button class="navbar-home">
-      Inicio
-     </button>
-     <button class="navbar-balance">
-      Mi balance
-     </button>
-     <button class="navbar-about">
-      Sobre Tropyco
-     </button>
-     <button class="navbar-wallet">
-      Conectar billetera
-     </button>
+    <div class="navbar-title">Tropyco</div>
+    <button class="navbar-home">Inicio</button>
+    <button class="navbar-balance">Mi balance</button>
+    <button class="navbar-about">Sobre Tropyco</button>
+    <button class="navbar-wallet">Conectar billetera</button>
   </div>
 </template>
 
