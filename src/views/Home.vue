@@ -1,17 +1,11 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="@/assets/logo.png">
-    <HelloWorld msg="Welcome to Tropyco App"/>
+  <div class="d-flex justify-content-center align-items-center">
+    <img alt="tropyco logo" src="@/assets/tropyco.png">
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue';
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld,
-  },
 };
 </script>
