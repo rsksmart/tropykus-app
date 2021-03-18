@@ -1,0 +1,62 @@
+#modal-error{
+    width: 543px;
+    height: 640px;
+    background-color: #FFFFFF;
+    .modalError-img{        
+        position: absolute;
+        width: 138px;
+        height: 138px;
+        left: 203px;
+        top: 142px;
+        box-sizing: border-box;
+    }
+    .modalError-title{
+        position: absolute;
+        width: 350px;
+        height: 175px;
+        left: 97px;
+        top: 270px;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 33px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #013E2F;
+    }
+    .modalError-text{
+        position: absolute;
+        width: 418px;
+        height: 175px;
+        left: 63px;
+        bottom: 60px;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 33px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #013E2F;
+        padding: 0px;
+    }
+    .modalSuccess-title {
+        position: absolute;
+        width: 300px;
+        height: 175px;
+        left: 112px;
+        top: 270px;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 33px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #013E2F;
+    }
+}

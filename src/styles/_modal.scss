@@ -1,0 +1,82 @@
+#modal-open{
+    position: absolute;
+    width: 689px;
+    height: 80px;
+    left: 232px;
+    top: 687px;
+    background-color: #4CB163 !important;
+    border-radius: 5px;
+    font-size: 30px;
+    color: #FFFFFF;
+    padding: 0px;
+    text-transform: none;
+}
+#modal-botton{
+    width:409px;
+    height:80px;
+    position: absolute;
+    left: 67px;
+    top: 510px;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #FFFFFF;
+    background-color:transparent;
+}
+#card{
+    width: 543px;
+    height: 640px;
+    background-image: url("../assets/modal.jpg");
+}
+#card:before {
+	content:'';
+	position: absolute;
+    top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(1,62,47,0.7);
+}
+#modal-title {
+    position: absolute;
+    width: 310px;
+    height: 104px;
+    left: 107px;
+    top: 192px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 34px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+#modal-text {
+    position: absolute;
+    width: 380px;
+    height: 175px;
+    left: 81px;
+    top: 305px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    padding:0px;
+}
+.modal-img{
+    width:91.29px;
+    height:88.86px;
+    position: absolute;
+    top: 72px;
+    left:224.96px;
+}

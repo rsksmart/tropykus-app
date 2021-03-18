@@ -1,0 +1,171 @@
+.register{
+    width:100%;
+    height:100%;
+    background-image: url("../assets/fondo.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .register-title{
+      position: absolute;
+      width: 258px;
+      height: 76px;
+      left: 52px;
+      top: 33px;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 60px;
+      line-height: 73px;
+      color: #FFFFFF;
+    }
+    h1{
+      position: absolute;
+      width: 505px;
+      height: 69px;
+      left: 485px;
+      top: 218px;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 70px;
+      line-height: 75px;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+    }
+    .register-name{
+      position: absolute;
+      width: 474px;
+      height: 26px;
+      left: 495px;
+      top: 357px;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 55px;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+    }
+    .input-name {
+      position: absolute;
+      width: 949px;
+      height: 64px;
+      left: 485px;
+      top: 392px;
+      background: #FFFFFF;
+      border-radius: 10px;
+    }
+    .input-name::placeholder {
+      font-family: Lato;
+      font-size: 24px;
+      color: #A3C5AB;
+      margin-left:15px;
+    }
+ 
+    .register-email{
+      position: absolute;
+      width: 474px;
+      height: 26px;
+      left: 496px;
+      top: 470px;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 55px;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+    }
+    .input-email{
+      position: absolute;
+      width: 949px;
+      height: 64px;
+      left: 485px;
+      top: 508px;
+      background: #FFFFFF;
+      border-radius: 10px;
+    }
+    .input-email::placeholder {
+      font-family: Lato;
+      font-size: 24px;
+      color: #A3C5AB;
+      margin-left:15px;
+    }
+    .register-twitter{
+      position: absolute;
+      width: 474px;
+      height: 26px;
+      left: 495px;
+      top: 591px;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 55px;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+    }
+    .input-twitter{
+      position: absolute;
+      width: 949px;
+      height: 64px;
+      left: 485px;
+      top: 624px;
+      background: #FFFFFF;
+      border-radius: 10px;
+    }
+    .input-twitter::placeholder {
+      font-family: Lato;
+      font-size: 24px;
+      color: #A3C5AB;
+    }
+    .register-button{
+      position: absolute;
+      width: 409px;
+      height: 80px;
+      left: 1025px;
+      top: 734px;
+      background: #4CB163;
+      border-radius: 10px;
+      color: #FFFFFF;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      line-height: 76px;
+    }
+    .register-foot{
+    position: absolute;
+    width: 474px;
+    height: 79px;
+    left: 486px;
+    top: 749px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+  }
+  h2{
+    position: absolute;
+    width: 474px;
+    height: 79px;
+    left: 486px;
+    top: 702px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+  }
+}
