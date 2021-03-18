@@ -1,63 +1,40 @@
 .landing{
-    width:100%;
-    height:100%;
-    background-image: url("../assets/landing-page.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  width:100%;
+  height:100%;
+  background-image: url("../assets/landing-page.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-    .landing-title{
-      position: absolute;
-      width: 258px;
-      height: 76px;
-      left: 52px;
-      top: 33px;
-      font-family: 'Montserrat', sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 60px;
-      line-height: 73px;
-      color: #FFFFFF;
-    }
-    h1{
-      position: absolute;
-      width: 725px;
-      height: 243px;
-      left: 237px;
-      top: 278px;
-      font-family: Lato;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 70px;
-      line-height: 75px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-    }
-    h2{
-      position: absolute;
-      width: 650px;
-      height: 113px;
-      left: 237px;
-      top: 541px;
-      font-family: Lato;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 35px;
-      line-height: 38px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-    }
-    .modal{
-        position: absolute;
-        width: 689px;
-        height: 80px;
-        left: 232px;
-        top: 687px;
-        background: #4CB163;
-        border-radius: 5px;
-        font-size: 30px;
-        color: #FFFFFF;
-    }
+  .landing-container {
+
+    margin: 140px 0 0 130px;
+  }
+
+  .landing-title{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 73px;
+    color: #FFFFFF;
+    margin: 39px 0 0 52px;
+  }
+  h1{
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 45px;
+    color: #FFFFFF;
+  }
+  h2{
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 28px;
+    color: #FFFFFF;
+  }
+  span {
+    font-size: 25px;
+    line-height: 56px;
+    color: #FFFFFF;
+  }
 }

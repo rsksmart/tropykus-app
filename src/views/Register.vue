@@ -1,44 +1,42 @@
 <template>
-  <v-app>
-    <div class="register">
-      <div class="register-title">Tropyco</div>
-      <h1>Registrate</h1>
-  <form v-on:submit.prevent ="register" action="">
-        <p class="register-name">Nombre</p>
-        <input
-          type="text"
-          class="input-name"
-          v-model="user.name"
-          placeholder="Escribe tu nombre"
-        />
-        <p class="register-email">Correo electrónico</p>
-        <input
-          type="text"
-          class="input-email"
-          v-model="user.email"
-          placeholder="Escribe tu correo electrónico de contacto"
-        />
-        <p class="register-twitter">Twitter</p>
-        <input
-          type="text"
-          class="input-twitter"
-          v-model="user.twitter"
-          placeholder="Escribe @pepito.perez"
-        />
-        <button class="register-button">Registrarme</button>
-      </form>
+  <div class="register">
+    <div class="register-title">Tropyco</div>
+    <h1>Registrate</h1>
+    <form v-on:submit.prevent ="register" action="">
+      <p class="register-name">Nombre</p>
+      <input
+        type="text"
+        class="input-name"
+        v-model="user.name"
+        placeholder="Escribe tu nombre"
+      />
+      <p class="register-email">Correo electrónico</p>
+      <input
+        type="text"
+        class="input-email"
+        v-model="user.email"
+        placeholder="Escribe tu correo electrónico de contacto"
+      />
+      <p class="register-twitter">Twitter</p>
+      <input
+        type="text"
+        class="input-twitter"
+        v-model="user.twitter"
+        placeholder="Escribe @pepito.perez"
+      />
+      <button class="register-button">Registrarme</button>
+    </form>
 
-      <h2>¡Contáctanos!</h2>
-      <p class="register-foot">
-        Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
-        Tropyco.
-      </p>
-      <Modal v-if="modalError || modalSuccess" v-bind:type="type()"/>
-    </div>
-  </v-app>
+    <h2>¡Contáctanos!</h2>
+    <p class="register-foot">
+      Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
+      Tropyco.
+    </p>
+    <Modal v-if="modalError || modalSuccess" v-bind:type="type()"/>
+  </div>
 </template>
 <script>
-import Modal from './ModalError.vue';
+import Modal from '@/components/ModalError.vue';
 
 export default {
   name: 'Register',

@@ -11,8 +11,6 @@
       height: 76px;
       left: 52px;
       top: 33px;
-      font-family: 'Montserrat', sans-serif;
-      font-style: normal;
       font-weight: 600;
       font-size: 60px;
       line-height: 73px;
@@ -24,8 +22,6 @@
       height: 69px;
       left: 485px;
       top: 218px;
-      font-family: Lato;
-      font-style: normal;
       font-weight: bold;
       font-size: 70px;
       line-height: 75px;
@@ -39,8 +35,6 @@
       height: 26px;
       left: 495px;
       top: 357px;
-      font-family: Lato;
-      font-style: normal;
       font-weight: bold;
       font-size: 20px;
       line-height: 55px;
@@ -58,34 +52,29 @@
       border-radius: 10px;
       padding: 0px 25px;
       font-size:24px;
-      font-family: Lato;
-
     }
     .input-name::placeholder {
-      font-family: Lato;
-      font-size: 24px;
+            font-size: 24px;
       color: #A3C5AB;
       margin-left:15px;
-   
+
     }
- 
+
     .register-email{
       position: absolute;
       width: 474px;
       height: 26px;
       left: 496px;
       top: 470px;
-      font-family: Lato;
-      font-style: normal;
       font-weight: bold;
       font-size: 20px;
       line-height: 55px;
       display: flex;
       align-items: center;
       color: #FFFFFF;
-   
+
     }
-    
+
     .input-email{
       position: absolute;
       width: 949px;
@@ -94,12 +83,10 @@
       top: 508px;
       background: #FFFFFF;
       border-radius: 10px;
-      padding: 0px 25px;
+      padding: 0 25px;
       font-size:24px;
-      font-family: Lato;
     }
     .input-email::placeholder {
-      font-family: Lato;
       font-size: 24px;
       color: #A3C5AB;
       margin-left:15px;
@@ -110,15 +97,13 @@
       height: 26px;
       left: 495px;
       top: 591px;
-      font-family: Lato;
-      font-style: normal;
       font-weight: bold;
       font-size: 20px;
       line-height: 55px;
       display: flex;
       align-items: center;
       color: #FFFFFF;
-      
+
     }
     .input-twitter{
       position: absolute;
@@ -128,13 +113,11 @@
       top: 624px;
       background: #FFFFFF;
       border-radius: 10px;
-      padding: 0px 25px;
+      padding: 0 25px;
       font-size:24px;
-      font-family: Lato;
 
     }
     .input-twitter::placeholder {
-      font-family: Lato;
       font-size: 24px;
       color: #A3C5AB;
     }
@@ -147,8 +130,6 @@
       background: #4CB163;
       border-radius: 10px;
       color: #FFFFFF;
-      font-family: Lato;
-      font-style: normal;
       font-weight: bold;
       font-size: 30px;
       line-height: 76px;
@@ -160,8 +141,6 @@
     height: 79px;
     left: 486px;
     top: 749px;
-    font-family: Lato;
-    font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 25px;
@@ -175,8 +154,6 @@
     height: 79px;
     left: 486px;
     top: 702px;
-    font-family: Lato;
-    font-style: normal;
     font-weight: bold;
     font-size: 30px;
     line-height: 25px;

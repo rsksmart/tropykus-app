@@ -1,0 +1,13 @@
+.validation-dialog {
+    width: 543px;
+    height: 640px;
+    background-color: #FFFFFF;
+    .modalError-img{
+        box-sizing: border-box;
+    }
+    div {
+        font-size: 30px;
+        line-height: 33px;
+        color: #013E2F;
+    }
+}

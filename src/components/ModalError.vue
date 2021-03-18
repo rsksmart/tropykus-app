@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="validation-dialog">
     <v-dialog v-model="dialog" hide-overlay persistent width="543">
       <v-card id="modal-error">
         <v-img  v-if="!type" class="modalError-img" src="@/assets/error.png"></v-img>
