@@ -56,12 +56,17 @@
       top: 392px;
       background: #FFFFFF;
       border-radius: 10px;
+      padding: 0px 25px;
+      font-size:24px;
+      font-family: Lato;
+
     }
     .input-name::placeholder {
       font-family: Lato;
       font-size: 24px;
       color: #A3C5AB;
       margin-left:15px;
+   
     }
  
     .register-email{
@@ -78,7 +83,9 @@
       display: flex;
       align-items: center;
       color: #FFFFFF;
+   
     }
+    
     .input-email{
       position: absolute;
       width: 949px;
@@ -87,6 +94,9 @@
       top: 508px;
       background: #FFFFFF;
       border-radius: 10px;
+      padding: 0px 25px;
+      font-size:24px;
+      font-family: Lato;
     }
     .input-email::placeholder {
       font-family: Lato;
@@ -108,6 +118,7 @@
       display: flex;
       align-items: center;
       color: #FFFFFF;
+      
     }
     .input-twitter{
       position: absolute;
@@ -117,6 +128,10 @@
       top: 624px;
       background: #FFFFFF;
       border-radius: 10px;
+      padding: 0px 25px;
+      font-size:24px;
+      font-family: Lato;
+
     }
     .input-twitter::placeholder {
       font-family: Lato;
@@ -137,6 +152,7 @@
       font-weight: bold;
       font-size: 30px;
       line-height: 76px;
+      text-transform: none;
     }
     .register-foot{
     position: absolute;

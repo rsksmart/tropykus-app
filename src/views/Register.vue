@@ -3,7 +3,7 @@
     <div class="register">
       <div class="register-title">Tropyco</div>
       <h1>Registrate</h1>
-      <form v-on:submit.prevent ="register" action="">
+  <form v-on:submit.prevent ="register" action="">
         <p class="register-name">Nombre</p>
         <input
           type="text"
@@ -27,6 +27,7 @@
         />
         <button class="register-button">Registrarme</button>
       </form>
+
       <h2>¡Contáctanos!</h2>
       <p class="register-foot">
         Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
@@ -82,11 +83,11 @@ export default {
   watch: {
     modalError(val) {
       if (!val) return;
-      setTimeout(() => { this.modalError = false; }, 1500);
+      setTimeout(() => { this.modalError = false; }, 2000);
     },
     modalSuccess(val) {
       if (!val) return;
-      setTimeout(() => { this.modalSuccess = false; }, 1500);
+      setTimeout(() => { this.modalSuccess = false; }, 2000);
     },
   },
 };
