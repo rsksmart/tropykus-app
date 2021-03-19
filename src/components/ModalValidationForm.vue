@@ -2,8 +2,8 @@
   <div class="validation-dialog">
     <v-dialog v-model="dialog" hide-overlay persistent width="543">
       <v-card id="modal-error">
-        <v-img  v-if="!type" class="modalError-img" src="@/assets/error.png"></v-img>
-        <v-img v-if="type" class="modalError-img" src="@/assets/success.png"></v-img>
+        <v-img  v-if="!type"  src="@/assets/error.png" height="140" contain/>
+        <v-img v-if="type"  src="@/assets/success.png"/>
         <v-card-title v-if="!type" class="modalError-title">
           Ha habido un error en el registro.
         </v-card-title>

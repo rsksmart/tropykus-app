@@ -5,7 +5,7 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="ml-10 mt-5 d-flex justify-center">
-        <v-card flat color="transparent" class="container" width="80%">
+        <v-card flat color="transparent" class="container" width="500">
           <h1>Saca rendimiento de tus bitcoins y vive la buena vida en Tropyco</h1>
           <h2>Plataforma en la red RSK para ahorrar y
             pedir prestado, que no controla ni almacena tus llaves privadas.

@@ -1,47 +1,33 @@
 <template>
   <div class="register">
-    <div class="register-title">Tropyco</div>
-    <h1>Registrate</h1>
-    <form v-on:submit.prevent ="register" action="">
-      <p class="register-name">Nombre</p>
-      <input
-        type="text"
-        class="input-name"
-        v-model="user.name"
-        placeholder="Escribe tu nombre"
-      />
-      <p class="register-email">Correo electrónico</p>
-      <input
-        type="text"
-        class="input-email"
-        v-model="user.email"
-        placeholder="Escribe tu correo electrónico de contacto"
-      />
-      <p class="register-twitter">Twitter</p>
-      <input
-        type="text"
-        class="input-twitter"
-        v-model="user.twitter"
-        placeholder="Escribe @pepito.perez"
-      />
-      <button class="register-button">Registrarme</button>
-    </form>
-
-    <h2>¡Contáctanos!</h2>
-    <p class="register-foot">
-      Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
-      Tropyco.
-    </p>
-    <Modal v-if="modalError || modalSuccess" v-bind:type="type()"/>
+    <v-row>
+      <v-col cols="2" >
+        <div class="register-title">Tropyco</div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2">
+      </v-col>
+      <v-col cols="8">
+        <h1 >Registrate</h1>
+         <v-text-field
+            label="Outlined"
+            single-line
+            outlined
+            color="#4CB163"
+          ></v-text-field>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
-import Modal from '@/components/ModalError.vue';
+
+// import ModalValidationForm from '../components/ModalValidationForm.vue';
 
 export default {
   name: 'Register',
   components: {
-    Modal,
+    // ModalValidationForm,
   },
   data() {
     return {

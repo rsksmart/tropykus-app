@@ -1,0 +1,38 @@
+.dialog-data-card{
+  height:500px;
+  
+//   background-blend-mode:rgba(1,62,47,0.7) ;
+//   background-color: rgba(1,62,47,0.7);
+
+
+  h1{
+    font-size: 20px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    width: 200px;
+   }
+   p{
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    width:300px;
+   }
+   .dialog-data-botton{
+    background-color:transparent !important;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 76px;
+    border: 2px solid #FFFFFF;
+    height:50px !important;
+   }
+}
+
+  .dialog-background{
+    background-image: url("../assets/modal.jpg");
+  } 
