@@ -7,7 +7,7 @@
       <v-col cols="3" />
       <v-col cols="6">
         <h1>Registrate</h1>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" lazy-validation>
           <p class="register-name">Nombre</p>
           <v-text-field
             v-model="user.name"
@@ -65,10 +65,9 @@ export default {
     };
   },
   methods: {
-    // eslint-disable-next-line consistent-return
     type() {
       if (this.modalSuccess) return true;
-      if (this.modalError) return false;
+      return false;
     },
     async register() {
       const emailRegex = RegExp(
@@ -100,13 +99,14 @@ export default {
       if (!val) return;
       setTimeout(() => {
         this.modalError = false;
-      }, 200000);
+      }, 2000);
     },
     modalSuccess(val) {
       if (!val) return;
       setTimeout(() => {
         this.modalSuccess = false;
-      }, 200000);
+        this.$router.push('/');
+      }, 2000);
     },
   },
 };

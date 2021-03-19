@@ -1,32 +1,42 @@
 <template>
-  <div class="validation-dialog">
-    <v-dialog v-model="dialog" hide-overlay persistent width="400">
-      <v-card id="modal-error">
-        <span class="">
-         <v-img  v-if="!type"  src="@/assets/error.png" width="40" contain/>
-         <v-img v-if="type"  src="@/assets/success.png" width="40" contain />
-        </span>
-
-        <v-card-title v-if="!type" class="modalError-title">
-          Ha habido un error en el registro.
-        </v-card-title>
-        <v-card-title v-if="type" class="modalSuccess-title">
-          Te has registrado correctamente.
-        </v-card-title>
-        <v-card-text v-if="!type" class="modalError-text">
-          Escribenos a diego@tugroup.tech y te ayudaremos en el proceso.
-        </v-card-text>
-        <v-card-text v-if="type" class="modalError-text">
-          Muy pronto podrás empezar a vivir la buena vida en Tropyco.
-        </v-card-text>
+  <div>
+    <v-dialog v-model="dialog" hide-overlay persistent width="350">
+      <v-card class="validation-dialog d-flex justify-center flex-column">
+        <v-row class="ma-0 mb-1 mt-12 d-flex align-end">
+          <v-img v-if="!type" src="@/assets/error.png" height="100" contain />
+          <v-img v-if="type" src="@/assets/success.png" height="100" contain />
+        </v-row>
+        <v-row
+          v-if="!type"
+          class="d-flex justify-center align-end ma-0 mt- mb-2"
+        >
+          <h1>Ha habido un error en el registro.</h1>
+        </v-row>
+        <v-row
+          v-if="type"
+          class="d-flex justify-center align-end ma-0 mt- mb-2"
+        >
+          <h1>Te has registrado correctamente.</h1>
+        </v-row>
+        <v-row
+          v-if="!type"
+          class="d-flex justify-center align-start ma-0 mb-15"
+        >
+          <p>Escribenos a diego@tugroup.tech y te ayudaremos en el proceso.</p>
+        </v-row>
+        <v-row v-if="type" class="d-flex justify-center align-start ma-0 mb-15">
+          <p>Muy pronto podrás empezar a vivir la buena vida en Tropyco.</p>
+        </v-row>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <script>
 export default {
+  name: 'ModalValidationForm',
   props: {
-    showModal: {
+    type: {
+      require: true,
       type: Boolean,
     },
   },

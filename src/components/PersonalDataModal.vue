@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-dialog v-model="dialog"  width="400" class="dialog-background">
-      <v-card class="dialog-data-card d-flex justify-center flex-column " >
+    <v-dialog v-model="dialog"  width="400 ">
+      <v-card class="dialog-data-card d-flex justify-center flex-column" >
         <v-row class="ma-0 mt-12 mb-1">
           <v-img
-          class="dialog-data-img"
           src="@/assets/warning.png"
           height="70"
           contain

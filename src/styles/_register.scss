@@ -1,98 +1,61 @@
 .register{
-    width:100%;
-    height:100%;
-    background-image: url("../assets/fondo.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    .v-btn{
-      height:50px !important;
+  width:100%;
+  height:100%;
+  background-image: url("../assets/fondo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .v-btn{
+    height:50px !important;
+  }
+  .modal{
+    display:none;
+  }
+  h1{
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 75px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    margin:100px 0 50px 0;
+  }
+  .register-name{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 55px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    height:10px;
     }
-    .modal{
-      display:none;
-    }
-    h1{
-      font-weight: bold;
-      font-size: 50px;
-      line-height: 75px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-      margin:100px 0 50px 0;
-    }
-    .register-name{
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 55px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-      height:10px;
-    }
-    .input-name {
-      background: #FFFFFF;
-      border-radius: 10px;
-      padding: 0px 25px;
-      font-size:24px;
-    }
-    .input-name::placeholder {
-      font-size: 24px;
-      color: #A3C5AB;
-      margin-left:15px;
-
-    }
-
-    .register-email{
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 55px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-      height:10px;
-
-    }
-
-    .input-email{
-      background: #FFFFFF;
-      border-radius: 10px;
-      padding: 0 25px;
-      font-size:24px;
-    }
-    .input-email::placeholder {
-      font-size: 24px;
-      color: #A3C5AB;
-      margin-left:15px;
-    }
-    .register-twitter{
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 55px;
-      display: flex;
-      align-items: center;
-      color: #FFFFFF;
-      height:10px;
-    }
-    .input-twitter{
-      background: #FFFFFF;
-      border-radius: 10px;
-      padding: 0 25px;
-      font-size:24px;
-
-    }
-    .input-twitter::placeholder {
-      font-size: 24px;
-      color: #A3C5AB;
-    }
-    span{
-      color:white;
-      font-size:20px;
-      .register-span {
-        margin-right: 80px;
+  .register-email{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 55px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    height:10px;
+  }
+  .register-twitter{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 55px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    height:10px;
+  }
+  span{
+    color:white;
+    font-size:20px;
+    .register-span {
+      margin-right: 80px;
       }
-    }
+  }
   
-    .register-foot{
+  .register-foot{
     font-weight: normal;
     font-size: 15px;
     line-height: 25px;
