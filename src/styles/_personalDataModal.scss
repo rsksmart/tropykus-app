@@ -1,9 +1,6 @@
 .dialog-data-card{
   height:500px;
-  
-//   background-blend-mode:rgba(1,62,47,0.7) ;
-//   background-color: rgba(1,62,47,0.7);
-
+  background-image: url("../assets/modal.jpg");
 
   h1{
     font-size: 20px;
@@ -33,6 +30,3 @@
    }
 }
 
-  .dialog-background{
-    background-image: url("../assets/modal.jpg");
-  } 

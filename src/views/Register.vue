@@ -1,33 +1,60 @@
 <template>
   <div class="register">
     <v-row>
-      <v-col cols="2" >
-        <div class="register-title">Tropyco</div>
-      </v-col>
+      <v-col cols="2"/>
     </v-row>
     <v-row>
-      <v-col cols="2">
-      </v-col>
-      <v-col cols="8">
-        <h1 >Registrate</h1>
-         <v-text-field
-            label="Outlined"
-            single-line
-            outlined
-            color="#4CB163"
+      <v-col cols="3" />
+      <v-col cols="6">
+        <h1>Registrate</h1>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <p class="register-name">Nombre</p>
+          <v-text-field
+            v-model="user.name"
+            label="Escribe tu nombre"
+            required
+            dense
+            solo
           ></v-text-field>
+          <p class="register-email">Correo electrónico</p>
+          <v-text-field
+            v-model="user.email"
+            label="Escribe un correo electrónico de contacto"
+            required
+            dense
+            solo
+          ></v-text-field>
+           <p class="register-twitter">Twitter</p>
+          <v-text-field
+            v-model="user.twitter"
+            label="Escribe @pepito.perez"
+            required
+            dense
+            solo
+          ></v-text-field>
+          <span class="d-flex justify-end" >
+            <span class="register-span">
+              <h2>¡Contáctanos!</h2>
+              <p class="register-foot">
+                Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
+                Tropyco.
+              </p>
+            </span>
+            <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
+          </span>
+        </v-form>
+       <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
       </v-col>
     </v-row>
   </div>
 </template>
 <script>
-
-// import ModalValidationForm from '../components/ModalValidationForm.vue';
+import ModalValidationForm from '../components/ModalValidationForm.vue';
 
 export default {
   name: 'Register',
   components: {
-    // ModalValidationForm,
+    ModalValidationForm,
   },
   data() {
     return {
@@ -47,7 +74,11 @@ export default {
       const emailRegex = RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
       );
-      if (!emailRegex.test(this.user.email) || !this.user.name || !this.user.twitter) {
+      if (
+        !emailRegex.test(this.user.email)
+        || !this.user.name
+        || !this.user.twitter
+      ) {
         this.modalError = true;
         return;
       }
@@ -67,11 +98,15 @@ export default {
   watch: {
     modalError(val) {
       if (!val) return;
-      setTimeout(() => { this.modalError = false; }, 2000);
+      setTimeout(() => {
+        this.modalError = false;
+      }, 200000);
     },
     modalSuccess(val) {
       if (!val) return;
-      setTimeout(() => { this.modalSuccess = false; }, 2000);
+      setTimeout(() => {
+        this.modalSuccess = false;
+      }, 200000);
     },
   },
 };

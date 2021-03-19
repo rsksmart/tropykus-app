@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog"  width="400" class="dialog-background">
-      <v-card class="dialog-data-card d-flex justify-center flex-column " color="rgba(1,62,47,0.7)">
+      <v-card class="dialog-data-card d-flex justify-center flex-column " >
         <v-row class="ma-0 mt-12 mb-1">
           <v-img
           class="dialog-data-img"

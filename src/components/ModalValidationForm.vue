@@ -1,9 +1,12 @@
 <template>
   <div class="validation-dialog">
-    <v-dialog v-model="dialog" hide-overlay persistent width="543">
+    <v-dialog v-model="dialog" hide-overlay persistent width="400">
       <v-card id="modal-error">
-        <v-img  v-if="!type"  src="@/assets/error.png" height="140" contain/>
-        <v-img v-if="type"  src="@/assets/success.png"/>
+        <span class="">
+         <v-img  v-if="!type"  src="@/assets/error.png" width="40" contain/>
+         <v-img v-if="type"  src="@/assets/success.png" width="40" contain />
+        </span>
+
         <v-card-title v-if="!type" class="modalError-title">
           Ha habido un error en el registro.
         </v-card-title>
@@ -22,7 +25,11 @@
 </template>
 <script>
 export default {
-  props: ['type'],
+  props: {
+    showModal: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       dialog: true,
