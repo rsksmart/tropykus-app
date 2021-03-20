@@ -82,7 +82,7 @@ export default {
         return;
       }
       try {
-        this.db.collection('users-tropyco').add({
+        this.db.collection('users-tropyco').doc(`${new Date()}`).set({
           name: this.user.name,
           email: this.user.email,
           twitter: this.user.twitter,
