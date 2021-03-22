@@ -1,8 +1,8 @@
 <template>
-  <v-app>
+  <div class="home">
      <Navbar/>
      <Landing/>
-  </v-app>
+  </div>
 </template>
 
 <script>

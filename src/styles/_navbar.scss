@@ -1,86 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
 
-div, p, h1, h2, h3, h4, h5, h6, body, button {
-  font-family: 'Lato', sans-serif;
-  font-style: normal;
-}
-$color-background:#E5E5E5;
-body {
-  background-color: $color-background;
-}
 .navbar{
+  background-color:rgba(1, 62, 47, 0.85);
+  height:120px;
+;
   .navbar-title{
-    position: absolute;
     font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    width: 258px;
-    height: 76px;
-    left: 2.7%; 
-    top: 33px;
-    color: #FF9153;
+    color: #FFF;
     font-weight: 600;
     font-size: 60px;
     line-height: 73px;
-    border: 0px;
   }
-  .navbar-home{
-    position: absolute;
-    width: 82px;
-    height: 28px;
-    left: 42%;
-    top: 67px;
-    font-weight: bold;
+  button{
+    background-color: rgba(0, 0, 0, 0);
     font-size: 22px;
-    line-height: 26px;
-    color: #000000;
-    border: 0px;
-    background-color: $color-background;
-    padding:0px;
+    line-height: 20px;
+    color: #FFFF;
   }
-  .navbar-balance{
-    position: absolute;
-    width: 211;
-    height: 23;
-    right: 41%;
-    top: 66px;
+ 
+  .navbar-button {
+    color:#FFFF;
+    height: 40px !important;
     font-style: normal;
     font-weight: normal;
     font-size: 22px;
-    line-height: 26px;
-    color: #000000;
-    border: 0px;
-    background-color: $color-background;
-    padding:0px;
-  
-  }
-  .navbar-about{
-    position: absolute;
-    width: 211;
-    height: 25;
-    right: 27%;
-    top: 66px;
-    font-weight: normal;
-    font-size: 22px;
-    line-height: 26px;
-    color: #000000;
-    border: 0px;
-    background-color: $color-background;
-    padding:0px;
-  
-  }
-  .navbar-wallet{
-    position: absolute;
-    width: 295px;
-    height: 60px;
-    right: 2%;
-    top: 52px;
-    background: #51C1AF;
-    border: 1px solid #51C1AF;
-    box-sizing: border-box;
-    border-radius: 10px;
-    color:#FFFFFF;
-    font-size: 25px;
-    padding: 0px;
-   
+    line-height: 10px;
+    text-transform: none;
   }
 }

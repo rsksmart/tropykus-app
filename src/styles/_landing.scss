@@ -1,116 +1,37 @@
-
-.landing-contain{
-    .landing-title{
-      position: absolute;
-      width: 951px;
-      height: 78px;
-      top: 165px;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 50px;
-      line-height: 55px;
-      color: #000000;
-      margin: auto;
-      left:50%;
-      margin-left:-475.5px;
-      text-align: center
-    }
-    .landing-save{
-      position: absolute;
-      width: 152px;
-      height: 46px;
-      top: 297px;
-      left:50%;
-      margin-left:-250px;
-      font-weight: bold;
-      font-size: 35px;
-      line-height: 42px;
-      color: #000000;
-      border:0px;
-      background-color: $color-background;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 2px solid #A8A8A8;
-    }
-    .landing-save-click {
-      position: absolute;
-      width: 152px;
-      height: 46px;
-      top: 297px;
-      left:50%;
-      margin-left:-250px;
-      font-weight: normal;
-      font-size: 35px;
-      line-height: 42px;
-      color: #000000;
-      border:0px;
-      background-color: $color-background;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-      // border-bottom: 2px solid #A8A8A8;
-    }
-    .landing-borrow{
-      position: absolute;
-      width: 272px;
-      height: 46px;
-      top: 297px;
-      left:50%;
-      margin-right:-272px;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 35px;
-      line-height: 42px;
-      color: #000000;
-      border:0px;
-      background-color: $color-background;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .landing-borrow-click {
-      position: absolute;
-      width: 272px;
-      height: 46px;
-      top: 297px;
-      left:50%;
-      margin-right:-272px;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 35px;
-      line-height: 42px;
-      color: #000000;
-      border:0px;
-      background-color: $color-background;
-      display:flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 2px solid #A8A8A8;
-
-    }
-    .landing-saving{
-      position: absolute;
-      left: 12%;
-      top: 467px;
-      display:flex;
-      flex-wrap: wrap;
-    }
-    .landing-borrowing{
-      position: absolute;
-      left: 12%;
-      top: 467px;
-      display:flex;
-      flex-wrap: wrap;
-    }
-    .landing-title-card{
-      position: absolute;
-      width: 290px;
-      height: 37px;
-      left: 17%;
-      top: 410px;
-      font-weight: bold;
-      font-size: 28px;
-      color: #000000;  
-    }
+@mixin style{
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 42px;
+    color: #FFF;
+    background-color:rgba(1, 62, 47, 0.85);
+    border-radius: 5px;
+    width:120px;
+    height:40px;
+}
+.landing{
+  h1{
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 55px;
+    color: #FFF
+  }
+  .button-save{
+    @include style;
+    margin-left:110px;
+  }
+  .button-borrow {
+    @include style;
+    width: 180px;
+    margin-right:70px;
+  }
+  .landing-subtitle {
+    @include style;
+  }
+  h2{
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .landing-img{
+    margin-left:20px;
+  }
 }
