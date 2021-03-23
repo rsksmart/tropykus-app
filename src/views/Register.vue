@@ -76,25 +76,6 @@ export default {
     };
   },
   methods: {
-    download(guideUrl, part) {
-      this.uxDate = new Date().toISOString();
-      this.downloadStartTime = new Date().getTime();
-      this.puzzleResult = true;
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = () => {
-        const blob = xhr.response;
-        const link = document.createElement('a');
-        link.setAttribute('download', `Guia de privacidad ${part}`);
-        link.href = URL.createObjectURL(blob);
-        link.click();
-        this.downloadEndTime = new Date().getTime();
-        this.saveData();
-      };
-      xhr.open('GET', guideUrl);
-      xhr.send();
-      this.showPuzzle = false;
-    },
     type() {
       if (this.modalSuccess) return true;
       return false;
