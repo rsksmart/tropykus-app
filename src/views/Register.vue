@@ -1,11 +1,11 @@
 <template>
   <div class="register">
-    <v-row>
-      <v-col cols="2"/>
+     <v-row>
+      <div class='register-title'>Tropyco</div>
     </v-row>
     <v-row>
       <v-col cols="3" />
-      <v-col cols="6">
+      <v-col cols="6" class="pa-0">
         <h1>Registrate</h1>
         <v-form ref="form" lazy-validation>
           <p class="register-name">Nombre</p>
@@ -44,6 +44,17 @@
           </span>
         </v-form>
        <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
+      </v-col>
+    </v-row>
+    <v-row class="d-flex justify-end ma-0">
+      <v-col cols="9" />
+      <v-col cols ="3" class="mt-12 register-buttons">
+        <a href="../assets/tropyco_whitepaper.pdf" download class="mx-6">
+          Whitepaper
+        </a>
+        <a href="https://github.com/TruStartUp/tropyco-app/tree/landing-page" target="_blank" class="mr-0">
+          Repositorio
+        </a>
       </v-col>
     </v-row>
   </div>

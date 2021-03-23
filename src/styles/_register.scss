@@ -11,6 +11,15 @@
   .modal{
     display:none;
   }
+  .register-title{
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 35px;
+    line-height: 73px;
+    color: #FFFFFF;
+    margin: 20px 0 0 52px;
+  }
   h1{
     font-weight: bold;
     font-size: 50px;
@@ -18,7 +27,7 @@
     display: flex;
     align-items: center;
     color: #FFFFFF;
-    margin:100px 0 50px 0;
+    margin:0px 0 40px 0;
   }
   .register-name{
     font-weight: bold;
@@ -70,5 +79,12 @@
     display: flex;
     align-items: center;
     color: #FFFFFF;
+  }
+  .register-buttons{
+    background-color:rgba(1, 62, 47, 0.85);
+  }
+  a{
+    color:#FFFFFF !important;
+    text-decoration:none;
   }
 }
