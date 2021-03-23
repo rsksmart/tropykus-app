@@ -1,25 +1,24 @@
-
-.navbar{
-  background-color:rgba(1, 62, 47, 0.85);
-  height:120px;
-;
-  .navbar-title{
-    font-family: 'Montserrat', sans-serif;
-    color: #FFF;
-    font-weight: 600;
-    font-size: 60px;
+.navbar {
+  background-color: rgba(1, 62, 47, 0.85);
+  height: 100px;
+  .navbar-title {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    color: #fff;
+    font-size: 40px;
     line-height: 73px;
   }
-  button{
+  button {
     background-color: rgba(0, 0, 0, 0);
     font-size: 22px;
     line-height: 20px;
-    color: #FFFF;
-    letter-spacing:0px;
+    color: #ffff;
+    letter-spacing: 0px;
   }
- 
+
   .navbar-button {
-    color:#FFFF;
+    color: #ffff;
     height: 40px !important;
     font-style: normal;
     font-weight: normal;

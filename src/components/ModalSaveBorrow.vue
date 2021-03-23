@@ -39,7 +39,7 @@
             <p class="ma-0 mt-5 mb-2">Escribe la cantidad que vas a ahorrar</p>
           </div>
           <v-text-field
-            placeholder="Escribe el monto          MAX"
+            placeholder="Escribe el monto"
             solo
             dense
           ></v-text-field>
