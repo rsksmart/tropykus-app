@@ -49,7 +49,7 @@
     <v-row class="d-flex justify-end ma-0">
       <v-col cols="9" />
       <v-col cols ="3" class="mt-12 register-buttons">
-        <a href="../assets/tropyco_whitepaper.pdf" download class="mx-6">
+        <a href="/assets/tropyco_whitepaper.pdf" download class="mx-6">
           Whitepaper
         </a>
         <a href="https://github.com/TruStartUp/tropyco-app/tree/landing-page" target="_blank" class="mr-0">
@@ -76,6 +76,25 @@ export default {
     };
   },
   methods: {
+    download(guideUrl, part) {
+      this.uxDate = new Date().toISOString();
+      this.downloadStartTime = new Date().getTime();
+      this.puzzleResult = true;
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = () => {
+        const blob = xhr.response;
+        const link = document.createElement('a');
+        link.setAttribute('download', `Guia de privacidad ${part}`);
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        this.downloadEndTime = new Date().getTime();
+        this.saveData();
+      };
+      xhr.open('GET', guideUrl);
+      xhr.send();
+      this.showPuzzle = false;
+    },
     type() {
       if (this.modalSuccess) return true;
       return false;
