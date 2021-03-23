@@ -1,37 +1,48 @@
-@mixin style{
-    font-weight: normal;
-    font-size: 25px;
-    line-height: 42px;
-    color: #FFF;
-    background-color:rgba(1, 62, 47, 0.85);
-    border-radius: 5px;
-    width:120px;
-    height:40px;
+@mixin style {
+  font-weight: normal;
+  font-size: 25px;
+  line-height: 42px;
+  color: #fff;
+  background-color: rgba(1, 62, 47, 0.85);
+  border-radius: 5px;
+  width: 120px;
+  height: 42px;
 }
-.landing{
-  h1{
+.landing {
+  h1 {
     font-weight: bold;
     font-size: 35px;
     line-height: 55px;
-    color: #FFF
+    color: #fff;
   }
-  .button-save{
+  .button-save {
     @include style;
-    margin-left:110px;
+    margin-left: 110px;
+    border-bottom: 2px solid #fff;
+  }
+  .button-save-click {
+    @include style;
+    margin-left: 110px;
   }
   .button-borrow {
     @include style;
     width: 180px;
-    margin-right:70px;
+    margin-right: 70px;
+  }
+  .button-borrow-click {
+    @include style;
+    width: 180px;
+    margin-right: 70px;
+    border-bottom: 2px solid #fff;
   }
   .landing-subtitle {
     @include style;
   }
-  h2{
-    font-size: 16px;
+  h2 {
+    font-size: 17px;
     margin-left: 10px;
   }
-  .landing-img{
-    margin-left:20px;
+  .landing-img {
+    margin-left: 20px;
   }
 }

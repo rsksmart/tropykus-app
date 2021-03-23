@@ -12,7 +12,7 @@
           depressed
           color="#4CB163"
           class="ma-auto mx-6 navbar-button"
-          width="250"
+          width="230"
         >
           Conectar billetera
         </v-btn>

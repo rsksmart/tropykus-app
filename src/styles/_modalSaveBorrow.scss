@@ -1,0 +1,50 @@
+.modal-save-borrow {
+  background-image: url('../assets/background-modal.jpg');
+  button {
+    color: #fff;
+    font-size: 22px;
+    border-bottom: 2px solid #fff;
+    width: 100px;
+    height: 40px;
+  }
+  img {
+    height: 30px;
+    width: 30px;
+    margin: 10px 10px 10px 0;
+  }
+  .modal-container {
+    width: 120px;
+    color: #fff;
+  }
+  h1 {
+    color: #fff;
+  }
+  .modal-container-img {
+    width: 150px;
+    color: #fff;
+  }
+  .modal-line {
+    border: 1px solid #bab9b9;
+    width: 85%;
+  }
+  .title-modal-rate {
+    line-height: 18px;
+  }
+  .modal-rate {
+    font-size: 20px;
+  }
+  .v-text-field {
+    width: 85% !important;
+  }
+  .v-btn {
+    color: #fff !important;
+    text-transform: none;
+    font-size: 18px;
+    letter-spacing: 0px;
+  }
+  .modal-contain-subtitle {
+    color: #fff;
+    width: 85%;
+    font-size: 12px;
+  }
+}
