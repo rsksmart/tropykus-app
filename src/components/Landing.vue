@@ -26,14 +26,15 @@
     </v-row>
     <v-row>
       <v-col cols="2" />
-      <v-col cols="8" class="ma-0 mt-4 pa-0">
-        <div v-if="hidden" class="d-flex flex-wrap">
-          <card v-for="data in saving" :key="data.id" :data="data" :hiddenButton="hidden" />
-        </div>
-        <div v-if="!hidden" class="d-flex flex-wrap">
+      <v-col cols="3" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
+        <template v-if="hidden">
+          <card :data="data" :hiddenButton="hidden"/>
+        </template>
+        <template v-else class="d-flex flex-wrap">
           <card v-for="data in borrow" :key="data.id" :data="data" :hiddenButton="hidden"/>
-        </div>
+        </template>
       </v-col>
+      <v-col cols="1"/>
     </v-row>
   </div>
 </template>

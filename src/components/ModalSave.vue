@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="350">
-      <v-card class="modal-save d-flex justify-center flex-column" v-click-outside="onClickOutside">
+    <v-dialog v-model="dialog" width="350" v-click-outside="onClickOutside">
+      <v-card class="modal-save d-flex justify-center flex-column">
         <v-row class="ma-0 mt-3 d-flex justify-center justify-space-around">
           <button @click="hidden = true" :class="hidden ? 'button-save' : 'button-save-click'">
             Ahorrar
