@@ -20,6 +20,9 @@
     margin-left: 110px;
     border-bottom: 2px solid #fff;
   }
+  .button-save-click:hover {
+    font-weight: bold;
+  }
   .button-save-click {
     @include style;
     margin-left: 110px;
@@ -28,6 +31,9 @@
     @include style;
     width: 180px;
     margin-right: 70px;
+  }
+  .button-borrow:hover {
+    font-weight: bold;
   }
   .button-borrow-click {
     @include style;

@@ -19,7 +19,7 @@
     </v-row>
     <v-row>
       <v-col cols="2" />
-      <v-col cols="2" class="pa-0 mt-6 mr-16 d-flex align-center landing-subtitle">
+      <v-col cols="2" class="pa-0 mt-6 mr-16 ml-3 d-flex align-center landing-subtitle">
         <img src="@/assets/logo.png" class="landing-img" width="23" />
         <h2 class="landing-title-card ">Mercados de cryptos</h2>
       </v-col>
