@@ -52,7 +52,7 @@
         <a href="/assets/tropyco_whitepaper.pdf" download class="mx-6">
           Whitepaper
         </a>
-        <a href="https://github.com/TruStartUp/tropyco-app/tree/landing-page" target="_blank" class="mr-0">
+        <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
           Repositorio
         </a>
       </v-col>
