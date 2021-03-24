@@ -8,15 +8,18 @@
   }
   .button-save {
     border-bottom: 2px solid #fff;
+    width:150px;
   }
   .button-save-click:hover {
     font-weight: bold;
+    width:150px;
   }
   .button-withdraw:hover {
     font-weight: bold;
   }
   .button-save-click {
     border-bottom: 0px solid #fff;
+    width:150px;
   }
   .button-withdraw-click {
     border-bottom: 2px solid #fff;
@@ -45,7 +48,7 @@
     line-height: 18px;
   }
   .modal-rate {
-    font-size: 22px;
+    font-size: 28px;
   }
   .v-text-field {
     width: 85% !important;
@@ -70,6 +73,7 @@
   }
   .p-italic {
     font-style: italic;
+    width:120px;
   }
   .p-bold {
     font-weight: bold;
@@ -81,5 +85,18 @@
   .p-name-data {
     font-size: 17px;
     height: 18px;
+  }
+  .icon-borrow {
+    width:70px;
+  }
+  .warning-contain {
+    width:100%;
+  }
+  .p-warning{
+    color:#fff;
+    font-size:14px;
+  }
+  .space{
+    height:30px;
   }
 }

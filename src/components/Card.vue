@@ -26,7 +26,7 @@
       <v-spacer></v-spacer>
       <v-btn
         v-if="hiddenButton"
-        @click="showModalSave = true"
+        @click="makeModalSaveVisible"
         class="mt-5"
         depressed
         color="#51C1AF"
@@ -45,7 +45,7 @@
         Pedir prestado
       </v-btn>
     </v-row>
-    <modal-save :showModal="showModalSave" :data="data"/>
+    <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside"/>
     <modal-borrow :showModal="showModalBorrow" :data="data"/>
   </v-card>
 </template>
@@ -69,6 +69,12 @@ export default {
     },
   },
   methods: {
+    makeModalSaveVisible() {
+      this.showModalSave = true;
+    },
+    onClickOutside() {
+      this.showModalSave = false;
+    },
   },
   data() {
     return {

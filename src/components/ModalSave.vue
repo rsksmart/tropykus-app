@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog" width="350">
-      <v-card class="modal-save d-flex justify-center flex-column">
+      <v-card class="modal-save d-flex justify-center flex-column" v-click-outside="onClickOutside">
         <v-row class="ma-0 mt-3 d-flex justify-center justify-space-around">
           <button @click="hidden = true" :class="hidden ? 'button-save' : 'button-save-click'">
             Ahorrar
@@ -80,13 +80,20 @@ export default {
       type: Object,
     },
   },
-  computed: {
-    dialog() {
-      return this.showModal;
+  methods: {
+    onClickOutside() {
+      this.dialog = false;
+      this.$emit('closed');
     },
+  },
+  computed: {
+    // dialog() {
+    //   return this.showModal;
+    // },
   },
   data() {
     return {
+      dialog: this.showModal,
       hidden: true,
       amount: '',
     };

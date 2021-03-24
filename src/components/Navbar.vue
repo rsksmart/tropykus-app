@@ -5,9 +5,10 @@
         <div class="navbar-title mt-2 ml-10">Tropyco</div>
       </v-col>
       <v-col cols="6" class="mt-2 d-flex justify-space-around">
-        <button class="navbar-home">Inicio</button>
+        <button>Inicio</button>
+        <button>Tutotial</button>
         <!-- <button class="navbar-balance">Mi balance</button> -->
-        <button class="navbar-about">Sobre Tropyco</button>
+        <button>Sobre Tropyco</button>
         <v-btn
           depressed
           color="#4CB163"
