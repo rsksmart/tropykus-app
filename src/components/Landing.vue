@@ -33,6 +33,10 @@
         <template v-else class="d-flex flex-wrap">
           <card :data="data" :hiddenButton="hidden"/>
         </template>
+         <template v-if="showModalConvertBtn">
+          <modal-convert-btn
+           :showModalConvertBtn="showModalConvertBtn" :data="data" @closed="outsideConvertBtn"/>
+        </template>
       </v-col>
     </v-row>
     </v-card>
@@ -40,13 +44,18 @@
 </template>
 <script>
 import card from './Card.vue';
+import ModalConvertBtn from './ModalConvertBtn.vue';
 
 export default {
   name: 'Landing',
   components: {
     card,
+    ModalConvertBtn,
   },
   methods: {
+    outsideConvertBtn() {
+      this.showModalConvertBtn = false;
+    },
     onBorrow() {
       this.hidden = false;
     },
@@ -54,8 +63,12 @@ export default {
       this.hidden = true;
     },
   },
+  // created() {
+  //   setTimeout(() => { this.showModalConvertBtn = true; }, 1000);
+  // },
   data() {
     return {
+      showModalConvertBtn: false,
       hidden: true,
       saving: [
         {

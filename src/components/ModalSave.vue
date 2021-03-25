@@ -69,7 +69,7 @@
           >
             Conectar billetera
           </v-btn>
-          <template>
+          <template v-if="showModalConnectWallet">
             <modal-connect-wallet
               :showModalConnectWallet="showModalConnectWallet"
               @closed="outsideConnectWallet"

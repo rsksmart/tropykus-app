@@ -25,7 +25,7 @@
   p {
     color: #fff;
     width:80px;
-    font-size:11px;
+    font-size:12px;
     margin:0;
     display: flex;
     justify-content:center;    
@@ -39,5 +39,8 @@
   }
   .footer-download{
       font-weight: bold;
+  }
+  .subtitle{
+    font-size:10px;
   }
 }

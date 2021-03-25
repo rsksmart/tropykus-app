@@ -96,9 +96,22 @@
           <v-btn v-if="!amount" class="modal-button mb-6" height="42" color="#A3C5AB" width="300">
             Conectar billetera
           </v-btn>
-          <v-btn v-if="amount" class="modal-button mb-6" height="42" color="#FF9153" width="300">
+          <v-btn
+            v-else
+            @click="showModalConnectWallet = true"
+            class="modal-button mb-6"
+            height="42"
+            color="#FF9153"
+            width="300"
+          >
             Conectar billetera
           </v-btn>
+          <template v-if="showModalConnectWallet">
+            <modal-connect-wallet
+              :showModalConnectWallet="showModalConnectWallet"
+              @closed="outsideConnectWallet"
+            />
+          </template>
         </v-row>
       </v-card>
     </v-dialog>
@@ -106,8 +119,13 @@
 </template>
 
 <script>
+import ModalConnectWallet from './ModalConnectWallet.vue';
+
 export default {
   name: 'ModalBorrow',
+  components: {
+    ModalConnectWallet,
+  },
   props: {
     showModal: {
       require: true,
@@ -118,6 +136,9 @@ export default {
     },
   },
   methods: {
+    outsideConnectWallet() {
+      this.showModalConnectWallet = false;
+    },
     onClickOutside() {
       this.dialog = false;
       this.$emit('closed');
@@ -125,6 +146,7 @@ export default {
   },
   data() {
     return {
+      showModalConnectWallet: false,
       dialog: this.showModal,
       hidden: true,
       amount: '',
