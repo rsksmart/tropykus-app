@@ -1,7 +1,7 @@
-.landing{
-  width:100%;
-  height:100%;
-  background-image: url("../assets/landing-page.jpg");
+.landing {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/landing-page.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,36 +10,71 @@
     margin: 140px 0 0 130px;
   }
 
-  .landing-title{
+  .landing-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: 800;
     font-size: 35px;
     line-height: 73px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 20px 0 0 52px;
   }
-  h1{
+  h1 {
     font-weight: bold;
     font-size: 40px;
     line-height: 45px;
-    color: #FFFFFF;
+    color: #ffffff;
     width: 400px;
   }
-  h2{
-    margin-top:25px;;
+  h2 {
+    margin-top: 25px;
     font-weight: 400;
     font-size: 20px;
     line-height: 23px;
-    color: #FFFFFF;
-    width:350px;
+    color: #ffffff;
+    width: 350px;
   }
   span {
     font-size: 25px;
     line-height: 56px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
   .v-btn {
     font-size: 0.1px !important;
+  }
+  .register-buttons {
+    background-color: #013e2f;
+  }
+  a {
+    text-decoration: none;
+    color: #ffffff !important;
+  }
+  @media (max-width: 600px) {
+     .background-responsive {
+      background-image: url('../assets/background-responsive.jpg');
+      height: 120%;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .landing-title {
+      text-align: center;
+      font-size: 24px;
+    }
+    h1 {
+      font-size: 29px;
+      width: 310px;
+      line-height: 29px;
+    }
+    h2 {
+      font-size: 16px;
+      width: 280px;
+      line-height: 18px;
+    }
+    span {
+      font-size: 20px;
+      letter-spacing: 0px;
+    }
   }
 }

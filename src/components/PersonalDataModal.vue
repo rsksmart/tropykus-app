@@ -3,6 +3,7 @@
     <v-dialog v-model="dialog" width="400 ">
       <v-card
         class="dialog-data-card d-flex justify-center flex-column"
+        v-click-outside="onClickOutside"
       >
         <v-row class="ma-0 mt-12 mb-1">
           <v-img src="@/assets/warning.png" height="70" contain />
@@ -36,14 +37,18 @@ export default {
       type: Boolean,
     },
   },
-  computed: {
-    dialog() {
-      return this.showModal;
-    },
+  data() {
+    return {
+      dialog: this.showModal,
+    };
   },
   methods: {
     redirect() {
       this.$router.push('Register');
+    },
+    onClickOutside() {
+      this.dialog = false;
+      this.$emit('closed');
     },
   },
 };

@@ -1,7 +1,8 @@
 <template>
   <div class="register">
+    <div class="hidden-sm-and-down">
      <v-row>
-      <div class='register-title'>Tropyco</div>
+      <div class='register-title'>Tropykus</div>
     </v-row>
     <v-row>
       <v-col cols="3" />
@@ -57,6 +58,66 @@
         </a>
       </v-col>
     </v-row>
+    </div>
+    <div class="hidden-md-and-up background-responsive">
+    <v-row>
+      <v-col cols="2" />
+        <v-col cols="8" >
+      <div class='register-title'>Tropykus</div>
+      </v-col>
+        <v-col cols="2" />
+    </v-row>
+    <v-row>
+      <v-col cols="1" />
+      <v-col cols="10" class="pa-0">
+        <h1 class="ml-2">Regístrate</h1>
+        <v-form ref="form" class="ma-2" lazy-validation>
+          <p class="register-name">Nombre</p>
+          <v-text-field
+            height="45"
+            v-model="user.name"
+            label="Escribe tu nombre"
+            required
+            dense
+            solo
+          ></v-text-field>
+          <p class="register-email">Correo electrónico</p>
+          <v-text-field
+            height="45"
+            v-model="user.email"
+            label="Escribe un correo electrónico"
+            required
+            dense
+            solo
+          ></v-text-field>
+           <p class="register-twitter">Twitter</p>
+          <v-text-field
+            height="45"
+            v-model="user.twitter"
+            label="Escribe @pepito.perez"
+            required
+            dense
+            solo
+          ></v-text-field>
+          <span class="d-flex justify-end mt-3" >
+            <v-btn color="#4CB163" @click="register" width="100%" class="mb-3"> Registarme </v-btn>
+          </span>
+        </v-form>
+       <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
+      </v-col>
+    </v-row>
+    <v-row class="d-flex justify-end ma-0">
+      <v-col cols="1" />
+      <v-col cols ="11" class="mt-12 register-buttons">
+        <a href="/assets/tropykus_whitepaper.pdf" download class="mx-6">
+          Whitepaper
+        </a>
+        <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0 ml-8">
+          Repositorio
+        </a>
+      </v-col>
+    </v-row>
+    </div>
   </div>
 </template>
 <script>

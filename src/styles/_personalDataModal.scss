@@ -1,7 +1,5 @@
 .dialog-data-card{
-  height:500px;
-  background-image: url("../assets/modal.jpg");
-
+  background-color: #013E2F!important;
   h1{
     font-size: 20px;
     line-height: 30px;
@@ -27,6 +25,18 @@
     line-height: 76px;
     border: 2px solid #FFFFFF;
     height:50px !important;
+  }
+  @media (max-width: 600px){
+    h1{
+      line-height: 23px;
+    }
+    p{
+      width: 240px;
+      font-size: 15px;
+    }
+    .v-btn{
+      width: 250px!important;
+    }
   }
 }
 
