@@ -24,18 +24,18 @@
         <h2 class="landing-title-card ">Mercados de cryptos</h2>
       </v-col>
     </v-row>
+    <v-card class="card mt-2 mb-6">
     <v-row>
-      <v-col cols="2" />
-      <v-col cols="3" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
+      <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
         <template v-if="hidden">
           <card :data="data" :hiddenButton="hidden"/>
         </template>
         <template v-else class="d-flex flex-wrap">
-          <card v-for="data in borrow" :key="data.id" :data="data" :hiddenButton="hidden"/>
+          <card :data="data" :hiddenButton="hidden"/>
         </template>
       </v-col>
-      <v-col cols="1"/>
     </v-row>
+    </v-card>
   </div>
 </template>
 <script>
@@ -77,37 +77,37 @@ export default {
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,
         },
         {
-          id: 3,
+          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,

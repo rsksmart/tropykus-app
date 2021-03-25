@@ -1,5 +1,5 @@
 <template>
-  <v-card width="95%" class="card mb-6 mx-3" color="rgba(1, 62, 47, 0.85)">
+  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 0.85)">
     <v-row class="ma-0">
       <span class="mt-3 mx-2 ml-3">
         <img
@@ -26,7 +26,7 @@
       <v-spacer></v-spacer>
       <template v-if="hiddenButton">
         <v-btn
-          @click="makeModalSaveVisible"
+          @click="showModalSave = true"
           class="mt-5"
           depressed
           color="#51C1AF"
@@ -48,7 +48,9 @@
         >
           Pedir prestado
         </v-btn>
-        <modal-borrow :showModal="showModalBorrow" :data="data"/>
+        <template v-if="showModalBorrow">
+          <modal-borrow :showModal="showModalBorrow" :data="data" @closed="onClickOutside"/>
+        </template>
       </template>
     </v-row>
   </v-card>
@@ -73,11 +75,9 @@ export default {
     },
   },
   methods: {
-    makeModalSaveVisible() {
-      this.showModalSave = true;
-    },
     onClickOutside() {
       this.showModalSave = false;
+      this.showModalBorrow = false;
     },
   },
   data() {

@@ -1,0 +1,43 @@
+.modal-connect-wallet {
+  background-color: #013e2f !important;
+  .container {
+    background-color: rgba(163, 197, 171, 0.3);
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    margin: 6px;
+  }
+  .container-row {
+    background-color: rgba(163, 197, 171, 0.3);
+    width: 135px;
+    height: 90px;
+    border-radius: 10px;
+    margin: 6px;
+  }
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 400;
+  }
+  img{
+      margin-bottom: 5px;
+  }
+  p {
+    color: #fff;
+    width:80px;
+    font-size:11px;
+    margin:0;
+    display: flex;
+    justify-content:center;    
+  }
+  h3{
+      color: #fff;
+      font-size:12px;
+  }
+  .footer{
+      font-weight: 400;
+  }
+  .footer-download{
+      font-weight: bold;
+  }
+}

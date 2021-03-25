@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-dialog v-model="dialog" width="350">
-      <v-card class="modal-borrow d-flex justify-center flex-column">
+      <v-card
+        class="modal-borrow d-flex justify-center flex-column"
+        v-click-outside="onClickOutside"
+      >
         <v-row class="ma-0 mt-3 d-flex justify-center justify-space-around">
           <button @click="hidden = true" :class="hidden ? 'button-save' : 'button-save-click'">
             Pedir prestado
@@ -58,19 +61,19 @@
           <div v-if="!hidden" class="d-flex flex-column modal-container-img mr-6">
             <div class="d-flex">
               <img
-                  class="mb-2"
-                  width="30"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
-                />
-                <div>
-                  <p class="ma-0 p-bold p-name mt-2">1 {{ data.name }}</p>
-                  <p class="ma-0 p-italic">= $50.000 USD</p>
-                </div>
+                class="mb-2"
+                width="30"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
+              />
+              <div>
+                <p class="ma-0 p-bold p-name mt-2">1 {{ data.name }}</p>
+                <p class="ma-0 p-italic">= $50.000 USD</p>
+              </div>
             </div>
-              <p class="title-modal-rate ma-0 mb-2">
-                Pediste prestado:
-              </p>
-               <p class="ma-0 p-bold p-name-data mb-2">0.000000 {{ data.name }}</p>
+            <p class="title-modal-rate ma-0 mb-2">
+              Pediste prestado:
+            </p>
+            <p class="ma-0 p-bold p-name-data mb-2">0.000000 {{ data.name }}</p>
             <p class="ma-0 p-italic mb-10">= ${{ data.price }} USD</p>
           </div>
         </v-row>
@@ -104,7 +107,7 @@
 
 <script>
 export default {
-  name: 'ModalSave',
+  name: 'ModalBorrow',
   props: {
     showModal: {
       require: true,
@@ -114,13 +117,15 @@ export default {
       type: Object,
     },
   },
-  computed: {
-    dialog() {
-      return this.showModal;
+  methods: {
+    onClickOutside() {
+      this.dialog = false;
+      this.$emit('closed');
     },
   },
   data() {
     return {
+      dialog: this.showModal,
       hidden: true,
       amount: '',
     };
