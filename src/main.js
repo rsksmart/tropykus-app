@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import firebase from 'firebase';
+import 'firebase/analytics';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
@@ -10,6 +11,7 @@ import 'firebase/storage';
 import firebaseConfig from '../firebaseConfig.json';
 
 Vue.prototype.$firebase = firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 new Vue({
   router,

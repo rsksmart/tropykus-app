@@ -103,7 +103,7 @@
             </v-btn>
             <div class="footer d-flex justify-center align-center">
               <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-              <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
+              <a href="https://github.com/TruStartUp/tropykus-protocol" target="_blank" class="mr-0">
                 Github
               </a>
             </div>
