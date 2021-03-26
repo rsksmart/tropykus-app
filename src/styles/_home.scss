@@ -31,37 +31,25 @@
   }
   span {
     font-size: 25px;
-    line-height: 56px;
     color: #ffffff;
   }
   .v-btn {
     font-size: 0.1px !important;
   }
-  .footer {
-    background-color: #1e6368;
-    color: white;
-    width: 170px;
-    height: 45px;
-    border-radius: 10px !important;
-    filter:drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
-  }
   a {
     text-decoration: none;
     color: #ffffff !important;
   }
+  p {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+  } 
   .footer-btn {
-    height: 45px !important;
+    height: 60px !important;
     font-size: 5px !important;
     border-radius: 10px !important;
     filter:drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
-    p {
-      height: 40px;
-      font-size: 16px;
-    }
-  }
-
-  .boton {
-    font-size: 10px;
   }
   @media (max-width: 600px) {
     .background-responsive {
@@ -89,17 +77,11 @@
       font-size: 20px;
       letter-spacing: 0px;
     }
-    .footer {
+    p {
       font-size: 13px;
-      width: 135px;
     }
     .footer-btn {
-      height: 45px !important;
-      font-size: 5px !important;
-      p {
-        height: 40px;
-        font-size: 13px;
-      }
+      height: 75px !important;
     }
   }
 }

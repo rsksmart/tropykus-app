@@ -3,7 +3,7 @@
     <div class="hidden-sm-and-down">
       <v-row>
             <a href="/" class="mt-10 ml-12">
-            <img  width="200" src="../assets/título.png" />
+            <img  width="200" src="@/assets/título.png" />
             </a>
       </v-row>
       <v-row>
@@ -52,27 +52,53 @@
           />
         </v-col>
       </v-row>
-      <v-row class="ma-0">
+      <v-row class="mt-3">
         <v-col cols="3"/>
-        <v-col cols="6" class="d-flex pa-0">
-          <v-btn
-            class="footer-btn mr-8"
-            @click="download('/assets/tropykus_whitepaper.pdf')"
-            color="#1E6368"
-            depressed
-            width="170"
-          >
-            <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
-            <p>
-              Whitepaper
-            </p>
-          </v-btn>
-          <div class="footer d-flex justify-center align-center">
-            <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-            <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
-              Github
-            </a>
-          </div>
+        <v-col cols="6" class="pa-0">
+          <v-row class="mx-0">
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                @click="download('/assets/tropykus_whitepaper.pdf')">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img class="d-flex justify-end" height="25" src="@/assets/icon-whitepaper.png"
+                            alt="Icon book" contain/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Manifiesto</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+            <v-col class="py-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+              href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img height="25" src="@/assets/icon-github.png"
+                            alt="Icon Github" contain class="mr-0"/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Github</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+              href="https://twitter.com/tropykus" target="_blank">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img height="25" src="@/assets/twitter.png"
+                            alt="Icon Twitter" contain/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Twitter</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </div>
@@ -81,7 +107,7 @@
         <v-col cols="2" />
         <v-col cols="8">
           <a href="/" class="mt-6">
-            <img  src="../assets/titulo-responsive.png" />
+            <img  src="@/assets/titulo-responsive.png" />
           </a>
         </v-col>
         <v-col cols="2" />
@@ -133,27 +159,51 @@
       </v-row>
       <v-row class="ma-0">
         <v-col cols="1"/>
-        <v-col cols="10" class="ml-9 d-flex pa-0">
-          <v-card class="d-flex container pa-0 mr-1" width="500" color="transparent" flat>
-            <v-btn
-              class="footer-btn mr-2"
-              @click="download('/assets/tropykus_whitepaper.pdf')"
-              color="#1E6368"
-              depressed
-              width="48%"
-            >
-              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
-              <p>
-                Whitepaper
-              </p>
-            </v-btn>
-            <div class="footer d-flex justify-center align-center">
-              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-              <a href="https://github.com/TruStartUp/tropykus-protocol" target="_blank" class="mr-0">
-                Github
-              </a>
-            </div>
-          </v-card>
+        <v-col cols="10" class="mt-8 pa-0">
+          <v-row class="mx-0">
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed
+                @click="download('/assets/tropykus_whitepaper.pdf')">
+                <div>
+                  <v-row class="mx-0">
+                    <v-img height="25" src="@/assets/icon-whitepaper.png"
+                            alt="Icon book" contain/>
+                  </v-row>
+                  <v-row class="mx-0">
+                    <p class="text-center">Manifiesto</p>
+                  </v-row>
+                </div>
+              </v-btn>
+            </v-col>
+            <v-col class="py-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed
+              href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                <div>
+                  <v-row class="d-flex justify-center align-center">
+                    <v-img height="25" src="@/assets/icon-github.png"
+                            alt="Icon Github" contain/>
+                  </v-row>
+                  <v-row class="d-flex justify-center align-center">
+                    <p class="text-center">Github</p>
+                  </v-row>
+                </div>
+              </v-btn>
+            </v-col>
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed
+              href="https://twitter.com/tropykus" target="_blank">
+                <div class="my-2">
+                  <v-row class="d-flex justify-center align-center">
+                    <v-img height="25" src="@/assets/twitter.png"
+                            alt="Icon Twitter" contain/>
+                  </v-row>
+                  <v-row class="d-flex justify-center align-center">
+                    <p class="text-center">Twitter</p>
+                  </v-row>
+                </div>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </div>
@@ -185,7 +235,7 @@ export default {
       xhr.onload = () => {
         const blob = xhr.response;
         const link = document.createElement('a');
-        link.setAttribute('download', 'tropykus_whitepaper');
+        link.setAttribute('download', 'tropykus_manifiesto');
         link.href = URL.createObjectURL(blob);
         link.click();
         this.downloadEndTime = new Date().getTime();

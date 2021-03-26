@@ -20,30 +20,36 @@
               <span>Obtén acceso exclusivo</span>
             </v-btn>
             <personal-data-modal :showModal="showModal" />
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row class="ma-0">
-        <v-col cols="6" class="ml-12 d-flex">
-          <v-card class="d-flex container pa-0" width="500" color="transparent" flat>
-            <v-btn
-              class="footer-btn mr-8"
-              @click="download('/assets/tropykus_whitepaper.pdf')"
-              color="#1E6368"
-              depressed
-              width="170"
-            >
-              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
-              <p>
-                Whitepaper
-              </p>
-            </v-btn>
-            <div class="footer d-flex justify-center align-center">
-              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-              <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
-                Github
-              </a>
-            </div>
+            <v-row class="mx-0 mt-8">
+              <v-col class="pa-0">
+                <v-btn class="footer-btn" color="#1E6368" depressed
+                  @click="download('/assets/tropykus_whitepaper.pdf')" width="85%">
+                  <v-row>
+                    <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                      <v-img class="d-flex justify-end" height="25" alt="Icon book" contain
+                              src="@/assets/icon-whitepaper.png"/>
+                    </v-col>
+                    <v-col class="px-0 d-flex justify-start align-center">
+                      <p class="text-center">Manifiesto</p>
+                    </v-col>
+                  </v-row>
+                </v-btn>
+              </v-col>
+              <v-col class="pa-0">
+                <v-btn class="footer-btn" color="#1E6368" depressed width="85%"
+                href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                  <v-row>
+                    <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                      <v-img height="25" src="@/assets/icon-github.png"
+                              alt="Icon Github" contain class="mr-0"/>
+                    </v-col>
+                    <v-col class="px-0 d-flex justify-start align-center">
+                      <p class="text-center">Github</p>
+                    </v-col>
+                  </v-row>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -52,66 +58,84 @@
       <v-row>
         <v-col cols="2" />
         <v-col cols="8" class="mt-10 text-center">
-            <img  src="../assets/titulo-responsive.png" />
+            <img  src="@/assets/titulo-responsive.png" />
         </v-col>
         <v-col cols="2" />
       </v-row>
       <v-row>
         <v-col cols="1" />
-        <v-col cols="10" class="ml-10 d-flex justify-center">
-          <v-card flat color="transparent" class="container pa-0" width="500">
-            <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
-            <h2>
-              Tropykus finance te ayuda a que saques rendimiento de tis bitcoins.Podrás tener el
-              control de tus fondos de tus forma simple,privada y con la seguridad de la blockchain
-              de RSK. Además,podrás impulsar el cambio en Latinoamérica con créditos más justos y
-              accesibles.
-            </h2>
-            <v-btn
-              dark
-              @click="showModal = true"
-              color="#4CB163"
-              x-large
-              class="mt-7
-             mb-12"
-              width="300"
-            >
+        <v-col cols="10" class="mt-5 d-flex justify-center">
+          <v-card flat color="transparent" class="container pa-0" width="100%">
+            <v-row class="mx-0">
+              <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
+            </v-row>
+            <v-row class="mx-0">
+              <h2>
+                Tropykus finance te ayuda a que saques rendimiento de tis bitcoins.
+                Podrás tener el control de tus fondos de tus forma simple,privada y
+                con la seguridad de la blockchain de RSK. Además,podrás impulsar el
+                cambio en Latinoamérica con créditos más justos y accesibles.
+              </h2>
+            </v-row>
+            <v-row class="mx-0">
+              <v-btn dark @click="showModal = true" color="#4CB163"
+                      x-large class="mt-7 mb-12" width="100%">
               <span>Obtén acceso exclusivo</span>
             </v-btn>
-            <template v-if="showModal">
-              <personal-data-modal :showModal="showModal" @closed="clickOutside" />
-            </template>
+            </v-row>
+            <v-row class="mx-0">
+              <v-col class="pa-0">
+                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                  @click="download('/assets/tropykus_whitepaper.pdf')">
+                  <div>
+                    <v-row class="mx-0">
+                      <v-img height="25" src="@/assets/icon-whitepaper.png"
+                              alt="Icon book" contain/>
+                    </v-row>
+                    <v-row class="mx-0 pt-1">
+                      <p class="text-center">Manifiesto</p>
+                    </v-row>
+                  </div>
+                </v-btn>
+              </v-col>
+              <v-col class="py-0">
+                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                      href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                  <div>
+                    <v-row class="d-flex justify-center align-center">
+                      <v-img height="25" src="@/assets/icon-github.png"
+                              alt="Icon Github" contain/>
+                    </v-row>
+                    <v-row class="pt-1 d-flex justify-center align-center">
+                      <p class="text-center">Github</p>
+                    </v-row>
+                  </div>
+                </v-btn>
+              </v-col>
+              <v-col class="pa-0">
+                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                        href="https://twitter.com/tropykus" target="_blank">
+                  <div class="my-2">
+                    <v-row class="d-flex justify-center align-center">
+                      <v-img height="25" src="@/assets/twitter.png"
+                              alt="Icon Twitter" contain/>
+                    </v-row>
+                    <v-row class="pt-1 d-flex justify-center align-center">
+                      <p class="text-center">Twitter</p>
+                    </v-row>
+                  </div>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
         <v-col cols="1" />
-      </v-row>
-      <v-row class="ma-0 ">
-        <v-col cols="1" />
-        <v-col cols="10" class="ml-10 d-flex">
-          <v-card class="d-flex container pa-0" width="500" color="transparent" flat>
-            <v-btn
-              class="footer-btn mr-2"
-              @click="download('/assets/tropykus_whitepaper.pdf')"
-              color="#1E6368"
-              depressed
-              width="135"
-            >
-              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
-              <p>
-                Whitepaper
-              </p>
-            </v-btn>
-            <div class="footer d-flex justify-center align-center">
-              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-              <a href="https://github.com/TruStartUp/tropykus-protocol" target="_blank" class="mr-0">
-                Github
-              </a>
-            </div>
-          </v-card>
-        </v-col>
       </v-row>
     </div>
-  </div>
+    <template v-if="showModal">
+      <personal-data-modal :showModal="showModal" @closed="clickOutside"/>
+    </template>
+</div>
 </template>
 
 <script>
@@ -143,7 +167,7 @@ export default {
       xhr.onload = () => {
         const blob = xhr.response;
         const link = document.createElement('a');
-        link.setAttribute('download', 'tropykus_whitepaper');
+        link.setAttribute('download', 'tropykus_manifiesto');
         link.href = URL.createObjectURL(blob);
         link.click();
         this.downloadEndTime = new Date().getTime();
