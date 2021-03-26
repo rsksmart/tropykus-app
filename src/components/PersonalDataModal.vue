@@ -14,8 +14,8 @@
         <v-row class="d-flex justify-center ma-0 my-4">
           <p>
             La información personal solicitada solo será usada para el proceso
-            de lanzamiento.No la almacenaremos ni usaremos para proveerla o
-            venderla a terceros
+            de lanzamiento. No la almacenaremos ni usaremos para proveerla o
+            venderla a terceros.
           </p>
         </v-row>
         <v-row class="d-flex justify-center ma-0 my-4 mb-8">

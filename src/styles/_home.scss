@@ -5,11 +5,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
-  .landing-container {
-    margin: 140px 0 0 130px;
-  }
-
   .landing-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -42,15 +37,33 @@
   .v-btn {
     font-size: 0.1px !important;
   }
-  .register-buttons {
-    background-color: #013e2f;
+  .footer {
+    background-color: #1e6368;
+    color: white;
+    width: 170px;
+    height: 45px;
+    border-radius: 10px;
   }
   a {
     text-decoration: none;
     color: #ffffff !important;
   }
+  .footer-btn {
+    height: 45px !important;
+    font-size: 5px !important;
+    border-radius: 10px !important;
+
+    p {
+      height: 40px;
+      font-size: 16px;
+    }
+  }
+
+  .boton {
+    font-size: 10px;
+  }
   @media (max-width: 600px) {
-     .background-responsive {
+    .background-responsive {
       background-image: url('../assets/background-responsive.jpg');
       height: 120%;
       width: 100%;
@@ -75,6 +88,17 @@
     span {
       font-size: 20px;
       letter-spacing: 0px;
+    }
+    .footer {
+      font-size: 13px;
+    }
+    .footer-btn {
+      height: 45px !important;
+      font-size: 5px !important;
+      p {
+        height: 40px;
+        font-size: 13px;
+      }
     }
   }
 }

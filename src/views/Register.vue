@@ -2,13 +2,13 @@
   <div class="register">
     <div class="hidden-sm-and-down">
      <v-row>
-      <div class='register-title'>Tropykus</div>
+      <a class='register-title' href="/">Tropykus</a>
     </v-row>
     <v-row>
       <v-col cols="3" />
       <v-col cols="6" class="pa-0">
         <h1>Registrate</h1>
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" class="mb-12" lazy-validation>
           <p class="register-name">Nombre</p>
           <v-text-field
             v-model="user.name"
@@ -47,23 +47,35 @@
        <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
       </v-col>
     </v-row>
-    <v-row class="d-flex justify-end ma-0">
-      <v-col cols="9" />
-      <v-col cols ="3" class="mt-12 register-buttons">
-        <a href="/assets/tropyco_whitepaper.pdf" download class="mx-6">
-          Whitepaper
-        </a>
-        <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
-          Repositorio
-        </a>
-      </v-col>
-    </v-row>
+       <v-row class="ma-0">
+         <v-col cols="3"/>
+        <v-col cols="6" class="d-flex pa-0">
+            <v-btn
+              class="footer-btn mr-8"
+              @click="download('/assets/tropykus_whitepaper.pdf')"
+              color="#1E6368"
+              depressed
+              width="170"
+            >
+              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
+              <p>
+                Whitepaper
+              </p>
+            </v-btn>
+            <div class="footer d-flex justify-center align-center">
+              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
+              <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
+                Github
+              </a>
+            </div>
+        </v-col>
+      </v-row>
     </div>
     <div class="hidden-md-and-up background-responsive">
     <v-row>
       <v-col cols="2" />
         <v-col cols="8" >
-      <div class='register-title'>Tropykus</div>
+       <a class='register-title' href="/">Tropykus</a>
       </v-col>
         <v-col cols="2" />
     </v-row>
@@ -106,17 +118,31 @@
        <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
       </v-col>
     </v-row>
-    <v-row class="d-flex justify-end ma-0">
-      <v-col cols="1" />
-      <v-col cols ="11" class="mt-12 register-buttons">
-        <a href="/assets/tropykus_whitepaper.pdf" download class="mx-6">
-          Whitepaper
-        </a>
-        <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0 ml-8">
-          Repositorio
-        </a>
-      </v-col>
-    </v-row>
+       <v-row class="ma-0">
+        <v-col cols="1" />
+        <v-col cols="10" class="ml-9 d-flex pa-0">
+          <v-card class="d-flex container pa-0" width="500" color="transparent" flat>
+            <v-btn
+              class="footer-btn mr-2"
+              @click="download('/assets/tropykus_whitepaper.pdf')"
+              color="#1E6368"
+              depressed
+              width="48%"
+            >
+              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
+              <p>
+                Whitepaper
+              </p>
+            </v-btn>
+            <div class="footer d-flex justify-center align-center">
+              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
+              <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
+                Github
+              </a>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -137,6 +163,25 @@ export default {
     };
   },
   methods: {
+    download(guideUrl) {
+      this.uxDate = new Date().toISOString();
+      this.downloadStartTime = new Date().getTime();
+      this.puzzleResult = true;
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = () => {
+        const blob = xhr.response;
+        const link = document.createElement('a');
+        link.setAttribute('download', 'tropikus_whitepaper');
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        this.downloadEndTime = new Date().getTime();
+        this.saveData();
+      };
+      xhr.open('GET', guideUrl);
+      xhr.send();
+      this.showPuzzle = false;
+    },
     type() {
       if (this.modalSuccess) return true;
       return false;
