@@ -143,7 +143,7 @@ export default {
       xhr.onload = () => {
         const blob = xhr.response;
         const link = document.createElement('a');
-        link.setAttribute('download', 'tropikus_whitepaper');
+        link.setAttribute('download', 'tropykus_whitepaper');
         link.href = URL.createObjectURL(blob);
         link.click();
         this.downloadEndTime = new Date().getTime();
