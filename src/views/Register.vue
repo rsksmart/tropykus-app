@@ -133,15 +133,15 @@
         </v-col>
       </v-row>
       <v-row class="ma-0">
-        <v-col cols="1" />
+        <v-col cols="1"/>
         <v-col cols="10" class="ml-9 d-flex pa-0">
-          <v-card class="d-flex container pa-0" width="500" color="transparent" flat>
+          <v-card class="d-flex container pa-0 mr-1" width="500" color="transparent" flat>
             <v-btn
               class="footer-btn mr-2"
               @click="download('/assets/tropykus_whitepaper.pdf')"
               color="#1E6368"
               depressed
-              width="50%"
+              width="48%"
             >
               <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
               <p>
