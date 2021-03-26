@@ -1,124 +1,138 @@
 <template>
   <div class="register">
     <div class="hidden-sm-and-down">
-     <v-row>
-      <a class='register-title' href="/">Tropykus</a>
-    </v-row>
-    <v-row>
-      <v-col cols="3" />
-      <v-col cols="6" class="pa-0">
-        <h1>Registrate</h1>
-        <v-form ref="form" class="mb-12" lazy-validation>
-          <p class="register-name">Nombre</p>
-          <v-text-field
-            v-model="user.name"
-            label="Escribe tu nombre"
-            required
-            dense
-            solo
-          ></v-text-field>
-          <p class="register-email">Correo electrónico</p>
-          <v-text-field
-            v-model="user.email"
-            label="Escribe un correo electrónico de contacto"
-            required
-            dense
-            solo
-          ></v-text-field>
-           <p class="register-twitter">Twitter</p>
-          <v-text-field
-            v-model="user.twitter"
-            label="Escribe @pepito.perez"
-            required
-            dense
-            solo
-          ></v-text-field>
-          <span class="d-flex justify-end" >
-            <span class="register-span">
-              <h2>¡Contáctanos!</h2>
-              <p class="register-foot">
-                Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del
-                Tropyco.
-              </p>
+      <v-row>
+        <a class="register-title d-flex align-center" href="/">
+          <img
+          class="title-img mr-3" src="../assets/Palmera.png" />
+        Tropykus</a>
+      </v-row>
+      <v-row>
+        <v-col cols="3" />
+        <v-col cols="6" class="pa-0">
+          <h1>Registrate</h1>
+          <v-form ref="form" class="mb-12" lazy-validation>
+            <p class="register-name">Nombre</p>
+            <v-text-field
+              v-model="user.name"
+              label="Escribe tu nombre"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <p class="register-email">Correo electrónico</p>
+            <v-text-field
+              v-model="user.email"
+              label="Escribe un correo electrónico de contacto"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <p class="register-twitter">Twitter</p>
+            <v-text-field
+              v-model="user.twitter"
+              label="Escribe @pepito.perez"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <span class="d-flex justify-end">
+              <span class="register-span">
+                <h2>¡Contáctanos!</h2>
+                <p class="register-foot">
+                  Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del Tropyco.
+                </p>
+              </span>
+              <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
             </span>
-            <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
-          </span>
-        </v-form>
-       <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
-      </v-col>
-    </v-row>
-       <v-row class="ma-0">
-         <v-col cols="3"/>
+          </v-form>
+          <modal-validation-form
+            class="modal"
+            v-if="modalError || modalSuccess"
+            v-bind:type="type()"
+          />
+        </v-col>
+      </v-row>
+      <v-row class="ma-0">
+        <v-col cols="3" />
         <v-col cols="6" class="d-flex pa-0">
-            <v-btn
-              class="footer-btn mr-8"
-              @click="download('/assets/tropykus_whitepaper.pdf')"
-              color="#1E6368"
-              depressed
-              width="170"
-            >
-              <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
-              <p>
-                Whitepaper
-              </p>
-            </v-btn>
-            <div class="footer d-flex justify-center align-center">
-              <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
-              <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
-                Github
-              </a>
-            </div>
+          <v-btn
+            class="footer-btn mr-8"
+            @click="download('/assets/tropykus_whitepaper.pdf')"
+            color="#1E6368"
+            depressed
+            width="170"
+          >
+            <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
+            <p>
+              Whitepaper
+            </p>
+          </v-btn>
+          <div class="footer d-flex justify-center align-center">
+            <img width="30" class="mr-2" src="../assets/icon-github.png" alt="Icon Github" />
+            <a href="https://github.com/TruStartUp/tropyco-protocol" target="_blank" class="mr-0">
+              Github
+            </a>
+          </div>
         </v-col>
       </v-row>
     </div>
     <div class="hidden-md-and-up background-responsive">
-    <v-row>
-      <v-col cols="2" />
-        <v-col cols="8" >
-       <a class='register-title' href="/">Tropykus</a>
-      </v-col>
+      <v-row>
         <v-col cols="2" />
-    </v-row>
-    <v-row>
-      <v-col cols="1" />
-      <v-col cols="10" class="pa-0">
-        <h1 class="ml-2">Regístrate</h1>
-        <v-form ref="form" class="ma-2" lazy-validation>
-          <p class="register-name">Nombre</p>
-          <v-text-field
-            height="45"
-            v-model="user.name"
-            label="Escribe tu nombre"
-            required
-            dense
-            solo
-          ></v-text-field>
-          <p class="register-email">Correo electrónico</p>
-          <v-text-field
-            height="45"
-            v-model="user.email"
-            label="Escribe un correo electrónico"
-            required
-            dense
-            solo
-          ></v-text-field>
-           <p class="register-twitter">Twitter</p>
-          <v-text-field
-            height="45"
-            v-model="user.twitter"
-            label="Escribe @pepito.perez"
-            required
-            dense
-            solo
-          ></v-text-field>
-          <span class="d-flex justify-end mt-3" >
-            <v-btn color="#4CB163" @click="register" width="100%" class="mb-3"> Registarme </v-btn>
-          </span>
-        </v-form>
-       <modal-validation-form class="modal" v-if="modalError || modalSuccess" v-bind:type="type()"/>
-      </v-col>
-    </v-row>
-       <v-row class="ma-0">
+        <v-col cols="8">
+          <a class="register-title d-flex align-center mt-2" href="/">
+          <img class="title-img mr-2" width="32" src="../assets/Palmera.png" />
+          Tropykus</a>
+        </v-col>
+        <v-col cols="2" />
+      </v-row>
+      <v-row>
+        <v-col cols="1" />
+        <v-col cols="10" class="pa-0">
+          <h1 class="ml-2">Regístrate</h1>
+          <v-form ref="form" class="ma-2" lazy-validation>
+            <p class="register-name">Nombre</p>
+            <v-text-field
+              height="45"
+              v-model="user.name"
+              label="Escribe tu nombre"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <p class="register-email">Correo electrónico</p>
+            <v-text-field
+              height="45"
+              v-model="user.email"
+              label="Escribe un correo electrónico"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <p class="register-twitter">Twitter</p>
+            <v-text-field
+              height="45"
+              v-model="user.twitter"
+              label="Escribe @pepito.perez"
+              required
+              dense
+              solo
+            ></v-text-field>
+            <span class="d-flex justify-end mt-3">
+              <v-btn color="#4CB163" @click="register" width="100%" class="mb-3">
+                Registarme
+              </v-btn>
+            </span>
+          </v-form>
+          <modal-validation-form
+            class="modal"
+            v-if="modalError || modalSuccess"
+            v-bind:type="type()"
+          />
+        </v-col>
+      </v-row>
+      <v-row class="ma-0">
         <v-col cols="1" />
         <v-col cols="10" class="ml-9 d-flex pa-0">
           <v-card class="d-flex container pa-0" width="500" color="transparent" flat>
@@ -127,7 +141,7 @@
               @click="download('/assets/tropykus_whitepaper.pdf')"
               color="#1E6368"
               depressed
-              width="48%"
+              width="50%"
             >
               <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
               <p>

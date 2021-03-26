@@ -2,7 +2,10 @@
   <div class="landing">
     <div class="hidden-sm-and-down">
       <v-row>
-        <div class="landing-title">Tropykus</div>
+        <div class="landing-title">
+          <img width="32" src="../assets/Palmera.png" />
+          Tropykus
+        </div>
       </v-row>
       <v-row>
         <v-col cols="6" class="ml-10 mt-10 d-flex justify-center">
@@ -48,7 +51,10 @@
       <v-row>
         <v-col cols="2" />
         <v-col cols="8">
-          <div class=" ma-0 landing-title">Tropykus</div>
+          <div class="landing-title">
+          <img width="22" src="../assets/Palmera.png" />
+          Tropykus
+        </div>
         </v-col>
         <v-col cols="2" />
       </v-row>
@@ -68,7 +74,7 @@
               x-large
               class="mt-7
              mb-12"
-              width="100%"
+              width="300"
             >
               <span>Obtén acceso exclusivo</span>
             </v-btn>
@@ -88,7 +94,7 @@
               @click="download('/assets/tropykus_whitepaper.pdf')"
               color="#1E6368"
               depressed
-              width="48%"
+              width="135"
             >
               <img width="25" class="mr-3" src="../assets/icon-whitepaper.png" alt="Icon book" />
               <p>

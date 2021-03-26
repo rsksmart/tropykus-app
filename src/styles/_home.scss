@@ -42,7 +42,7 @@
     color: white;
     width: 170px;
     height: 45px;
-    border-radius: 10px;
+    border-radius: 10px !important;
   }
   a {
     text-decoration: none;
@@ -72,7 +72,6 @@
       background-size: cover;
     }
     .landing-title {
-      text-align: center;
       font-size: 24px;
     }
     h1 {
@@ -91,6 +90,7 @@
     }
     .footer {
       font-size: 13px;
+      width: 135px;
     }
     .footer-btn {
       height: 45px !important;

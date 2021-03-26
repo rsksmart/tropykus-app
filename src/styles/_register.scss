@@ -11,6 +11,10 @@
   .modal {
     display: none;
   }
+  .title-img {
+    height: 28px;
+    width: 32px;
+  }
   .register-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -68,10 +72,10 @@
     background-color: rgba(1, 62, 47);
   }
   a {
-    text-align: center!important;
+    text-align: center !important;
     color: #ffffff !important;
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
     text-decoration: none;
   }
   .footer {
@@ -79,7 +83,7 @@
     color: white;
     width: 170px;
     height: 45px;
-    border-radius: 10px;
+    border-radius: 10px !important;
   }
   .footer-btn {
     height: 45px !important;
@@ -88,8 +92,8 @@
     p {
       height: 40px;
       font-size: 16px;
-      margin:0;
-      font-weight:normal;
+      margin: 0;
+      font-weight: normal;
     }
   }
   @media (max-width: 600px) {
@@ -97,6 +101,10 @@
       margin: 0px;
       text-align: center;
       font-size: 24px;
+    }
+    .title-img {
+      height: 18px;
+      width: 22px;
     }
     h1 {
       font-size: 30px;
@@ -119,13 +127,17 @@
     .v-btn {
       letter-spacing: 0;
     }
-    a{
+    a {
       font-size: 13px;
+    }
+    .footer {
+      font-size: 13px;
+      width: 50%;
     }
     .footer-btn {
-    p {
-      font-size: 13px;
+      p {
+        font-size: 13px;
+      }
     }
-  }
   }
 }
