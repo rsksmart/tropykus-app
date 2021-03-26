@@ -1,25 +1,22 @@
 .modal-save {
-  background-color: #013E2F !important;
-  button {
-    color: #fff;
-    font-size: 22px;
-    width: 100px;
-    height: 40px;
-  }
-  .button-save {
-    border-bottom: 2px solid #fff;
-  }
-  .button-save-click:hover {
-    font-weight: bold;
-  }
-  .button-withdraw:hover {
-    font-weight: bold;
-  }
-  .button-save-click {
-    border-bottom: 0px solid #fff;
-  }
-  .button-withdraw-click {
-    border-bottom: 2px solid #fff;
+  background-color: #013e2f !important;
+  .button {
+    .v-btn {
+      color: #fff !important;
+      text-transform: none;
+      font-size: 24px !important;
+      letter-spacing: 0 !important;
+      height: 40px !important;
+    }
+    .v-btn:hover {
+      font-weight: bold !important;
+    }
+    .button-save {
+      border-bottom: 2px solid #fff !important;
+    }
+    .button-withdraw-click {
+      border-bottom: 2px solid #fff !important;
+    }
   }
   img {
     height: 35px;

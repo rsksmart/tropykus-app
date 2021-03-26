@@ -2,16 +2,23 @@
   <div>
     <v-dialog v-model="dialog" width="350">
       <v-card class="modal-save d-flex justify-center flex-column" v-click-outside="onClickOutside">
-        <v-row class="ma-0 mt-3 d-flex justify-center justify-space-around">
-          <button @click="hidden = true" :class="hidden ? 'button-save' : 'button-save-click'">
+        <v-row class="button ma-0 mt-3 d-flex justify-center justify-space-around">
+          <v-btn
+            depressed
+            color="transparent"
+           @click="hidden = true"
+            :class="hidden ? 'button-save' : 'button-save-click'"
+            >
             Ahorrar
-          </button>
-          <button
+          </v-btn>
+          <v-btn
+            depressed
+            color="transparent"
             @click="hidden = false"
             :class="hidden ? 'button-withdraw' : 'button-withdraw-click'"
           >
             Retirar
-          </button>
+          </v-btn>
         </v-row>
         <v-row class="d-flex justify-center ma-0 ">
           <div class="modal-container mt-6 ml-6">

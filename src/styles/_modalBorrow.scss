@@ -1,29 +1,47 @@
 .modal-borrow {
   background-color: #013E2F !important;
-  button {
-    color: #fff;
-    font-size: 22px;
-    width: 100px;
-    height: 40px;
+  .button {
+    .v-btn {
+      color: #fff !important;
+      text-transform: none;
+      font-size: 24px !important;
+      letter-spacing: 0 !important;
+      height: 40px !important;
+    }
+    .v-btn:hover {
+      font-weight: bold !important;
+    }
+    .button-save {
+      border-bottom: 2px solid #fff !important;
+    }
+    .button-withdraw-click {
+      border-bottom: 2px solid #fff !important;
+    }
   }
-  .button-save {
-    border-bottom: 2px solid #fff;
-    width:150px;
-  }
-  .button-save-click:hover {
-    font-weight: bold;
-    width:150px;
-  }
-  .button-withdraw:hover {
-    font-weight: bold;
-  }
-  .button-save-click {
-    border-bottom: 0px solid #fff;
-    width:150px;
-  }
-  .button-withdraw-click {
-    border-bottom: 2px solid #fff;
-  }
+  // button {
+  //   color: #fff;
+  //   font-size: 22px;
+  //   width: 100px;
+  //   height: 40px;
+  // }
+  // .button-save {
+  //   border-bottom: 2px solid #fff;
+  //   width:150px;
+  // }
+  // .button-save-click:hover {
+  //   font-weight: bold;
+  //   width:150px;
+  // }
+  // .button-withdraw:hover {
+  //   font-weight: bold;
+  // }
+  // .button-save-click {
+  //   border-bottom: 0px solid #fff;
+  //   width:150px;
+  // }
+  // .button-withdraw-click {
+  //   border-bottom: 2px solid #fff;
+  // }
   img {
     height: 35px;
     width: 35px;

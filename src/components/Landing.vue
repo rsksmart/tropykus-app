@@ -8,13 +8,35 @@
     </v-row>
     <v-row>
       <v-col cols="3" />
-      <v-col cols="6" class="d-flex justify-center mt-4 justify-space-around">
-        <button :class="hidden ? 'button-save' : 'button-save-click'" @click="onSaving">
+      <v-col cols="6" class="button d-flex justify-center">
+        <v-btn
+        depressed
+        color="rgba(1, 62, 47, 0.85)"
+        :class="hidden ? 'button-save mr-10':'button-save-click mr-10'"
+        @click="onSaving"
+        >
           Ahorrar
-        </button>
-        <button :class="hidden ? 'button-borrow' : 'button-borrow-click'" @click="onBorrow">
+        </v-btn>
+        <v-btn
+        depressed
+        color="rgba(1, 62, 47, 0.85)"
+        :class="hidden ? 'button-borrow ml-8':'button-borrow-click ml-8'"
+        @click="onBorrow"
+        >
           Pedir prestado
-        </button>
+        </v-btn>
+        <!-- <v-btn
+        depressed
+        color="rgba(1, 62, 47, 0.85)"
+        :class="hidden ? 'button-save' : 'button-save-click'" @click="onSaving">
+          Ahorrar
+        </v-btn>
+        <v-btn
+        depressed
+        color="rgba(1, 62, 47, 0.85)"
+        :class="hidden ? 'button-borrow' : 'button-borrow-click'" @click="onBorrow">
+          Pedir prestado
+        </v-btn> -->
       </v-col>
     </v-row>
     <v-row>
@@ -25,32 +47,45 @@
       </v-col>
     </v-row>
     <v-card class="card mt-2 mb-6">
-    <v-row>
-      <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
-        <template v-if="hidden">
-          <card :data="data" :hiddenButton="hidden"/>
-        </template>
-        <template v-else class="d-flex flex-wrap">
-          <card :data="data" :hiddenButton="hidden"/>
-        </template>
-         <template v-if="showModalConvertBtn">
-          <modal-convert-btn
-           :showModalConvertBtn="showModalConvertBtn" :data="data" @closed="outsideConvertBtn"/>
-        </template>
-      </v-col>
-    </v-row>
+      <v-row>
+        <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
+          <template v-if="hidden">
+            <card :data="data" :hiddenButton="hidden" />
+          </template>
+          <template v-else class="d-flex flex-wrap">
+            <card :data="data" :hiddenButton="hidden" />
+          </template>
+        </v-col>
+      </v-row>
     </v-card>
+    <v-dialog v-model="showModalConvertBtn" width="350">
+      <v-card
+        class="modal-convert-btn d-flex justify-center align-center flex-column"
+        v-click-outside="outsideConvertBtn"
+      >
+        <h1 class="mt-8 mb-2">Convierte de BTC a RBTC</h1>
+        <p class="mb-8">
+          Ten en cuenta que las comisones para realizar cualquier transacción deben ser pagadas en
+          RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropyco.
+        </p>
+        <img width="180" src="../assets/btn-icon.png" alt="" />
+        <div>
+          <v-btn width="100" color="rgba(0,0,0,0.0)" class="ma-2 my-8 button-continue"
+            >Continuar</v-btn
+          >
+          <v-btn width="160" color="#4CB163" class="ma-2 my-8">Conviertir BTC a RBTC</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import card from './Card.vue';
-import ModalConvertBtn from './ModalConvertBtn.vue';
 
 export default {
   name: 'Landing',
   components: {
     card,
-    ModalConvertBtn,
   },
   methods: {
     outsideConvertBtn() {
@@ -63,13 +98,10 @@ export default {
       this.hidden = true;
     },
   },
-  // created() {
-  //   setTimeout(() => { this.showModalConvertBtn = true; }, 1000);
-  // },
   data() {
     return {
       showModalConvertBtn: false,
-      hidden: true,
+      hidden: false,
       saving: [
         {
           id: 1,
