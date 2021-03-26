@@ -1,43 +1,42 @@
-.dialog-data-card{
-  background-color: #013E2F!important;
-  h1{
+.dialog-data-card {
+  background-color: #013e2f !important;
+  h1 {
     font-size: 20px;
-    line-height: 30px;
+    line-height: 22px;
     display: flex;
     align-items: center;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     width: 200px;
   }
-  p{
+  p {
     font-size: 18px;
     line-height: 20px;
     display: flex;
     align-items: center;
-    color: #FFFFFF;
-    width:300px;
+    color: #ffffff;
+    width: 340px;
   }
-  .dialog-data-botton{
-    background-color:transparent !important;
-    color: #FFFFFF;
+  .dialog-data-botton {
+    background-color: transparent !important;
+    color: #ffffff;
     font-size: 20px;
     font-weight: bold;
     line-height: 76px;
-    border: 2px solid #FFFFFF;
-    height:50px !important;
+    border: 2px solid #ffffff;
+    height: 50px !important;
   }
-  @media (max-width: 600px){
-    h1{
+  @media (max-width: 600px) {
+    h1 {
       line-height: 23px;
     }
-    p{
+    p {
       width: 240px;
       font-size: 15px;
+      letter-spacing: 0px;
     }
-    .v-btn{
-      width: 250px!important;
+    .v-btn {
+      width: 250px !important;
     }
   }
 }
-
-

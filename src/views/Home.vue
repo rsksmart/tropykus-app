@@ -2,20 +2,21 @@
   <div class="landing">
     <div class="hidden-sm-and-down">
       <v-row>
-        <div class="landing-title">
-          <img width="32" src="../assets/Palmera.png" />
-          Tropykus
-        </div>
+        <v-col cols="8" class="mt-10 ml-8">
+            <img width="200" src="../assets/título.png" />
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="6" class="ml-10 mt-10 d-flex justify-center">
           <v-card flat color="transparent" class="container" width="500">
-            <h1>Saca rendimiento de tus bitcoins y vive la buena vida en Tropykus</h1>
+            <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
             <h2>
-              Plataforma en la red RSK para ahorrar y pedir prestado, que no controla ni almacena
-              tus llaves privadas.
+              Tropykus finance te ayuda a que saques rendimiento de tus bitcoins. Podrás tener el
+              control de tus fondos de tus forma simple, privada y con la seguridad de la blockchain
+              de RSK. Además, podrás impulsar el cambio en Latinoamérica con créditos más justos y
+              accesibles.
             </h2>
-            <v-btn dark @click="showModal = true" color="#4CB163" x-large class="mt-7" width="83%">
+            <v-btn dark @click="showModal = true" color="#4CB163" x-large class="mt-7" width="92%">
               <span>Obtén acceso exclusivo</span>
             </v-btn>
             <personal-data-modal :showModal="showModal" />
@@ -50,11 +51,8 @@
     <div class="hidden-md-and-up background-responsive">
       <v-row>
         <v-col cols="2" />
-        <v-col cols="8">
-          <div class="landing-title">
-          <img width="22" src="../assets/Palmera.png" />
-          Tropykus
-        </div>
+        <v-col cols="8" class="mt-10 text-center">
+            <img  src="../assets/titulo-responsive.png" />
         </v-col>
         <v-col cols="2" />
       </v-row>
@@ -62,10 +60,12 @@
         <v-col cols="1" />
         <v-col cols="10" class="ml-10 d-flex justify-center">
           <v-card flat color="transparent" class="container pa-0" width="500">
-            <h1>Saca rendimiento de tus bitcoins y vive la buena vida en Tropykus</h1>
+            <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
             <h2>
-              Plataforma en la red RSK para ahorrar y pedir prestado, que no controla ni almacena
-              tus llaves privadas.
+              Tropykus finance te ayuda a que saques rendimiento de tis bitcoins.Podrás tener el
+              control de tus fondos de tus forma simple,privada y con la seguridad de la blockchain
+              de RSK. Además,podrás impulsar el cambio en Latinoamérica con créditos más justos y
+              accesibles.
             </h2>
             <v-btn
               dark
@@ -85,7 +85,7 @@
         </v-col>
         <v-col cols="1" />
       </v-row>
-      <v-row class="ma-0 mt-16">
+      <v-row class="ma-0 ">
         <v-col cols="1" />
         <v-col cols="10" class="ml-10 d-flex">
           <v-card class="d-flex container pa-0" width="500" color="transparent" flat>

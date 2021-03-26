@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="400 ">
+    <v-dialog v-model="dialog" width="450">
       <v-card
         class="dialog-data-card d-flex justify-center flex-column"
         v-click-outside="onClickOutside"
@@ -17,8 +17,8 @@
             almacenaremos ni usaremos para proveerla o venderla a terceros.
           </p>
         </v-row>
-        <v-row class="d-flex justify-center ma-0 my-4 mb-8">
-          <v-btn class="ma-3 dialog-data-botton" @click="redirect" width="300">
+        <v-row class="d-flex justify-center ma-0 my-2 mb-8">
+          <v-btn class="ma-3 dialog-data-botton" @click="redirect" width="340">
             Continuar
           </v-btn>
         </v-row>

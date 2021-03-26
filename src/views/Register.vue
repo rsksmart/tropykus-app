@@ -2,15 +2,14 @@
   <div class="register">
     <div class="hidden-sm-and-down">
       <v-row>
-        <a class="register-title d-flex align-center" href="/">
-          <img
-          class="title-img mr-3" src="../assets/Palmera.png" />
-        Tropykus</a>
+            <a href="/" class="mt-10 ml-12">
+            <img  width="200" src="../assets/título.png" />
+            </a>
       </v-row>
       <v-row>
         <v-col cols="3" />
         <v-col cols="6" class="pa-0">
-          <h1>Registrate</h1>
+          <h1>Regístrate</h1>
           <v-form ref="form" class="mb-12" lazy-validation>
             <p class="register-name">Nombre</p>
             <v-text-field
@@ -40,7 +39,7 @@
               <span class="register-span">
                 <h2>¡Contáctanos!</h2>
                 <p class="register-foot">
-                  Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del Tropyco.
+                  Escribe a diego@trugroup.tech y te ayudaremos a estar más cerca del Tropykus.
                 </p>
               </span>
               <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
@@ -54,7 +53,7 @@
         </v-col>
       </v-row>
       <v-row class="ma-0">
-        <v-col cols="3" />
+        <v-col cols="3"/>
         <v-col cols="6" class="d-flex pa-0">
           <v-btn
             class="footer-btn mr-8"
@@ -81,9 +80,9 @@
       <v-row>
         <v-col cols="2" />
         <v-col cols="8">
-          <a class="register-title d-flex align-center mt-2" href="/">
-          <img class="title-img mr-2" width="32" src="../assets/Palmera.png" />
-          Tropykus</a>
+          <a href="/" class="mt-6">
+            <img  src="../assets/titulo-responsive.png" />
+          </a>
         </v-col>
         <v-col cols="2" />
       </v-row>
