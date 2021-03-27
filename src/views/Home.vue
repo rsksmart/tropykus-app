@@ -1,12 +1,12 @@
 <template>
   <div class="landing">
     <div class="hidden-sm-and-down">
-      <v-row class="mt-5 ml-5 d-flex justify-start">
+      <v-row class="mt-5 mb-15 ml-5 d-flex justify-start">
         <v-img position="left top" src="@/assets/título.png" height="50" contain/>
       </v-row>
-      <v-row class="mx-0 ml-10 my-10 d-flex justify-start">
+      <v-row class="mx-0 ml-10 mt-15 mb-10 d-flex justify-start">
         <v-col cols="1"/>
-        <v-col cols="7" class="mt-5 d-flex justify-start">
+        <v-col cols="7" class="mt-10 d-flex justify-start">
           <v-card flat color="transparent" width="500">
             <v-row class="mx-0">
               <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
