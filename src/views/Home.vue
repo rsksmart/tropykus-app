@@ -31,7 +31,7 @@
       </v-row>
       <v-row class="mx-0 ml-10 mt-10">
         <v-col cols="1"/>
-        <v-col cols="6" class="mt-10">
+        <v-col cols="6" class="mt-4">
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
