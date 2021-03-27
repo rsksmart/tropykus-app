@@ -3,7 +3,7 @@
     <div class="hidden-sm-and-down">
       <v-row>
         <v-col cols="8" class="mt-10 ml-8">
-            <img width="200" src="../assets/título.png" />
+          <img width="200" src="../assets/título.png" />
         </v-col>
       </v-row>
       <v-row>
@@ -22,12 +22,12 @@
             <personal-data-modal :showModal="showModal" />
             <v-row class="mx-0 mt-8">
               <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" depressed
-                  @click="download('/assets/tropykus_whitepaper.pdf')" width="85%">
+                <v-btn class="footer-btn" color="#1E6368" width="85%"
+                       @click="download('/assets/tropykus_whitepaper.pdf')">
                   <v-row>
                     <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                       <v-img class="d-flex justify-end" height="25" alt="Icon book" contain
-                              src="@/assets/icon-whitepaper.png"/>
+                             src="@/assets/icon-whitepaper.png"/>
                     </v-col>
                     <v-col class="px-0 d-flex justify-start align-center">
                       <p class="text-center">Manifiesto</p>
@@ -36,12 +36,12 @@
                 </v-btn>
               </v-col>
               <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" depressed width="85%"
-                href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                <v-btn class="footer-btn" color="#1E6368" width="85%"
+                       href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
                   <v-row>
                     <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                       <v-img height="25" src="@/assets/icon-github.png"
-                              alt="Icon Github" contain class="mr-0"/>
+                             alt="Icon Github" contain class="mr-0"/>
                     </v-col>
                     <v-col class="px-0 d-flex justify-start align-center">
                       <p class="text-center">Github</p>
@@ -58,7 +58,7 @@
       <v-row>
         <v-col cols="2" />
         <v-col cols="8" class="mt-10 text-center">
-            <img  src="@/assets/titulo-responsive.png" />
+          <img  src="@/assets/titulo-responsive.png" />
         </v-col>
         <v-col cols="2" />
       </v-row>
@@ -79,18 +79,18 @@
             </v-row>
             <v-row class="mx-0">
               <v-btn dark @click="showModal = true" color="#4CB163"
-                      x-large class="mt-7 mb-12" width="100%">
-              <span>Obtén acceso exclusivo</span>
-            </v-btn>
+                     x-large class="mt-7 mb-12" width="100%">
+                <span>Obtén acceso exclusivo</span>
+              </v-btn>
             </v-row>
             <v-row class="mx-0">
               <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-                  @click="download('/assets/tropykus_whitepaper.pdf')">
+                <v-btn class="footer-btn" color="#1E6368" width="100%"
+                       @click="download('/assets/tropykus_whitepaper.pdf')">
                   <div>
                     <v-row class="mx-0">
                       <v-img height="25" src="@/assets/icon-whitepaper.png"
-                              alt="Icon book" contain/>
+                             alt="Icon book" contain/>
                     </v-row>
                     <v-row class="mx-0 pt-1">
                       <p class="text-center">Manifiesto</p>
@@ -99,12 +99,12 @@
                 </v-btn>
               </v-col>
               <v-col class="py-0">
-                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-                      href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                <v-btn class="footer-btn" color="#1E6368" width="100%"
+                       href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
                   <div>
                     <v-row class="d-flex justify-center align-center">
                       <v-img height="25" src="@/assets/icon-github.png"
-                              alt="Icon Github" contain/>
+                             alt="Icon Github" contain/>
                     </v-row>
                     <v-row class="pt-1 d-flex justify-center align-center">
                       <p class="text-center">Github</p>
@@ -113,12 +113,12 @@
                 </v-btn>
               </v-col>
               <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-                        href="https://twitter.com/tropykus" target="_blank">
+                <v-btn class="footer-btn" color="#1E6368" width="100%"
+                       href="https://twitter.com/tropykus" target="_blank">
                   <div class="my-2">
                     <v-row class="d-flex justify-center align-center">
                       <v-img height="25" src="@/assets/twitter.png"
-                              alt="Icon Twitter" contain/>
+                             alt="Icon Twitter" contain/>
                     </v-row>
                     <v-row class="pt-1 d-flex justify-center align-center">
                       <p class="text-center">Twitter</p>
@@ -135,7 +135,7 @@
     <template v-if="showModal">
       <personal-data-modal :showModal="showModal" @closed="clickOutside"/>
     </template>
-</div>
+  </div>
 </template>
 
 <script>

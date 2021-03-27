@@ -2,9 +2,9 @@
   <div class="register">
     <div class="hidden-sm-and-down">
       <v-row>
-            <a href="/" class="mt-10 ml-12">
-            <img  width="200" src="@/assets/título.png" />
-            </a>
+        <a href="/" class="mt-10 ml-12">
+          <img  width="200" src="@/assets/título.png" />
+        </a>
       </v-row>
       <v-row>
         <v-col cols="3" />
@@ -58,11 +58,11 @@
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-                @click="download('/assets/tropykus_whitepaper.pdf')">
+                     @click="download('/assets/tropykus_whitepaper.pdf')">
                 <v-row>
                   <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                     <v-img class="d-flex justify-end" height="25" src="@/assets/icon-whitepaper.png"
-                            alt="Icon book" contain/>
+                           alt="Icon book" contain/>
                   </v-col>
                   <v-col class="px-0 d-flex justify-start align-center">
                     <p class="text-center">Manifiesto</p>
@@ -72,11 +72,11 @@
             </v-col>
             <v-col class="py-0">
               <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-              href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                     href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
                 <v-row>
                   <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                     <v-img height="25" src="@/assets/icon-github.png"
-                            alt="Icon Github" contain class="mr-0"/>
+                           alt="Icon Github" contain class="mr-0"/>
                   </v-col>
                   <v-col class="px-0 d-flex justify-start align-center">
                     <p class="text-center">Github</p>
@@ -86,11 +86,11 @@
             </v-col>
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-              href="https://twitter.com/tropykus" target="_blank">
+                     href="https://twitter.com/tropykus" target="_blank">
                 <v-row>
                   <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                     <v-img height="25" src="@/assets/twitter.png"
-                            alt="Icon Twitter" contain/>
+                           alt="Icon Twitter" contain/>
                   </v-col>
                   <v-col class="px-0 d-flex justify-start align-center">
                     <p class="text-center">Twitter</p>
@@ -163,11 +163,11 @@
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed
-                @click="download('/assets/tropykus_whitepaper.pdf')">
+                     @click="download('/assets/tropykus_whitepaper.pdf')">
                 <div>
                   <v-row class="mx-0">
                     <v-img height="25" src="@/assets/icon-whitepaper.png"
-                            alt="Icon book" contain/>
+                           alt="Icon book" contain/>
                   </v-row>
                   <v-row class="mx-0">
                     <p class="text-center">Manifiesto</p>
@@ -177,11 +177,11 @@
             </v-col>
             <v-col class="py-0">
               <v-btn class="footer-btn" color="#1E6368" depressed
-              href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                     href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
                 <div>
                   <v-row class="d-flex justify-center align-center">
                     <v-img height="25" src="@/assets/icon-github.png"
-                            alt="Icon Github" contain/>
+                           alt="Icon Github" contain/>
                   </v-row>
                   <v-row class="d-flex justify-center align-center">
                     <p class="text-center">Github</p>
@@ -191,11 +191,11 @@
             </v-col>
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed
-              href="https://twitter.com/tropykus" target="_blank">
+                     href="https://twitter.com/tropykus" target="_blank">
                 <div class="my-2">
                   <v-row class="d-flex justify-center align-center">
                     <v-img height="25" src="@/assets/twitter.png"
-                            alt="Icon Twitter" contain/>
+                           alt="Icon Twitter" contain/>
                   </v-row>
                   <v-row class="d-flex justify-center align-center">
                     <p class="text-center">Twitter</p>
