@@ -2,7 +2,8 @@
   <div>
     <v-dialog v-model="dialog" width="350">
       <v-card
-        class="modal-connect-wallet d-flex justify-center align-center flex-column"
+        class="modal-connect-wallet d-flex justify-center
+       align-center flex-column"
         v-click-outside="outsideConnectWallet"
       >
         <v-row class="ma-0" width="100%">

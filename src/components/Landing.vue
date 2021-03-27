@@ -10,18 +10,18 @@
       <v-col cols="3" />
       <v-col cols="6" class="button d-flex justify-center">
         <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-save mr-10':'button-save-click mr-10'"
-        @click="onSaving"
+          depressed
+          color="rgba(1, 62, 47, 0.85)"
+          :class="hidden ? 'button-save mr-10' : 'button-save-click mr-10'"
+          @click="onSaving"
         >
           Ahorrar
         </v-btn>
         <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-borrow ml-8':'button-borrow-click ml-8'"
-        @click="onBorrow"
+          depressed
+          color="rgba(1, 62, 47, 0.85)"
+          :class="hidden ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
+          @click="onBorrow"
         >
           Pedir prestado
         </v-btn>
