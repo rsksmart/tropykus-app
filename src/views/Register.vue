@@ -45,11 +45,6 @@
               <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
             </span>
           </v-form>
-          <modal-validation-form
-            class="modal"
-            v-if="modalError || modalSuccess"
-            v-bind:type="type()"
-          />
         </v-col>
       </v-row>
       <v-row class="mt-3">
@@ -107,13 +102,12 @@
         <v-col cols="2" />
         <v-col cols="8">
           <a href="/" class="mt-6">
-            <img  src="@/assets/titulo-responsive.png" />
+            <v-img src="@/assets/titulo-responsive.png" height="65" contain/>
           </a>
         </v-col>
         <v-col cols="2" />
       </v-row>
-      <v-row>
-        <v-col cols="1" />
+      <v-row class="mx-0 d-flex justify-center">
         <v-col cols="10" class="pa-0">
           <h1 class="ml-2">Regístrate</h1>
           <v-form ref="form" class="ma-2" lazy-validation>
@@ -150,16 +144,10 @@
               </v-btn>
             </span>
           </v-form>
-          <modal-validation-form
-            class="modal"
-            v-if="modalError || modalSuccess"
-            v-bind:type="type()"
-          />
         </v-col>
       </v-row>
-      <v-row class="ma-0">
-        <v-col cols="1"/>
-        <v-col cols="10" class="mt-8 pa-0">
+      <v-row class="mx-0 mt-8 d-flex justify-center">
+        <v-col cols="10" class="pa-0">
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed
@@ -207,6 +195,11 @@
         </v-col>
       </v-row>
     </div>
+    <modal-validation-form
+      class="modal"
+      v-if="modalError || modalSuccess"
+      v-bind:type="type()"
+    />
   </div>
 </template>
 <script>

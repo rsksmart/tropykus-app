@@ -1,57 +1,83 @@
 <template>
   <div class="landing">
     <div class="hidden-sm-and-down">
-      <v-row>
-        <v-col cols="8" class="mt-10 ml-8">
-          <img width="200" src="../assets/título.png" />
-        </v-col>
+      <v-row class="mt-10 ml-8">
+        <v-img src="@/assets/título.png" height="58" contain/>
       </v-row>
-      <v-row>
-        <v-col cols="6" class="ml-10 mt-10 d-flex justify-center">
-          <v-card flat color="transparent" class="container" width="500">
-            <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
-            <h2>
-              Tropykus finance te ayuda a que saques rendimiento de tus bitcoins. Podrás tener el
-              control de tus fondos de tus forma simple, privada y con la seguridad de la blockchain
-              de RSK. Además, podrás impulsar el cambio en Latinoamérica con créditos más justos y
-              accesibles.
-            </h2>
-            <v-btn dark @click="showModal = true" color="#4CB163" x-large class="mt-7" width="92%">
-              <span>Obtén acceso exclusivo</span>
-            </v-btn>
-            <personal-data-modal :showModal="showModal" />
-            <v-row class="mx-0 mt-8">
-              <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" width="85%"
-                       @click="download('/assets/tropykus_whitepaper.pdf')">
-                  <v-row>
-                    <v-col cols="5" class="pr-0 d-flex justify-end align-center">
-                      <v-img class="d-flex justify-end" height="25" alt="Icon book" contain
-                             src="@/assets/icon-whitepaper.png"/>
-                    </v-col>
-                    <v-col class="px-0 d-flex justify-start align-center">
-                      <p class="text-center">Manifiesto</p>
-                    </v-col>
-                  </v-row>
-                </v-btn>
-              </v-col>
-              <v-col class="pa-0">
-                <v-btn class="footer-btn" color="#1E6368" width="85%"
-                       href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
-                  <v-row>
-                    <v-col cols="5" class="pr-0 d-flex justify-end align-center">
-                      <v-img height="25" src="@/assets/icon-github.png"
-                             alt="Icon Github" contain class="mr-0"/>
-                    </v-col>
-                    <v-col class="px-0 d-flex justify-start align-center">
-                      <p class="text-center">Github</p>
-                    </v-col>
-                  </v-row>
-                </v-btn>
-              </v-col>
+      <v-row class="mx-0 ml-10 mt-10 d-flex justify-start">
+        <v-col cols="1"/>
+        <v-col cols="7" class="d-flex justify-start">
+          <v-card flat color="transparent" width="500">
+            <v-row class="mx-0">
+              <h1>Saca rendimiento de tus BTC. Relajate mientras impulsas el cambio.</h1>
+            </v-row>
+            <v-row class="mx-0">
+              <h2>
+                Tropykus finance te ayuda a que saques rendimiento de tus bitcoins.
+                Podrás tener el control de tus fondos de tus forma simple, privada y
+                con la seguridad de la blockchain de RSK. Además, podrás impulsar el
+                cambio en Latinoamérica con créditos más justos y accesibles.
+              </h2>
+            </v-row>
+            <v-row class="mx-0">
+              <v-btn dark @click="showModal = true" color="#4CB163"
+                     x-large class="mt-7" width="92%">
+                <span>Obtén acceso exclusivo</span>
+              </v-btn>
             </v-row>
           </v-card>
         </v-col>
+        <v-col/>
+      </v-row>
+      <v-row class="mx-0 ml-10 mt-10">
+        <v-col cols="1"/>
+        <v-col cols="6" class="mt-10">
+          <v-row class="mx-0">
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                     @click="download('/assets/tropykus_whitepaper.pdf')">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img class="d-flex justify-end" height="25" src="@/assets/icon-whitepaper.png"
+                           alt="Icon book" contain/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Manifiesto</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+            <v-col class="py-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                     href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img height="25" src="@/assets/icon-github.png"
+                           alt="Icon Github" contain class="mr-0"/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Github</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+            <v-col class="pa-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                     href="https://twitter.com/tropykus" target="_blank">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img height="25" src="@/assets/twitter.png"
+                           alt="Icon Twitter" contain/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Twitter</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col/>
       </v-row>
     </div>
     <div class="hidden-md-and-up background-responsive">
