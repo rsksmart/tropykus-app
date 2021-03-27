@@ -1,9 +1,9 @@
 <template>
   <div class="register">
     <div class="hidden-sm-and-down">
-      <v-row>
-        <a href="/" class="mt-10 ml-12">
-          <img  width="200" src="@/assets/título.png" />
+      <v-row class="mt-5 ml-5 d-flex justify-start">
+        <a href="/">
+          <v-img position="left top" src="@/assets/título.png" height="50" contain/>
         </a>
       </v-row>
       <v-row>
