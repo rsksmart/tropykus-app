@@ -1,5 +1,58 @@
 .tutorials {
   background-color: #013e2f;
   background-size: cover;
-  height: 100% !important;
+  height: 120% !important;
+}
+
+.tutorial-navbar {
+  background-image: url('../assets/background-home.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.tutorial-container {
+  max-width: 90%;
+  position: relative;
+}
+
+.tutorial-steps {
+  margin-top: 1em;
+}
+
+.tutorial-step-image {
+  z-index: 1 !important;
+}
+
+.tutorial-step-title {
+  margin-bottom: 1em;
+}
+
+.tutorial-step-number {
+  background-color: #0083ff;
+  color: #fff;
+  border-radius: 50%;
+  width: 37.5px;
+  height: 37.5px;
+  display: inline-block;
+  text-align: center;
+  padding-top: 4px;
+  margin-right: 7.5px;
+}
+
+.tutorial-step-description {
+  display: inline;
+  color: #fff;
+}
+
+.tutorial-left-arrow {
+  height: 0.8em;
+}
+
+.tutorial-frog {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 800px;
 }

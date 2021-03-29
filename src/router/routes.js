@@ -1,5 +1,6 @@
 import Home from '@/views/Home.vue';
-import Tutorials from '@/views/Tutorials.vue';
+import Tutorials from '@/views/Tutorials/index.vue';
+import RbtcToBtc from '@/views/Tutorials/rbtc-to-btc.vue';
 
 export default [
   {
@@ -8,8 +9,15 @@ export default [
     component: Home,
   },
   {
-    path: '/tutorials',
+    path: '/Tutorials',
     name: 'Tutorials',
     component: Tutorials,
+    // TODO: FIX CHILDREN
+    children: [],
+  },
+  {
+    path: '/Tutorials/rbtc-to-btc',
+    name: 'rBTC to BTC',
+    component: RbtcToBtc,
   },
 ];
