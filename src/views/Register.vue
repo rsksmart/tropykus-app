@@ -53,7 +53,7 @@
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
-                     @click="download('/assets/tropykus_whitepaper.pdf')">
+                     @click="download">
                 <v-row>
                   <v-col cols="5" class="pr-0 d-flex justify-end align-center">
                     <v-img class="d-flex justify-end" height="25" src="@/assets/icon-whitepaper.png"
@@ -151,7 +151,7 @@
           <v-row class="mx-0">
             <v-col class="pa-0">
               <v-btn class="footer-btn" color="#1E6368" depressed
-                     @click="download('/assets/tropykus_whitepaper.pdf')">
+                     @click="download">
                 <div>
                   <v-row class="mx-0">
                     <v-img height="25" src="@/assets/icon-whitepaper.png"
@@ -216,27 +216,22 @@ export default {
       modalSuccess: false,
       modalError: false,
       db: this.$firebase.firestore(),
+      manifestUrl: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/Tropykus_Manifiesto.pdf?alt=media&token=4b2bd86b-e7f7-44f0-b5a2-14d2d04037fb',
     };
   },
   methods: {
-    download(guideUrl) {
-      this.uxDate = new Date().toISOString();
-      this.downloadStartTime = new Date().getTime();
-      this.puzzleResult = true;
+    download() {
       const xhr = new XMLHttpRequest();
       xhr.responseType = 'blob';
       xhr.onload = () => {
         const blob = xhr.response;
         const link = document.createElement('a');
-        link.setAttribute('download', 'tropykus_manifiesto');
+        link.setAttribute('download', 'Tropykus_Manifiesto');
         link.href = URL.createObjectURL(blob);
         link.click();
-        this.downloadEndTime = new Date().getTime();
-        this.saveData();
       };
-      xhr.open('GET', guideUrl);
+      xhr.open('GET', this.manifestUrl);
       xhr.send();
-      this.showPuzzle = false;
     },
     type() {
       if (this.modalSuccess) return true;
