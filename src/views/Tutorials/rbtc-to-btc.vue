@@ -16,7 +16,6 @@
         </span>
         Cómo convertir mis BTC a rBTC
       </h1>
-
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
         <v-col v-for="element in elements" :key="element.id" cols="12" md="4">
           <h3 class="tutorial-step-title">
@@ -31,8 +30,11 @@
           />
         </v-col>
       </v-row>
-      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
     </v-container>
+
+    <div class="frog-container" style="position: relative">
+      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
+    </div>
   </div>
 </template>
 
@@ -101,6 +103,19 @@ export default {
 <style scoped>
 .tutorial-step-number {
   background-color: #0083ff;
+}
+
+@media screen and (max-width: 1700px) {
+  .tutorial-step-title {
+    height: 66px;
+  }
+}
+
+@media screen and (max-width: 969px) {
+  .tutorial-step-title {
+    height: 38px;
+    text-align: center;
+  }
 }
 </style>
 

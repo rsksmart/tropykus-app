@@ -14,6 +14,9 @@
 
 .tutorial-container {
   max-width: 90%;
+}
+
+.frog-container {
   position: relative;
 }
 
@@ -48,6 +51,7 @@
 
 .tutorial-left-arrow {
   height: 0.8em;
+  margin-right: 0.1em;
 }
 
 .tutorial-frog {
@@ -55,4 +59,8 @@
   bottom: 0;
   right: 0;
   max-width: 800px;
+}
+
+.hidden {
+  display: none;
 }
