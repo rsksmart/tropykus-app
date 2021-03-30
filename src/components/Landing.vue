@@ -10,49 +10,36 @@
       <v-col cols="3" />
       <v-col cols="6" class="button d-flex justify-center">
         <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-save mr-10':'button-save-click mr-10'"
-        @click="onSaving"
+          depressed
+          color="rgba(1, 62, 47, 0.85)"
+          :class="hidden ? 'button-save mr-10' : 'button-save-click mr-10'"
+          @click="onSaving"
         >
           Ahorrar
         </v-btn>
         <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-borrow ml-8':'button-borrow-click ml-8'"
-        @click="onBorrow"
+          depressed
+          color="rgba(1, 62, 47, 0.85)"
+          :class="hidden ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
+          @click="onBorrow"
         >
           Pedir prestado
         </v-btn>
-        <!-- <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-save' : 'button-save-click'" @click="onSaving">
-          Ahorrar
-        </v-btn>
-        <v-btn
-        depressed
-        color="rgba(1, 62, 47, 0.85)"
-        :class="hidden ? 'button-borrow' : 'button-borrow-click'" @click="onBorrow">
-          Pedir prestado
-        </v-btn> -->
       </v-col>
     </v-row>
+    <v-card class="card mt-2 mb-14" flat>
     <v-row>
-      <v-col cols="2" />
-      <v-col cols="2" class="pa-0 mt-6 mr-16 ml-3 d-flex align-center landing-subtitle">
-        <img src="@/assets/logo.png" class="landing-img" width="23" />
+      <v-col cols="3" class="pa-0 mt-6 ml-3 d-flex align-center landing-subtitle">
+        <img src="@/assets/logo.png" width="23" />
         <h2 class="landing-title-card ">Mercados de cryptos</h2>
       </v-col>
     </v-row>
-    <v-card class="card mt-2 mb-6">
       <v-row>
         <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
           <template v-if="hidden">
             <card :data="data" :hiddenButton="hidden" />
           </template>
-          <template v-else class="d-flex flex-wrap">
+          <template v-else>
             <card :data="data" :hiddenButton="hidden" />
           </template>
         </v-col>
@@ -68,11 +55,16 @@
           Ten en cuenta que las comisones para realizar cualquier transacción deben ser pagadas en
           RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropyco.
         </p>
-        <img width="180" src="../assets/btn-icon.png" alt="" />
+        <img width="180" src="../assets/btn-icon.png" alt="BTN icon" />
         <div>
-          <v-btn width="100" color="rgba(0,0,0,0.0)" class="ma-2 my-8 button-continue"
-            >Continuar</v-btn
+          <v-btn
+          @click="outsideConvertBtn"
+          width="100"
+          color="rgba(0,0,0,0.0)"
+          class="ma-2 my-8 button-continue"
           >
+           Continuar
+           </v-btn>
           <v-btn width="160" color="#4CB163" class="ma-2 my-8">Conviertir BTC a RBTC</v-btn>
         </div>
       </v-card>
@@ -100,7 +92,7 @@ export default {
   },
   data() {
     return {
-      showModalConvertBtn: false,
+      showModalConvertBtn: true,
       hidden: false,
       saving: [
         {
@@ -117,36 +109,6 @@ export default {
         },
         {
           id: 3,
-          name: 'BPRO',
-          rate: 7.04,
-          price: 400,
-        },
-        {
-          id: 4,
-          name: 'BPRO',
-          rate: 7.04,
-          price: 400,
-        },
-        {
-          id: 4,
-          name: 'BPRO',
-          rate: 7.04,
-          price: 400,
-        },
-        {
-          id: 4,
-          name: 'BPRO',
-          rate: 7.04,
-          price: 400,
-        },
-        {
-          id: 4,
-          name: 'BPRO',
-          rate: 7.04,
-          price: 400,
-        },
-        {
-          id: 4,
           name: 'BPRO',
           rate: 7.04,
           price: 400,

@@ -10,6 +10,9 @@
       <h1>
         {{ data.name }}
       </h1>
+      <a href="" class="mt-4 ml-2">
+        <img width="12" src="../assets/icon-link.svg"/>
+      </a>
       <v-spacer></v-spacer>
       <div class="anual-rate">
         <h2 class="mt-3 ml-10">{{ data.rate }}%</h2>
@@ -71,6 +74,7 @@ export default {
       type: Object,
     },
     hiddenButton: {
+      require: true,
       type: Boolean,
     },
   },
@@ -85,9 +89,6 @@ export default {
       showModalSave: false,
       showModalBorrow: false,
     };
-  },
-  mounted() {
-    console.log(`Card show modal: ${this.showModal}`);
   },
 };
 </script>

@@ -13,7 +13,7 @@
   }
   p{
     color: #FFF;
-    font-size:10px;
+    font-size:11px;
     margin:0;
   }
   .anual-rate{
@@ -30,5 +30,11 @@
     color: #FFF;
     text-transform: none;
     letter-spacing:0px !important;
+  }
+  .p-bold{
+    font-weight: 600;
+  }
+  .p-italic{
+    font-style: italic;
   }
 }
