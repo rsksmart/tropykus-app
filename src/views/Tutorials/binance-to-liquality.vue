@@ -11,10 +11,11 @@
       <h1>
         <span>
           <router-link to="/Tutorials">
-            <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="" />
+            <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
           </router-link>
         </span>
-        Cómo convertir mis BTC a rBTC
+        Transfiere tus BTC desde
+        <span><img src="@/assets/binance-logo.svg" alt="Binance Logo"/></span>
       </h1>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
@@ -51,42 +52,39 @@ export default {
         {
           number: 1,
           title: 'Instala liquality en tu navegador',
-          image: '/img/tutorials/rbtc-to-btc/step01.png',
+          image: '/img/tutorials/binance-to-liquality/step01.png',
         },
         {
           number: 2,
-          title: 'Selecciona la red de Bitcoin',
-          image: '/img/tutorials/rbtc-to-btc/step02.png',
+          title: 'Inicia sesión en Binance con tu cuenta',
+          image: '/img/tutorials/binance-to-liquality/step02.png',
         },
         {
           number: 3,
-          title: 'Transfiere tus fondos a tu billetera Liquality',
-          image: '/img/tutorials/rbtc-to-btc/step03.png',
+          title:
+            'Presiona la opción de “Wallet” ubicada en la esquina superior derecha y selecciona la opción “Fiat and spot”',
+          image: '/img/tutorials/binance-to-liquality/step03.png',
         },
         {
           number: 4,
-          title: 'Copia la dirección de destino para recibir tus Bitcoins      ',
-          image: '/img/tutorials/rbtc-to-btc/step04.png',
+          title: 'Busca la opción de “Withdraw” que aparece en el lado derecho del menú  “Bitcoin”',
+          image: '/img/tutorials/binance-to-liquality/step04.png',
         },
         {
           number: 5,
-          title: 'Presiona la opción de “swap”',
-          image: '/img/tutorials/rbtc-to-btc/step05.png',
+          title:
+            'Selecciona la red Bitcoin y copia y pega tu dirección de Bitcoin de tu billetera Liquality.',
+          image: '/img/tutorials/binance-to-liquality/step05.png',
         },
         {
           number: 6,
-          title: 'Convierte BTC a RBTC',
-          image: '/img/tutorials/rbtc-to-btc/step06.png',
+          title: 'Escribe el monto de BTC que quieres retirar y presiona el botón “Submit”.',
+          image: '/img/tutorials/binance-to-liquality/step06.png',
         },
         {
           number: 7,
-          title: 'Confirma la transacción',
-          image: '/img/tutorials/rbtc-to-btc/step07.png',
-        },
-        {
-          number: 8,
-          title: 'Recibe tus BTC y ahorra en Tropyco',
-          image: '/img/tutorials/rbtc-to-btc/step08.png',
+          title: 'Escribe el monto de BTC que quieres retirar y presiona el botón “Submit”.',
+          image: '/img/tutorials/binance-to-liquality/step07.png',
         },
       ],
     };
@@ -100,7 +98,7 @@ export default {
 </script>
 <style scoped>
 .tutorial-step-number {
-  background-color: #0083ff;
+  background-color: #ff9153;
 }
 </style>
 
