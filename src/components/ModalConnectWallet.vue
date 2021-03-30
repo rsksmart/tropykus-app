@@ -12,31 +12,31 @@
           <v-col cols="4" class="pa-0">
             <v-btn>
               <div class="d-flex align-center flex-column">
-              <img width="30" class="mt-4" src="../assets/ledger-icon.png" alt="Ledger icon" />
-              <p>Ledger</p>
-              <p class="subtitle">(Pronto)</p>
+                <img width="30" class="mt-4" src="../assets/ledger-icon.png" alt="Ledger icon" />
+                <p>Ledger</p>
+                <p class="subtitle">(Pronto)</p>
               </div>
             </v-btn>
           </v-col>
           <v-col cols="4" class="pa-0">
             <v-btn>
               <div class="d-flex align-center flex-column">
-              <img width="20" class="mt-4" src="../assets/trezor-icon.png" alt="Trezor icon" />
-              <p>Trezor</p>
-              <p class="subtitle">(Pronto)</p>
+                <img width="20" class="mt-4" src="../assets/trezor-icon.png" alt="Trezor icon" />
+                <p>Trezor</p>
+                <p class="subtitle">(Pronto)</p>
               </div>
             </v-btn>
           </v-col>
           <v-col cols="4" class="pa-0">
             <v-btn @click="redirectToHome">
               <div class="d-flex align-center flex-column">
-              <img
-                width="40"
-                class="mb-3 mt-2"
-                src="../assets/liquality-icon.png"
-                alt="Trezor icon"
-              />
-              <p>Liquality</p>
+                <img
+                  width="40"
+                  class="mb-3 mt-2"
+                  src="../assets/liquality-icon.png"
+                  alt="Trezor icon"
+                />
+                <p>Liquality</p>
               </div>
             </v-btn>
           </v-col>
@@ -45,18 +45,18 @@
           <v-col cols="6" class="pa-0">
             <v-btn>
               <div class="d-flex align-center flex-column">
-              <img width="38" src="../assets/metamask-icon.png" alt="Trezor icon" />
-              <p>Metamask</p>
-              <p class="subtitle">(Pronto)</p>
+                <img width="38" src="../assets/metamask-icon.png" alt="Trezor icon" />
+                <p>Metamask</p>
+                <p class="subtitle">(Pronto)</p>
               </div>
             </v-btn>
           </v-col>
           <v-col cols="6" class="pa-0">
             <v-btn>
               <div class="d-flex align-center flex-column">
-              <img width="45" src="../assets/movil-wallet-icon.png" alt="Trezor icon" />
-              <p>Billetera móvil</p>
-              <p class="subtitle">(Pronto)</p>
+                <img width="45" src="../assets/movil-wallet-icon.png" alt="Trezor icon" />
+                <p>Billetera móvil</p>
+                <p class="subtitle">(Pronto)</p>
               </div>
             </v-btn>
           </v-col>

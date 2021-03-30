@@ -7,15 +7,15 @@
       >
         <v-row class="button ma-0 my-2 d-flex justify-center justify-space-around">
           <v-btn
-          depressed
+            depressed
             color="transparent"
-           @click="hidden = true"
+            @click="hidden = true"
             :class="hidden ? 'button-save' : 'button-save-click'"
-            >
+          >
             Pedir prestado
           </v-btn>
           <v-btn
-          depressed
+            depressed
             color="transparent"
             @click="hidden = false"
             :class="hidden ? 'button-withdraw' : 'button-withdraw-click'"
