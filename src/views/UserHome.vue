@@ -96,12 +96,8 @@
         <v-row class="ma-0">
           <template v-if="inMyWallet[0]">
             <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in inMyWallet" :key="data.id">
-              <template v-if="showSaveOrBorrow">
-                <card :data="data" :hiddenButton="showSaveOrBorrow" />
-              </template>
-              <template v-else>
-                <card :data="data" :hiddenButton="showSaveOrBorrow" />
-              </template>
+                <card :data="data"
+                :showInfoMyWallet="showInfoMyWallet" :hiddenButton="showSaveOrBorrow" />
             </v-col>
           </template>
           <template v-else>
@@ -158,22 +154,12 @@
       <v-row class="ma-0">
         <template v-if="showSaveOrBorrow">
           <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in suggestionsToSave" :key="data.id">
-            <template v-if="showSaveOrBorrow">
               <card :data="data" :hiddenButton="showSaveOrBorrow" />
-            </template>
-            <template v-else>
-              <card :data="data" :hiddenButton="showSaveOrBorrow" />
-            </template>
           </v-col>
         </template>
         <template v-else>
           <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in suggestionsToBorrow" :key="data.id">
-            <template v-if="showSaveOrBorrow">
               <card :data="data" :hiddenButton="showSaveOrBorrow" />
-            </template>
-            <template v-else>
-              <card :data="data" :hiddenButton="showSaveOrBorrow" />
-            </template>
           </v-col>
         </template>
       </v-row>
@@ -204,6 +190,7 @@ export default {
     return {
       showSaveOrBorrow: true,
       showSavings: true,
+      showInfoMyWallet: true,
       mySavings: [
         {
           id: 1,
@@ -277,14 +264,16 @@ export default {
         {
           id: 1,
           name: 'RBTC',
-          rate: 9.01,
+          borrowing: 9.01,
           price: 300,
+          debts: 1.7,
         },
         {
           id: 2,
           name: 'RBTC',
-          rate: 9.01,
+          borrowing: 9.01,
           price: 300,
+          debts: 1.7,
         },
       ],
     };
