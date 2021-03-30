@@ -5,6 +5,7 @@ import BinanceToLiquality from '@/views/Tutorials/binance-to-liquality.vue';
 import BlockFiToLiquality from '@/views/Tutorials/blockfi-to-liquality.vue';
 import LednToLiquality from '@/views/Tutorials/ledn-to-liquality.vue';
 import UserHome from '@/views/UserHome.vue';
+import Balance from '@/views/Balance.vue';
 
 export default [
   {
@@ -43,5 +44,10 @@ export default [
     path: '/home',
     name: 'UserHome',
     component: UserHome,
+  },
+  {
+    path: '/balance',
+    name: 'Balance',
+    component: Balance,
   },
 ];

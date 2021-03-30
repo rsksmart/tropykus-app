@@ -12,13 +12,14 @@
         {{ data.name }}
       </h1>
       <a href="" class="mt-8 ml-2">
-        <img width="12" src="../assets/icon-link.svg"/>
+        <img width="12" src="../assets/icon-link.svg" />
       </a>
       <v-spacer></v-spacer>
       <div class="anual-rate">
-        <h2 class="mt-5 ml-10 anual-rate-title">{{ data.rate }}%</h2>
+        <h2 class="mt-5 ml-10 anual-rate-title" v-if="hiddenButton">{{ data.rate }}%</h2>
+        <h2 class="mt-5 ml-3 anual-rate-title" v-else>{{ data.rate }}%</h2>
         <p class="ma-0 mr-2 mb-3" v-if="hiddenButton">Rendimiento anual</p>
-        <p class="ma-0 d-flex justify-end" v-if="!hiddenButton">Interés anual</p>
+        <p class="ma-0 mr-2 d-flex justify-end" v-else>Interés anual</p>
       </div>
       <div class="ma-auto card-line"></div>
     </v-row>
@@ -30,14 +31,14 @@
         </div>
       </template>
       <template v-else>
-        <div class="">
-         <p>Tienes en tu billetera</p>
+        <div class=" mt-1 ml-5">
+          <p>Tienes en tu billetera</p>
           <p class="p-bold">{{ data.savings }} {{ data.name }}</p>
           <p class="p-italic">= $ {{ this.data.price * this.data.savings }} USD</p>
         </div>
       </template>
       <v-spacer></v-spacer>
-      <template v-if="hiddenButton">
+      <template v-if="hiddenButton && !showInfoMyWallet">
         <v-btn
           @click="showModalSave = true"
           class="mt-5 mb-6"
@@ -48,21 +49,29 @@
           Ahorrar
         </v-btn>
         <template v-if="showModalSave">
-          <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside"/>
+          <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
         </template>
       </template>
-      <template v-else>
+      <template v-if="hiddenButton && showInfoMyWallet">
         <v-btn
-          @click="showModalBorrow = true"
-          class="mt-5"
+          @click="showModalSave = true"
+          class="mt-5 mb-6"
           depressed
-          color="#FF9153"
-          width="38%"
+          color="#4CB163"
+          width="35%"
         >
+          Ahorrar
+        </v-btn>
+        <template v-if="showModalSave">
+          <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
+        </template>
+      </template>
+      <template v-if="!hiddenButton">
+        <v-btn @click="showModalBorrow = true" class="mt-5" depressed color="#FF9153" width="38%">
           Pedir prestado
         </v-btn>
         <template v-if="showModalBorrow">
-          <modal-borrow :showModal="showModalBorrow" :data="data" @closed="onClickOutside"/>
+          <modal-borrow :showModal="showModalBorrow" :data="data" @closed="onClickOutside" />
         </template>
       </template>
     </v-row>

@@ -1,9 +1,9 @@
 <template>
-  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 0.85)">
+  <v-card width="94%" class="card-save-and-borrow mx-3" color="rgba(1, 62, 47, 0.85)">
     <v-row class="ma-0">
       <span class="mt-3 mx-2 ml-3">
         <img
-          width="30"
+          width="40"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
         />
       </span>
@@ -20,7 +20,7 @@
         </v-btn>
       </template>
       <template v-else>
-        <v-btn @click="showModalBorrow = true" class="mt-5" depressed color="#E65D3D" width="38%">
+        <v-btn @click="showModalBorrow = true" class="mt-5" depressed color="#E65D3D" width="34%">
           Pagar
         </v-btn>
         <template v-if="showModalBorrow">
@@ -31,13 +31,13 @@
     </v-row>
     <v-row class="ma-0">
       <template v-if="hiddenButton">
-        <div class="mx-4 my-2">
+        <div class="mx-4 my-2 ml-5">
           <p>Tienes depositado</p>
           <p class="p-bold">{{ data.savings }} {{ data.name }}</p>
           <p class="p-italic">= $ {{ this.data.price * this.data.savings }} USD</p>
         </div>
         <v-spacer></v-spacer>
-        <div class="mr-12 my-2">
+        <div class="mr-14 my-2">
           <p>Has ganado</p>
           <p class="p-bold">{{ data.earnings }} {{ data.name }}</p>
           <p class="p-italic">= $ {{ this.data.price * this.data.earnings }} USD</p>

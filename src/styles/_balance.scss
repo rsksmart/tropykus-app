@@ -1,0 +1,11 @@
+.balance {
+  background-image: url(../assets/background-balance.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  .card {
+    width: 70%;
+    margin-left: 15%;
+  }
+}

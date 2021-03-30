@@ -28,7 +28,7 @@
             </v-btn>
           </v-col>
           <v-col cols="4" class="pa-0">
-            <v-btn @click="redirectToHome">
+            <v-btn @click="redirectToHome" class="button-liquality">
               <div class="d-flex align-center flex-column">
                 <img
                   width="40"
