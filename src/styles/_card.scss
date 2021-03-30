@@ -1,11 +1,12 @@
 .card{
   img{
-    height:30px;
+    height:40px;
   }
   h1{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 35px;
     line-height: 55px;
+    letter-spacing: -0.5px;
   }
   h2{
     color: #FFF;
@@ -20,12 +21,12 @@
     margin-right:12px;
   }
   .card-line{
-    width: 92%;
+    width: 87%;
     height: 0px;
     border: 0.5px solid #BEBEBE;
   }
   .v-btn{
-    margin-right:12px;
+    margin-right:20px;
     height: 25px !important;
     color: #FFF;
     text-transform: none;
@@ -36,5 +37,9 @@
   }
   .p-italic{
     font-style: italic;
+  }
+  .anual-rate-title {
+    font-size: 18px;
+    line-height:26px;
   }
 }

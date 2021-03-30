@@ -1,29 +1,30 @@
 <template>
   <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 0.85)">
     <v-row class="ma-0">
-      <span class="mt-3 mx-2 ml-3">
+      <span class="mt-3 mx-2 ml-5">
         <img
-          width="30"
+          class="mt-3"
+          width="40"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
         />
       </span>
-      <h1>
+      <h1 class="mt-4">
         {{ data.name }}
       </h1>
-      <a href="" class="mt-4 ml-2">
+      <a href="" class="mt-8 ml-2">
         <img width="12" src="../assets/icon-link.svg"/>
       </a>
       <v-spacer></v-spacer>
       <div class="anual-rate">
-        <h2 class="mt-3 ml-10">{{ data.rate }}%</h2>
-        <p class="ma-0" v-if="hiddenButton">Rendimiento anual</p>
+        <h2 class="mt-5 ml-10 anual-rate-title">{{ data.rate }}%</h2>
+        <p class="ma-0 mr-2 mb-3" v-if="hiddenButton">Rendimiento anual</p>
         <p class="ma-0 d-flex justify-end" v-if="!hiddenButton">Interés anual</p>
       </div>
       <div class="ma-auto card-line"></div>
     </v-row>
     <v-row class="ma-0">
       <template v-if="!showInfoMyWallet">
-        <div class="ma-4 ">
+        <div class="ma-4 ml-5">
           <p>Precio actual</p>
           <p>1 {{ data.name }} = ${{ data.price }} USD</p>
         </div>
@@ -39,7 +40,7 @@
       <template v-if="hiddenButton">
         <v-btn
           @click="showModalSave = true"
-          class="mt-5"
+          class="mt-5 mb-6"
           depressed
           color="#51C1AF"
           width="35%"
