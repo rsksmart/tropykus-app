@@ -10,6 +10,9 @@
       <h1>
         {{ data.name }}
       </h1>
+      <a href="" class="mt-4 ml-2">
+        <img width="12" src="../assets/icon-link.svg"/>
+      </a>
       <v-spacer></v-spacer>
       <div class="anual-rate">
         <h2 class="mt-3 ml-10">{{ data.rate }}%</h2>
@@ -19,10 +22,19 @@
       <div class="ma-auto card-line"></div>
     </v-row>
     <v-row class="ma-0">
-      <div class="ma-4 ">
-        <p>Precio actual</p>
-        <p>1 {{ data.name }} = ${{ data.price }} USD</p>
-      </div>
+      <template v-if="!showInfoMyWallet">
+        <div class="ma-4 ">
+          <p>Precio actual</p>
+          <p>1 {{ data.name }} = ${{ data.price }} USD</p>
+        </div>
+      </template>
+      <template v-else>
+        <div class="">
+         <p>Tienes en tu billetera</p>
+          <p class="p-bold">{{ data.savings }} {{ data.name }}</p>
+          <p class="p-italic">= $ {{ this.data.price * this.data.savings }} USD</p>
+        </div>
+      </template>
       <v-spacer></v-spacer>
       <template v-if="hiddenButton">
         <v-btn
@@ -71,6 +83,11 @@ export default {
       type: Object,
     },
     hiddenButton: {
+      require: true,
+      type: Boolean,
+    },
+    showInfoMyWallet: {
+      require: true,
       type: Boolean,
     },
   },
@@ -85,9 +102,6 @@ export default {
       showModalSave: false,
       showModalBorrow: false,
     };
-  },
-  mounted() {
-    console.log(`Card show modal: ${this.showModal}`);
   },
 };
 </script>
