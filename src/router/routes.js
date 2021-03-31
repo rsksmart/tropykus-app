@@ -53,10 +53,4 @@ export default [
     name: 'Balance',
     component: Balance,
   },
-  // FOR DEVELOPMENT
-  {
-    path: '/dev/modals',
-    name: 'Modals',
-    component: Modals,
-  },
 ];
