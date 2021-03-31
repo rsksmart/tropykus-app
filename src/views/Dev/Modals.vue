@@ -2,17 +2,20 @@
 <template>
   <div>
     <h1>Modal Borrow</h1>
-    <ModalTransactionStatus
+    <!-- <ModalTransactionStatus
+      style="display: none;"
       showModal
       :stage="currentStage"
       txAmount="100"
       txCryptocurrency="rBTC"
-    />
+    /> -->
+    <ModalTransferFunds showModal />
   </div>
 </template>
 
 <script>
-import ModalTransactionStatus from '@/components/ModalTransactionStatus.vue';
+// import ModalTransactionStatus from '@/components/ModalTransactionStatus.vue';
+import ModalTransferFunds from '@/components/ModalTransferFunds.vue';
 
 export default {
   data() {
@@ -26,7 +29,8 @@ export default {
   },
 
   components: {
-    ModalTransactionStatus,
+    // ModalTransactionStatus,
+    ModalTransferFunds,
   },
 };
 </script>

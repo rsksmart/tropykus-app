@@ -45,9 +45,6 @@
     </v-container>
 
     <div class="frog-container">
-      <!-- <v-overlay absolute z-index="0">
-        <v-img src="@/assets/frog.svg" alt="" class="tutorial-frog"></v-img>
-      </v-overlay> -->
       <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
     </div>
   </div>
