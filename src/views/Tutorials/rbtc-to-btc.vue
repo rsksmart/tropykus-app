@@ -8,14 +8,15 @@
     </div>
 
     <v-container class="tutorial-container">
-      <h1>
-        <span>
-          <router-link to="/">
-            <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="" />
-          </router-link>
-        </span>
-        Cómo convertir mis BTC a rBTC
-      </h1>
+      <div class="d-flex align-center">
+        <router-link to="/Tutorials">
+          <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
+        </router-link>
+        <h1>
+          Cómo convertir mis BTC a rBTC
+        </h1>
+      </div>
+
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
         <v-col v-for="element in elements" :key="element.id" cols="12" md="4">
           <div class="d-flex align-center tutorial-step-title justify-sm-center justify-md-start">
@@ -23,7 +24,6 @@
               <h2>{{ element.number }}.</h2>
             </div>
             <div class="d-flex align-center">
-              <!-- <h3 class="tutorial-step-description">{{ element.title }}</h3> -->
               <h2 class="tutorial-step-description">{{ element.title }}</h2>
             </div>
           </div>

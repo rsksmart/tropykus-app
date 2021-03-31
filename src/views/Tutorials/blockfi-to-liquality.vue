@@ -7,39 +7,49 @@
       </div>
     </div>
 
-    <v-container class="landing tutorial-container">
-      <h1>
-        <span>
-          <router-link to="/Tutorials">
-            <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
-          </router-link>
-        </span>
-        Transfiere tus BTC desde
-        <span><img src="@/assets/blockfi-logo.svg" alt="Blockfi Logo"/></span>
-      </h1>
+    <v-container class="tutorial-container">
+      <div class="d-flex align-center">
+        <router-link to="/Tutorials">
+          <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
+        </router-link>
+        <h1>
+          Transfiere tus BTC desde
+        </h1>
+        <img src="@/assets/blockfi-logo.svg" alt="Binance Logo" />
+      </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
         <v-col
           v-for="element in elements"
           :key="element.id"
           cols="12"
-          :md="element.number !== 5 ? 4 : 8"
+          :md="element.number === 5 ? 8 : 4"
         >
-          <h3 class="tutorial-step-title">
-            <span class="tutorial-step-number">{{ element.number }}</span>
-            <p class="tutorial-step-description">{{ element.title }}</p>
-          </h3>
+          <div class="d-flex align-center tutorial-step-title justify-sm-center justify-md-start">
+            <div class="tutorial-step-number flex-shrink-0 d-flex align-center justify-center">
+              <h2>{{ element.number }}.</h2>
+            </div>
+            <div class="d-flex align-center">
+              <h2 class="tutorial-step-description">{{ element.title }}</h2>
+            </div>
+          </div>
+
           <v-img
+            :max-width="element.number === 5 ? '80%' : '307px'"
             :src="element.image"
             alt="Tutorial step"
-            max-width="310px"
             class="mx-auto tutorial-step-image"
-            :min-width="element.number === 5 ? '80%' : 0"
           />
         </v-col>
       </v-row>
-      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
     </v-container>
+
+    <div class="frog-container">
+      <!-- <v-overlay absolute z-index="0">
+        <v-img src="@/assets/frog.svg" alt="" class="tutorial-frog"></v-img>
+      </v-overlay> -->
+      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
+    </div>
   </div>
 </template>
 
@@ -96,6 +106,22 @@ export default {
 <style scoped>
 .tutorial-step-number {
   background-color: #ff9153;
+}
+
+.tutorial-step-title {
+  height: 90px;
+}
+
+@media screen and (max-width: 1365px) {
+  .tutorial-step-title {
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tutorial-step-title {
+    height: 210px;
+  }
 }
 </style>
 

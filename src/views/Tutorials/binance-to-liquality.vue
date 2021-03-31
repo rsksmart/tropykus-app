@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+n/* eslint-disable linebreak-style */
 <template>
   <div class="tutorials">
     <div>
@@ -7,40 +7,45 @@
       </div>
     </div>
 
-    <v-container class="landing tutorial-container">
-      <h1>
-        <span>
-          <router-link to="/Tutorials">
-            <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
-          </router-link>
-        </span>
-        Transfiere tus BTC desde
-        <span><img src="@/assets/binance-logo.svg" alt="Binance Logo"/></span>
-      </h1>
+    <v-container class="tutorial-container">
+      <div class="d-flex align-center">
+        <router-link to="/Tutorials">
+          <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
+        </router-link>
+        <h1>
+          Transfiere tus BTC desde
+        </h1>
+        <img src="@/assets/binance-logo.svg" alt="Binance Logo" />
+      </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
-        <v-col v-for="element in elements" :key="element.id" cols="12" md="4">
-          <h3 class="tutorial-step-title">
-            <span class="tutorial-step-number">{{ element.number }}</span>
-            <p class="tutorial-step-description">{{ element.title }}</p>
-          </h3>
-          <v-img
-            :src="element.image"
-            alt="Tutorial step"
-            max-width="310px"
-            class="mx-auto tutorial-step-image"
-          />
+        <v-col
+          v-for="element in elements"
+          :key="element.id"
+          cols="12"
+          :md="element.number === 4 ? 8 : 4"
+        >
+          <div class="d-flex align-center tutorial-step-title justify-sm-center justify-md-start">
+            <div class="tutorial-step-number flex-shrink-0 d-flex align-center justify-center">
+              <h2>{{ element.number }}.</h2>
+            </div>
+            <div class="d-flex align-center">
+              <h2 class="tutorial-step-description">{{ element.title }}</h2>
+            </div>
+          </div>
+
+          <v-img :src="element.image" alt="Tutorial step" class="mx-auto tutorial-step-image" />
         </v-col>
       </v-row>
-      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
     </v-container>
+    <div class="frog-container" style="position: relative">
+      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
+    </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
-
-import _ from 'lodash';
 
 export default {
   components: {
@@ -91,7 +96,11 @@ export default {
   },
   computed: {
     groupedElements() {
-      return _.chunk(this.steps, 3);
+      return [
+        [this.steps[0], this.steps[1], this.steps[2]],
+        [this.steps[3], this.steps[4]],
+        [this.steps[5], this.steps[6]],
+      ];
     },
   },
 };
@@ -99,6 +108,21 @@ export default {
 <style scoped>
 .tutorial-step-number {
   background-color: #ff9153;
+}
+
+.tutorial-step-description {
+  line-height: 28px;
+}
+
+@media screen and (max-width: 1365px) {
+  .tutorial-step-title {
+    height: 224px;
+  }
+}
+@media screen and (min-width: 1366px) {
+  .tutorial-step-title {
+    height: 122px;
+  }
 }
 </style>
 
