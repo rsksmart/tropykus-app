@@ -4,6 +4,10 @@
   height: 120% !important;
 }
 
+.tutorials h1 {
+  color: #fff;
+}
+
 .tutorial-navbar {
   background-image: url('../assets/background-home.jpg');
   background-position: center;
@@ -33,20 +37,19 @@
 }
 
 .tutorial-step-number {
-  // background-color: #0083ff;
   color: #fff;
   border-radius: 50%;
-  width: 37.5px;
-  height: 37.5px;
+  width: 51px;
+  height: 51px;
   display: inline-block;
   text-align: center;
-  padding-top: 4px;
-  margin-right: 7.5px;
+  margin-right: 1em;
 }
 
 .tutorial-step-description {
-  display: inline;
   color: #fff;
+  font-size: 25px;
+  line-height: 30px;
 }
 
 .tutorial-left-arrow {

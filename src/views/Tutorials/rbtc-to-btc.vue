@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <v-container class="landing tutorial-container">
+    <v-container class="tutorial-container">
       <h1>
         <span>
           <router-link to="/Tutorials">
@@ -18,10 +18,16 @@
       </h1>
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
         <v-col v-for="element in elements" :key="element.id" cols="12" md="4">
-          <h3 class="tutorial-step-title">
-            <span class="tutorial-step-number">{{ element.number }}</span>
-            <p class="tutorial-step-description">{{ element.title }}</p>
-          </h3>
+          <div class="d-flex align-center tutorial-step-title justify-sm-center justify-md-start">
+            <div class="tutorial-step-number flex-shrink-0 d-flex align-center justify-center">
+              <h2>{{ element.number }}.</h2>
+            </div>
+            <div class="d-flex align-center">
+              <!-- <h3 class="tutorial-step-description">{{ element.title }}</h3> -->
+              <h2 class="tutorial-step-description">{{ element.title }}</h2>
+            </div>
+          </div>
+
           <v-img
             :src="element.image"
             alt="Tutorial step"
@@ -105,16 +111,13 @@ export default {
   background-color: #0083ff;
 }
 
-@media screen and (max-width: 1700px) {
-  .tutorial-step-title {
-    height: 66px;
-  }
+.tutorial-step-title {
+  height: 60px;
 }
 
-@media screen and (max-width: 969px) {
+@media screen and (max-width: 1365px) {
   .tutorial-step-title {
-    height: 38px;
-    text-align: center;
+    height: 90px;
   }
 }
 </style>
