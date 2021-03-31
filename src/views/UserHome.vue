@@ -51,7 +51,7 @@
         <v-row class="ma-0">
           <template v-if="mySavings[0]">
             <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in mySavings" :key="data.id">
-                <card-save-and-borrow :data="data" :hiddenButton="showSaveOrBorrow"/>
+              <card-save-and-borrow :data="data" :hiddenButton="showSaveOrBorrow" />
             </v-col>
           </template>
           <template v-else>
@@ -69,7 +69,7 @@
         <v-row class="ma-0">
           <template v-if="myBorrowing[0]">
             <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in myBorrowing" :key="data.id">
-                <card-save-and-borrow :data="data" :hiddenButton="showSaveOrBorrow"/>
+              <card-save-and-borrow :data="data" :hiddenButton="showSaveOrBorrow" />
             </v-col>
           </template>
           <template v-else>
@@ -96,8 +96,11 @@
         <v-row class="ma-0">
           <template v-if="inMyWallet[0]">
             <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in inMyWallet" :key="data.id">
-                <card :data="data"
-                :showInfoMyWallet="showInfoMyWallet" :hiddenButton="showSaveOrBorrow" />
+              <card
+                :data="data"
+                :showInfoMyWallet="showInfoMyWallet"
+                :hiddenButton="showSaveOrBorrow"
+              />
             </v-col>
           </template>
           <template v-else>
@@ -106,7 +109,7 @@
                 height="120"
                 class="saving-message container-wallet d-flex flex-column align-start"
               >
-                <span class="my-2 subtitle-span">
+                <span class="my-2 mt-4 subtitle-span">
                   Puedes transferir tus fondos desde
                 </span>
                 <container class="d-flex">
@@ -154,12 +157,12 @@
       <v-row class="ma-0">
         <template v-if="showSaveOrBorrow">
           <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in suggestionsToSave" :key="data.id">
-              <card :data="data" :hiddenButton="showSaveOrBorrow" />
+            <card :data="data" :hiddenButton="showSaveOrBorrow" />
           </v-col>
         </template>
         <template v-else>
           <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in suggestionsToBorrow" :key="data.id">
-              <card :data="data" :hiddenButton="showSaveOrBorrow" />
+            <card :data="data" :hiddenButton="showSaveOrBorrow" />
           </v-col>
         </template>
       </v-row>
@@ -192,33 +195,33 @@ export default {
       showSavings: true,
       showInfoMyWallet: true,
       mySavings: [
-        {
-          id: 1,
-          name: 'RBTC',
-          earnings: 0.0123,
-          savings: 0.612345,
-          price: 1000,
-        },
+        // {
+        //   id: 1,
+        //   name: 'RBTC',
+        //   earnings: 0.0123,
+        //   savings: 0.612345,
+        //   price: 1000,
+        // },
       ],
       inMyWallet: [
-        {
-          id: 1,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
-        {
-          id: 2,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
-        {
-          id: 3,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
+        // {
+        //   id: 1,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
+        // {
+        //   id: 2,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
+        // {
+        //   id: 3,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
       ],
       suggestionsToSave: [
         {

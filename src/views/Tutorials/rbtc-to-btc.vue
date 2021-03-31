@@ -10,7 +10,7 @@
     <v-container class="tutorial-container">
       <h1>
         <span>
-          <router-link to="/Tutorials">
+          <router-link to="/">
             <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="" />
           </router-link>
         </span>

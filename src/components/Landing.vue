@@ -12,7 +12,7 @@
         <v-btn
           depressed
           color="rgba(1, 62, 47, 0.85)"
-          :class="hidden ? 'button-save mr-10' : 'button-save-click mr-10'"
+          :class="hidden ? 'button-save mr-4' : 'button-save-click mr-4'"
           @click="onSaving"
         >
           Ahorrar
@@ -20,7 +20,7 @@
         <v-btn
           depressed
           color="rgba(1, 62, 47, 0.85)"
-          :class="hidden ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
+          :class="hidden ? 'button-borrow ml-9' : 'button-borrow-click ml-9'"
           @click="onBorrow"
         >
           Pedir prestado
@@ -28,12 +28,12 @@
       </v-col>
     </v-row>
     <v-card class="card mt-2 mb-14" flat>
-    <v-row>
-      <v-col cols="3" class="pa-0 mt-6 ml-3 d-flex align-center landing-subtitle">
-        <img src="@/assets/logo.png" width="23" />
-        <h2 class="landing-title-card ">Mercados de cryptos</h2>
-      </v-col>
-    </v-row>
+      <v-row>
+        <v-col cols="3" class="pa-0 mt-6 ml-3 d-flex align-center landing-subtitle">
+          <img src="@/assets/logo.png" width="23" />
+          <h2 class="landing-title-card ">Mercados de cryptos</h2>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
           <template v-if="hidden">
@@ -58,14 +58,16 @@
         <img width="180" src="../assets/btn-icon.png" alt="BTN icon" />
         <div>
           <v-btn
-          @click="outsideConvertBtn"
-          width="100"
-          color="rgba(0,0,0,0.0)"
-          class="ma-2 my-8 button-continue"
+            @click="outsideConvertBtn"
+            width="100"
+            color="rgba(0,0,0,0.0)"
+            class="ma-2 my-8 button-continue"
           >
-           Continuar
-           </v-btn>
-          <v-btn width="160" color="#4CB163" class="ma-2 my-8">Conviertir BTC a RBTC</v-btn>
+            Continuar
+          </v-btn>
+          <v-btn @click="redirectToTutorials" width="160" color="#4CB163" class="ma-2 my-8"
+            >Conviertir BTC a RBTC</v-btn
+          >
         </div>
       </v-card>
     </v-dialog>
@@ -80,6 +82,9 @@ export default {
     card,
   },
   methods: {
+    redirectToTutorials() {
+      this.$router.push('/Tutorials/rbtc-to-btc');
+    },
     outsideConvertBtn() {
       this.showModalConvertBtn = false;
     },
@@ -93,7 +98,7 @@ export default {
   data() {
     return {
       showModalConvertBtn: true,
-      hidden: false,
+      hidden: true,
       saving: [
         {
           id: 1,

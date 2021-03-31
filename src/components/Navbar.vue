@@ -3,15 +3,14 @@
     <v-row>
       <v-col cols="6">
         <a href="/">
-        <img width="250" class="mt-6 ml-5" src="../assets/titulo.png"/>
+        <img width="250" class="mt-4 ml-5" src="../assets/titulo.png"/>
         </a>
-        <!-- <div class="navbar-title mt-2 ml-10">Tropyco</div> -->
       </v-col>
-      <v-col cols="6" class="mt-2 d-flex justify-space-around">
-        <button>Inicio</button>
-        <button>Tutorial</button>
-        <!-- <button class="navbar-balance">Mi balance</button> -->
-        <button>Sobre Tropyco</button>
+      <v-col cols="6" class="mt-2 d-flex align-center justify-space-around">
+        <v-btn depressed color="transparent" @click="redirectToHome">Inicio</v-btn>
+        <v-btn depressed color="transparent" @click="redirectToTutorials">Tutorial</v-btn>
+        <v-btn depressed color="transparent" @click="redirectToBalance">Mi balance</v-btn>
+        <v-btn depressed color="transparent">Sobre Tropyco</v-btn>
         <v-btn
           @click="ShowDialogConnectWallet"
           depressed
@@ -44,6 +43,15 @@ export default {
     ModalConnectWallet,
   },
   methods: {
+    redirectToBalance() {
+      this.$router.push('/balance');
+    },
+    redirectToHome() {
+      this.$router.push('/');
+    },
+    redirectToTutorials() {
+      this.$router.push('/Tutorials/rbtc-to-btc');
+    },
     outsideConnectWallet() {
       this.showModalConnectWallet = false;
     },
