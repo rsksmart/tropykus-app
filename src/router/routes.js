@@ -7,6 +7,9 @@ import LednToLiquality from '@/views/Tutorials/ledn-to-liquality.vue';
 import UserHome from '@/views/UserHome.vue';
 import Balance from '@/views/Balance.vue';
 
+// FOR DEVELOPMENT ONLY
+import Modals from '@/views/Dev/Modals.vue';
+
 export default [
   {
     path: '/',
@@ -49,5 +52,11 @@ export default [
     path: '/balance',
     name: 'Balance',
     component: Balance,
+  },
+  // FOR DEVELOPMENT
+  {
+    path: '/dev/modals',
+    name: 'Modals',
+    component: Modals,
   },
 ];

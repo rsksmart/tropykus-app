@@ -1,0 +1,22 @@
+.modal-transaction-status {
+  background-image: url(../assets/background-modal-transaction-status.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 644px;
+  color: #fff !important;
+
+  .card-content {
+    width: 90%;
+    padding-top: 167px;
+  }
+
+  .dialog-text {
+    max-width: 384px;
+  }
+
+  h2 {
+    font-size: 30px;
+    line-height: 33px;
+  }
+}
