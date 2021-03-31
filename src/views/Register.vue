@@ -10,15 +10,7 @@
         <v-col cols="3" />
         <v-col cols="6" class="pa-0">
           <h1>Regístrate</h1>
-          <v-form ref="form" class="mb-12" lazy-validation>
-            <p class="register-name">Nombre</p>
-            <v-text-field
-              v-model="user.name"
-              label="Escribe tu nombre"
-              required
-              dense
-              solo
-            ></v-text-field>
+          <v-form ref="form" class="mb-16" lazy-validation>
             <p class="register-email">Correo electrónico</p>
             <v-text-field
               v-model="user.email"
@@ -47,6 +39,9 @@
           </v-form>
         </v-col>
       </v-row>
+      <br/>
+      <br/>
+      <br/>
       <v-row class="mt-3">
         <v-col cols="3"/>
         <v-col cols="6" class="pa-0">
@@ -93,6 +88,20 @@
                 </v-row>
               </v-btn>
             </v-col>
+            <v-col class="py-0">
+              <v-btn class="footer-btn" color="#1E6368" depressed width="100%"
+                     href="https://web.telegram.org/#/im?p=g571607928" target="_blank">
+                <v-row>
+                  <v-col cols="5" class="pr-0 d-flex justify-end align-center">
+                    <v-img height="25" src="@/assets/telegram.png"
+                           alt="Icon Twitter" contain/>
+                  </v-col>
+                  <v-col class="px-0 d-flex justify-start align-center">
+                    <p class="text-center">Telegram</p>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -111,15 +120,6 @@
         <v-col cols="10" class="pa-0">
           <h1 class="ml-2">Regístrate</h1>
           <v-form ref="form" class="ma-2" lazy-validation>
-            <p class="register-name">Nombre</p>
-            <v-text-field
-              height="45"
-              v-model="user.name"
-              label="Escribe tu nombre"
-              required
-              dense
-              solo
-            ></v-text-field>
             <p class="register-email">Correo electrónico</p>
             <v-text-field
               height="45"
@@ -146,10 +146,13 @@
           </v-form>
         </v-col>
       </v-row>
+      <br/>
+      <br/>
+      <br/>
       <v-row class="mx-0 mt-8 d-flex justify-center">
         <v-col cols="10" class="pa-0">
           <v-row class="mx-0">
-            <v-col class="pa-0">
+            <v-col class="pa-0 px-1">
               <v-btn class="footer-btn" color="#1E6368" depressed
                      @click="download">
                 <div>
@@ -157,13 +160,13 @@
                     <v-img height="25" src="@/assets/icon-whitepaper.png"
                            alt="Icon book" contain/>
                   </v-row>
-                  <v-row class="mx-0">
+                  <v-row class="d-flex justify-center align-center">
                     <p class="text-center">Manifiesto</p>
                   </v-row>
                 </div>
               </v-btn>
             </v-col>
-            <v-col class="py-0">
+            <v-col class="pa-0 px-1">
               <v-btn class="footer-btn" color="#1E6368" depressed
                      href="https://github.com/TruStartUp/tropykus-protocol" target="_blank">
                 <div>
@@ -177,7 +180,7 @@
                 </div>
               </v-btn>
             </v-col>
-            <v-col class="pa-0">
+            <v-col class="pa-0 px-1">
               <v-btn class="footer-btn" color="#1E6368" depressed
                      href="https://twitter.com/tropykus" target="_blank">
                 <div class="my-2">
@@ -187,6 +190,20 @@
                   </v-row>
                   <v-row class="d-flex justify-center align-center">
                     <p class="text-center">Twitter</p>
+                  </v-row>
+                </div>
+              </v-btn>
+            </v-col>
+            <v-col class="pa-0 px-1">
+              <v-btn class="footer-btn" color="#1E6368" depressed
+                     href="https://web.telegram.org/#/im?p=g571607928" target="_blank">
+                <div class="my-2">
+                  <v-row class="d-flex justify-center align-center">
+                    <v-img height="25" src="@/assets/telegram.png"
+                           alt="Icon Twitter" contain/>
+                  </v-row>
+                  <v-row class="d-flex justify-center align-center">
+                    <p class="text-center">Telegram</p>
                   </v-row>
                 </div>
               </v-btn>
@@ -216,7 +233,7 @@ export default {
       modalSuccess: false,
       modalError: false,
       db: this.$firebase.firestore(),
-      manifestUrl: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/Tropykus_Manifiesto.pdf?alt=media&token=4b2bd86b-e7f7-44f0-b5a2-14d2d04037fb',
+      manifestUrl: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/Tropykus_Manifiesto.pdf?alt=media&token=394b8a25-9217-4ecd-96d0-6d9fcb74c6be',
     };
   },
   methods: {
@@ -243,7 +260,6 @@ export default {
       );
       if (
         !emailRegex.test(this.user.email)
-        || !this.user.name
         || !this.user.twitter
       ) {
         this.modalError = true;
@@ -251,7 +267,6 @@ export default {
       }
       try {
         this.db.collection('users-tropyco').doc(`${new Date()}`).set({
-          name: this.user.name,
           email: this.user.email,
           twitter: this.user.twitter,
         });
