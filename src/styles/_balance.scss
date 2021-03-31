@@ -30,9 +30,13 @@
     width: 47%;
     height: 80px;
     border-radius: 10px;
+    p{
+      font-size: 15px;
+    }
     .p-bold {
       font-weight: bold;
-      font-size: 20px;
+      font-size: 35px;
+      line-height:30px;
     }
   }
   .net-balance {
@@ -40,9 +44,13 @@
     width: 100%;
     height: 260px;
     border-radius: 10px;
+    p{
+      font-size: 15px;
+    }
     .p-bold {
-      font-weight: bold;
-      font-size: 20px;
+       font-weight: bold;
+      font-size: 35px;
+      line-height:30px;
     }
   }
   .line {
@@ -62,10 +70,11 @@
     th {
       color: #fff !important;
       text-align: center !important;
+      font-weight: 300 !important;
     }
     td {
       background-color: rgba(1, 62, 47, 1);
-      border-top: 2px solid #fff !important;
+      border-top: 1px solid #fff !important;
       text-align: center !important;
     }
     .v-data-table__wrapper {

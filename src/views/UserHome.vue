@@ -195,13 +195,13 @@ export default {
       showSavings: true,
       showInfoMyWallet: true,
       mySavings: [
-        // {
-        //   id: 1,
-        //   name: 'RBTC',
-        //   earnings: 0.0123,
-        //   savings: 0.612345,
-        //   price: 1000,
-        // },
+        {
+          id: 1,
+          name: 'RBTC',
+          earnings: 0.0123,
+          savings: 0.612345,
+          price: 1000,
+        },
       ],
       inMyWallet: [
         // {

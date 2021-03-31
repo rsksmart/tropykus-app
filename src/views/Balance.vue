@@ -15,15 +15,15 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="ma-0 mt-3 pa-0 ml-3 d-flex">
-                <div class="mybalance-cards d-flex justify-center align-center">
-                  <div>
-                    <p class="p-bold">1000.000 USD</p>
+                <div class="mybalance-cards d-flex justify-start align-center">
+                  <div class="ml-10">
+                    <p class="p-bold">100.00 USD</p>
                     <p>Ahorrados</p>
                   </div>
                 </div>
-                <div class="mybalance-cards ml-5 d-flex justify-center align-center">
-                  <div>
-                    <p class="p-bold">40.000 USD</p>
+                <div class="mybalance-cards ml-5 d-flex justify-start align-center">
+                  <div class="ml-10">
+                    <p class="p-bold">40.00 USD</p>
                     <p>Debes pagar</p>
                   </div>
                 </div>
@@ -65,6 +65,7 @@
                 <p>Balance neto</p>
               </div>
               <div class="line mt-4 mx-auto"></div>
+              <GChart type="PieChart" :data="chartData" :options="chartOptions" />
             </div>
             <div class="user-risk mt-8">hola</div>
           </v-card>
@@ -74,7 +75,7 @@
         <v-col cols="3" class="pa-0">
           <div class="container">
             <img width="30" src="@/assets/icon-clock.svg" class="ma-2" />
-            <h2>Mis actividad</h2>
+            <h2>Mi actividad</h2>
           </div>
         </v-col>
       </v-row>
@@ -122,6 +123,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import CardSaveAndBorrow from '@/components/CardSaveAndBorrow.vue';
+// import { GChart } from 'vue-google-charts';
 
 export default {
   name: 'Balance',
@@ -131,6 +133,27 @@ export default {
   },
   data() {
     return {
+      chartData: [
+        ['Task', 'Hours per Day'],
+        ['Work', 11],
+        ['Eat', 2],
+        ['Commute', 2],
+        ['Watch TV', 2],
+        ['Sleep', 7],
+      ],
+      chartOptions: {
+        pieHole: 0.7,
+        backgroundColor: 'transparent',
+        pieSliceBorderColor: 'transparent',
+        pieSliceText: 'none',
+        pieSliceTextStyle: {
+          color: 'black',
+        },
+        legend: {
+          position: 'left',
+          textStyle: { color: '#FFF' },
+        },
+      },
       desserts: [
         {
           type: 'Ahorrar',
