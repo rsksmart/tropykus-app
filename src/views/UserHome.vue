@@ -95,7 +95,12 @@
         </v-row>
         <v-row class="ma-0">
           <template v-if="inMyWallet[0]">
-            <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in inMyWallet" :key="data.id">
+            <v-col
+              cols="4"
+              class=" inMyWallet ma-0 mt-3 pa-0"
+              v-for="data in inMyWallet"
+              :key="data.id"
+            >
               <card
                 :data="data"
                 :showInfoMyWallet="showInfoMyWallet"
