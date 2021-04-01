@@ -1,5 +1,5 @@
 <template>
-  <v-card width="94%" class="card-save-and-borrow mx-3" color="rgba(1, 62, 47, 0.85)">
+  <v-card width="94%" class="card-save-and-borrow mx-3" color="rgba(1, 62, 47, 1)">
     <v-row class="ma-0">
       <span class="mt-3 mx-2 ml-3">
         <img
@@ -15,9 +15,12 @@
       </a>
       <v-spacer></v-spacer>
       <template v-if="hiddenButton">
-        <v-btn class="mt-5" depressed color="#4696A6" width="35%">
-          Ver
+        <v-btn @click="showModalSave = true" class="mt-5" depressed color="#4696A6" width="35%">
+          Ahorrar
         </v-btn>
+          <template v-if="showModalSave">
+          <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
+        </template>
       </template>
       <template v-else>
         <v-btn @click="showModalBorrow = true" class="mt-5" depressed color="#E65D3D" width="34%">
@@ -61,15 +64,18 @@
 </template>
 <script>
 import ModalBorrow from './ModalBorrow.vue';
+import ModalSave from './ModalSave.vue';
 
 export default {
   name: 'CardSaveAndBorrow',
   components: {
     ModalBorrow,
+    ModalSave,
   },
   data() {
     return {
       showModalBorrow: false,
+      showModalSave: false,
     };
   },
   props: {

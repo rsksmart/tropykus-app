@@ -1,5 +1,5 @@
 <template>
-  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 0.85)">
+  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 1)">
     <v-row class="ma-0">
       <span class="mt-3 mx-2 ml-5">
         <img
@@ -24,7 +24,7 @@
       <div class="ma-auto card-line"></div>
     </v-row>
     <v-row class="ma-0">
-      <template v-if="!showInfoMyWallet">
+      <template v-if="showInfoMyWallet">
         <div class="ma-4 ml-5">
           <p>Precio actual</p>
           <p>1 {{ data.name }} = ${{ data.price }} USD</p>
@@ -38,7 +38,7 @@
         </div>
       </template>
       <v-spacer></v-spacer>
-      <template v-if="hiddenButton && !showInfoMyWallet">
+      <template v-if="hiddenButton">
         <v-btn
           @click="showModalSave = true"
           class="mt-5 mb-6"
@@ -52,22 +52,9 @@
           <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
         </template>
       </template>
-      <template v-if="hiddenButton && showInfoMyWallet">
-        <v-btn
-          @click="showModalSave = true"
-          class="mt-5 mb-6"
-          depressed
-          color="#4CB163"
-          width="35%"
-        >
-          Ahorrar
-        </v-btn>
-        <template v-if="showModalSave">
-          <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
-        </template>
-      </template>
-      <template v-if="!hiddenButton">
-        <v-btn @click="showModalBorrow = true" class="mt-5" depressed color="#FF9153" width="38%">
+      <template v-else>
+        <v-btn @click="showModalBorrow = true" class="mt-5 mb-6"
+        depressed color="#FF9153" width="38%">
           Pedir prestado
         </v-btn>
         <template v-if="showModalBorrow">
