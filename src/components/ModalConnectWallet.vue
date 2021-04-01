@@ -89,7 +89,7 @@ export default {
     redirectToHome() {
       this.connectToWeb3();
       this.$router.push('/home');
-      this.dialog = false;
+      this.outsideConnectWallet();
     },
     outsideConnectWallet() {
       this.dialog = false;

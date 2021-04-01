@@ -3,7 +3,8 @@
     <v-row>
       <v-col cols="6">
         <a href="/">
-        <img width="250" class="mt-4 ml-5" src="../assets/titulo.png"/>
+        <v-img height="48" class="ml-2 mt-2"
+               position="left center" src="@/assets/titulo.png" contain/>
         </a>
       </v-col>
       <v-col cols="6" class="mt-2 d-flex align-center justify-space-around">

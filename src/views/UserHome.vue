@@ -116,7 +116,7 @@
                 <span class="my-2 mt-4 subtitle-span">
                   No tienes fondos en tu billetera, así que puedes transferir desde
                 </span>
-                <container class="d-flex">
+                <v-container class="d-flex">
                   <div class="mx-3 d-flex buttons-wallet">
                     <v-btn href="/Tutorials/binance-to-liquality">
                       <v-img
@@ -164,7 +164,7 @@
                     </p>
                     <v-btn class="ml-1" color="#4CB163" width="92%">Desconectar billetera</v-btn>
                   </div>
-                </container>
+                </v-container>
                 <template v-if="showModalTransferFunds">
                   <modal-transfer-funds
                       :showModal="showModalTransferFunds"

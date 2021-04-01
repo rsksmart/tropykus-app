@@ -74,12 +74,12 @@
   </div>
 </template>
 <script>
-import card from './Card.vue';
+import Card from '@/components/Card.vue';
 
 export default {
   name: 'Landing',
   components: {
-    card,
+    Card,
   },
   methods: {
     redirectToTutorials() {
