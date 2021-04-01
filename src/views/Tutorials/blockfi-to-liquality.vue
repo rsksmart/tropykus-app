@@ -9,7 +9,7 @@
 
     <v-container class="tutorial-container">
       <div class="d-flex align-center">
-        <router-link to="/Tutorials">
+        <router-link to="/home">
           <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
         </router-link>
         <h1>
@@ -45,9 +45,6 @@
     </v-container>
 
     <div class="frog-container">
-      <!-- <v-overlay absolute z-index="0">
-        <v-img src="@/assets/frog.svg" alt="" class="tutorial-frog"></v-img>
-      </v-overlay> -->
       <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
     </div>
   </div>

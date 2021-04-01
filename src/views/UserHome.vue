@@ -10,18 +10,18 @@
       <v-col cols="3" />
       <v-col cols="6" class="button d-flex justify-center">
         <v-btn
-          depressed
-          color="rgba(1, 62, 47, 0.85)"
-          :class="showSaveOrBorrow ? 'button-save mr-10' : 'button-save-click mr-10'"
-          @click="onSaving"
+            depressed
+            color="rgba(1, 62, 47, 1)"
+            :class="showSaveOrBorrow ? 'button-save mr-10' : 'button-save-click mr-10'"
+            @click="onSaving"
         >
           Ahorrar
         </v-btn>
         <v-btn
-          depressed
-          color="rgba(1, 62, 47, 0.85)"
-          :class="showSaveOrBorrow ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
-          @click="onBorrow"
+            depressed
+            color="rgba(1, 62, 47,1)"
+            :class="showSaveOrBorrow ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
+            @click="onBorrow"
         >
           Pedir prestado
         </v-btn>
@@ -94,40 +94,66 @@
         </v-row>
         <v-row class="ma-0">
           <template v-if="inMyWallet[0]">
-            <v-col cols="4" class="ma-0 mt-3 pa-0" v-for="data in inMyWallet" :key="data.id">
+            <v-col
+                cols="4"
+                class=" inMyWallet ma-0 mt-3 pa-0"
+                v-for="data in inMyWallet"
+                :key="data.id"
+            >
               <card
-                :data="data"
-                :showInfoMyWallet="showInfoMyWallet"
-                :hiddenButton="showSaveOrBorrow"
+                  :data="data"
+                  :showInfoMyWallet="showInfoMyWallet"
+                  :hiddenButton="showSaveOrBorrow"
               />
             </v-col>
           </template>
           <template v-else>
             <v-col cols="12">
               <div
-                height="120"
-                class="saving-message container-wallet d-flex flex-column align-start"
+                  height="120"
+                  class="saving-message container-wallet d-flex flex-column align-start"
               >
                 <span class="my-2 mt-4 subtitle-span">
-                  Puedes transferir tus fondos desde
+                  No tienes fondos en tu billetera, así que puedes transferir desde
                 </span>
-                <v-container class="d-flex">
+                <container class="d-flex">
                   <div class="mx-3 d-flex buttons-wallet">
-                    <v-btn class="pa-0">
-                      <img width="80" src="../assets/icon-binance.svg" alt="Binance icon" />
+                    <v-btn href="/Tutorials/binance-to-liquality">
+                      <v-img
+                          contain
+                          width="100"
+                          src="@/assets/icon-binance.svg"
+                          alt="Binance icon"
+                      />
                     </v-btn>
-                    <v-btn>
-                      <img width="100" src="../assets/icon-lend.svg" alt="Binance icon" />
+                    <v-btn class="d-flex" href="/Tutorials/ledn-to-liquality">
+                      <v-img
+                          width="30"
+                          height="25"
+                          src="@/assets/icon-lend.svg"
+                          alt="Lend icon"
+                          contain
+                      />
                     </v-btn>
-                    <v-btn>
-                      <img width="100" src="../assets/icon-blockfi.svg" alt="Binance icon" />
+                    <v-btn href="/Tutorials/blockfi-to-liquality">
+                      <v-img
+                          contain
+                          width="100"
+                          src="@/assets/icon-blockfi.svg"
+                          alt="BlocFi icon"
+                      />
                     </v-btn>
-                    <v-btn>
-                      <img width="100" src="../assets/icon-poloniex.svg" alt="Binance icon" />
+                    <v-btn disabled>
+                      <v-img
+                          contain
+                          width="100"
+                          src="@/assets/icon-poloniex.svg"
+                          alt="Poloniex icon"
+                      />
                     </v-btn>
-                    <v-btn>
+                    <v-btn @click="showModalTransferFunds = true">
                       <v-card flat color="transparent">
-                        Transferir desde otras platformas
+                        Transferir desde otras plataformas
                       </v-card>
                     </v-btn>
                   </div>
@@ -138,7 +164,13 @@
                     </p>
                     <v-btn class="ml-1" color="#4CB163" width="92%">Desconectar billetera</v-btn>
                   </div>
-                </v-container>
+                </container>
+                <template v-if="showModalTransferFunds">
+                  <modal-transfer-funds
+                      :showModal="showModalTransferFunds"
+                      @closed="outsideModalTransfer"
+                  />
+                </template>
               </div>
             </v-col>
           </template>
@@ -171,14 +203,19 @@
 <script>
 import card from '@/components/Card.vue';
 import CardSaveAndBorrow from '@/components/CardSaveAndBorrow.vue';
+import ModalTransferFunds from '@/components/ModalTransferFunds.vue';
 
 export default {
   name: 'Landing',
   components: {
     card,
     CardSaveAndBorrow,
+    ModalTransferFunds,
   },
   methods: {
+    outsideModalTransfer() {
+      this.showModalTransferFunds = false;
+    },
     onBorrow() {
       this.showSaveOrBorrow = false;
     },
@@ -188,6 +225,7 @@ export default {
   },
   data() {
     return {
+      showModalTransferFunds: false,
       showSaveOrBorrow: true,
       showSavings: true,
       showInfoMyWallet: true,
