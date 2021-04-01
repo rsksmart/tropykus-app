@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" width="538px">
-    <v-card class="modal-transfer-funds">
+    <v-card class="modal-transfer-funds" v-click-outside="onClickOutside">
       <div class="card-content mx-auto">
         <div class="pt-4 float-right">
           <v-img
@@ -41,7 +41,12 @@
             <p class="step-description">{{ step.text }}</p>
           </div>
         </div>
-        <v-btn height="62" block class="continue-button px-10 mt-5" color="#4cb163"
+        <v-btn
+          height="62"
+          @click="dialog = false"
+          block
+          class="continue-button px-10 mt-5"
+          color="#4cb163"
           >Continuar</v-btn
         >
       </div>
@@ -55,6 +60,12 @@ export default {
     showModal: {
       require: true,
       type: Boolean,
+    },
+  },
+  methods: {
+    onClickOutside() {
+      this.dialog = false;
+      this.$emit('closed');
     },
   },
   data() {

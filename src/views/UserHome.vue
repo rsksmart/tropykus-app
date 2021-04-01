@@ -119,7 +119,7 @@
                 </span>
                 <container class="d-flex">
                   <div class="mx-3 d-flex buttons-wallet">
-                    <v-btn>
+                    <v-btn href="/Tutorials/binance-to-liquality">
                       <v-img
                         contain
                         width="100"
@@ -127,7 +127,7 @@
                         alt="Binance icon"
                       />
                     </v-btn>
-                    <v-btn class="d-flex">
+                    <v-btn class="d-flex" href="/Tutorials/ledn-to-liquality">
                       <v-img
                         width="30"
                         height="25"
@@ -136,7 +136,7 @@
                         contain
                       />
                     </v-btn>
-                    <v-btn>
+                    <v-btn href="/Tutorials/blockfi-to-liquality">
                       <v-img
                         contain
                         width="100"
@@ -144,7 +144,7 @@
                         alt="BlocFi icon"
                       />
                     </v-btn>
-                    <v-btn>
+                    <v-btn disabled>
                       <v-img
                         contain
                         width="100"
@@ -152,9 +152,9 @@
                         alt="Poloniex icon"
                       />
                     </v-btn>
-                    <v-btn>
+                    <v-btn @click="showModalTransferFunds = true">
                       <v-card flat color="transparent">
-                        Transferir desde otras platformas
+                        Transferir desde otras plataformas
                       </v-card>
                     </v-btn>
                   </div>
@@ -166,6 +166,12 @@
                     <v-btn class="ml-1" color="#4CB163" width="92%">Desconectar billetera</v-btn>
                   </div>
                 </container>
+                <template v-if="showModalTransferFunds">
+                  <modal-transfer-funds
+                    :showModal="showModalTransferFunds"
+                    @closed="outsideModalTransfer"
+                  />
+                </template>
               </div>
             </v-col>
           </template>
@@ -199,6 +205,7 @@
 import Navbar from '@/components/Navbar.vue';
 import card from '@/components/Card.vue';
 import CardSaveAndBorrow from '@/components/CardSaveAndBorrow.vue';
+import ModalTransferFunds from '@/components/ModalTransferFunds.vue';
 
 export default {
   name: 'Landing',
@@ -206,8 +213,12 @@ export default {
     card,
     Navbar,
     CardSaveAndBorrow,
+    ModalTransferFunds,
   },
   methods: {
+    outsideModalTransfer() {
+      this.showModalTransferFunds = false;
+    },
     onBorrow() {
       this.showSaveOrBorrow = false;
     },
@@ -217,37 +228,38 @@ export default {
   },
   data() {
     return {
+      showModalTransferFunds: false,
       showSaveOrBorrow: true,
       showSavings: true,
       showInfoMyWallet: true,
       mySavings: [
-        {
-          id: 1,
-          name: 'RBTC',
-          earnings: 0.0123,
-          savings: 0.612345,
-          price: 1000,
-        },
+        // {
+        //   id: 1,
+        //   name: 'RBTC',
+        //   earnings: 0.0123,
+        //   savings: 0.612345,
+        //   price: 1000,
+        // },
       ],
       inMyWallet: [
-        {
-          id: 1,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
-        {
-          id: 2,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
-        {
-          id: 3,
-          name: 'RBTC',
-          rate: 9.01,
-          price: 300,
-        },
+        // {
+        //   id: 1,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
+        // {
+        //   id: 2,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
+        // {
+        //   id: 3,
+        //   name: 'RBTC',
+        //   rate: 9.01,
+        //   price: 300,
+        // },
       ],
       suggestionsToSave: [
         {
