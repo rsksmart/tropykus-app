@@ -9,7 +9,7 @@
 
     <v-container class="tutorial-container">
       <div class="d-flex align-center">
-        <router-link to="/Tutorials">
+        <router-link to="/">
           <img class="tutorial-left-arrow" src="@/assets/left-arrow.svg" alt="Left arrow" />
         </router-link>
         <h1>
