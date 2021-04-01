@@ -10,7 +10,7 @@
         </v-row>
         <v-row class="ma-0 first-row">
           <v-col cols="4" class="pa-0">
-            <v-btn>
+            <v-btn disabled>
               <div class="d-flex align-center flex-column">
                 <img width="30" class="mt-4" src="../assets/ledger-icon.png" alt="Ledger icon" />
                 <p>Ledger</p>
@@ -19,7 +19,7 @@
             </v-btn>
           </v-col>
           <v-col cols="4" class="pa-0">
-            <v-btn>
+            <v-btn disabled>
               <div class="d-flex align-center flex-column">
                 <img width="20" class="mt-4" src="../assets/trezor-icon.png" alt="Trezor icon" />
                 <p>Trezor</p>
@@ -43,7 +43,7 @@
         </v-row>
         <v-row class="second-row ma-0 mb-4">
           <v-col cols="6" class="pa-0">
-            <v-btn>
+            <v-btn disabled>
               <div class="d-flex align-center flex-column">
                 <img width="38" src="../assets/metamask-icon.png" alt="Trezor icon" />
                 <p>Metamask</p>
@@ -52,7 +52,7 @@
             </v-btn>
           </v-col>
           <v-col cols="6" class="pa-0">
-            <v-btn>
+            <v-btn disabled>
               <div class="d-flex align-center flex-column">
                 <img width="45" src="../assets/movil-wallet-icon.png" alt="Trezor icon" />
                 <p>Billetera móvil</p>
@@ -71,6 +71,9 @@
 </template>
 
 <script>
+import * as constants from '@/store/constants';
+import { mapActions } from 'vuex';
+
 export default {
   name: 'ModalConnectWallet',
   props: {
@@ -80,8 +83,13 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      connectToWeb3: constants.SESSION_CONNECT_WEB3,
+    }),
     redirectToHome() {
+      this.connectToWeb3();
       this.$router.push('/home');
+      this.dialog = false;
     },
     outsideConnectWallet() {
       this.dialog = false;

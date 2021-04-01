@@ -18,7 +18,7 @@
           class="ma-auto mx-6 navbar-button"
           width="230"
         >
-          Conectar billetera
+          {{ accountCutOff }}
         </v-btn>
          <template v-if="showModalConnectWallet">
             <modal-connect-wallet
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import ModalConnectWallet from './ModalConnectWallet.vue';
 
 export default {
@@ -41,6 +42,15 @@ export default {
   },
   components: {
     ModalConnectWallet,
+  },
+  computed: {
+    ...mapState({
+      account: (state) => state.Session.account,
+    }),
+    accountCutOff() {
+      return typeof this.account === 'string' ? `${this.account.substring(0, 7)}...${this.account
+        .substring(this.account.length - 4, this.account.length)}` : 'Conectar billetera';
+    },
   },
   methods: {
     redirectToBalance() {
@@ -66,7 +76,3 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" src="../styles/main.scss">
-</style>
