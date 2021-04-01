@@ -12,7 +12,7 @@
       <v-col cols="6" class="button d-flex justify-center">
         <v-btn
           depressed
-          color="rgba(1, 62, 47, 0.85)"
+          color="rgba(1, 62, 47, 1)"
           :class="showSaveOrBorrow ? 'button-save mr-10' : 'button-save-click mr-10'"
           @click="onSaving"
         >
@@ -20,7 +20,7 @@
         </v-btn>
         <v-btn
           depressed
-          color="rgba(1, 62, 47, 0.85)"
+          color="rgba(1, 62, 47,1)"
           :class="showSaveOrBorrow ? 'button-borrow ml-8' : 'button-borrow-click ml-8'"
           @click="onBorrow"
         >
@@ -110,21 +110,42 @@
                 class="saving-message container-wallet d-flex flex-column align-start"
               >
                 <span class="my-2 mt-4 subtitle-span">
-                  Puedes transferir tus fondos desde
+                  No tienes fondos en tu billetera, así que puedes transferir desde
                 </span>
                 <container class="d-flex">
                   <div class="mx-3 d-flex buttons-wallet">
-                    <v-btn class="pa-0">
-                      <img width="80" src="../assets/icon-binance.svg" alt="Binance icon" />
+                    <v-btn>
+                      <v-img
+                        contain
+                        width="100"
+                        src="@/assets/icon-binance.svg"
+                        alt="Binance icon"
+                      />
+                    </v-btn>
+                    <v-btn class="d-flex">
+                      <v-img
+                        width="30"
+                        height="25"
+                        src="@/assets/icon-lend.svg"
+                        alt="Lend icon"
+                        contain
+                      />
                     </v-btn>
                     <v-btn>
-                      <img width="100" src="../assets/icon-lend.svg" alt="Binance icon" />
+                      <v-img
+                        contain
+                        width="100"
+                        src="@/assets/icon-blockfi.svg"
+                        alt="BlocFi icon"
+                      />
                     </v-btn>
                     <v-btn>
-                      <img width="100" src="../assets/icon-blockfi.svg" alt="Binance icon" />
-                    </v-btn>
-                    <v-btn>
-                      <img width="100" src="../assets/icon-poloniex.svg" alt="Binance icon" />
+                      <v-img
+                        contain
+                        width="100"
+                        src="@/assets/icon-poloniex.svg"
+                        alt="Poloniex icon"
+                      />
                     </v-btn>
                     <v-btn>
                       <v-card flat color="transparent">
@@ -204,24 +225,24 @@ export default {
         },
       ],
       inMyWallet: [
-        // {
-        //   id: 1,
-        //   name: 'RBTC',
-        //   rate: 9.01,
-        //   price: 300,
-        // },
-        // {
-        //   id: 2,
-        //   name: 'RBTC',
-        //   rate: 9.01,
-        //   price: 300,
-        // },
-        // {
-        //   id: 3,
-        //   name: 'RBTC',
-        //   rate: 9.01,
-        //   price: 300,
-        // },
+        {
+          id: 1,
+          name: 'RBTC',
+          rate: 9.01,
+          price: 300,
+        },
+        {
+          id: 2,
+          name: 'RBTC',
+          rate: 9.01,
+          price: 300,
+        },
+        {
+          id: 3,
+          name: 'RBTC',
+          rate: 9.01,
+          price: 300,
+        },
       ],
       suggestionsToSave: [
         {

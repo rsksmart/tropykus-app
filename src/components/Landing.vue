@@ -11,7 +11,7 @@
       <v-col cols="6" class="button d-flex justify-center">
         <v-btn
           depressed
-          color="rgba(1, 62, 47, 0.85)"
+          color="rgba(1, 62, 47, 1)"
           :class="hidden ? 'button-save mr-4' : 'button-save-click mr-4'"
           @click="onSaving"
         >
@@ -19,7 +19,7 @@
         </v-btn>
         <v-btn
           depressed
-          color="rgba(1, 62, 47, 0.85)"
+          color="rgba(1, 62, 47, 1)"
           :class="hidden ? 'button-borrow ml-9' : 'button-borrow-click ml-9'"
           @click="onBorrow"
         >

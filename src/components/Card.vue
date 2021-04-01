@@ -1,5 +1,5 @@
 <template>
-  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 0.85)">
+  <v-card width="94%" class="card mx-3" color="rgba(1, 62, 47, 1)">
     <v-row class="ma-0">
       <span class="mt-3 mx-2 ml-5">
         <img
