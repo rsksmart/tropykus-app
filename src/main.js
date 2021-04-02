@@ -7,7 +7,8 @@ import store from './store';
 import './styles/main.scss';
 import vuetify from './plugins/vuetify';
 
-Vue.prototype.$web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
+// eslint-disable-next-line no-multi-assign
+Vue.prototype.$web3 = Vue.web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
 
 new Vue({
   router,

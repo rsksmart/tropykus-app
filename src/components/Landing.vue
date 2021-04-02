@@ -31,17 +31,17 @@
       <v-row>
         <v-col cols="3" class="pa-0 mt-6 ml-3 d-flex align-center landing-subtitle">
           <img src="@/assets/logo.png" width="23" />
-          <h2 class="landing-title-card ">Mercados de cryptos</h2>
+          <h2 class="landing-title-card">Mercados de cryptos</h2>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="4" class="ma-0 mt-4 pa-0" v-for="data in saving" :key="data.id">
-          <template v-if="hidden">
-            <card :data="data" :hiddenButton="hidden" />
-          </template>
-          <template v-else>
-            <card :data="data" :hiddenButton="hidden" />
-          </template>
+        <v-col
+          cols="4"
+          class="ma-0 mt-4 pa-0"
+          v-for="(market, idx) in markets"
+          :key="`market-${idx}`"
+        >
+          <card :hiddenButton="hidden" :marketAddress="market" />
         </v-col>
       </v-row>
     </v-card>
@@ -74,7 +74,8 @@
   </div>
 </template>
 <script>
-import Card from '@/components/Card.vue';
+import { Comptroller } from '@/middleware';
+import Card from '@/components/market/Card.vue';
 
 export default {
   name: 'Landing',
@@ -99,6 +100,7 @@ export default {
     return {
       showModalConvertBtn: true,
       hidden: true,
+      markets: [],
       saving: [
         {
           id: 1,
@@ -182,6 +184,10 @@ export default {
         },
       ],
     };
+  },
+  async created() {
+    const comptroller = new Comptroller('0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e');
+    this.markets = await comptroller.allMarkets;
   },
 };
 </script>

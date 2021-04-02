@@ -201,7 +201,7 @@
   </div>
 </template>
 <script>
-import card from '@/components/Card.vue';
+import card from '@/components/market/Card.vue';
 import CardSaveAndBorrow from '@/components/CardSaveAndBorrow.vue';
 import ModalTransferFunds from '@/components/ModalTransferFunds.vue';
 
