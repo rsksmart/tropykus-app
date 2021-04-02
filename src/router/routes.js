@@ -1,10 +1,10 @@
 import Home from '@/views/Home.vue';
 import Register from '@/views/Register.vue';
-import Tutorials from '@/views/Tutorials/index.vue';
-import RbtcToBtc from '@/views/Tutorials/rbtc-to-btc.vue';
-import BinanceToLiquality from '@/views/Tutorials/binance-to-liquality.vue';
-import BlockFiToLiquality from '@/views/Tutorials/blockfi-to-liquality.vue';
-import LednToLiquality from '@/views/Tutorials/ledn-to-liquality.vue';
+import Tutorials from '@/views/Tutorials.vue';
+import BtcToRbtc from '@/components/tutorials/BtcToRbtc.vue';
+import BinanceToLiquality from '@/components/tutorials/BinanceToLiquality.vue';
+import BlockFiToLiquality from '@/components/tutorials/BlockfiToLiquality.vue';
+import LednToLiquality from '@/components/tutorials/LednToLiquality.vue';
 import UserHome from '@/views/UserHome.vue';
 import Balance from '@/views/Balance.vue';
 
@@ -20,30 +20,28 @@ export default [
     component: Register,
   },
   {
-    path: '/Tutorials',
+    path: '/tutorials',
     name: 'Tutorials',
     component: Tutorials,
-    // TODO: FIX CHILDREN
-    children: [],
   },
   {
-    path: '/Tutorials/rbtc-to-btc',
-    name: 'rBTC to BTC',
-    component: RbtcToBtc,
+    path: '/tutorials/btc-to-rbtc',
+    name: 'BtcToRbtc',
+    component: BtcToRbtc,
   },
   {
-    path: '/Tutorials/binance-to-liquality',
-    name: 'Binance to Liquality',
+    path: '/tutorials/binance-to-liquality',
+    name: 'BinanceToLiquality',
     component: BinanceToLiquality,
   },
   {
-    path: '/Tutorials/blockfi-to-liquality',
-    name: 'BlockFi to Liquality',
+    path: '/tutorials/blockfi-to-liquality',
+    name: 'BlockfiToLiquality',
     component: BlockFiToLiquality,
   },
   {
-    path: '/Tutorials/ledn-to-liquality',
-    name: 'Ledn to Liquality',
+    path: '/tutorials/ledn-to-liquality',
+    name: 'LednToLiquality',
     component: LednToLiquality,
   },
   {

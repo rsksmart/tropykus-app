@@ -186,7 +186,7 @@ export default {
   },
   methods: {
     redirectToTutorials() {
-      this.$router.push('/Tutorials/rbtc-to-btc');
+      this.$router.push('/tutorials/btc-to-rbtc');
     },
     outsideConvertBtn() {
       this.showModalConvertBtn = false;

@@ -1,12 +1,16 @@
 <template>
-  <v-app-bar class="navbar" color="rgba(1, 62, 47, 0.85)" flat height="70" absolute>
-    <v-img height="48" position="left center" src="@/assets/titulo.png"
+  <v-app-bar color="rgba(1, 62, 47, 0.85)" flat height="70" absolute
+             v-bind:class="{ 'tutorial-navbar': isTutorial }" class="navbar">
+    <v-img height="48" position="left center" src="@/assets/tropykus.svg"
            @click="redirectToHome" contain/>
-    <router-link class="mx-10" :to="{ name: 'Home' }">
+    <router-link :to="{ name: 'Home' }">
       Inicio
     </router-link>
     <router-link class="mx-10" :to="{ name: 'Balance' }">
       Mi Balance
+    </router-link>
+    <router-link class="mr-10" :to="{ name: 'Tutorials' }">
+      Tutoriales
     </router-link>
     <v-btn @click="ShowDialogConnectWallet" class="wallet-button" width="230"
            v-bind:class="{'wallet-button-connected': isWalletConnected}">
@@ -37,6 +41,7 @@ export default {
     ...mapState({
       account: (state) => state.Session.account,
       wallet: (state) => state.Session.wallet,
+      routePath: (state) => state.route.path,
     }),
     accountCutOff() {
       return typeof this.account === 'string' ? `${this.account.substring(0, 7)}...${this.account
@@ -44,6 +49,9 @@ export default {
     },
     isWalletConnected() {
       return !!this.wallet;
+    },
+    isTutorial() {
+      return this.routePath.substr(1, 10) === 'tutorials/';
     },
   },
   methods: {
@@ -54,7 +62,7 @@ export default {
       this.$router.push('/');
     },
     redirectToTutorials() {
-      this.$router.push('/Tutorials/rbtc-to-btc');
+      this.$router.push('/tutorials/btc-to-rbtc');
     },
     outsideConnectWallet() {
       this.showModalConnectWallet = false;

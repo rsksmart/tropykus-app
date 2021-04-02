@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import firebase from 'firebase';
 import 'firebase/analytics';
 import 'firebase/storage';
+import { sync } from 'vuex-router-sync';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
@@ -12,6 +13,7 @@ import vuetify from './plugins/vuetify';
 
 import { firebaseConfig } from '../firebaseConfig';
 
+sync(store, router);
 // eslint-disable-next-line no-multi-assign
 Vue.prototype.$web3 = Vue.web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
 

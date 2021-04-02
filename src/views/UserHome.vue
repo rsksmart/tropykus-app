@@ -118,7 +118,7 @@
                 </span>
                 <v-container class="d-flex">
                   <div class="mx-3 d-flex buttons-wallet">
-                    <v-btn href="/Tutorials/binance-to-liquality">
+                    <v-btn @click="$router.push({ name: 'BinanceToLiquality'})">
                       <v-img
                           contain
                           width="100"
@@ -126,7 +126,7 @@
                           alt="Binance icon"
                       />
                     </v-btn>
-                    <v-btn class="d-flex" href="/Tutorials/ledn-to-liquality">
+                    <v-btn class="d-flex" @click="$router.push({ name: 'LednToLiquality'})">
                       <v-img
                           width="30"
                           height="25"
@@ -135,7 +135,7 @@
                           contain
                       />
                     </v-btn>
-                    <v-btn href="/Tutorials/blockfi-to-liquality">
+                    <v-btn @click="$router.push({ name: 'BlockfiToLiquality'})">
                       <v-img
                           contain
                           width="100"
