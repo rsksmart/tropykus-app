@@ -102,6 +102,9 @@ export default {
       showModalBorrow: false,
       name: null,
       symbol: null,
+      rate: 6.54,
+      savings: 4.5,
+      price: 4.23,
     };
   },
   methods: {
