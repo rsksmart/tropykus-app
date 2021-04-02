@@ -12,6 +12,7 @@ import 'firebase/storage';
 import { firebaseConfig } from '../firebaseConfig';
 
 Vue.prototype.$firebase = firebase.initializeApp(firebaseConfig);
+Vue.firebase = Vue.prototype.$firebase;
 Vue.prototype.$web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545');
 firebase.analytics();
 
