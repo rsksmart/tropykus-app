@@ -5,5 +5,4 @@ import VueGoogleCharts from 'vue-google-charts';
 Vue.use(VueGoogleCharts);
 Vue.use(Vuetify);
 
-export default new Vuetify({
-});
+export default new Vuetify({});

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
+import Navbar from '@/components/menu/Navbar.vue';
 
 import _ from 'lodash';
 

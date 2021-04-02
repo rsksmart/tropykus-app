@@ -18,7 +18,7 @@
         <v-btn @click="showModalSave = true" class="mt-5" depressed color="#4696A6" width="35%">
           Ahorrar
         </v-btn>
-          <template v-if="showModalSave">
+        <template v-if="showModalSave">
           <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" />
         </template>
       </template>
@@ -62,6 +62,7 @@
     </v-row>
   </v-card>
 </template>
+
 <script>
 import ModalBorrow from './ModalBorrow.vue';
 import ModalSave from './ModalSave.vue';

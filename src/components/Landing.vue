@@ -73,6 +73,7 @@
     </v-dialog>
   </div>
 </template>
+
 <script>
 import { Comptroller } from '@/middleware';
 import Card from '@/components/market/Card.vue';

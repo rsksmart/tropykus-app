@@ -1,7 +1,10 @@
-@import '~vuetify/src/styles/main.sass';
+@import "~vuetify/src/styles/main.sass";
 
-@import '_site';
-@import '_home';
+@import "site";
+@import "_home";
+@import "_register";
+@import "_personalDataModal";
+@import "_modalValidationForm";
 @import '_tutorials';
 @import '_modalSave';
 @import '_modalBorrow';

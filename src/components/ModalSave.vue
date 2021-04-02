@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import ModalConnectWallet from './ModalConnectWallet.vue';
+import ModalConnectWallet from './dialog/ConnectWallet.vue';
 
 export default {
   name: 'ModalSave',

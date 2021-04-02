@@ -6,21 +6,29 @@
 </template>
 
 <script>
+import Navbar from '@/components/menu/Navbar.vue';
+import * as constants from '@/store/constants';
+import { mapActions, mapState } from 'vuex';
 import { Unitroller } from '@/middleware';
-import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      comptrollerAddress: null,
-    };
+  computed: {
+    ...mapState({
+      unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      getUnitrollerAddress: constants.CONTRACT_GET_UNITROLLER_ADDRESS,
+    }),
   },
   components: {
     Navbar,
   },
   async created() {
-    const unitroller = new Unitroller('0x0165878A594ca255338adfa4d48449f69242Eb8F');
+    this.getUnitrollerAddress();
+    const unitroller = new Unitroller(this.unitrollerAddress);
     this.comptrollerAddress = await unitroller.comptrollerImplementation;
   },
 };

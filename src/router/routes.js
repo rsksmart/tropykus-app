@@ -1,4 +1,5 @@
 import Home from '@/views/Home.vue';
+import Register from '@/views/Register.vue';
 import Tutorials from '@/views/Tutorials/index.vue';
 import RbtcToBtc from '@/views/Tutorials/rbtc-to-btc.vue';
 import BinanceToLiquality from '@/views/Tutorials/binance-to-liquality.vue';
@@ -12,6 +13,11 @@ export default [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
   },
   {
     path: '/Tutorials',
