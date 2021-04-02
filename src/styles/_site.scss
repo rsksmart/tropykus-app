@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600&display=swap");
 
 div, p, h1, h2, h3, h4, h5, h6, body, button {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-style: normal;
 }
 
@@ -11,13 +11,11 @@ html,body{
   overflow:hidden;
   background-color: #0c1520;
 }
-img{
-  min-height:100%;
-  min-width:100%;
-  height:auto;
-  width:auto;
-  position:absolute;
-  top:-100%; bottom:-100%;
-  left:-100%; right:-100%;
-  margin:auto;
+
+.v-btn {
+  text-transform: none !important;
+}
+
+.boldie {
+  font-weight: bold !important;
 }
