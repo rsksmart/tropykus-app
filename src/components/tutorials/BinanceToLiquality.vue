@@ -3,10 +3,10 @@
     <v-container class="tutorial-container">
       <div class="d-flex align-center">
         <router-link :to="{ name: 'Tutorials' }" class="mr-3">
-          <v-img height="28" src="@/assets/left-arrow.svg" alt="Left arrow" contain/>
+          <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
         <h1>Transfiere tus BTC desde</h1>
-        <img class="mx-2" src="@/assets/binance-logo.svg" alt="Binance Logo" />
+        <img class="mx-2" src="@/assets/tutorials/binance-logo.svg" alt="Binance Logo" />
       </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">
@@ -30,7 +30,7 @@
       </v-row>
     </v-container>
     <div class="frog-container" style="position: relative">
-      <img src="@/assets/frog.svg" alt="" class="tutorial-frog" />
+      <img src="@/assets/tutorials/frog.svg" alt="" class="tutorial-frog" />
     </div>
   </div>
 </template>

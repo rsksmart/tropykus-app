@@ -69,13 +69,13 @@
             </div>
             <div class="user-risk mt-8 d-flex">
               <v-img class="risk-img" width="40" height="40"
-                     src="@/assets/face-happy.png" />
+                     src="@/assets/health/face-happy.png" />
               <!-- <v-img class="risk-img" width="40" height="40"
-              src="@/assets/face-serious.png" /> -->
+              src="@/assets/health/face-serious.png" /> -->
               <!-- <v-img class="risk-img" width="40" height="40"
-              src="@/assets/face-worry.png" /> -->
+              src="@/assets/health/face-worry.png" /> -->
               <!-- <v-img class="risk-img" width="40" height="40"
-              src="@/assets/face-sad.png" /> -->
+              src="@/assets/health/face-sad.png" /> -->
               <GChart type="PieChart" :data="chartDataRiskProfile" :options="optionsRiskProfile" />
               <div>
                 <h2 class="mt-8 p-risk">Riesgo mínimo</h2>

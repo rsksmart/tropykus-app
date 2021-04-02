@@ -3,8 +3,8 @@
     <v-container class="tutorials">
       <v-row class="pa-3 pl-5">
         <v-card class="crop-card">
-          <v-card-title class="pa-2">
-            <v-icon class="px-2" large left color="#fff">mdi-help-circle-outline</v-icon>
+          <v-card-title class="pa-0">
+            <v-icon class="px-2" left color="#fff">mdi-help-circle-outline</v-icon>
             <h1 class="text-left">Tutoriales</h1>
           </v-card-title>
         </v-card>
@@ -13,8 +13,8 @@
         <v-col cols="3" class="px-5">
           <v-card class="container" color="#013E2F">
             <v-row class="mx-2 my-1">
-              <v-img position="center center" src="@/assets/tutorials/BtcToRbtc.svg"
-                     height="48" contain/>
+              <v-img position="center center" height="48" contain
+                     src="@/assets/tutorials/btc-to-rbtc/BtcToRbtc.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
               Convierte
@@ -32,8 +32,8 @@
         <v-col cols="3" class="px-5">
           <v-card class="container" color="#013E2F">
             <v-row class="mx-2 my-1">
-              <v-img position="center center" src="@/assets/tutorials/BinanceToLiquality.svg"
-                     height="48" contain/>
+              <v-img position="center center" height="48" contain
+                     src="@/assets/tutorials/binance-to-liquality/BinanceToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
               Transfiere tus fondos
@@ -51,8 +51,8 @@
         <v-col cols="3" class="px-5">
           <v-card class="container" color="#013E2F">
             <v-row class="mx-2 my-1">
-              <v-img position="center center" src="@/assets/tutorials/LednToLiquality.svg"
-                     height="48" contain/>
+              <v-img position="center center" height="48" contain
+                     src="@/assets/tutorials/ledn-to-liquality/LednToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
               Transfiere tus fondos
@@ -70,8 +70,8 @@
         <v-col cols="3" class="px-5">
           <v-card class="container" color="#013E2F">
             <v-row class="mx-2 my-1">
-              <v-img position="center center" src="@/assets/tutorials/BlockfiToLiquality.svg"
-                     height="48" contain/>
+              <v-img position="center center" height="48"
+                     contain src="@/assets/tutorials/blockfi-to-liquality/BlockfiToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
               Transfiere tus fondos
