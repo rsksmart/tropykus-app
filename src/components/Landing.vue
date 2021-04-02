@@ -34,7 +34,7 @@
           <h2 class="landing-title-card">Mercados de cryptos</h2>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="markets">
         <v-col
           cols="4"
           class="ma-0 mt-4 pa-0"
@@ -75,28 +75,12 @@
 </template>
 
 <script>
-import { Comptroller } from '@/middleware';
+import { mapState } from 'vuex';
+import { Unitroller, Comptroller } from '@/middleware';
 import Card from '@/components/market/Card.vue';
 
 export default {
   name: 'Landing',
-  components: {
-    Card,
-  },
-  methods: {
-    redirectToTutorials() {
-      this.$router.push('/Tutorials/rbtc-to-btc');
-    },
-    outsideConvertBtn() {
-      this.showModalConvertBtn = false;
-    },
-    onBorrow() {
-      this.hidden = false;
-    },
-    onSaving() {
-      this.hidden = true;
-    },
-  },
   data() {
     return {
       showModalConvertBtn: true,
@@ -186,9 +170,36 @@ export default {
       ],
     };
   },
-  async created() {
-    const comptroller = new Comptroller('0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e');
-    this.markets = await comptroller.allMarkets;
+  computed: {
+    ...mapState({
+      unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
+    }),
+  },
+  watch: {
+    async unitrollerAddress(val) {
+      if (val) {
+        const unitroller = new Unitroller(this.unitrollerAddress);
+        const comptroller = new Comptroller(await unitroller.comptrollerImplementation);
+        this.markets = await comptroller.allMarkets;
+      }
+    },
+  },
+  methods: {
+    redirectToTutorials() {
+      this.$router.push('/Tutorials/rbtc-to-btc');
+    },
+    outsideConvertBtn() {
+      this.showModalConvertBtn = false;
+    },
+    onBorrow() {
+      this.hidden = false;
+    },
+    onSaving() {
+      this.hidden = true;
+    },
+  },
+  components: {
+    Card,
   },
 };
 </script>
