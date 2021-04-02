@@ -1,0 +1,45 @@
+.card-save-and-borrow{
+  img{
+    height:40px;
+  }
+  h1{
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 55px;
+    letter-spacing: -0.5px;
+  }
+  h2{
+    color: #FFF;
+    font-size:15px;
+  }
+  p{
+    color: #FFF;
+    font-size:11px;
+    margin:0;
+  }
+  .anual-rate{
+    margin-right:12px;
+  }
+  .card-line{
+    width: 87%;
+    height: 0px;
+    border: 0.5px solid #BEBEBE;
+  }
+  .v-btn{
+    margin-right:20px;
+    height: 25px !important;
+    color: #FFF;
+    text-transform: none;
+    letter-spacing:0px !important;
+  }
+  .p-bold{
+    font-weight: 600;
+  }
+  .p-italic{
+    font-style: italic;
+  }
+  .anual-rate-title {
+    font-size: 18px;
+    line-height:26px;
+  }
+}

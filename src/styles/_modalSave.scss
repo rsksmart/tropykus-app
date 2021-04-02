@@ -1,0 +1,83 @@
+.modal-save {
+  background-color: #013e2f !important;
+  .button {
+    .v-btn {
+      color: #fff !important;
+      text-transform: none;
+      font-size: 24px !important;
+      letter-spacing: 0 !important;
+      height: 40px !important;
+    }
+    .v-btn:hover {
+      font-weight: bold !important;
+    }
+    .button-save {
+      border-bottom: 2px solid #fff !important;
+    }
+    .button-withdraw-click {
+      border-bottom: 2px solid #fff !important;
+    }
+  }
+  img {
+    height: 35px;
+    width: 35px;
+    margin: 10px 10px 0 0;
+  }
+  .modal-container {
+    width: 120px;
+    color: #fff;
+  }
+  h1 {
+    color: #fff;
+  }
+  .modal-container-img {
+    width: 150px;
+    color: #fff;
+  }
+  .modal-line {
+    border: 0.5px solid #bab9b9;
+    width: 85%;
+  }
+  .title-modal-rate {
+    line-height: 18px;
+  }
+  .modal-rate {
+    font-size: 28px;
+  }
+  .v-text-field {
+    width: 85% !important;
+  }
+  .v-btn {
+    color: #fff !important;
+    text-transform: none;
+    font-size: 18px;
+    letter-spacing: 0px;
+  }
+  .modal-contain-subtitle {
+    color: #fff;
+    width: 85%;
+    font-size: 15px;
+  }
+  .modal-icon {
+    display: flex;
+    width: 160px;
+  }
+  .modal-icon-click {
+    margin-left: 40px;
+  }
+  .p-italic {
+    font-style: italic;
+  }
+  .p-bold {
+    font-weight: bold;
+  }
+  .p-name {
+    font-size: 18px;
+    height: 20px;
+  }
+  .p-name-data {
+    font-size: 17px;
+    height: 18px;
+    width: 140px;
+  }
+}

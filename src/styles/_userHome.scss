@@ -1,0 +1,108 @@
+.user-home {
+  background-image: url('../assets/background-landing.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  h1 {
+    color: #fff;
+  }
+  .user-home-title {
+    h1 {
+      font-weight: bold;
+      font-size: 35px;
+      line-height: 55px;
+      color: #fff;
+    }
+  }
+  .button {
+    .v-btn {
+      color: #fff !important;
+      text-transform: none;
+      font-size: 24px !important;
+      letter-spacing: 0 !important;
+      height: 40px !important;
+    }
+    .v-btn:hover {
+      font-weight: bold !important;
+    }
+    .button-save {
+      border-bottom: 2px solid #fff !important;
+    }
+    .button-borrow-click {
+      border-bottom: 2px solid #fff !important;
+    }
+  }
+  .inMyWallet{
+    .v-btn {
+      background-color: #4CB163 !important;
+    }
+  }
+  .subtitle {
+    color: #fff;
+    margin-left: 11px !important;
+    .container {
+      background-color: rgba(1, 62, 47, 1);
+      padding: 0;
+      display: flex;
+      align-items: center;
+      width: 200px;
+      height: 35px;
+      border-radius: 10px 10px 0px 0px;
+      margin: 0px;
+      margin-top: 15px;
+    }
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      margin-left: 10px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+  }
+  .saving-message {
+    background-color: #013e2f;
+    height: 85px;
+    width: 100%;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 20px;
+    p{
+      font-size:14px;
+      letter-spacing:0px;
+      line-height:15px;
+    }
+  }
+  .buttons-wallet{
+    .v-btn {
+      background: rgba(163, 197, 171, 0.39);
+      width: 120px;
+      height: 88px !important;
+      margin: 0 5px 0 5px;
+      letter-spacing: 0px;
+    }
+    .v-card{
+      width: 100px;
+      color: #fff;
+    }
+  }
+  .card {
+    width: 70%;
+    margin-left: 15%;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .container-wallet {
+    height: 170px;
+  }
+  .button-disconnect-wallet{
+    .v-btn{
+      height: 35px !important;
+    }
+  }
+   .subtitle-span {
+      text-align: center;
+      margin-left: 20px;
+    }
+}

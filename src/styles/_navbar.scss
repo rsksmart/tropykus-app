@@ -1,0 +1,29 @@
+.navbar {
+  background-color: rgba(1, 62, 47, 0.85) !important;
+  height: 80px;
+  .navbar-title {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    color: #fff;
+    font-size: 40px;
+    line-height: 73px;
+  }
+  .v-btn {
+    font-size: 15px;
+    line-height: 20px;
+    color: #ffff;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+
+  .navbar-button {
+    color: #ffff;
+    height: 40px !important;
+    font-style: normal;
+    font-weight: bold ;
+    font-size: 15px;
+    line-height: 10px;
+    text-transform: none;
+  }
+}
