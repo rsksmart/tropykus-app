@@ -3,7 +3,7 @@
     <div class="hidden-sm-and-down">
       <v-row class="mt-5 ml-5 d-flex justify-start">
         <a href="/">
-          <v-img position="left top" src="@/assets/título.png" height="50" contain/>
+          <v-img position="left top" src="@/assets/tropykus.svg" height="50" contain/>
         </a>
       </v-row>
       <v-row>

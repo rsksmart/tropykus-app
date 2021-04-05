@@ -1,22 +1,25 @@
 .tutorials {
+  h1 {
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 55px;
+    color: #fff;
+  }
+  div {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    color: #fff;
+  }
+  .v-btn {
+    background: #4CB163 !important;
+    color: #fff !important;
+  }
+}
+
+.tutorial-background{
   padding-top: 70px;
-  background-color: #013e2f;
-  background-size: cover;
-  height: 120% !important;
-  z-index: 0;
-}
-
-.tutorials h1 {
-  color: #fff;
-  margin: 0 0.5em;
-}
-
-.tutorial-navbar {
-  background-image: url('../assets/backgrounds/background-home.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
+  background-color: #013E2F;
 }
 
 .tutorial-container {
@@ -55,11 +58,6 @@
   font-size: 25px;
   line-height: 30px;
   z-index: 1 !important;
-}
-
-.tutorial-left-arrow {
-  height: 30px;
-  margin-right: 0.1em;
 }
 
 .tutorial-frog {

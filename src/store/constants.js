@@ -1,6 +1,16 @@
 export const WALLET_LIQUALITY = 'WALLET_LIQUALITY';
 export const WALLET_METAMASK = 'WALLET_METAMASK';
 
+export const cRBTC = 'cRBTC';
+export const cRIF = 'cRIF';
+export const cDOC = 'cDOC';
+export const crUSDT = 'crUSDT';
+
+export const RBTC = 'RBTC';
+export const RIF = 'RIF';
+export const DOC = 'DOC';
+export const rUSDT = 'rUSDT';
+
 // actions
 export const SESSION_CONNECT_WEB3 = 'SESSION_CONNECT_WEB3';
 export const CONTRACT_GET_UNITROLLER_ADDRESS = 'CONTRACT_GET_UNITROLLER_ADDRESS';

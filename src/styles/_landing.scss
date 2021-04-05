@@ -5,12 +5,13 @@
     line-height: 55px;
     color: #fff;
   }
+  .menu-selected {
+    border-bottom: 2px solid #fff !important;
+  }
   .button {
     .v-btn {
       color: #fff !important;
-      text-transform: none;
       font-size: 24px !important;
-      letter-spacing: 0 !important;
       height: 40px !important;
     }
     .v-btn:hover {
@@ -22,28 +23,5 @@
     .button-borrow-click {
       border-bottom: 2px solid #fff !important;
     }
-  }
-  .landing-subtitle {
-    font-weight: normal;
-    font-size: 25px;
-    line-height: 42px;
-    color: #fff;
-    background-color: rgba(1, 62, 47, 1);
-    border-radius: 10px 10px 0px 0px;
-    width: 120px;
-    height: 42px;
-    img {
-      margin-left: 20px;
-      height: 23px;
-    }
-  }
-  h2 {
-    font-size: 17px;
-    margin-left: 10px;
-  }
-  .card {
-    width: 70%;
-    margin-left: 15%;
-    background-color: rgba(0, 0, 0, 0);
   }
 }
