@@ -260,7 +260,7 @@ export default {
   data() {
     return {
       showModal: false,
-      manifestUrl: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/Tropykus_Manifiesto.pdf?alt=media&token=394b8a25-9217-4ecd-96d0-6d9fcb74c6be',
+      manifestUrl: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/Tropykus_Manifiesto.pdf?alt=media&token=a897f65c-967a-4c91-87b2-d14103c53e10',
     };
   },
   components: {
