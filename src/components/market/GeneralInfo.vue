@@ -4,14 +4,14 @@
       <v-col cols="7" class="pa-0">
         <v-row class="mx-0">
           <v-col class="pa-0 d-flex justify-start">
-            <v-img position="left center" height="40" :src="symbolImg" contain />
+            <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
             <h1>{{ symbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
-              <v-img height="16" src="@/assets/icon-link.svg" contain />
+              <v-img height="16" src="@/assets/icon-link.svg" contain/>
             </a>
           </v-col>
         </v-row>
@@ -50,19 +50,31 @@
 </template>
 
 <script>
-import { CToken } from '@/middleware';
+import { mapState } from 'vuex';
+import { Market } from '@/middleware';
 
 export default {
   name: 'GeneralInfo',
   data() {
     return {
       db: this.$firebase.firestore(),
-      symbolImg: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd',
+      symbolImg:
+          'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd',
       symbol: 'crUSDT',
       underlying: 'rUSDT',
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
       rate: 6.54,
       underlyingPrice: 50000,
+      info: {
+        name: null,
+        symbol: null,
+        rate: null,
+        savings: null,
+        price: null,
+        underlyingPrice: null,
+        available: null,
+        underlying: null,
+      },
     };
   },
   props: {
@@ -76,6 +88,9 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.account,
+    }),
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
     },
@@ -90,16 +105,16 @@ export default {
     },
   },
   async created() {
-    const cToken = new CToken(this.marketAddress);
+    const cToken = new Market(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol;
+    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
     this.info.rate = await cToken.supplyRateAPY();
     this.info.underlying = await cToken.underlying();
-    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
     if (this.walletAddress) {
       this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
       this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
+      this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
     }
   },
 };

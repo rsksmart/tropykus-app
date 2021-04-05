@@ -74,7 +74,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { CToken } from '@/middleware';
+import { Market } from '@/middleware';
 
 // import ModalBorrow from '@/components/ModalBorrow.vue';
 import ModalSave from '@/components/market/ModalSave.vue';
@@ -128,7 +128,7 @@ export default {
     },
   },
   async created() {
-    const cToken = new CToken(this.marketAddress);
+    const cToken = new Market(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol;

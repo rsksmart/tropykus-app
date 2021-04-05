@@ -54,6 +54,8 @@ const getters = {
         return 'wallet';
     }
   },
+  // eslint-disable-next-line no-shadow
+  [constants.SESSION_IS_LOGGED_IN]: (state) => !!state.account,
 };
 
 export default {

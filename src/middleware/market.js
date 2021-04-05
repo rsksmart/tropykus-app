@@ -10,7 +10,7 @@ const blocksPerDay = 2 * 60 * 24;
 const daysPerYear = 365;
 const factor = 1e18;
 
-export default class CToken {
+export default class Market {
   constructor(address = '') {
     this.cTokenAddress = address;
     this.instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
@@ -69,6 +69,8 @@ export default class CToken {
   }
 
   async underlyingCurrentPrice(chainId) {
+    console.log(chainId);
+    console.log(addresses);
     const priceOracleProxyInstance = new ethers.Contract(
       // eslint-disable-next-line dot-notation
       addresses[`${chainId}`]['priceOracleProxy'],

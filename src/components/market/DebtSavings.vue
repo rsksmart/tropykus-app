@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { CToken } from '@/middleware';
+import { Market } from '@/middleware';
 
 export default {
   name: 'DebtSavings',
@@ -108,29 +108,27 @@ export default {
   },
   methods: {
     getSymbolImg() {
-      console.log(this.info.symbol);
       this.db
         .collection('markets-symbols')
         .doc(this.info.symbol)
         .get()
         .then((response) => {
-          console.log(response);
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
     },
   },
   async created() {
-    const cToken = new CToken(this.marketAddress);
+    const cToken = new Market(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
     this.info.rate = await cToken.supplyRateAPY();
     this.info.underlying = await cToken.underlying();
-    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
     if (this.walletAddress) {
       this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
       this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
+      this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
     }
   },
   async updated() {
