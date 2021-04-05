@@ -13,10 +13,9 @@
             </v-row>
             <v-row class="mx-0">
               <h2>
-                Tropykus finance te ayuda a que saques rendimiento de tus bitcoins. Podrás tener el
-                control de tus fondos de tus forma simple, privada y con la seguridad de la
-                blockchain de RSK. Además, podrás impulsar el cambio en Latinoamérica con créditos
-                más justos y accesibles.
+                Ten el control de tus fondos de forma simple, privada y con la seguridad de la
+                blockchain de RSK. Impulsa el cambio en Latinoamérica con créditos más justos y
+                accesibles.
               </h2>
             </v-row>
             <v-row class="mx-0">
@@ -147,10 +146,9 @@
             </v-row>
             <v-row class="mx-0">
               <h2>
-                Tropykus finance te ayuda a que saques rendimiento de tis bitcoins. Podrás tener el
-                control de tus fondos de tus forma simple,privada y con la seguridad de la
-                blockchain de RSK. Además,podrás impulsar el cambio en Latinoamérica con créditos
-                más justos y accesibles.
+                Ten el control de tus fondos de forma simple, privada y con la seguridad de la
+                blockchain de RSK. Impulsa el cambio en Latinoamérica con créditos más justos y
+                accesibles.
               </h2>
             </v-row>
             <v-row class="mx-0">
@@ -159,7 +157,7 @@
                 @click="showModal = true"
                 color="#4CB163"
                 x-large
-                class="mt-7 mb-12"
+                class="mt-7 mb-16"
                 width="100%"
               >
                 <span>Obtén acceso exclusivo</span>
