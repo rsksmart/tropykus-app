@@ -10,8 +10,9 @@ import router from './router';
 import store from './store';
 import './styles/main.scss';
 import vuetify from './plugins/vuetify';
-
 import { firebaseConfig } from '../firebaseConfig';
+
+require('./filters');
 
 sync(store, router);
 // eslint-disable-next-line no-multi-assign
