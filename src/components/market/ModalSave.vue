@@ -23,13 +23,13 @@
         <v-row class="d-flex justify-center ma-0 ">
           <div class="modal-container mt-6 ml-6">
             <img
-              src="../assets/icon-modal.png"
+              src="../../assets/icon-modal.png"
               alt="icon wallet"
               class="wallet-icon mb-1"
               v-if="hidden"
             />
             <img
-              src="../assets/icon-pig.png"
+              src="../../assets/icon-pig.png"
               alt="icon pig"
               class="wallet-icon mb-1"
               v-if="!hidden"
@@ -37,8 +37,8 @@
             <p class="title-modal-rate ma-0">
               En tu billetera:
             </p>
-            <p class="ma-0 p-bold p-name-data">0.000000 {{ data.name }}</p>
-            <p class="ma-0 mb-6 p-italic">= ${{ data.price }} USD</p>
+            <p class="ma-0 p-bold p-name-data">{{ info.available }} {{ info.symbol }}</p>
+            <p class="ma-0 mb-6 p-italic">= ${{ info.price }} USD</p>
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex flex-column modal-container-img mr-6 mt-6">
@@ -49,12 +49,12 @@
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
               />
               <div>
-                <p class="ma-0 p-bold p-name mt-2">1 {{ data.name }}</p>
+                <p class="ma-0 p-bold p-name mt-2">1 {{ info.symbol }}</p>
                 <p class="ma-0 p-italic">= $50.000 USD</p>
               </div>
             </div>
             <p class="ma-0 mb-1" v-if="hidden">Rendimiento Anual</p>
-            <p class="ma-0 modal-rate" v-if="hidden">{{ data.rate }} %</p>
+            <p class="ma-0 modal-rate" v-if="hidden">{{ info.rate }} %</p>
           </div>
         </v-row>
         <v-row class="d-flex align-center flex-column ma-0">
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import ModalConnectWallet from './dialog/ConnectWallet.vue';
+import ModalConnectWallet from '../dialog/ConnectWallet.vue';
 
 export default {
   name: 'ModalSave',
@@ -98,11 +98,12 @@ export default {
   },
   props: {
     showModal: {
-      require: true,
       type: Boolean,
+      required: true,
     },
-    data: {
+    info: {
       type: Object,
+      required: true,
     },
   },
   methods: {

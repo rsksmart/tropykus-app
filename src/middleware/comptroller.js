@@ -1,13 +1,14 @@
-import Vue from 'vue';
 import ComptrollerAbi from '@/abis/Comptroller.json';
+import { ethers } from 'ethers';
+import Vue from 'vue';
 
 export default class Comptroller {
   constructor(address = '') {
     this.comptrollerAddress = address;
-    this.instance = new Vue.web3.eth.Contract(ComptrollerAbi, address);
+    this.instance = new ethers.Contract(address, ComptrollerAbi, Vue.web3);
   }
 
   get allMarkets() {
-    return this.instance.methods.getAllMarkets().call();
+    return this.instance.callStatic.getAllMarkets();
   }
 }

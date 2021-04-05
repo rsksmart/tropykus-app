@@ -1,38 +1,36 @@
-import Vue from 'vue';
-import Web3 from 'web3';
+import store from '@/store';
 import * as constants from '@/store/constants';
+import { ethers } from 'ethers';
+import Vue from 'vue';
+
+if (window.ethereum) {
+  window.ethereum.on('accountsChanged', async () => {
+    store.dispatch(constants.SESSION_CONNECT_WEB3);
+  });
+}
 
 const state = {
   account: undefined,
   wallet: undefined,
+  chainId: undefined,
 };
 
 const actions = {
-  [constants.SESSION_CONNECT_WEB3]: async ({ commit }, walletType) => {
+  [constants.SESSION_CONNECT_WEB3]: async ({ commit }) => {
     if (window.ethereum) {
-      Vue.prototype.$web3 = new Web3(window.ethereum);
       await window.ethereum.enable();
-      window.ethereum.on('accountsChanged', async () => {
-        const accounts = await Vue.prototype.$web3.eth.getAccounts();
-        commit(constants.SESSION_SET_PROPERTY, { account: accounts[0] });
-      });
-      if (walletType === constants.WALLET_METAMASK && window.ethereum.isMetaMask) {
-        const accounts = await Vue.prototype.$web3.eth.getAccounts();
-        commit(constants.SESSION_SET_PROPERTY, { account: accounts[0] });
-        commit(constants.SESSION_SET_PROPERTY, { wallet: walletType });
-        return true;
-      }
-      if (walletType === constants.WALLET_LIQUALITY && window.ethereum.isLiquality) {
-        const accounts = await Vue.prototype.$web3.eth.getAccounts();
-        commit(constants.SESSION_SET_PROPERTY, { account: accounts[0] });
-        commit(constants.SESSION_SET_PROPERTY, { wallet: walletType });
-        return true;
-      }
-      console.error(`Error while getting account data from ${walletType} wallet`);
-      return false;
+      const account = await Vue.web3.getSigner();
+      console.log(
+        ethers.utils.formatEther(
+          await Vue.web3.getBalance(account.provider.provider.selectedAddress),
+        ),
+      );
+      commit(constants.SESSION_SET_PROPERTY, { chainId: window?.ethereum?.chainId ?? 0 });
+      commit(
+        constants.SESSION_SET_PROPERTY,
+        { account: account.provider.provider.selectedAddress },
+      );
     }
-    console.error('No web3 wallet detected');
-    return false;
   },
 };
 

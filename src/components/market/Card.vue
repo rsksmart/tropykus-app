@@ -9,15 +9,15 @@
         />
       </span>
       <h1 class="mt-4">
-        {{ symbol }}
+        {{ info.symbol }}
       </h1>
       <a href="" class="mt-8 ml-2">
         <img width="12" src="../../assets/icon-link.svg" />
       </a>
       <v-spacer></v-spacer>
       <div class="anual-rate">
-        <h2 class="mt-5 ml-10 anual-rate-title" v-if="hiddenButton">{{ rate }}%</h2>
-        <h2 class="mt-5 ml-3 anual-rate-title" v-else>{{ rate }}%</h2>
+        <h2 class="mt-5 ml-10 anual-rate-title" v-if="hiddenButton">{{ info.rate }}%</h2>
+        <h2 class="mt-5 ml-3 anual-rate-title" v-else>{{ info.rate }}%</h2>
         <p class="ma-0 mr-2 mb-3" v-if="hiddenButton">Rendimiento anual</p>
         <p class="ma-0 mr-2 d-flex justify-end" v-else>Interés anual</p>
       </div>
@@ -27,14 +27,14 @@
       <template v-if="showInfoMyWallet">
         <div class="ma-4 ml-5">
           <p>Precio actual</p>
-          <p>1 {{ name }} = ${{ price }} USD</p>
+          <p>1 {{ info.name }} = ${{ info.price }} USD</p>
         </div>
       </template>
-      <template v-else>
+      <template v-else-if="info.available !== null">
         <div class="mt-1 ml-5">
           <p>Tienes en tu billetera</p>
-          <p class="p-bold">{{ savings }} {{ name }}</p>
-          <p class="p-italic">= $ {{ price * savings }} USD</p>
+          <p class="p-bold">{{ info.available }} {{ info.underlyingSymbol }}</p>
+          <p class="p-italic">= $ {{ info.underlyingPrice * info.savings }} USD</p>
         </div>
       </template>
       <v-spacer></v-spacer>
@@ -49,7 +49,7 @@
           Ahorrar
         </v-btn>
         <template v-if="showModalSave">
-          <!-- <modal-save :showModal="showModalSave" :data="data" @closed="onClickOutside" /> -->
+          <modal-save :showModal="showModalSave" :info="info" @closed="onClickOutside" />
         </template>
       </template>
       <template v-else>
@@ -63,7 +63,7 @@
           Pedir prestado
         </v-btn>
         <template v-if="showModalBorrow">
-<!-- <modal-borrow :showModal="showModalBorrow" :data="data" @closed="onClickOutside" /> -->
+    <!-- <modal-borrow :showModal="showModalBorrow" :data="data" @closed="onClickOutside" /> -->
         </template>
       </template>
     </v-row>
@@ -71,17 +71,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { CToken } from '@/middleware';
 
 // import ModalBorrow from '@/components/ModalBorrow.vue';
-// import ModalSave from '@/components/ModalSave.vue';
+import ModalSave from '@/components/market/ModalSave.vue';
 
 export default {
   name: 'Card',
-  // components: {
-  //   ModalSave,
-  //   ModalBorrow,
-  // },
+  components: {
+    ModalSave,
+    //   ModalBorrow,
+  },
   props: {
     hiddenButton: {
       require: true,
@@ -100,12 +101,23 @@ export default {
     return {
       showModalSave: false,
       showModalBorrow: false,
-      name: null,
-      symbol: null,
-      rate: 6.54,
-      savings: 4.5,
-      price: 4.23,
+      info: {
+        name: null,
+        symbol: null,
+        rate: null,
+        savings: null,
+        price: null,
+        underlyingPrice: null,
+        available: null,
+        underlying: null,
+      },
     };
+  },
+  computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.account,
+      chainId: (state) => state.Session.chainId,
+    }),
   },
   methods: {
     onClickOutside() {
@@ -115,8 +127,16 @@ export default {
   },
   async created() {
     const cToken = new CToken(this.marketAddress);
-    this.name = await cToken.name;
-    this.symbol = await cToken.symbol;
+    this.info.name = await cToken.name;
+    this.info.symbol = await cToken.symbol;
+    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol;
+    this.info.rate = await cToken.supplyRateAPY();
+    this.info.underlying = await cToken.underlying();
+    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    if (this.walletAddress) {
+      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
+      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
+    }
   },
 };
 </script>

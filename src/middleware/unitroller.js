@@ -1,13 +1,14 @@
-import Vue from 'vue';
 import UnitrollerAbi from '@/abis/Unitroller.json';
+import { ethers } from 'ethers';
+import Vue from 'vue';
 
 export default class Unitroller {
   constructor(address = '') {
     this.unitrollerAddress = address;
-    this.instance = new Vue.web3.eth.Contract(UnitrollerAbi, address);
+    this.instance = new ethers.Contract(address, UnitrollerAbi, Vue.web3);
   }
 
   get comptrollerImplementation() {
-    return this.instance.methods.comptrollerImplementation().call();
+    return this.instance.callStatic.comptrollerImplementation();
   }
 }

@@ -178,9 +178,7 @@ export default {
   watch: {
     async unitrollerAddress(val) {
       if (val) {
-        const unitroller = new Unitroller(this.unitrollerAddress);
-        const comptroller = new Comptroller(await unitroller.comptrollerImplementation);
-        this.markets = await comptroller.allMarkets;
+        this.load();
       }
     },
   },
@@ -197,9 +195,19 @@ export default {
     onSaving() {
       this.hidden = true;
     },
+    async load() {
+      if (this.unitrollerAddress) {
+        const unitroller = new Unitroller(this.unitrollerAddress);
+        const comptroller = new Comptroller(await unitroller.comptrollerImplementation);
+        this.markets = await comptroller.allMarkets;
+      }
+    },
   },
   components: {
     Card,
+  },
+  created() {
+    this.load();
   },
 };
 </script>

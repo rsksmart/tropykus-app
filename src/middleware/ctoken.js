@@ -1,17 +1,81 @@
+import CTokenAbi from '@/abis/CErc20Immutable.json';
+import PriceOracleProxyAbi from '@/abis/PriceOracleProxy.json';
+import StandardTokenAbi from '@/abis/StandardToken.json';
+import TropykusLensAbi from '@/abis/TropykusLens.json';
+import { addresses } from '@/middleware';
+import { ethers } from 'ethers';
 import Vue from 'vue';
-import CTokenAbi from '@/abis/CToken.json';
+
+const blocksPerDay = 2 * 60 * 24;
+const daysPerYear = 365;
+const factor = 1e18;
 
 export default class CToken {
   constructor(address = '') {
     this.cTokenAddress = address;
-    this.instance = new Vue.web3.eth.Contract(CTokenAbi, address);
+    this.instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
+    this.lens = new ethers.Contract('0x4826533B4897376654Bb4d4AD88B7faFD0C98528', TropykusLensAbi, Vue.web3);
   }
 
   get name() {
-    return this.instance.methods.name().call();
+    return this.instance.callStatic.name();
   }
 
   get symbol() {
-    return this.instance.methods.symbol().call();
+    return this.instance.callStatic.symbol();
+  }
+
+  get underlyingAssetSymbol() {
+    const underlyingAsset = new ethers.Contract(
+      this.underlying(),
+      StandardTokenAbi,
+      Vue.web3,
+    );
+    return underlyingAsset.callStatic.symbol();
+  }
+
+  async underlying() {
+    const { underlyingAssetAddress } = await this
+      .lens.callStatic.cTokenMetadata(this.cTokenAddress);
+    return underlyingAssetAddress;
+  }
+
+  async supplyRateAPY() {
+    const supplyRatePerBlock = await this.instance.callStatic.supplyRatePerBlock();
+    return ((Number(supplyRatePerBlock) * blocksPerDay + 1) ** (daysPerYear - 1) - 1) * 100;
+  }
+
+  async borrowRateAPY() {
+    const borrowRatePerBlock = await this.instance.callStatic.borrowRatePerBlock();
+    return ((Number(borrowRatePerBlock) * blocksPerDay + 1) ** (daysPerYear - 1) - 1) * 100;
+  }
+
+  async balanceOf(address) {
+    return Number(await this.instance.callStatic.balanceOf(address)) / factor;
+  }
+
+  async balanceOfUnderlying(address) {
+    return Number(await this.instance.callStatic.balanceOfUnderlying(address)) / factor;
+  }
+
+  async balanceOfUnderlyingInWallet(address) {
+    const underlyingAssetSymbol = await this.underlying();
+    const underlyingAsset = new ethers.Contract(
+      underlyingAssetSymbol,
+      StandardTokenAbi,
+      Vue.web3,
+    );
+    return Number(await underlyingAsset.callStatic.balanceOf(address)) / factor;
+  }
+
+  async underlyingCurrentPrice(chainId) {
+    const priceOracleProxyInstance = new ethers.Contract(
+      // eslint-disable-next-line dot-notation
+      addresses.chainId.['priceOracleProxy'],
+      PriceOracleProxyAbi,
+      Vue.web3,
+    );
+    return Number(await priceOracleProxyInstance.callStatic.getUnderlyingPrice(this.cTokenAddress))
+      / factor;
   }
 }

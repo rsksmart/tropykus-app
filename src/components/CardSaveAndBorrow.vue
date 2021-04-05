@@ -65,7 +65,7 @@
 
 <script>
 import ModalBorrow from './ModalBorrow.vue';
-import ModalSave from './ModalSave.vue';
+import ModalSave from './market/ModalSave.vue';
 
 export default {
   name: 'CardSaveAndBorrow',
