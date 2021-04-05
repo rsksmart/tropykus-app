@@ -11,7 +11,7 @@
         <v-col cols="6" class="pa-0">
           <h1>Regístrate</h1>
           <v-form ref="form" class="mb-16" lazy-validation>
-            <p class="register-email">Correo electrónico</p>
+            <p class="register-email">Correo electrónico: *</p>
             <v-text-field
               v-model="user.email"
               label="Escribe un correo electrónico de contacto"
@@ -120,7 +120,7 @@
         <v-col cols="10" class="pa-0">
           <h1 class="ml-2">Regístrate</h1>
           <v-form ref="form" class="ma-2" lazy-validation>
-            <p class="register-email">Correo electrónico</p>
+            <p class="register-email">Correo electrónico: *</p>
             <v-text-field
               height="45"
               v-model="user.email"
@@ -254,22 +254,22 @@ export default {
       if (this.modalSuccess) return true;
       return false;
     },
+
     async register() {
+      let data = {};
       const emailRegex = RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
       );
-      if (
-        !emailRegex.test(this.user.email)
-        || !this.user.twitter
-      ) {
+      if (!emailRegex.test(this.user.email)) {
         this.modalError = true;
         return;
       }
+      data = { ...data, email: this.user.email };
+      if (this.user.twitter) data = { ...data, twitter: this.user.twitter };
+      console.log(data);
       try {
-        this.db.collection('users-tropyco').doc(`${new Date()}`).set({
-          email: this.user.email,
-          twitter: this.user.twitter,
-        });
+        this.db.collection('users-tropyco').doc(`${new Date()}`)
+          .set(data);
         this.user = {};
         this.modalSuccess = true;
       } catch (err) {
