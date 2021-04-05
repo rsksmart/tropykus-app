@@ -2,7 +2,7 @@ import CTokenAbi from '@/abis/CErc20Immutable.json';
 import PriceOracleProxyAbi from '@/abis/PriceOracleProxy.json';
 import StandardTokenAbi from '@/abis/StandardToken.json';
 import TropykusLensAbi from '@/abis/TropykusLens.json';
-import { addresses } from '@/middleware';
+import { addresses } from '@/middleware/constants';
 import { ethers } from 'ethers';
 import Vue from 'vue';
 
@@ -25,9 +25,9 @@ export default class CToken {
     return this.instance.callStatic.symbol();
   }
 
-  get underlyingAssetSymbol() {
+  async underlyingAssetSymbol() {
     const underlyingAsset = new ethers.Contract(
-      this.underlying(),
+      await this.underlying(),
       StandardTokenAbi,
       Vue.web3,
     );
@@ -71,7 +71,7 @@ export default class CToken {
   async underlyingCurrentPrice(chainId) {
     const priceOracleProxyInstance = new ethers.Contract(
       // eslint-disable-next-line dot-notation
-      addresses.chainId.['priceOracleProxy'],
+      addresses[`${chainId}`]['priceOracleProxy'],
       PriceOracleProxyAbi,
       Vue.web3,
     );

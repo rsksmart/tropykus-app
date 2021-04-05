@@ -4,6 +4,7 @@
     <router-link :to="{ name: 'Home' }">
       <v-img height="48" position="left center" src="@/assets/titulo.png" contain />
     </router-link>
+    <v-spacer />
     <router-link :to="{ name: 'Home' }">
       Inicio
     </router-link>

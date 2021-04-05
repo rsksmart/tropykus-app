@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { CToken } from '@/middleware';
+
 export default {
   name: 'GeneralInfo',
   data() {
@@ -86,6 +88,19 @@ export default {
     rateLabel() {
       return this.inBorrowMenu ? 'Interés anual' : 'Rendimiento anual';
     },
+  },
+  async created() {
+    const cToken = new CToken(this.marketAddress);
+    this.info.name = await cToken.name;
+    this.info.symbol = await cToken.symbol;
+    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol;
+    this.info.rate = await cToken.supplyRateAPY();
+    this.info.underlying = await cToken.underlying();
+    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    if (this.walletAddress) {
+      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
+      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
+    }
   },
 };
 </script>

@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain />
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ symbol }}</h1>
+            <h1>{{ info.symbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -23,7 +23,7 @@
       </v-col>
     </v-row>
     <v-row class="mx-0 container">
-      <v-divider color="#BEBEBE"/>
+      <v-divider color="#BEBEBE" />
     </v-row>
     <v-row class="mx-0 mb-1 container">
       <v-col cols="7" class="pa-0 d-flex align-center">
@@ -52,18 +52,29 @@
 </template>
 
 <script>
+import { CToken } from '@/middleware';
+
 export default {
   name: 'DebtSavings',
   data() {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
-      symbol: 'crUSDT',
       underlying: 'rUSDT',
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
       rate: 6.54,
       underlyingPrice: 50000,
       underlyingBalance: 3,
+      info: {
+        name: null,
+        symbol: null,
+        rate: null,
+        savings: null,
+        price: null,
+        underlyingPrice: null,
+        available: null,
+        underlying: null,
+      },
     };
   },
   props: {
@@ -78,7 +89,8 @@ export default {
   },
   computed: {
     tokenPrice() {
-      return this.inBorrowMenu ? this.underlyingBalance * this.underlyingPrice
+      return this.inBorrowMenu
+        ? this.underlyingBalance * this.underlyingPrice
         : this.underlyingBalance * this.underlyingPrice;
     },
     buttonColor() {
@@ -96,15 +108,32 @@ export default {
   },
   methods: {
     getSymbolImg() {
-      this.db.collection('markets-symbols')
-        .doc(this.underlying).get()
+      console.log(this.info.symbol);
+      this.db
+        .collection('markets-symbols')
+        .doc(this.info.symbol)
+        .get()
         .then((response) => {
+          console.log(response);
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
     },
   },
-  created() {
+  async created() {
+    const cToken = new CToken(this.marketAddress);
+    this.info.name = await cToken.name;
+    this.info.symbol = await cToken.symbol;
+    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
+    this.info.rate = await cToken.supplyRateAPY();
+    this.info.underlying = await cToken.underlying();
+    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    if (this.walletAddress) {
+      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
+      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
+    }
+  },
+  async updated() {
     this.getSymbolImg();
   },
 };
