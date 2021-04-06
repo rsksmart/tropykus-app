@@ -38,7 +38,7 @@
             </v-row>
             <v-row>
               <v-col cols="6" class="ma-0 mt-3 pa-0" v-for="data in mySavings" :key="data.id">
-                <card-save-and-borrow :data="data" :hiddenButton="true" />
+                <debt-savings :marketAddress="0x00" :inBorrowMenu="true" />
               </v-col>
             </v-row>
             <v-row>
@@ -51,7 +51,7 @@
             </v-row>
             <v-row>
               <v-col cols="6" class="ma-0 mt-3 pa-0" v-for="data in myBorrowing" :key="data.id">
-                <card-save-and-borrow :data="data" :hiddenButton="false" />
+                <debt-savings :data="data" :hiddenButton="false" />
               </v-col>
             </v-row>
           </v-card>
@@ -149,19 +149,12 @@
     </v-card>
   </div>
 </template>
+
 <script>
-import CardSaveAndBorrow from '@/components/CardSaveAndBorrow.vue';
+import DebtSavings from '@/components/market/DebtSavings.vue';
 
 export default {
   name: 'Balance',
-  components: {
-    CardSaveAndBorrow,
-  },
-  computed: {
-    chartDataRiskProfile() {
-      return this.dataRiskLow;
-    },
-  },
   data() {
     return {
       dataRiskLow: [
@@ -303,6 +296,14 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    chartDataRiskProfile() {
+      return this.dataRiskLow;
+    },
+  },
+  components: {
+    DebtSavings,
   },
 };
 </script>

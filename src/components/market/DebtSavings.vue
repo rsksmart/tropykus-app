@@ -32,7 +32,7 @@
             <p>Precio actual</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ underlyingBalance }} {{ underlying }} =</p>
+            <p class="boldie">1 {{ tokenBalance }} {{ token }} =</p>
           </v-row>
           <v-row class="mx-0">
             <p class="italique">{{ tokenPrice | formatPrice }}</p>
@@ -41,7 +41,7 @@
       </v-col>
       <v-col cols="5" class="pa-0">
         <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ rate }}%</h2>
+          <h2 class="text-right">{{ info.rate }}%</h2>
         </v-row>
         <v-row class="mx-0 d-flex justify-end">
           <p class="text-right">{{ rateLabel }}</p>
@@ -53,6 +53,7 @@
 
 <script>
 import { CToken } from '@/middleware';
+import { mapState } from 'vuex';
 
 export default {
   name: 'DebtSavings',
@@ -60,11 +61,10 @@ export default {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
-      underlying: 'rUSDT',
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
-      rate: 6.54,
-      underlyingPrice: 50000,
       underlyingBalance: 3,
+      cTokenBalance: 35,
+      cTokenExchangeRate: 0.02,
       info: {
         name: null,
         symbol: null,
@@ -88,10 +88,20 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.account,
+      chainId: (state) => state.Session.chainId,
+    }),
+    token() {
+      return this.inBorrowMenu ? this.info.symbol : this.info.underlyingPrice;
+    },
+    tokenBalance() {
+      return this.inBorrowMenu ? this.cTokenBalance : this.underlyingBalance;
+    },
     tokenPrice() {
       return this.inBorrowMenu
-        ? this.underlyingBalance * this.underlyingPrice
-        : this.underlyingBalance * this.underlyingPrice;
+        ? this.cTokenBalance * this.cTokenExchangeRate * this.info.underlyingPrice
+        : this.underlyingBalance * this.info.underlyingPrice;
     },
     buttonColor() {
       return this.inBorrowMenu ? '#F24646' : '#4696A6';
@@ -108,13 +118,11 @@ export default {
   },
   methods: {
     getSymbolImg() {
-      console.log(this.info.symbol);
       this.db
         .collection('markets-symbols')
         .doc(this.info.symbol)
         .get()
         .then((response) => {
-          console.log(response);
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
@@ -124,10 +132,13 @@ export default {
     const cToken = new CToken(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.rate = await cToken.supplyRateAPY();
+    this.info.underlyingSymbol = 'RBTC';
+    // this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
+    this.info.rate = this.inBorrowMenu ? await cToken.borrowRateAPY()
+      : await cToken.supplyRateAPY();
     this.info.underlying = await cToken.underlying();
-    this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    // this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    this.info.underlyingPrice = 50000;
     if (this.walletAddress) {
       this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
       this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);

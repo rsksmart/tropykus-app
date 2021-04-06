@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain />
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ info.symbol }}</h1>
+            <h1>{{ underlyingSymbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -18,10 +18,10 @@
       </v-col>
       <v-col cols="5" class="pa-0">
         <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ info.rate }}%</h2>
+          <h2 class="text-right">{{ supplyRate }}%</h2>
         </v-row>
         <v-row class="mx-0 d-flex justify-end">
-          <p class="text-right">{{ rateLabel }}</p>
+          <p class="text-right">Rendimiento anual</p>
         </v-row>
       </v-col>
     </v-row>
@@ -35,14 +35,14 @@
             <p>Precio actual</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ info.underlyingSymbol }} =</p>
-            <p class="italique">{{ info.underlyingPrice | formatPrice }}</p>
+            <p class="boldie">1 {{ underlyingSymbol }} =</p>
+            <p class="italique">{{ underlyingPrice | formatPrice }}</p>
           </v-row>
         </div>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-center">
-        <v-btn depressed :color="buttonColor" width="100%" height="30">
-          {{ buttonName }}
+        <v-btn depressed color="#4CB163" width="100%" height="30">
+          Ahorrar
         </v-btn>
       </v-col>
     </v-row>
@@ -50,26 +50,19 @@
 </template>
 
 <script>
-import { CToken } from '@/middleware';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'GeneralInfo',
+  name: 'WalletInfo',
   data() {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
-      info: {
-        name: null,
-        symbol: null,
-        rate: null,
-        savings: null,
-        price: null,
-        underlyingPrice: null,
-        available: null,
-        underlying: null,
-      },
+      underlyingBalance: 3,
+      underlyingSymbol: 'RBTC',
+      underlyingPrice: 50000,
+      supplyRate: 6,
     };
   },
   props: {
@@ -87,24 +80,15 @@ export default {
       walletAddress: (state) => state.Session.account,
       chainId: (state) => state.Session.chainId,
     }),
-    buttonColor() {
-      return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
-    },
-    buttonName() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Ahorrar';
-    },
     marketOnExplorer() {
       return `${this.baseExplorerURL}/${this.marketAddress}`;
-    },
-    rateLabel() {
-      return this.inBorrowMenu ? 'Interés anual' : 'Rendimiento anual';
     },
   },
   methods: {
     getSymbolImg() {
       this.db
         .collection('markets-symbols')
-        .doc(this.info.symbol)
+        .doc(this.underlyingSymbol)
         .get()
         .then((response) => {
           this.symbolImg = response.data().imageURL;
@@ -112,23 +96,7 @@ export default {
         .catch(console.error);
     },
   },
-  async created() {
-    const cToken = new CToken(this.marketAddress);
-    this.info.name = await cToken.name;
-    this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = 'RBTC';
-    // this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.rate = this.inBorrowMenu ? await cToken.borrowRateAPY()
-      : await cToken.supplyRateAPY();
-    this.info.underlying = await cToken.underlying();
-    // this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
-    this.info.underlyingPrice = 50000;
-    if (this.walletAddress) {
-      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
-      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
-    }
-  },
-  async updated() {
+  created() {
     this.getSymbolImg();
   },
 };

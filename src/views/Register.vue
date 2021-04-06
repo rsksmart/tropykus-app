@@ -220,7 +220,7 @@
   </div>
 </template>
 <script>
-import ModalValidationForm from '../components/ModalValidationForm.vue';
+import ModalValidationForm from '../components/dialog/ModalValidationForm.vue';
 
 export default {
   name: 'Register',

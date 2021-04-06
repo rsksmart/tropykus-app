@@ -27,13 +27,13 @@
         <v-row class="d-flex justify-center ma-0 ">
           <div class="modal-container ml-6">
             <img
-              src="../assets/icon-borrow.png"
+              src="../../assets/icon-borrow.png"
               alt="icon borrow"
               class="icon-borrow mb-1"
               v-if="hidden"
             />
             <img
-              src="../assets/icon-pay.png"
+              src="../../assets/icon-pay.png"
               alt="icon pig"
               class="wallet-icon mb-1"
               v-if="!hidden"
@@ -88,7 +88,7 @@
           <div class="d-flex flex-column align-center warning-contain">
             <div class="modal-line" />
             <div v-if="hidden" class="d-flex my-4 mx-5">
-              <img class="ml-8" src="../assets/icon-warning.png" alt="Icon Warning" />
+              <img class="ml-8" src="../../assets/icon-warning.png" alt="Icon Warning" />
               <p class="ma-0 mt-1 p-warning">
                 Necesitas tener ahorros en otras cryptos para respaldar tu prestámo
               </p>
@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import ModalConnectWallet from './dialog/ConnectWallet.vue';
+import ModalConnectWallet from './ConnectWallet.vue';
 
 export default {
   name: 'ModalBorrow',
