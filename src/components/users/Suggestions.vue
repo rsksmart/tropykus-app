@@ -64,7 +64,7 @@ export default {
   },
   created() {
     setTimeout(() => {
-      this.suggestions = [];
+      this.suggestions = ['x'];
     }, 1000);
   },
 };

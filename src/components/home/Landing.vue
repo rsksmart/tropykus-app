@@ -13,7 +13,7 @@
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in markets"
                  :key="`market-${idx}`">
-            <generalInfo :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
+            <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
           </v-col>
         </v-row>
       </template>

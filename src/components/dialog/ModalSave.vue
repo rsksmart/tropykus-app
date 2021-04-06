@@ -64,24 +64,8 @@
           </div>
           <v-text-field placeholder="Escribe el monto" v-model="amount" solo dense></v-text-field>
           <v-btn v-if="!amount" class="modal-button mb-6" height="42" color="#A3C5AB" width="300">
-            Conectar billetera
+            Ahorrar
           </v-btn>
-          <v-btn
-            v-else
-            class="modal-button mb-6"
-            @click="showModalConnectWallet = true"
-            height="42"
-            color="#4CB163"
-            width="300"
-          >
-            Conectar billetera
-          </v-btn>
-          <template v-if="showModalConnectWallet">
-            <modal-connect-wallet
-              :showModalConnectWallet="showModalConnectWallet"
-              @closed="outsideConnectWallet"
-            />
-          </template>
         </v-row>
       </v-card>
     </v-dialog>
@@ -89,20 +73,25 @@
 </template>
 
 <script>
-import ModalConnectWallet from '../dialog/ConnectWallet.vue';
-
 export default {
   name: 'ModalSave',
-  components: {
-    ModalConnectWallet,
+  data() {
+    return {
+      info: {
+        symbol: 'cRBTC',
+        price: 32,
+        available: 'avaiable',
+        rate: 6,
+      },
+      showModalConnectWallet: false,
+      dialog: this.showModal,
+      hidden: true,
+      amount: '',
+    };
   },
   props: {
     showModal: {
       type: Boolean,
-      required: true,
-    },
-    info: {
-      type: Object,
       required: true,
     },
   },
@@ -114,14 +103,6 @@ export default {
       this.dialog = false;
       this.$emit('closed');
     },
-  },
-  data() {
-    return {
-      showModalConnectWallet: false,
-      dialog: this.showModal,
-      hidden: true,
-      amount: '',
-    };
   },
 };
 </script>

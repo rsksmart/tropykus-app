@@ -41,17 +41,26 @@
         </div>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-center">
-        <v-btn depressed :color="buttonColor" width="100%" height="30">
+        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="supplyOrBorrow">
           {{ buttonName }}
         </v-btn>
       </v-col>
     </v-row>
+    <template v-if="walletDialog">
+      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false" />
+    </template>
+    <template v-if="supplyDialog">
+      <modal-save :showModal="supplyDialog" />
+    </template>
   </v-card>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import { CToken } from '@/middleware';
+import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
+import ModalSave from '@/components/dialog/ModalSave.vue';
+import * as constants from '@/store/constants';
 
 export default {
   name: 'GeneralInfo',
@@ -70,6 +79,8 @@ export default {
         available: null,
         underlying: null,
       },
+      walletDialog: false,
+      supplyDialog: false,
     };
   },
   props: {
@@ -85,6 +96,9 @@ export default {
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.account,
+    }),
+    ...mapGetters({
+      isLoggedIn: constants.SESSION_IS_CONNECTED,
     }),
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
@@ -110,10 +124,19 @@ export default {
         })
         .catch(console.error);
     },
+    supplyOrBorrow() {
+      if (this.isLoggedIn) {
+        this.supplyDialog = true;
+      } else {
+        this.walletDialog = true;
+      }
+    },
+  },
+  components: {
+    ConnectWallet,
+    ModalSave,
   },
   async created() {
-    const result = await CToken.isCRBT(this.marketAddress);
-    console.log(result);
     const cToken = new CToken(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;

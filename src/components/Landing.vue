@@ -110,7 +110,7 @@ export default {
       unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
     }),
     ...mapGetters({
-      isLoggedIn: constants.SESSION_IS_LOGGED_IN,
+      isLoggedIn: constants.SESSION_IS_CONNECTED,
     }),
     marketsLoaded() {
       return this.markets.length > 0;

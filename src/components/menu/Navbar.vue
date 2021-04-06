@@ -20,7 +20,7 @@
     </v-btn>
     <template v-if="showModalConnectWallet">
       <connect-wallet
-        :showModalConnectWallet="showModalConnectWallet"
+        :showModal="showModalConnectWallet"
         @closed="outsideConnectWallet"
       />
     </template>

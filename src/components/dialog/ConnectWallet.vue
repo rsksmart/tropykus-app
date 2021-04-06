@@ -74,11 +74,11 @@ export default {
   data() {
     return {
       constants,
-      dialog: this.showModalConnectWallet,
+      dialog: this.showModal,
     };
   },
   props: {
-    showModalConnectWallet: {
+    showModal: {
       require: true,
       type: Boolean,
     },

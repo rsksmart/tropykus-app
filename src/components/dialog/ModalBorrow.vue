@@ -115,7 +115,7 @@
           </v-btn>
           <template v-if="showModalConnectWallet">
             <modal-connect-wallet
-              :showModalConnectWallet="showModalConnectWallet"
+              :showModal="showModalConnectWallet"
               @closed="outsideConnectWallet"
             />
           </template>
