@@ -20,7 +20,7 @@
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in inMyWallet"
                  :key="`market-${idx}`">
-            <wallet-info :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
+            <wallet-info :marketAddress="market" />
           </v-col>
         </v-row>
       </template>
@@ -102,12 +102,6 @@ export default {
       inMyWallet: null,
       showModalTransferFunds: false,
     };
-  },
-  props: {
-    inBorrowMenu: {
-      required: true,
-      type: Boolean,
-    },
   },
   computed: {
     loadingOnMyWallet() {

@@ -66,10 +66,6 @@ export default {
     };
   },
   props: {
-    inBorrowMenu: {
-      require: true,
-      type: Boolean,
-    },
     marketAddress: {
       require: true,
       type: String,

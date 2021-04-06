@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       myBorrowing: null,
+      inBorrowMenu: true,
     };
   },
   computed: {
@@ -51,12 +52,6 @@ export default {
     },
     debtsLoaded() {
       return this.myBorrowing?.length > 0;
-    },
-  },
-  props: {
-    inBorrowMenu: {
-      required: true,
-      type: Boolean,
     },
   },
   components: {

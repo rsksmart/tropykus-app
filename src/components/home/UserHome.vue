@@ -1,22 +1,22 @@
 <template>
   <div class="container">
     <template v-if="inBorrowMenu">
-      <debts :inBorrowMenu="inBorrowMenu" />
+      <debts />
       <suggestions :inBorrowMenu="inBorrowMenu" />
     </template>
     <template v-else>
-      <savings :inBorrowMenu="inBorrowMenu" />
-      <on-my-wallet :inBorrowMenu="inBorrowMenu" />
+      <savings />
+      <on-my-wallet />
       <suggestions :inBorrowMenu="inBorrowMenu" />
     </template>
   </div>
 </template>
 
 <script>
-import Savings from '@/components/home/Savings.vue';
-import Debts from '@/components/home/Debts.vue';
-import OnMyWallet from '@/components/home/OnMyWallet.vue';
-import Suggestions from '@/components/home/Suggestions.vue';
+import Savings from '@/components/users/Savings.vue';
+import Debts from '@/components/users/Debts.vue';
+import OnMyWallet from '@/components/users/OnMyWallet.vue';
+import Suggestions from '@/components/users/Suggestions.vue';
 
 export default {
   name: 'UserHome',

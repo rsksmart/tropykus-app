@@ -8,7 +8,7 @@
         </v-card-title>
       </v-card>
     </v-row>
-    <template v-if="loadingSavingss">
+    <template v-if="loadingSavings">
       <v-row class="mx-0 mt-4">
         <v-col cols="4" v-for="index in 3" :key="index">
           <v-skeleton-loader type="image" height="158" />
@@ -43,16 +43,11 @@ export default {
   data() {
     return {
       mySavings: null,
+      inBorrowMenu: false,
     };
   },
-  props: {
-    inBorrowMenu: {
-      required: true,
-      type: Boolean,
-    },
-  },
   computed: {
-    loadingSavingss() {
+    loadingSavings() {
       return this.mySavings === null;
     },
     savingsLoaded() {
