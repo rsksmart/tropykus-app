@@ -51,7 +51,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Market } from '@/middleware';
+import { CToken } from '@/middleware';
 
 export default {
   name: 'GeneralInfo',
@@ -105,7 +105,9 @@ export default {
     },
   },
   async created() {
-    const cToken = new Market(this.marketAddress);
+    const result = await CToken.isCRBT(this.marketAddress);
+    console.log(result);
+    const cToken = new CToken(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();

@@ -10,11 +10,21 @@ const blocksPerDay = 2 * 60 * 24;
 const daysPerYear = 365;
 const factor = 1e18;
 
-export default class Market {
+export default class CToken {
   constructor(address = '') {
-    this.cTokenAddress = address;
-    this.instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
+    this.marketAddress = address;
     this.lens = new ethers.Contract('0x4826533B4897376654Bb4d4AD88B7faFD0C98528', TropykusLensAbi, Vue.web3);
+    this.instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
+  }
+
+  static async isCRBT(address) {
+    const instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
+    try {
+      const result = await instance.callStatic.symbol();
+      return result === 'cRBTC';
+    } catch (e) {
+      return false;
+    }
   }
 
   get name() {
@@ -36,7 +46,7 @@ export default class Market {
 
   async underlying() {
     const { underlyingAssetAddress } = await this
-      .lens.callStatic.cTokenMetadata(this.cTokenAddress);
+      .lens.callStatic.cTokenMetadata(this.marketAddress);
     return underlyingAssetAddress;
   }
 
@@ -77,7 +87,7 @@ export default class Market {
       PriceOracleProxyAbi,
       Vue.web3,
     );
-    return Number(await priceOracleProxyInstance.callStatic.getUnderlyingPrice(this.cTokenAddress))
+    return Number(await priceOracleProxyInstance.callStatic.getUnderlyingPrice(this.marketAddress))
       / factor;
   }
 }

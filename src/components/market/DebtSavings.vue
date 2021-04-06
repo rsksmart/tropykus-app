@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { Market } from '@/middleware';
+import { CToken } from '@/middleware';
+import { mapState } from 'vuex';
 
 export default {
   name: 'DebtSavings',
@@ -88,6 +89,9 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.account,
+    }),
     tokenPrice() {
       return this.inBorrowMenu
         ? this.underlyingBalance * this.underlyingPrice
@@ -119,7 +123,7 @@ export default {
     },
   },
   async created() {
-    const cToken = new Market(this.marketAddress);
+    const cToken = new CToken(this.marketAddress);
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
