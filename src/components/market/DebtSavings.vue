@@ -4,14 +4,14 @@
       <v-col cols="7" class="pa-0">
         <v-row class="mx-0">
           <v-col class="pa-0 d-flex justify-start">
-            <v-img position="left center" height="40" :src="symbolImg" contain />
+            <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
             <h1>{{ info.symbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
-              <v-img height="16" src="@/assets/icon-link.svg" contain />
+              <v-img height="16" src="@/assets/icon-link.svg" contain/>
             </a>
           </v-col>
         </v-row>
@@ -23,7 +23,7 @@
       </v-col>
     </v-row>
     <v-row class="mx-0 container">
-      <v-divider color="#BEBEBE" />
+      <v-divider color="#BEBEBE"/>
     </v-row>
     <v-row class="mx-0 mb-1 container">
       <v-col cols="7" class="pa-0 d-flex align-center">
@@ -32,7 +32,7 @@
             <p>Precio actual</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ underlyingBalance }} {{ underlying }} =</p>
+            <p class="boldie">1 {{ tokenBalance }} {{ token }} =</p>
           </v-row>
           <v-row class="mx-0">
             <p class="italique">{{ tokenPrice | formatPrice }}</p>
@@ -41,7 +41,7 @@
       </v-col>
       <v-col cols="5" class="pa-0">
         <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ rate }}%</h2>
+          <h2 class="text-right">{{ info.rate }}%</h2>
         </v-row>
         <v-row class="mx-0 d-flex justify-end">
           <p class="text-right">{{ rateLabel }}</p>
@@ -61,11 +61,10 @@ export default {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
-      underlying: 'rUSDT',
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
-      rate: 6.54,
-      underlyingPrice: 50000,
       underlyingBalance: 3,
+      cTokenBalance: 35,
+      cTokenExchangeRate: 0.02,
       info: {
         name: null,
         symbol: null,
@@ -92,10 +91,16 @@ export default {
     ...mapState({
       walletAddress: (state) => state.Session.account,
     }),
+    token() {
+      return this.inBorrowMenu ? this.info.symbol : this.info.underlyingPrice;
+    },
+    tokenBalance() {
+      return this.inBorrowMenu ? this.cTokenBalance : this.underlyingBalance;
+    },
     tokenPrice() {
       return this.inBorrowMenu
-        ? this.underlyingBalance * this.underlyingPrice
-        : this.underlyingBalance * this.underlyingPrice;
+        ? this.cTokenBalance * this.cTokenExchangeRate * this.info.underlyingPrice
+        : this.underlyingBalance * this.info.underlyingPrice;
     },
     buttonColor() {
       return this.inBorrowMenu ? '#F24646' : '#4696A6';
@@ -113,10 +118,7 @@ export default {
   methods: {
     getSymbolImg() {
       this.db
-        .collection('markets-symbols')
-        .doc(this.info.symbol)
-        .get()
-        .then((response) => {
+        .collection('markets-symbols').doc(this.info.symbol).get().then((response) => {
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
@@ -127,8 +129,11 @@ export default {
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.rate = await cToken.supplyRateAPY();
+    this.info.rate = this.inBorrowMenu
+      ? await cToken.borrowRateAPY()
+      : await cToken.supplyRateAPY();
     this.info.underlying = await cToken.underlying();
+    this.info.underlyingPrice = 50000;
     if (this.walletAddress) {
       this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
       this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);

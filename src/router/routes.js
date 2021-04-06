@@ -5,7 +5,6 @@ import BtcToRbtc from '@/components/tutorials/BtcToRbtc.vue';
 import BinanceToLiquality from '@/components/tutorials/BinanceToLiquality.vue';
 import BlockFiToLiquality from '@/components/tutorials/BlockfiToLiquality.vue';
 import LednToLiquality from '@/components/tutorials/LednToLiquality.vue';
-import UserHome from '@/views/UserHome.vue';
 import Balance from '@/views/Balance.vue';
 
 export default [
@@ -43,11 +42,6 @@ export default [
     path: '/tutorials/ledn-to-liquality',
     name: 'LednToLiquality',
     component: LednToLiquality,
-  },
-  {
-    path: '/home',
-    name: 'UserHome',
-    component: UserHome,
   },
   {
     path: '/balance',

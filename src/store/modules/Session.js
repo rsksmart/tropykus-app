@@ -1,6 +1,5 @@
 import store from '@/store';
 import * as constants from '@/store/constants';
-import { ethers } from 'ethers';
 import Vue from 'vue';
 
 if (window.ethereum) {
@@ -20,11 +19,6 @@ const actions = {
     if (window.ethereum) {
       await window.ethereum.enable();
       const account = await Vue.web3.getSigner();
-      console.log(
-        ethers.utils.formatEther(
-          await Vue.web3.getBalance(account.provider.provider.selectedAddress),
-        ),
-      );
       commit(constants.SESSION_SET_PROPERTY, { chainId: window?.ethereum?.chainId ?? 0 });
       commit(
         constants.SESSION_SET_PROPERTY,
@@ -55,7 +49,7 @@ const getters = {
     }
   },
   // eslint-disable-next-line no-shadow
-  [constants.SESSION_IS_LOGGED_IN]: (state) => !!state.account,
+  [constants.SESSION_IS_CONNECTED]: (state) => !!state.account,
 };
 
 export default {

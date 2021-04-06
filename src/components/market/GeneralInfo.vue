@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ symbol }}</h1>
+            <h1>{{ info.symbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -18,7 +18,7 @@
       </v-col>
       <v-col cols="5" class="pa-0">
         <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ rate }}%</h2>
+          <h2 class="text-right">{{ info.rate }}%</h2>
         </v-row>
         <v-row class="mx-0 d-flex justify-end">
           <p class="text-right">{{ rateLabel }}</p>
@@ -35,8 +35,8 @@
             <p>Precio actual</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ underlying }} =</p>
-            <p class="italique">{{ underlyingPrice | formatPrice }}</p>
+            <p class="boldie">1 {{ info.underlyingSymbol }} =</p>
+            <p class="italique">{{ info.underlyingPrice | formatPrice }}</p>
           </v-row>
         </div>
       </v-col>
@@ -58,13 +58,8 @@ export default {
   data() {
     return {
       db: this.$firebase.firestore(),
-      symbolImg:
-          'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd',
-      symbol: 'crUSDT',
-      underlying: 'rUSDT',
+      symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
-      rate: 6.54,
-      underlyingPrice: 50000,
       info: {
         name: null,
         symbol: null,
@@ -104,6 +99,18 @@ export default {
       return this.inBorrowMenu ? 'Interés anual' : 'Rendimiento anual';
     },
   },
+  methods: {
+    getSymbolImg() {
+      this.db
+        .collection('markets-symbols')
+        .doc(this.info.symbol)
+        .get()
+        .then((response) => {
+          this.symbolImg = response.data().imageURL;
+        })
+        .catch(console.error);
+    },
+  },
   async created() {
     const result = await CToken.isCRBT(this.marketAddress);
     console.log(result);
@@ -111,13 +118,20 @@ export default {
     this.info.name = await cToken.name;
     this.info.symbol = await cToken.symbol;
     this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.rate = await cToken.supplyRateAPY();
     this.info.underlying = await cToken.underlying();
+    this.info.rate = this.inBorrowMenu
+      ? await cToken.borrowRateAPY()
+      : await cToken.supplyRateAPY();
+    this.info.underlying = await cToken.underlying();
+    this.info.underlyingPrice = 50000;
     if (this.walletAddress) {
       this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
       this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
       this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
     }
+  },
+  async updated() {
+    this.getSymbolImg();
   },
 };
 </script>

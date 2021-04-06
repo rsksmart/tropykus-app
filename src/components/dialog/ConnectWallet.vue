@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="350">
+    <v-dialog v-model="dialog" width="350" overlay-opacity="0.8" overlay-color="#000">
       <v-card
         class="modal-connect-wallet d-flex justify-center align-center flex-column"
         v-click-outside="closeDialog"
@@ -89,7 +89,6 @@ export default {
     }),
     connectWeb3Wallet(walletType) {
       this.connectToWeb3(walletType);
-      this.$router.push('/home');
       this.closeDialog();
     },
     closeDialog() {
