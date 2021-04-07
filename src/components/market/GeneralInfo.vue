@@ -51,7 +51,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { CToken } from '@/middleware';
+import { CToken, CRbtc, Market } from '@/middleware';
 
 export default {
   name: 'GeneralInfo',
@@ -112,22 +112,22 @@ export default {
     },
   },
   async created() {
-    const result = await CToken.isCRBT(this.marketAddress);
-    console.log(result);
-    const cToken = new CToken(this.marketAddress);
-    this.info.name = await cToken.name;
-    this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.underlying = await cToken.underlying();
+    const market = await Market.isCRBT(this.marketAddress)
+      ? new CRbtc(this.marketAddress)
+      : new CToken(this.marketAddress);
+    this.info.name = await market.name;
+    this.info.symbol = await market.symbol;
+    this.info.underlyingSymbol = await market.underlyingAssetSymbol();
+    this.info.underlying = await market.underlying();
     this.info.rate = this.inBorrowMenu
-      ? await cToken.borrowRateAPY()
-      : await cToken.supplyRateAPY();
-    this.info.underlying = await cToken.underlying();
+      ? await market.borrowRateAPY()
+      : await market.supplyRateAPY();
+    this.info.underlying = await market.underlying();
     this.info.underlyingPrice = 50000;
     if (this.walletAddress) {
-      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
-      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
-      this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+      this.info.savings = await market.balanceOfUnderlying(this.walletAddress);
+      this.info.available = await market.balanceOfUnderlyingInWallet(this.walletAddress);
+      this.info.underlyingPrice = await market.underlyingCurrentPrice(this.chainId);
     }
   },
   async updated() {
