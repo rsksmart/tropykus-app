@@ -41,26 +41,26 @@
         </div>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-center">
-        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="supplyOrBorrow">
+        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="pseudo">
           {{ buttonName }}
         </v-btn>
       </v-col>
     </v-row>
     <template v-if="walletDialog">
-      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false" />
+      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
     </template>
     <template v-if="supplyDialog">
-      <modal-save :showModal="supplyDialog" />
+      <modal-save :showModal="supplyDialog" @save="deposit" :info="info"/>
     </template>
   </v-card>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
-import { CToken } from '@/middleware';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import ModalSave from '@/components/dialog/ModalSave.vue';
 import * as constants from '@/store/constants';
+import { CToken, CRbtc, Market } from '@/middleware';
 
 export default {
   name: 'GeneralInfo',
@@ -68,7 +68,7 @@ export default {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
-      baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
+      baseExplorerURL: 'https://explorer.testnet.rsk.co/address',
       info: {
         name: null,
         symbol: null,
@@ -81,6 +81,7 @@ export default {
       },
       walletDialog: false,
       supplyDialog: false,
+      market: null,
     };
   },
   props: {
@@ -95,7 +96,9 @@ export default {
   },
   computed: {
     ...mapState({
-      walletAddress: (state) => state.Session.account,
+      walletAddress: (state) => state.Session.walletAddress,
+      account: (state) => state.Session.account,
+      chainId: (state) => state.Session.chainId,
     }),
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
@@ -131,30 +134,48 @@ export default {
         this.walletDialog = true;
       }
     },
+    async pseudo() {
+      console.log(this.market.marketAddress);
+      await this.deposit('12');
+    },
+    async deposit(amount) {
+      await this.market.supply(this.account, amount);
+      await this.updateMarketInfo();
+    },
+    async updateMarketInfo() {
+      this.info.name = await this.market.name;
+      this.info.symbol = await this.market.symbol;
+      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
+      this.info.underlying = await this.market.underlying();
+      this.info.rate = this.inBorrowMenu
+        ? await this.market.borrowRateAPY()
+        : await this.market.supplyRateAPY();
+      if (this.chainId) {
+        this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
+      }
+      if (this.walletAddress) {
+        this.info.savings = await this.market.balanceOfUnderlying(this.walletAddress);
+        this.info.available = await this.market.balanceOfUnderlyingInWallet(this.walletAddress);
+      }
+    },
   },
   components: {
     ConnectWallet,
     ModalSave,
   },
   async created() {
-    const cToken = new CToken(this.marketAddress);
-    this.info.name = await cToken.name;
-    this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.underlying = await cToken.underlying();
-    this.info.rate = this.inBorrowMenu
-      ? await cToken.borrowRateAPY()
-      : await cToken.supplyRateAPY();
-    this.info.underlying = await cToken.underlying();
-    this.info.underlyingPrice = 50000;
-    if (this.walletAddress) {
-      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
-      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
-      this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
+    const isCRBT = await Market.isCRBT(this.marketAddress);
+    if (isCRBT) {
+      this.market = new CRbtc(this.marketAddress);
+    } else {
+      this.market = new CToken(this.marketAddress);
     }
+    console.log(this.market);
+    await this.updateMarketInfo();
   },
   async updated() {
     this.getSymbolImg();
+    await this.updateMarketInfo();
   },
 };
 </script>

@@ -6,9 +6,9 @@
           <v-btn
             depressed
             color="transparent"
-           @click="hidden = true"
+            @click="hidden = true"
             :class="hidden ? 'button-save' : 'button-save-click'"
-            >
+          >
             Ahorrar
           </v-btn>
           <v-btn
@@ -37,8 +37,8 @@
             <p class="title-modal-rate ma-0">
               En tu billetera:
             </p>
-            <p class="ma-0 p-bold p-name-data">{{ info.available }} {{ info.symbol }}</p>
-            <p class="ma-0 mb-6 p-italic">= ${{ info.price }} USD</p>
+            <p class="ma-0 p-bold p-name-data">{{ info.available }} {{ info.underlyingSymbol }}</p>
+            <p class="ma-0 mb-6 p-italic">= ${{ info.available * info.underlyingPrice }} USD</p>
           </div>
           <v-spacer></v-spacer>
           <div class="d-flex flex-column modal-container-img mr-6 mt-6">
@@ -49,8 +49,8 @@
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
               />
               <div>
-                <p class="ma-0 p-bold p-name mt-2">1 {{ info.symbol }}</p>
-                <p class="ma-0 p-italic">= $50.000 USD</p>
+                <p class="ma-0 p-bold p-name mt-2">1 {{ info.underlyingSymbol }}</p>
+                <p class="ma-0 p-italic">= {{ info.underlyingPrice | formatPrice }} USD</p>
               </div>
             </div>
             <p class="ma-0 mb-1" v-if="hidden">Rendimiento Anual</p>
@@ -58,12 +58,13 @@
           </div>
         </v-row>
         <v-row class="d-flex align-center flex-column ma-0">
-          <div class="modal-line" />
+          <div class="modal-line"/>
           <div class="d-flex justify-start modal-contain-subtitle">
             <p class="ma-0 mt-5 mb-2">Escribe la cantidad que vas a ahorrar</p>
           </div>
           <v-text-field placeholder="Escribe el monto" v-model="amount" solo dense></v-text-field>
-          <v-btn v-if="!amount" class="modal-button mb-6" height="42" color="#A3C5AB" width="300">
+          <v-btn class="modal-button mb-6" height="42" color="#A3C5AB"
+                 width="300" :disabled="!amount" @click="save">
             Ahorrar
           </v-btn>
         </v-row>
@@ -77,21 +78,19 @@ export default {
   name: 'ModalSave',
   data() {
     return {
-      info: {
-        symbol: 'cRBTC',
-        price: 32,
-        available: 'avaiable',
-        rate: 6,
-      },
       showModalConnectWallet: false,
       dialog: this.showModal,
       hidden: true,
-      amount: '',
+      amount: null,
     };
   },
   props: {
     showModal: {
       type: Boolean,
+      required: true,
+    },
+    info: {
+      type: Object,
       required: true,
     },
   },
@@ -102,6 +101,9 @@ export default {
     onClickOutside() {
       this.dialog = false;
       this.$emit('closed');
+    },
+    save() {
+      this.$emit('save', this.amount);
     },
   },
 };

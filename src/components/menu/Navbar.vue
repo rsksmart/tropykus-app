@@ -15,7 +15,7 @@
       Tutoriales
     </router-link>
     <v-btn @click="ShowDialogConnectWallet" class="wallet-button" width="230"
-           v-bind:class="{'wallet-button-connected': isWalletConnected}">
+           :class="{'wallet-button-connected': isWalletConnected}">
       {{ accountCutOff }}
     </v-btn>
     <template v-if="showModalConnectWallet">
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     ...mapState({
-      account: (state) => state.Session.account,
+      walletAddress: (state) => state.Session.walletAddress,
       wallet: (state) => state.Session.wallet,
       routePath: (state) => state.route.path,
     }),

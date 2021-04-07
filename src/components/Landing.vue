@@ -29,7 +29,7 @@
       <v-row class="mx-0 pl-3">
         <v-card class="crop-card">
           <v-card-title class="pa-0">
-            <v-img class="px-2" src="@/assets/logo.png" height="23" contain />
+            <v-img class="px-2" src="@/assets/logo.png" height="23" contain/>
             <h1 class="text-left">Mercados de cryptos</h1>
           </v-card-title>
         </v-card>
@@ -37,19 +37,14 @@
       <template v-if="marketsLoaded">
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in markets" :key="`market-${idx}`">
-            <template v-if="isLoggedIn">
-              <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
-            </template>
-            <template v-else>
-              <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
-            </template>
+            <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
         </v-row>
       </template>
       <template v-else>
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="index in 6" :key="index">
-            <v-skeleton-loader type="image" height="158" />
+            <v-skeleton-loader type="image" height="158"/>
           </v-col>
         </v-row>
       </template>
@@ -91,14 +86,14 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import * as constants from '@/store/constants';
-import { Unitroller, Comptroller } from '@/middleware';
+import { Comptroller, Unitroller } from '@/middleware';
 import GeneralInfo from '@/components/market/GeneralInfo.vue';
-import DebtSavings from '@/components/market/DebtSavings.vue';
 
 export default {
   name: 'Landing',
   data() {
     return {
+      comptroller: undefined,
       inBorrowMenu: false,
       showModalConvertBtn: true,
       markets: [],
@@ -106,7 +101,6 @@ export default {
   },
   computed: {
     ...mapState({
-      account: (state) => state.Session.account,
       unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
     }),
     ...mapGetters({
@@ -139,14 +133,14 @@ export default {
     async load() {
       if (this.unitrollerAddress) {
         const unitroller = new Unitroller(this.unitrollerAddress);
-        const comptroller = new Comptroller(await unitroller.comptrollerImplementation);
-        this.markets = await comptroller.allMarkets;
+        this.comptroller = await unitroller.comptrollerImplementation;
+        const comptrollerInstance = new Comptroller(this.comptroller);
+        this.markets = await comptrollerInstance.allMarkets;
       }
     },
   },
   components: {
     GeneralInfo,
-    DebtSavings,
   },
   created() {
     this.load();

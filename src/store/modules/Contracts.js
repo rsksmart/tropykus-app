@@ -3,6 +3,8 @@ import * as constants from '@/store/constants';
 
 const state = {
   unitrollerAddress: undefined,
+  comptroller: undefined,
+  markets: [],
 };
 
 const actions = {
