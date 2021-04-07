@@ -36,6 +36,10 @@ export default class Market {
     return this.instance.callStatic.symbol();
   }
 
+  get decimals() {
+    return this.instance.callStatic.decimals();
+  }
+
   async underlyingAssetSymbol() {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
@@ -43,6 +47,15 @@ export default class Market {
       Vue.web3,
     );
     return underlyingAsset.callStatic.symbol();
+  }
+
+  async underlyingAssetDecimals() {
+    const underlyingAsset = new ethers.Contract(
+      await this.underlying(),
+      StandardTokenAbi,
+      Vue.web3,
+    );
+    return underlyingAsset.callStatic.decimals();
   }
 
   async underlying() {
@@ -89,9 +102,20 @@ export default class Market {
       / factor;
   }
 
+  async getAmountDecimals(amount, isCtoken = false) {
+    const cTokenDecimals = await this.decimals;
+    const underlyingDecimals = await this.underlyingAssetDecimals();
+    // add decimals token to fixed
+    const decimalToFix = !isCtoken ? cTokenDecimals : underlyingDecimals;
+    return ethers.utils.parseUnits(
+      typeof amount === 'string' ? amount : amount.toFixed(decimalToFix),
+      decimalToFix,
+    );
+  }
+
   async supply(account, amountIntended, isCrbtc = false) {
     const accountSigner = signer(account);
-    const amount = ethers.utils.parseEther(amountIntended);
+    const amount = this.getAmountDecimals(amountIntended);
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
@@ -99,8 +123,8 @@ export default class Market {
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
     console.log('approved at ', this.marketAddress);
-    const gasLimit = await this.instance.estimateGas.mint(amount);
-    console.log(gasLimit);
+    const gasLimit = 250000;
+    console.log(`Gas limit: ${gasLimit}`);
     if (isCrbtc) {
       await this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
     } else {
