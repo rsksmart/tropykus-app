@@ -97,9 +97,8 @@ export default class Market {
       StandardTokenAbi,
       Vue.web3,
     );
-    await underlyingAsset
-      .connect(accountSigner)
-      .approve(this.marketAddress, amount);
+    await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
+    console.log('approved at ', this.marketAddress);
     const gasLimit = await this.instance.estimateGas.mint(amount);
     console.log(gasLimit);
     if (isCrbtc) {

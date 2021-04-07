@@ -18,7 +18,7 @@
     <template v-else>
       <template v-if="suggestionsLoaded">
         <v-row class="mx-0 mt-4">
-          <v-col cols="4" v-for="(market, idx) in suggestions"
+          <v-col :cols="suggestions.length+1" v-for="(market, idx) in suggestions"
                  :key="`market-${idx}`">
             <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
