@@ -15,7 +15,7 @@
       Tutoriales
     </router-link>
     <v-btn @click="ShowDialogConnectWallet" class="wallet-button" width="230"
-           v-bind:class="{'wallet-button-connected': isWalletConnected}">
+           :class="{'wallet-button-connected': isWalletConnected}">
       {{ accountCutOff }}
     </v-btn>
     <template v-if="showModalConnectWallet">

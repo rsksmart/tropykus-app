@@ -15,7 +15,6 @@ export default {
   methods: {
     ...mapActions({
       getUnitrollerAddress: constants.CONTRACT_GET_UNITROLLER_ADDRESS,
-      loadChainId: constants.SESSION_GET_CHAIN_ID,
     }),
   },
   components: {
@@ -23,7 +22,6 @@ export default {
   },
   async created() {
     this.getUnitrollerAddress();
-    this.loadChainId();
   },
 };
 </script>
