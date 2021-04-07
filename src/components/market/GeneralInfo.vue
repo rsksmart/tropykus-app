@@ -59,7 +59,7 @@ export default {
     return {
       db: this.$firebase.firestore(),
       symbolImg: null,
-      baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
+      baseExplorerURL: 'https://explorer.testnet.rsk.co/address',
       info: {
         name: null,
         symbol: null,
@@ -85,6 +85,7 @@ export default {
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.account,
+      chainId: (state) => state.Session.chainId,
     }),
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
@@ -122,12 +123,12 @@ export default {
     this.info.rate = this.inBorrowMenu
       ? await market.borrowRateAPY()
       : await market.supplyRateAPY();
-    this.info.underlying = await market.underlying();
-    this.info.underlyingPrice = 50000;
+    if (this.chainId) {
+      this.info.underlyingPrice = await market.underlyingCurrentPrice(this.chainId);
+    }
     if (this.walletAddress) {
       this.info.savings = await market.balanceOfUnderlying(this.walletAddress);
       this.info.available = await market.balanceOfUnderlyingInWallet(this.walletAddress);
-      this.info.underlyingPrice = await market.underlyingCurrentPrice(this.chainId);
     }
   },
   async updated() {

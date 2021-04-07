@@ -79,11 +79,8 @@ export default class Market {
   }
 
   async underlyingCurrentPrice(chainId) {
-    console.log(chainId);
-    console.log(addresses);
     const priceOracleProxyInstance = new ethers.Contract(
-      // eslint-disable-next-line dot-notation
-      addresses[`${chainId}`]['priceOracleProxy'],
+      addresses[chainId].priceOracleProxy,
       PriceOracleProxyAbi,
       Vue.web3,
     );

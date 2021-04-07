@@ -8,6 +8,8 @@ export const COMMIT_HASH = process.env.VUE_APP_GIT_HASH || '';
 
 // actions
 export const SESSION_CONNECT_WEB3 = 'SESSION_CONNECT_WEB3';
+export const SESSION_GET_CHAIN_ID = 'SESSION_GET_CHAIN_ID';
+
 export const CONTRACT_GET_UNITROLLER_ADDRESS = 'CONTRACT_GET_UNITROLLER_ADDRESS';
 
 // mutations
