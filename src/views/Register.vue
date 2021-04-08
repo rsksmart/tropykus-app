@@ -34,6 +34,7 @@
                   Encuentranos en telegram como<a href="https://web.telegram.org/#/im?p=g571607928" target="_blank" class="ml-1">Tropykus finance</a>
                 </p>
               </span>
+              <v-spacer></v-spacer>
               <v-btn color="#4CB163" @click="register" width="40%"> Registarme </v-btn>
             </span>
           </v-form>
