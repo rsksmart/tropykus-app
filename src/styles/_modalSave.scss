@@ -1,5 +1,9 @@
 .modal-save {
   background-color: #013e2f !important;
+  .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
+    background-color: #A3C5AB !important;
+    color: #fff !important;
+  }
   .button {
     .v-btn {
       color: #fff !important;

@@ -5,3 +5,6 @@ Vue.filter('formatPrice', (value) => {
     .replace(',', '.');
   return `$ ${val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 });
+
+Vue.filter('twoDecimals', (value) => `${value.toFixed(2)
+  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);

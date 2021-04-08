@@ -50,7 +50,7 @@
       <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
     </template>
     <template v-if="supplyDialog">
-      <modal-save :showModal="supplyDialog" @save="deposit"
+      <supply-redeem :showModal="supplyDialog" @save="deposit"
                   :info="info" @closed="supplyDialog = false"/>
     </template>
   </v-card>
@@ -59,7 +59,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
-import ModalSave from '@/components/dialog/ModalSave.vue';
+import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
 import * as constants from '@/store/constants';
 import { CToken, CRbtc, Market } from '@/middleware';
 
@@ -158,7 +158,7 @@ export default {
   },
   components: {
     ConnectWallet,
-    ModalSave,
+    SupplyRedeem,
   },
   async created() {
     const isCRBT = await Market.isCRBT(this.marketAddress);

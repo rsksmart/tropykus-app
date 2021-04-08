@@ -109,7 +109,7 @@ export default class Market {
   async getAmountDecimals(amount, isCtoken = false) {
     const cTokenDecimals = await this.decimals;
     const underlyingDecimals = await this.underlyingAssetDecimals();
-    const decimalToFix = !isCtoken ? cTokenDecimals : underlyingDecimals;
+    const decimalToFix = isCtoken ? cTokenDecimals : underlyingDecimals;
     return ethers.utils.parseUnits(
       typeof amount === 'string' ? amount : amount.toFixed(decimalToFix),
       decimalToFix,
@@ -118,7 +118,10 @@ export default class Market {
 
   async supply(account, amountIntended, isCrbtc = false) {
     const accountSigner = signer(account);
-    const amount = this.getAmountDecimals(amountIntended);
+    const amount = await this.getAmountDecimals(amountIntended);
+    const amount2 = ((amount * 1e8) / 1e18) / 2;
+    console.log(`amount to approve: ${amount} === ${50 * 1e18}`);
+    console.log(`amount to mint: ${amount2} === ${(50 * 1e18) / 2}`);
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
@@ -129,9 +132,9 @@ export default class Market {
     const gasLimit = 250000;
     console.log(`Gas limit: ${gasLimit}`);
     if (isCrbtc) {
-      await this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
+      await this.instance.connect(accountSigner).mint({ value: amount2, gasLimit });
     } else {
-      await this.instance.connect(accountSigner).mint(amount, { gasLimit });
+      await this.instance.connect(accountSigner).mint(amount2, { gasLimit });
     }
   }
 }

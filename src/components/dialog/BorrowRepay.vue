@@ -129,7 +129,7 @@
 import ModalConnectWallet from './ConnectWallet.vue';
 
 export default {
-  name: 'ModalBorrow',
+  name: 'BorrowRepay',
   components: {
     ModalConnectWallet,
   },
