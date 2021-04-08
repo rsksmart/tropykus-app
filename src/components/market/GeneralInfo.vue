@@ -41,7 +41,7 @@
         </div>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-center">
-        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="pseudo">
+        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="supplyOrBorrow">
           {{ buttonName }}
         </v-btn>
       </v-col>
@@ -50,7 +50,8 @@
       <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
     </template>
     <template v-if="supplyDialog">
-      <modal-save :showModal="supplyDialog" @save="deposit" :info="info"/>
+      <modal-save :showModal="supplyDialog" @save="deposit"
+                  :info="info" @closed="supplyDialog = false"/>
     </template>
   </v-card>
 </template>
@@ -133,10 +134,6 @@ export default {
       } else {
         this.walletDialog = true;
       }
-    },
-    async pseudo() {
-      console.log(this.market.marketAddress);
-      await this.deposit('12');
     },
     async deposit(amount) {
       await this.market.supply(this.account, amount);

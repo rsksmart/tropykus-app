@@ -63,7 +63,7 @@
             <p class="ma-0 mt-5 mb-2">Escribe la cantidad que vas a ahorrar</p>
           </div>
           <v-text-field placeholder="Escribe el monto" v-model="amount" solo dense></v-text-field>
-          <v-btn class="modal-button mb-6" height="42" color="#A3C5AB"
+          <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                  width="300" :disabled="!amount" @click="save">
             Ahorrar
           </v-btn>
@@ -92,6 +92,11 @@ export default {
     info: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    buttonColor() {
+      return this.amount ? '#4CB163' : '#A3C5AB';
     },
   },
   methods: {

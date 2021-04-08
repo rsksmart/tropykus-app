@@ -40,6 +40,16 @@ export default class Market {
     return this.instance.callStatic.decimals();
   }
 
+  async underlying() {
+    const { underlyingAssetAddress } = await this
+      .lens.callStatic.cTokenMetadata(this.marketAddress);
+    return underlyingAssetAddress;
+  }
+
+  async underlyingAssetInstance() {
+    return new ethers.Contract(await this.underlying(), StandardTokenAbi, Vue.web3);
+  }
+
   async underlyingAssetSymbol() {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
@@ -56,12 +66,6 @@ export default class Market {
       Vue.web3,
     );
     return underlyingAsset.callStatic.decimals();
-  }
-
-  async underlying() {
-    const { underlyingAssetAddress } = await this
-      .lens.callStatic.cTokenMetadata(this.marketAddress);
-    return underlyingAssetAddress;
   }
 
   async supplyRateAPY() {
@@ -105,7 +109,6 @@ export default class Market {
   async getAmountDecimals(amount, isCtoken = false) {
     const cTokenDecimals = await this.decimals;
     const underlyingDecimals = await this.underlyingAssetDecimals();
-    // add decimals token to fixed
     const decimalToFix = !isCtoken ? cTokenDecimals : underlyingDecimals;
     return ethers.utils.parseUnits(
       typeof amount === 'string' ? amount : amount.toFixed(decimalToFix),
