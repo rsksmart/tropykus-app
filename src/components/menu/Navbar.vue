@@ -48,8 +48,8 @@ export default {
       routePath: (state) => state.route.path,
     }),
     accountCutOff() {
-      return typeof this.account === 'string'
-        ? `${this.account.substr(0, 7)}...${this.account.substr(-4)}`
+      return typeof this.walletAddress === 'string'
+        ? `${this.walletAddress.substr(0, 7)}...${this.walletAddress.substr(-4)}`
         : 'Conectar billetera';
     },
     isWalletConnected() {
