@@ -18,4 +18,8 @@ export default class CRbtc extends Market {
     console.log(address, this.marketAddress);
     return Number(await account.getBalance()) / 1e18;
   }
+
+  async supply(account, amountIntended) {
+    await super.supply(account, amountIntended, true);
+  }
 }
