@@ -210,7 +210,7 @@ export default {
       if (this.walletAddress) {
         this.info.balance = await this.market.balanceOfUnderlying(this.walletAddress);
         this.info.underlyingBalance = await this.market
-          .balanceOfUnderlyingInWallet(this.walletAddress);
+          .balanceOfUnderlyingInWallet(this.account);
       }
     },
   },
@@ -227,7 +227,6 @@ export default {
     } else {
       this.market = new CToken(this.marketAddress, this.chainId);
     }
-    console.log(this.market);
     await this.updateMarketInfo();
   },
   async updated() {

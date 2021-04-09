@@ -9,7 +9,6 @@ if (window.ethereum) {
   });
   window.ethereum.on('chainChanged', () => {
     store.dispatch(constants.SESSION_GET_CHAIN_ID);
-    store.dispatch(constants.CONTRACT_GET_UNITROLLER_ADDRESS);
   });
 }
 
@@ -30,7 +29,7 @@ const actions = {
       commit(constants.SESSION_SET_PROPERTY, { account });
       commit(
         constants.SESSION_SET_PROPERTY,
-        { walletAddress: account.provider.provider.selectedAddress },
+        { walletAddress: await account.getAddress },
       );
       commit(constants.SESSION_SET_PROPERTY, { wallet });
       dispatch(constants.SESSION_GET_CHAIN_ID);

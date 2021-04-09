@@ -13,14 +13,14 @@
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in markets"
                  :key="`market-${idx}`">
-            <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
+            <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
         </v-row>
       </template>
       <template v-else>
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="index in 3" :key="index">
-            <v-skeleton-loader type="image" height="158" />
+            <v-skeleton-loader type="image" height="158"/>
           </v-col>
         </v-row>
       </template>
@@ -65,13 +65,14 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Unitroller, Comptroller } from '@/middleware';
+import { Comptroller } from '@/middleware';
 import GeneralInfo from '@/components/market/GeneralInfo.vue';
 
 export default {
   name: 'Landing',
   data() {
     return {
+      comptroller: undefined,
       showModalConvertBtn: true,
       markets: [],
     };
@@ -85,36 +86,29 @@ export default {
   computed: {
     ...mapState({
       account: (state) => state.Session.account,
-      unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
+      chainId: (state) => state.Session.chainId,
     }),
     marketsLoaded() {
       return this.markets.length > 0;
-    },
-  },
-  watch: {
-    async unitrollerAddress(val) {
-      if (val) {
-        this.loadMarkets();
-      }
     },
   },
   methods: {
     outsideConvertBtn() {
       this.showModalConvertBtn = false;
     },
-    async loadMarkets() {
-      if (this.unitrollerAddress) {
-        const unitroller = new Unitroller(this.unitrollerAddress);
-        const comptroller = new Comptroller(await unitroller.comptrollerImplementation);
-        this.markets = await comptroller.allMarkets;
-      }
+    async load() {
+      this.markets = await this.comptroller.allMarkets;
     },
   },
   components: {
     GeneralInfo,
   },
   created() {
-    this.loadMarkets();
+    this.comptroller = new Comptroller(this.chainId);
+    this.load();
+  },
+  updated() {
+    this.load();
   },
 };
 </script>

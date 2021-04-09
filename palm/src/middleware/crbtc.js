@@ -1,6 +1,5 @@
 import CRBTCAbi from '@/abis/CRBTC.json';
 import Market from '@/middleware/market';
-import Vue from 'vue';
 
 export default class CRbtc extends Market {
   constructor(address = '', chainId) {
@@ -13,9 +12,7 @@ export default class CRbtc extends Market {
     return this.internalUnderlyingAssetSymbol;
   }
 
-  async balanceOfUnderlyingInWallet(address) {
-    const account = await Vue.web3.getSigner();
-    console.log(address, this.marketAddress);
+  static async balanceOfUnderlyingInWallet(account) {
     return Number(await account.getBalance()) / 1e18;
   }
 

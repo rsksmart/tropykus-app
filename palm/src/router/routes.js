@@ -1,11 +1,4 @@
 import Home from '@/views/Home.vue';
-import Register from '@/views/Register.vue';
-import Tutorials from '@/views/Tutorials.vue';
-import BtcToRbtc from '@/components/tutorials/BtcToRbtc.vue';
-import BinanceToLiquality from '@/components/tutorials/BinanceToLiquality.vue';
-import BlockFiToLiquality from '@/components/tutorials/BlockfiToLiquality.vue';
-import LednToLiquality from '@/components/tutorials/LednToLiquality.vue';
-import Balance from '@/views/Balance.vue';
 
 export default [
   {
@@ -16,36 +9,36 @@ export default [
   {
     path: '/register',
     name: 'Register',
-    component: Register,
-  },
-  {
-    path: '/tutorials',
-    name: 'Tutorials',
-    component: Tutorials,
-  },
-  {
-    path: '/tutorials/btc-to-rbtc',
-    name: 'BtcToRbtc',
-    component: BtcToRbtc,
-  },
-  {
-    path: '/tutorials/binance-to-liquality',
-    name: 'BinanceToLiquality',
-    component: BinanceToLiquality,
-  },
-  {
-    path: '/tutorials/blockfi-to-liquality',
-    name: 'BlockfiToLiquality',
-    component: BlockFiToLiquality,
-  },
-  {
-    path: '/tutorials/ledn-to-liquality',
-    name: 'LednToLiquality',
-    component: LednToLiquality,
+    component: () => import(/* webpackChunkName: "Register" */ '@/views/Register.vue'),
   },
   {
     path: '/balance',
     name: 'Balance',
-    component: Balance,
+    component: () => import(/* webpackChunkName: "Balance" */ '@/views/Balance.vue'),
+  },
+  {
+    path: '/tutorials',
+    name: 'Tutorials',
+    component: () => import(/* webpackChunkName: "Tutorials" */ '@/views/Tutorials.vue'),
+  },
+  {
+    path: '/tutorials/btc-to-rbtc',
+    name: 'BtcToRbtc',
+    component: () => import(/* webpackChunkName: "BtcToRbtc" */ '@/components/tutorials/BtcToRbtc.vue'),
+  },
+  {
+    path: '/tutorials/binance-to-liquality',
+    name: 'BinanceToLiquality',
+    component: () => import(/* webpackChunkName: "BinanceToLiquality" */ '@/components/tutorials/BinanceToLiquality.vue'),
+  },
+  {
+    path: '/tutorials/blockfi-to-liquality',
+    name: 'BlockfiToLiquality',
+    component: () => import(/* webpackChunkName: "BlockfiToLiquality" */ '@/components/tutorials/BlockfiToLiquality.vue'),
+  },
+  {
+    path: '/tutorials/ledn-to-liquality',
+    name: 'LednToLiquality',
+    component: () => import(/* webpackChunkName: "LednToLiquality" */ '@/components/tutorials/LednToLiquality.vue'),
   },
 ];

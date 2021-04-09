@@ -38,7 +38,7 @@
 <script>
 import { mapState } from 'vuex';
 import GeneralInfo from '@/components/market/GeneralInfo.vue';
-import { Comptroller, Unitroller } from '@/middleware';
+import { Comptroller } from '@/middleware';
 
 export default {
   name: 'Suggestions',
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
-      unitrollerAddress: (state) => state.Contracts.unitrollerAddress,
+      chainId: (state) => state.Session.chainId,
     }),
     loadingSuggestions() {
       return this.suggestions === null;
@@ -67,18 +67,17 @@ export default {
   },
   methods: {
     async load() {
-      if (this.unitrollerAddress) {
-        const unitroller = new Unitroller(this.unitrollerAddress);
-        this.comptroller = await unitroller.comptrollerImplementation;
-        const comptrollerInstance = new Comptroller(this.comptroller);
-        this.suggestions = await comptrollerInstance.allMarkets;
-      }
+      this.suggestions = await this.comptroller.allMarkets;
     },
   },
   components: {
     GeneralInfo,
   },
   created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.load();
+  },
+  updated() {
     this.load();
   },
 };

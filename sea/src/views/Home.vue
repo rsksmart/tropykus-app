@@ -1,8 +1,12 @@
 <template>
   <div class="landing">
     <div class="hidden-sm-and-down">
-      <v-row class="mt-5 mb-15 ml-5 d-flex justify-start">
+      <v-row class="mt-5 mb-15 mx-5 d-flex justify-start">
         <v-img position="left top" src="@/assets/título.png" height="50" contain />
+        <v-btn color="#1E6368" class="footer-btn"
+               href="https://test.tropykus.finance" target="_blank" rel="noopener">
+          <span class="button-txt">Entra al Tropykus</span>
+        </v-btn>
       </v-row>
       <v-row class="mx-0 ml-10 mt-15 mb-10 d-flex justify-start">
         <v-col cols="1" />
