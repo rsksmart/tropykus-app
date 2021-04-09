@@ -12,7 +12,8 @@ import router from './router';
 import store from './store';
 import './styles/main.scss';
 
-const web3 = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+const web3 = new ethers.providers.JsonRpcProvider('https://public-node.testnet.rsk.co');
+// const web3 = new ethers.providers.JsonRpcProvider('http://localhost:8545');
 const format = web3.formatter.formats;
 format.receipt.root = format.receipt.logsBloom;
 Object.assign(web3.formatter, { format });

@@ -9,6 +9,7 @@ if (window.ethereum) {
   });
   window.ethereum.on('chainChanged', () => {
     store.dispatch(constants.SESSION_GET_CHAIN_ID);
+    store.dispatch(constants.CONTRACT_GET_UNITROLLER_ADDRESS);
   });
 }
 
@@ -16,7 +17,7 @@ const state = {
   walletAddress: undefined,
   account: undefined,
   wallet: undefined,
-  chainId: 1337,
+  chainId: 31,
 };
 
 const actions = {
@@ -31,7 +32,6 @@ const actions = {
         constants.SESSION_SET_PROPERTY,
         { walletAddress: account.provider.provider.selectedAddress },
       );
-      console.log(wallet);
       commit(constants.SESSION_SET_PROPERTY, { wallet });
       dispatch(constants.SESSION_GET_CHAIN_ID);
     }
@@ -39,7 +39,7 @@ const actions = {
   [constants.SESSION_GET_CHAIN_ID]: async ({ commit }) => {
     if (window.ethereum) {
       await window.ethereum.enable();
-      const chainId = window?.ethereum?.chainId ?? 1337;
+      const chainId = window?.ethereum?.chainId ?? 31;
       commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
     }
   },

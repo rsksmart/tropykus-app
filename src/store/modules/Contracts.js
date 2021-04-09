@@ -8,7 +8,8 @@ const state = {
 };
 
 const actions = {
-  [constants.CONTRACT_GET_UNITROLLER_ADDRESS]: async ({ commit }) => {
+  [constants.CONTRACT_GET_UNITROLLER_ADDRESS]: async ({ commit, rootState }) => {
+    let unitrollerAddress = null;
     Vue.firebase.firestore()
       .collection('contracts')
       .doc('unitroller')
@@ -16,8 +17,11 @@ const actions = {
       .get()
       .then((unitrollers) => {
         unitrollers.forEach((doc) => {
-          commit(constants.CONTRACT_SET_PROPERTY, { unitrollerAddress: doc.data().address });
+          if (doc.id === rootState.Session.chainId.toString()) {
+            unitrollerAddress = doc.data().address;
+          }
         });
+        commit(constants.CONTRACT_SET_PROPERTY, { unitrollerAddress });
       });
   },
 };

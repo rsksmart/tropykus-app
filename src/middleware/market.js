@@ -12,9 +12,9 @@ const daysPerYear = 365;
 const factor = 1e18;
 
 export default class Market {
-  constructor(address = '', MarketAbi) {
+  constructor(address = '', MarketAbi, chainId) {
     this.marketAddress = address;
-    this.lens = new ethers.Contract('0x4826533B4897376654Bb4d4AD88B7faFD0C98528', TropykusLensAbi, Vue.web3);
+    this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
     this.instance = new ethers.Contract(address, MarketAbi, Vue.web3);
   }
 

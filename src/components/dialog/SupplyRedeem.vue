@@ -28,10 +28,10 @@
               En tu billetera:
             </p>
             <p class="ma-0 p-bold p-name-data">
-              {{ info.available | twoDecimals }} {{ info.underlyingSymbol }}
+              {{ info.underlyingBalance | twoDecimals }} {{ info.underlyingSymbol }}
             </p>
             <p class="ma-0 mb-6 p-italic">
-              ={{ info.available * info.underlyingPrice | formatPrice }} USD
+              ={{ info.underlyingBalance * info.underlyingPrice | formatPrice }} USD
             </p>
           </div>
           <v-spacer></v-spacer>

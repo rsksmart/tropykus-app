@@ -51,7 +51,7 @@
     </template>
     <template v-if="supplyDialog">
       <supply-redeem :showModal="supplyDialog" @save="deposit"
-                  :info="info" @closed="supplyDialog = false"/>
+                     :info="info" @closed="supplyDialog = false"/>
     </template>
   </v-card>
 </template>
@@ -74,10 +74,9 @@ export default {
         name: null,
         symbol: null,
         rate: null,
-        savings: null,
-        price: null,
+        balance: null,
         underlyingPrice: null,
-        available: null,
+        underlyingBalance: null,
         underlying: null,
       },
       walletDialog: false,
@@ -151,8 +150,9 @@ export default {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
       }
       if (this.walletAddress) {
-        this.info.savings = await this.market.balanceOfUnderlying(this.walletAddress);
-        this.info.available = await this.market.balanceOfUnderlyingInWallet(this.walletAddress);
+        this.info.balance = await this.market.balanceOfUnderlying(this.walletAddress);
+        this.info.underlyingBalance = await this.market
+          .balanceOfUnderlyingInWallet(this.walletAddress);
       }
     },
   },
@@ -163,9 +163,9 @@ export default {
   async created() {
     const isCRBT = await Market.isCRBT(this.marketAddress);
     if (isCRBT) {
-      this.market = new CRbtc(this.marketAddress);
+      this.market = new CRbtc(this.marketAddress, this.chainId);
     } else {
-      this.market = new CToken(this.marketAddress);
+      this.market = new CToken(this.marketAddress, this.chainId);
     }
     console.log(this.market);
     await this.updateMarketInfo();

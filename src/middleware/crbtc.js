@@ -3,8 +3,8 @@ import Market from '@/middleware/market';
 import Vue from 'vue';
 
 export default class CRbtc extends Market {
-  constructor(address = '') {
-    super(address, CRBTCAbi);
+  constructor(address = '', chainId) {
+    super(address, CRBTCAbi, chainId);
     this.internalUnderlyingAssetSymbol = 'RBTC';
     this.type = 'CRBTC';
   }
