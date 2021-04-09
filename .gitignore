@@ -1,11 +1,11 @@
 .DS_Store
-**/node_modules
-**/dist
-**/.firebase/
-**/cors.json
+node_modules
+dist
+.firebase/
+cors.json
 
 # local env files
-**/.env*
+.env*
 
 # Editor directories and files
 .idea
@@ -20,8 +20,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,vue,node,firebase
 
 ### Firebase ###
-**/node_modules/*
-**/.firebaserc
+node_modules/*
+.firebaserc
 package-lock.json
 
 ### Firebase Patch ###
