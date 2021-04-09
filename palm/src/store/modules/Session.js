@@ -9,6 +9,7 @@ if (window.ethereum) {
   });
   window.ethereum.on('chainChanged', () => {
     store.dispatch(constants.SESSION_GET_CHAIN_ID);
+    window.location.reload();
   });
 }
 
@@ -37,7 +38,6 @@ const actions = {
   },
   [constants.SESSION_GET_CHAIN_ID]: async ({ commit }) => {
     if (window.ethereum) {
-      await window.ethereum.enable();
       const chainId = window?.ethereum?.chainId ?? 31;
       commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
     }
