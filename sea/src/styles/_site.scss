@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600&display=swap");
+
+div, p, h1, h2, h3, h4, h5, h6, body, button {
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+}
+
+html,body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  background-color: #0c1520;
+}
+
+.v-btn {
+  text-transform: none !important;
+}
+
+.boldie {
+  font-weight: bold !important;
+}
