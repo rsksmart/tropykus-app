@@ -8,7 +8,7 @@ import store from './store';
 import './styles/main.scss';
 import vuetify from './plugins/vuetify';
 import 'firebase/storage';
-import firebaseConfig from '../firebaseConfig.json';
+import { firebaseConfig } from '../firebaseConfig';
 
 Vue.prototype.$firebase = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
