@@ -49,9 +49,19 @@
     <template v-if="walletDialog">
       <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
     </template>
-    <template v-if="supplyDialog">
-      <supply-redeem :showModal="supplyDialog" @save="deposit"
-                     :info="info" @closed="supplyDialog = false"/>
+    <template v-if="supplyBorrowDialog">
+      <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
+                 @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"/>
+    </template>
+    <template v-if="waitingDialog">
+      <modal-tx-status :showModal="waitingDialog" :stage="'in-progress'"/>
+    </template>
+    <template v-if="successDialog">
+      <modal-tx-status :showModal="successDialog" :stage="'success'"
+                       :txAmount="amount" :txCryptocurrency="txCurrency"/>
+    </template>
+    <template v-if="errorDialog">
+      <modal-tx-status :showModal="errorDialog" :stage="'error'"/>
     </template>
   </v-card>
 </template>
@@ -60,6 +70,8 @@
 import { mapGetters, mapState } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
+import ModalTxStatus from '@/components/dialog/ModalTxStatus.vue';
+import BorrowRepay from '@/components/dialog/BorrowRepay.vue';
 import * as constants from '@/store/constants';
 import { CToken, CRbtc, Market } from '@/middleware';
 
@@ -78,10 +90,16 @@ export default {
         underlyingPrice: null,
         underlyingBalance: null,
         underlying: null,
+        underlyingSymbol: null,
       },
       walletDialog: false,
-      supplyDialog: false,
+      supplyBorrowDialog: false,
+      waitingDialog: false,
+      successDialog: false,
+      errorDialog: false,
       market: null,
+      amount: null,
+      txCurrency: null,
     };
   },
   props: {
@@ -103,6 +121,9 @@ export default {
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
     }),
+    supplyBorrowComponent() {
+      return this.inBorrowMenu ? 'BorrowRepay' : 'SupplyRedeem';
+    },
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
     },
@@ -129,13 +150,49 @@ export default {
     },
     supplyOrBorrow() {
       if (this.isLoggedIn) {
-        this.supplyDialog = true;
+        this.supplyBorrowDialog = true;
       } else {
         this.walletDialog = true;
       }
     },
-    async deposit(amount) {
-      await this.market.supply(this.account, amount);
+    reset() {
+      this.walletDialog = false;
+      this.supplyBorrowDialog = false;
+      this.waitingDialog = false;
+      this.successDialog = false;
+      this.errorDialog = false;
+    },
+    async menuAction({ amount, action }) {
+      this.amount = amount;
+      this.reset();
+      this.waitingDialog = true;
+      switch (action) {
+        case 'Depositar':
+          this.txCurrency = this.info.underlyingSymbol;
+          this.market.supply(this.account, amount)
+            .then(() => {
+              this.reset();
+              this.successDialog = true;
+            })
+            .catch(() => {
+              this.errorDialog = true;
+            });
+          break;
+        case 'Retirar':
+          this.txCurrency = this.info.symbol;
+          console.log('redeem');
+          break;
+        case 'Pedir prestado':
+          this.txCurrency = this.info.symbol;
+          console.log('borrow');
+          break;
+        case 'Pagar deuda':
+          this.txCurrency = this.info.symbol;
+          console.log('repay');
+          break;
+        default:
+          break;
+      }
       await this.updateMarketInfo();
     },
     async updateMarketInfo() {
@@ -143,6 +200,7 @@ export default {
       this.info.symbol = await this.market.symbol;
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.underlying = await this.market.underlying();
+      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.rate = this.inBorrowMenu
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
@@ -159,6 +217,8 @@ export default {
   components: {
     ConnectWallet,
     SupplyRedeem,
+    BorrowRepay,
+    ModalTxStatus,
   },
   async created() {
     const isCRBT = await Market.isCRBT(this.marketAddress);

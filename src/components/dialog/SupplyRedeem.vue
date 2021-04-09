@@ -135,7 +135,10 @@ export default {
       this.$emit('closed');
     },
     supplyOrRedeem() {
-      this.$emit('save', this.amount);
+      this.$emit('action', {
+        amount: this.amount,
+        action: this.buttonLabel,
+      });
     },
   },
   created() {
