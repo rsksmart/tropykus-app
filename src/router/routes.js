@@ -7,11 +7,6 @@ export default [
     component: Home,
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import(/* webpackChunkName: "Register" */ '@/views/Register.vue'),
-  },
-  {
     path: '/balance',
     name: 'Balance',
     component: () => import(/* webpackChunkName: "Balance" */ '@/views/Balance.vue'),
