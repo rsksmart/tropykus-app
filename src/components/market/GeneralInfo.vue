@@ -104,19 +104,19 @@ export default {
   },
   props: {
     inBorrowMenu: {
-      require: true,
+      required: true,
       type: Boolean,
     },
     marketAddress: {
-      require: true,
+      required: true,
       type: String,
     },
   },
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
-      account: (state) => state.Session.account,
       chainId: (state) => state.Session.chainId,
+      account: (state) => state.Session.account,
     }),
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
@@ -169,7 +169,7 @@ export default {
       switch (action) {
         case 'Depositar':
           this.txCurrency = this.info.underlyingSymbol;
-          this.market.supply(this.account, amount)
+          this.market.supply(this.walletAddress, amount)
             .then(() => {
               this.reset();
               this.successDialog = true;
@@ -204,14 +204,19 @@ export default {
       this.info.rate = this.inBorrowMenu
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
+      this.info.rate = this.info.rate.toFixed(2);
+      this.getSymbolImg();
       if (this.chainId) {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
       }
       if (this.walletAddress) {
-        this.info.balance = await this.market.balanceOfUnderlying(this.walletAddress);
+        this.info.balance = await this.market.balanceOf(this.walletAddress);
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
       }
+    },
+    isCRbtc() {
+      return Market.isCRBT(this.marketAddress);
     },
   },
   components: {
@@ -220,18 +225,17 @@ export default {
     BorrowRepay,
     ModalTxStatus,
   },
-  async created() {
-    const isCRBT = await Market.isCRBT(this.marketAddress);
-    if (isCRBT) {
-      this.market = new CRbtc(this.marketAddress, this.chainId);
-    } else {
-      this.market = new CToken(this.marketAddress, this.chainId);
-    }
-    await this.updateMarketInfo();
+  created() {
+    this.isCRbtc()
+      .then((isCRbtc) => {
+        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+          : new CToken(this.marketAddress, this.chainId);
+        this.updateMarketInfo();
+      })
+      .catch(console.error);
   },
-  async updated() {
-    this.getSymbolImg();
-    await this.updateMarketInfo();
-  },
+  // updated() {
+  //   this.updateMarketInfo();
+  // },
 };
 </script>

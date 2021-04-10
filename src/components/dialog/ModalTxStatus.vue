@@ -32,15 +32,15 @@ export default {
   name: 'ModalTxStatus',
   props: {
     showModal: {
-      require: true,
+      required: true,
       type: Boolean,
     },
     inBorrowMenu: {
-      require: true,
+      required: true,
       type: Boolean,
     },
     stage: {
-      require: true,
+      required: true,
       type: String,
     },
     txAmount: {

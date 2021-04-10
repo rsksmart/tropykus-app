@@ -67,7 +67,7 @@ export default {
   },
   props: {
     marketAddress: {
-      require: true,
+      required: true,
       type: String,
     },
   },

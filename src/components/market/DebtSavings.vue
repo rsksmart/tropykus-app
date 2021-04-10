@@ -79,11 +79,11 @@ export default {
   },
   props: {
     inBorrowMenu: {
-      require: true,
+      required: true,
       type: Boolean,
     },
     marketAddress: {
-      require: true,
+      required: true,
       type: String,
     },
   },

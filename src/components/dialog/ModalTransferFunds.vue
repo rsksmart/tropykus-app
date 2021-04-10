@@ -46,7 +46,7 @@
 export default {
   props: {
     showModal: {
-      require: true,
+      required: true,
       type: Boolean,
     },
   },

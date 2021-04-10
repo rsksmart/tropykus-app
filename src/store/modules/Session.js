@@ -9,7 +9,6 @@ if (window.ethereum) {
   });
   window.ethereum.on('chainChanged', () => {
     store.dispatch(constants.SESSION_GET_CHAIN_ID);
-    window.location.reload();
   });
 }
 
@@ -27,11 +26,9 @@ const actions = {
       // eslint-disable-next-line no-multi-assign
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(window.ethereum);
       const account = await Vue.web3.getSigner();
+      const walletAddress = await account.getAddress();
       commit(constants.SESSION_SET_PROPERTY, { account });
-      commit(
-        constants.SESSION_SET_PROPERTY,
-        { walletAddress: await account.getAddress },
-      );
+      commit(constants.SESSION_SET_PROPERTY, { walletAddress });
       commit(constants.SESSION_SET_PROPERTY, { wallet });
       dispatch(constants.SESSION_GET_CHAIN_ID);
     }

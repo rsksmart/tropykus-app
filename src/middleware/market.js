@@ -13,13 +13,13 @@ const factor = 1e18;
 
 export default class Market {
   constructor(address = '', MarketAbi, chainId) {
-    this.marketAddress = address;
+    this.marketAddress = address.toLowerCase();
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
-    this.instance = new ethers.Contract(address, MarketAbi, Vue.web3);
+    this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
   }
 
   static async isCRBT(address) {
-    const instance = new ethers.Contract(address, CTokenAbi, Vue.web3);
+    const instance = new ethers.Contract(address.toLowerCase(), CTokenAbi, Vue.web3);
     try {
       const result = await instance.callStatic.symbol();
       return result === 'cRBTC';
@@ -69,12 +69,14 @@ export default class Market {
   }
 
   async supplyRateAPY() {
-    const supplyRatePerBlock = await this.instance.callStatic.supplyRatePerBlock();
+    let supplyRatePerBlock = await this.instance.callStatic.supplyRatePerBlock();
+    supplyRatePerBlock = Number(supplyRatePerBlock) / factor;
     return ((Number(supplyRatePerBlock) * blocksPerDay + 1) ** (daysPerYear - 1) - 1) * 100;
   }
 
   async borrowRateAPY() {
-    const borrowRatePerBlock = await this.instance.callStatic.borrowRatePerBlock();
+    let borrowRatePerBlock = await this.instance.callStatic.borrowRatePerBlock();
+    borrowRatePerBlock = Number(borrowRatePerBlock) / factor;
     return ((Number(borrowRatePerBlock) * blocksPerDay + 1) ** (daysPerYear - 1) - 1) * 100;
   }
 
@@ -82,11 +84,8 @@ export default class Market {
     return Number(await this.instance.callStatic.balanceOf(address)) / factor;
   }
 
-  async balanceOfUnderlying(address) {
-    return Number(await this.instance.callStatic.balanceOfUnderlying(address)) / factor;
-  }
-
-  async balanceOfUnderlyingInWallet(address) {
+  async balanceOfUnderlyingInWallet(account) {
+    const address = await account.getAddress();
     const underlyingAssetSymbol = await this.underlying();
     const underlyingAsset = new ethers.Contract(
       underlyingAssetSymbol,

@@ -8,11 +8,32 @@
         <v-row class="ma-0" width="100%">
           <h1 class="mt-6 mb-4">Conecta tu billetera</h1>
         </v-row>
-        <v-row class="ma-0 first-row">
+        <v-row class="second-row ma-0">
+          <v-col cols="6" class="pa-0">
+            <v-btn @click="connectWeb3Wallet(constants.WALLET_METAMASK)">
+              <div class="d-flex align-center flex-column">
+                <v-img height="40" width="40" src="@/assets/metamask-icon.png"
+                       alt="MetaMask icon" contain position="center center" />
+                <p>Metamask</p>
+              </div>
+            </v-btn>
+          </v-col>
+          <v-col cols="6" class="pa-0">
+            <v-btn @click="connectWeb3Wallet(constants.WALLET_LIQUALITY)" class="button-liquality">
+              <div class="d-flex align-center flex-column">
+                <v-img height="40" width="40" class="mb-3 mt-2" src="@/assets/liquality-icon.png"
+                       alt="Liquality icon" contain position="center center" />
+                <p>Liquality</p>
+              </div>
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row class="ma-0 first-row mb-4">
           <v-col cols="4" class="pa-0">
             <v-btn disabled>
               <div class="d-flex align-center flex-column">
-                <img width="30" class="mt-4" src="../../assets/ledger-icon.png" alt="Ledger icon" />
+                <v-img height="40" width="40" src="@/assets/ledger-icon.png"
+                       alt="Ledger icon" contain position="center center" />
                 <p>Ledger</p>
                 <p class="subtitle">(Pronto)</p>
               </div>
@@ -21,35 +42,18 @@
           <v-col cols="4" class="pa-0">
             <v-btn disabled>
               <div class="d-flex align-center flex-column">
-                <img width="20" class="mt-4" src="../../assets/trezor-icon.png" alt="Trezor icon" />
+                <v-img height="40" width="40" class="mt-4" src="@/assets/trezor-icon.png"
+                       alt="Trezor icon" contain position="center center" />
                 <p>Trezor</p>
                 <p class="subtitle">(Pronto)</p>
               </div>
             </v-btn>
           </v-col>
           <v-col cols="4" class="pa-0">
-            <v-btn @click="connectWeb3Wallet(constants.WALLET_LIQUALITY)" class="button-liquality">
-              <div class="d-flex align-center flex-column">
-                <v-img height="40" class="mb-3 mt-2" src="@/assets/liquality-icon.png"
-                       alt="Liquality icon" contain/>
-                <p>Liquality</p>
-              </div>
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row class="second-row ma-0 mb-4">
-          <v-col cols="6" class="pa-0">
-            <v-btn @click="connectWeb3Wallet(constants.WALLET_METAMASK)">
-              <div class="d-flex align-center flex-column">
-                <v-img height="40" src="@/assets/metamask-icon.png" alt="MetaMask icon" contain/>
-                <p>Metamask</p>
-              </div>
-            </v-btn>
-          </v-col>
-          <v-col cols="6" class="pa-0">
             <v-btn disabled>
               <div class="d-flex align-center flex-column">
-                <img width="45" src="../../assets/movil-wallet-icon.png" alt="Trezor icon"/>
+                <v-img height="40" width="40" src="@/assets/movil-wallet-icon.png"
+                       alt="Trezor icon" contain position="center center" />
                 <p>Billetera móvil</p>
                 <p class="subtitle">(Pronto)</p>
               </div>
@@ -57,8 +61,9 @@
           </v-col>
         </v-row>
         <v-row class="ma-0 mb-3">
-          <h3 class="footer mr-1">¿No tienes billetera?</h3>
-          <h3 class="footer-download">Descargala</h3>
+          <h3 class="footer">
+            ¿No tienes billetera? <strong class="ml-1">Descargala</strong>
+          </h3>
         </v-row>
       </v-card>
     </v-dialog>
@@ -79,7 +84,7 @@ export default {
   },
   props: {
     showModal: {
-      require: true,
+      required: true,
       type: Boolean,
     },
   },

@@ -18,7 +18,7 @@
     <template v-else>
       <template v-if="suggestionsLoaded">
         <v-row class="mx-0 mt-4">
-          <v-col :cols="12/suggestions.length" v-for="(market, idx) in suggestions"
+          <v-col :cols="4" v-for="(market, idx) in suggestions"
                  :key="`market-${idx}`">
             <general-info :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
@@ -36,28 +36,22 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import GeneralInfo from '@/components/market/GeneralInfo.vue';
-import { Comptroller } from '@/middleware';
 
 export default {
   name: 'Suggestions',
-  data() {
-    return {
-      suggestions: null,
-      comptroller: null,
-    };
-  },
   props: {
     inBorrowMenu: {
       required: true,
       type: Boolean,
     },
+    suggestions: {
+      required: false,
+      type: Array,
+      default: null,
+    },
   },
   computed: {
-    ...mapState({
-      chainId: (state) => state.Session.chainId,
-    }),
     loadingSuggestions() {
       return this.suggestions === null;
     },
@@ -65,28 +59,8 @@ export default {
       return this.suggestions?.length > 0;
     },
   },
-  watch: {
-    chainId(val) {
-      this.suggestions = null;
-      console.log(val);
-      this.comptroller = new Comptroller(val);
-      this.load();
-    },
-  },
-  methods: {
-    async load() {
-      this.suggestions = await this.comptroller.allMarkets;
-    },
-  },
   components: {
     GeneralInfo,
-  },
-  created() {
-    this.comptroller = new Comptroller(this.chainId);
-    this.load();
-  },
-  updated() {
-    this.load();
   },
 };
 </script>

@@ -32,7 +32,7 @@ export default {
   name: 'PersonalDataModal',
   props: {
     showModal: {
-      require: true,
+      required: true,
       type: Boolean,
     },
   },

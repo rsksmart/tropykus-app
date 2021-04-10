@@ -79,7 +79,7 @@ export default {
   },
   props: {
     inBorrowMenu: {
-      require: true,
+      required: true,
       type: Boolean,
     },
   },

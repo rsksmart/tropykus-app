@@ -36,7 +36,7 @@ export default {
   name: 'ModalValidationForm',
   props: {
     type: {
-      require: true,
+      required: true,
       type: Boolean,
     },
   },

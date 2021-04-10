@@ -12,7 +12,8 @@ export default class CRbtc extends Market {
     return this.internalUnderlyingAssetSymbol;
   }
 
-  static async balanceOfUnderlyingInWallet(account) {
+  // eslint-disable-next-line class-methods-use-this
+  async balanceOfUnderlyingInWallet(account) {
     return Number(await account.getBalance()) / 1e18;
   }
 
