@@ -144,7 +144,7 @@ export default {
       }
     },
     isCRbtc() {
-      return Market.isCRBT(this.marketAddress);
+      return Market.isCRbtc(this.marketAddress);
     },
   },
   created() {

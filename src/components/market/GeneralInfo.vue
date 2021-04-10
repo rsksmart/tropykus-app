@@ -51,17 +51,21 @@
     </template>
     <template v-if="supplyBorrowDialog">
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
-                 @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"/>
+                 @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"
+                 :inBorrowMenu="inBorrowMenu" />
     </template>
     <template v-if="waitingDialog">
-      <modal-tx-status :showModal="waitingDialog" :stage="'in-progress'"/>
+      <modal-tx-status :showModal="waitingDialog" :stage="'in-progress'"
+                       :inBorrowMenu="inBorrowMenu" />
     </template>
     <template v-if="successDialog">
       <modal-tx-status :showModal="successDialog" :stage="'success'"
-                       :txAmount="amount" :txCryptocurrency="txCurrency"/>
+                       :txAmount="amount" :txCryptocurrency="txCurrency"
+                       :inBorrowMenu="inBorrowMenu" />
     </template>
     <template v-if="errorDialog">
-      <modal-tx-status :showModal="errorDialog" :stage="'error'"/>
+      <modal-tx-status :showModal="errorDialog" :stage="'error'"
+                       :inBorrowMenu="inBorrowMenu" />
     </template>
   </v-card>
 </template>
@@ -73,7 +77,12 @@ import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
 import ModalTxStatus from '@/components/dialog/ModalTxStatus.vue';
 import BorrowRepay from '@/components/dialog/BorrowRepay.vue';
 import * as constants from '@/store/constants';
-import { CToken, CRbtc, Market } from '@/middleware';
+import {
+  CToken,
+  CRbtc,
+  Market,
+  Comptroller,
+} from '@/middleware';
 
 export default {
   name: 'GeneralInfo',
@@ -100,6 +109,7 @@ export default {
       market: null,
       amount: null,
       txCurrency: null,
+      comptroller: null,
     };
   },
   props: {
@@ -169,12 +179,16 @@ export default {
       switch (action) {
         case 'Depositar':
           this.txCurrency = this.info.underlyingSymbol;
-          this.market.supply(this.walletAddress, amount)
+          this.market.supply(this.account, amount)
+            .then(() => this.comptroller
+              .includeAsCollateral(this.account, this.marketAddress))
             .then(() => {
               this.reset();
               this.successDialog = true;
             })
-            .catch(() => {
+            .catch((e) => {
+              console.error(e);
+              this.reset();
               this.errorDialog = true;
             });
           break;
@@ -216,7 +230,7 @@ export default {
       }
     },
     isCRbtc() {
-      return Market.isCRBT(this.marketAddress);
+      return Market.isCRbtc(this.marketAddress);
     },
   },
   components: {
@@ -226,6 +240,7 @@ export default {
     ModalTxStatus,
   },
   created() {
+    this.comptroller = new Comptroller(this.chainId);
     this.isCRbtc()
       .then((isCRbtc) => {
         this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)

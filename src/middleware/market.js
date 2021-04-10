@@ -18,7 +18,7 @@ export default class Market {
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
   }
 
-  static async isCRBT(address) {
+  static async isCRbtc(address) {
     const instance = new ethers.Contract(address.toLowerCase(), CTokenAbi, Vue.web3);
     try {
       const result = await instance.callStatic.symbol();
@@ -113,7 +113,7 @@ export default class Market {
     );
   }
 
-  async supply(account, amountIntended, isCrbtc = false) {
+  async supply(account, amountIntended) {
     const accountSigner = signer(account);
     const amount = await Market.getAmountDecimals(amountIntended);
     const underlyingAsset = new ethers.Contract(
@@ -124,7 +124,7 @@ export default class Market {
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
     const gasLimit = 250000;
     console.log(`Gas limit: ${gasLimit}`);
-    if (isCrbtc) {
+    if (await Market.isCRbtc(this.marketAddress)) {
       await this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
     } else {
       await this.instance.connect(accountSigner).mint(amount, { gasLimit });
