@@ -8,7 +8,7 @@ if (window.ethereum) {
     store.dispatch(constants.SESSION_CONNECT_WEB3);
   });
   window.ethereum.on('chainChanged', () => {
-    store.dispatch(constants.SESSION_GET_CHAIN_ID);
+    window.location.reload();
   });
 }
 

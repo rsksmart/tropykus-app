@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ info.symbol }}</h1>
+            <h1>{{ info.underlyingSymbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -234,8 +234,5 @@ export default {
       })
       .catch(console.error);
   },
-  // updated() {
-  //   this.updateMarketInfo();
-  // },
 };
 </script>

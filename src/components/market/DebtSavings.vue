@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ info.symbol }}</h1>
+            <h1>{{ token }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { CToken } from '@/middleware';
+import { CRbtc, CToken, Market } from '@/middleware';
 import { mapState } from 'vuex';
 
 export default {
@@ -123,25 +123,38 @@ export default {
         })
         .catch(console.error);
     },
+    async updateMarketInfo() {
+      this.info.name = await this.market.name;
+      this.info.symbol = await this.market.symbol;
+      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
+      this.info.underlying = await this.market.underlying();
+      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
+      this.info.rate = this.inBorrowMenu
+        ? await this.market.borrowRateAPY()
+        : await this.market.supplyRateAPY();
+      this.info.rate = this.info.rate.toFixed(2);
+      this.getSymbolImg();
+      if (this.chainId) {
+        this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
+      }
+      if (this.walletAddress) {
+        this.info.balance = await this.market.balanceOf(this.walletAddress);
+        this.info.underlyingBalance = await this.market
+          .balanceOfUnderlyingInWallet(this.account);
+      }
+    },
+    isCRbtc() {
+      return Market.isCRBT(this.marketAddress);
+    },
   },
-  async created() {
-    const cToken = new CToken(this.marketAddress);
-    this.info.name = await cToken.name;
-    this.info.symbol = await cToken.symbol;
-    this.info.underlyingSymbol = await cToken.underlyingAssetSymbol();
-    this.info.rate = this.inBorrowMenu
-      ? await cToken.borrowRateAPY()
-      : await cToken.supplyRateAPY();
-    this.info.underlying = await cToken.underlying();
-    this.info.underlyingPrice = 50000;
-    if (this.walletAddress) {
-      this.info.savings = await cToken.balanceOfUnderlying(this.walletAddress);
-      this.info.available = await cToken.balanceOfUnderlyingInWallet(this.walletAddress);
-      this.info.underlyingPrice = await cToken.underlyingCurrentPrice(this.chainId);
-    }
-  },
-  async updated() {
-    this.getSymbolImg();
+  created() {
+    this.isCRbtc()
+      .then((isCRbtc) => {
+        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+          : new CToken(this.marketAddress, this.chainId);
+        this.updateMarketInfo();
+      })
+      .catch(console.error);
   },
 };
 </script>
