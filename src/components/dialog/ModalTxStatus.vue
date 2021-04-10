@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="538p">
+  <v-dialog v-model="dialog" width="500">
     <v-card class="modal-transaction-status">
       <div class="card-content mx-auto">
         <div class="mb-5">

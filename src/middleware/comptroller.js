@@ -15,7 +15,6 @@ export default class Comptroller {
   }
 
   includeAsCollateral(account, marketAddress) {
-    console.log('comptroller.js includeAsCollateral...');
     const accountSigner = signer(account);
     return this.instance.connect(accountSigner).enterMarkets([marketAddress]);
   }
