@@ -28,7 +28,7 @@ export default {
   name: 'RiskChart',
   data() {
     return {
-      riskRate: 80,
+      riskRate: 100,
     };
   },
   computed: {

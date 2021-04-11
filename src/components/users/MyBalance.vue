@@ -3,7 +3,7 @@
     <v-row class="mx-0 pl-3">
       <v-card class="crop-card">
         <v-card-title class="pa-0">
-          <v-img class="px-2" src="@/assets/icon-balance.svg" height="23" contain/>
+          <v-img class="mx-2" src="@/assets/icons/home.svg" height="23" width="23" contain/>
           <h1 class="text-left">Mi balance</h1>
         </v-card-title>
       </v-card>
@@ -22,7 +22,7 @@
             <v-row class="ma-0">
               <v-col class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
-                  <v-img class="px-2" src="@/assets/icon-pig.png" width="64" height="64"
+                  <v-img class="mx-2" src="@/assets/icons/pig.svg" width="64" height="64"
                          position="center center" contain/>
                 </v-row>
               </v-col>
@@ -42,7 +42,7 @@
             <v-row class="ma-0">
               <v-col class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
-                  <v-img class="px-2" src="@/assets/icon-pay.png" width="64"  height="64"
+                  <v-img class="px-2" src="@/assets/icons/pay.svg" width="64" height="64"
                          position="center center" contain/>
                 </v-row>
               </v-col>
@@ -81,8 +81,8 @@ export default {
   },
   created() {
     setTimeout(() => {
-      this.totalSuppliedUSD = 100000;
-      this.totalBorrowedUSD = 40000;
+      this.totalSuppliedUSD = 0;
+      this.totalBorrowedUSD = 0;
     }, 1000);
   },
 };

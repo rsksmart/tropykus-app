@@ -8,7 +8,7 @@
         <h1>
           Transfiere tus BTC desde
         </h1>
-        <img class="mx-2" src="@/assets/tutorials/blockfi-logo.svg" alt="Binance Logo" />
+        <img class="mx-2" src="@/assets/wallets/blockfi.svg" alt="Binance Logo" />
       </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">

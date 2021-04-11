@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import WalletIcon from '@/assets/icon-wallet.png';
-import PigIcon from '@/assets/icon-pig.png';
+import WalletIcon from '@/assets/icons/wallet.svg';
+import PigIcon from '@/assets/icons/pig.svg';
 
 export default {
   name: 'SupplyRedeem',

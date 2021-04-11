@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-container class="tutorials">
+    <v-container class="tutorials mt-8 container">
       <v-row class="pa-3 pl-5">
         <v-card class="crop-card">
           <v-card-title class="pa-0">

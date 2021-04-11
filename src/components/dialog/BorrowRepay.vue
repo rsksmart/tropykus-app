@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import Borrow from '@/assets/icon-borrow.png';
-import Pay from '@/assets/icon-pay.png';
+import Borrow from '@/assets/icons/borrow.svg';
+import Pay from '@/assets/icons/pay.svg';
 
 export default {
   name: 'BorrowRepay',

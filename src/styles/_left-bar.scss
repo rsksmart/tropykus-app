@@ -1,0 +1,15 @@
+.left-bar {
+  position: absolute;
+  top: 250px;
+  background-color: #023f30;
+  width: 68px;
+  height: 280px;
+  border-radius: 0 10px 10px 0;
+
+  .v-btn {
+    background-color: transparent !important;
+    &:focus, &:visited, &:active, &:hover {
+      background-color: rgba(163, 197, 171, 0.5) !important;
+    }
+  }
+}

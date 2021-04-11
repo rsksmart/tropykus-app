@@ -2,7 +2,7 @@
   <v-app-bar color="rgba(1, 62, 47, 0.85)" flat height="70" absolute
              v-bind:class="{ 'tutorial-navbar': isTutorial }" class="navbar">
     <router-link :to="{ name: 'Home' }">
-      <v-img height="48" position="left center" src="@/assets/titulo.png" contain />
+      <v-img height="48" position="left center" src="@/assets/tropykus.svg" contain />
     </router-link>
     <v-spacer />
     <router-link :to="{ name: 'Home' }">

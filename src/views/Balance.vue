@@ -1,6 +1,6 @@
 <template>
   <div class="balance">
-    <div class="container">
+    <v-container class="mt-8 container">
       <v-row class="ma-0">
         <v-col cols="8" class="pa-0">
           <v-row class="ma-0">
@@ -27,7 +27,7 @@
           <v-row class="mx-0 pl-3">
             <v-card class="crop-card">
               <v-card-title class="pa-0">
-                <v-img class="px-2" src="@/assets/icon-clock.svg" height="23" contain/>
+                <v-img class="px-2" src="@/assets/icons/clock.svg" height="23" contain/>
                 <h1 class="text-left">Mi actividad</h1>
               </v-card-title>
             </v-card>
@@ -74,7 +74,7 @@
           </v-row>
         </div>
       </v-row>
-    </div>
+    </v-container>
   </div>
 </template>
 

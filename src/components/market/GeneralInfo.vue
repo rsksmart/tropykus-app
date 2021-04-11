@@ -11,7 +11,7 @@
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
-              <v-img height="16" src="@/assets/icon-link.svg" contain/>
+              <v-img height="16" src="@/assets/icons/link.svg" contain/>
             </a>
           </v-col>
         </v-row>

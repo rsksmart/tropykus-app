@@ -1,10 +1,15 @@
-import Home from '@/views/Home.vue';
+import Supply from '@/views/Supply.vue';
 
 export default [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Supply',
+    component: Supply,
+  },
+  {
+    path: '/borrow',
+    name: 'Borrow',
+    component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Borrow.vue'),
   },
   {
     path: '/balance',

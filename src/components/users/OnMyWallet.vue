@@ -3,7 +3,7 @@
     <v-row class="mx-0 pl-3">
       <v-card class="crop-card">
         <v-card-title class="pa-0">
-          <v-img class="px-2" src="@/assets/icon-wallet.png" height="23" contain/>
+          <v-img class="px-2" src="@/assets/icons/wallet.svg" height="23" contain/>
           <h1 class="text-left">Tengo en mi billetera</h1>
         </v-card-title>
       </v-card>
@@ -36,25 +36,27 @@
               <v-col class="pa-0 pr-3">
                 <v-btn @click="$router.push({ name: 'BinanceToLiquality'})"
                        color="rgba(163, 197, 171, 0.39)" width="100%" height="100%">
-                  <v-img contain width="100" src="@/assets/icon-binance.svg" alt="Binance icon" />
+                  <v-img contain width="100" src="@/assets/wallets/binance.svg"
+                         alt="Binance icon" />
                 </v-btn>
               </v-col>
               <v-col class="pa-0">
                 <v-btn class="d-flex" @click="$router.push({ name: 'LednToLiquality'})"
                        color="rgba(163, 197, 171, 0.39)" width="100%" height="100%">
-                  <v-img width="30" height="25" src="@/assets/icon-lend.svg"
+                  <v-img width="30" height="25" src="@/assets/wallets/ledn.svg"
                          alt="Lend icon" contain />
                 </v-btn>
               </v-col>
               <v-col class="py-0">
                 <v-btn @click="$router.push({ name: 'BlockfiToLiquality'})"
                        color="rgba(163, 197, 171, 0.39)" width="100%" height="100%">
-                  <v-img contain width="100" src="@/assets/icon-blockfi.svg" alt="BlocFi icon" />
+                  <v-img contain width="100" src="@/assets/wallets/blockfi.svg" alt="BlocFi icon" />
                 </v-btn>
               </v-col>
               <v-col class="pa-0">
                 <v-btn disabled color="rgba(163, 197, 171, 0.39)" width="100%" height="100%">
-                  <v-img contain width="100" src="@/assets/icon-poloniex.svg" alt="Poloniex icon" />
+                  <v-img contain width="100" src="@/assets/wallets/poloniex.svg"
+                         alt="Poloniex icon" />
                 </v-btn>
               </v-col>
               <v-col class="py-0">

@@ -8,7 +8,7 @@
         <h1>
           Transfiere tus BTC desde
         </h1>
-        <img class="mx-2" src="@/assets/tutorials/ledn-logo.svg" alt="Ledn Logo" />
+        <img class="mx-2" src="@/assets/wallets/ledn.svg" alt="Ledn Logo" />
       </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">

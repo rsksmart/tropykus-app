@@ -6,7 +6,7 @@
           <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
         <h1>Transfiere tus BTC desde</h1>
-        <img class="mx-2" src="@/assets/tutorials/binance-logo.svg" alt="Binance Logo" />
+        <img class="mx-2" src="@/assets/wallets/binance.svg" alt="Binance Logo" />
       </div>
 
       <v-row class="tutorial-steps" v-for="elements in this.groupedElements" :key="elements.id">

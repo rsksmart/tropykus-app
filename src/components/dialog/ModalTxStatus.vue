@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import Success from '@/assets/Check.svg';
-import Error from '@/assets/Error.svg';
+import Success from '@/assets/dialog/success.svg';
+import Error from '@/assets/dialog/error.svg';
 
 export default {
   name: 'ModalTxStatus',

@@ -2,7 +2,8 @@
   <v-card class="container" color="#013E2F">
     <v-row class="ma-0 container">
       <v-col class="pa-0">
-        <v-img class="px-2" src="@/assets/icon-dollar.png" width="64" contain/>
+        <v-img class="px-2" src="@/assets/icons/dollar.svg" height="64" width="64"
+               position="center center" contain/>
       </v-col>
       <v-col cols="9" class="pa-0">
         <v-row class="ma-0">
@@ -30,7 +31,7 @@ export default {
   name: 'BalanceChart',
   data() {
     return {
-      userCashUSD: 60000,
+      userCashUSD: 0,
       chartData: [
         ['Balance', 'Cryptos'],
         [`RBTC | ${0.097}`, 0.097869],
