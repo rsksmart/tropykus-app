@@ -68,10 +68,5 @@ export default {
     Navbar,
     LeftBar,
   },
-  created() {
-    if (window.ethereum) {
-      console.log('Is connected??', window.ethereum.isConnected());
-    }
-  },
 };
 </script>

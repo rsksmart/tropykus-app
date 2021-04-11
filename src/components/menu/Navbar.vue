@@ -5,15 +5,6 @@
       <v-img height="48" position="left center" src="@/assets/tropykus.svg" contain />
     </router-link>
     <v-spacer />
-    <router-link :to="{ name: 'Home' }">
-      Inicio
-    </router-link>
-    <router-link class="mx-10" :to="{ name: 'Balance' }">
-      Mi Balance
-    </router-link>
-    <router-link class="mr-10" :to="{ name: 'Tutorials' }">
-      Tutoriales
-    </router-link>
     <v-btn @click="ShowDialogConnectWallet" class="wallet-button" width="230"
            :class="{'wallet-button-connected': isWalletConnected}">
       {{ accountCutOff }}

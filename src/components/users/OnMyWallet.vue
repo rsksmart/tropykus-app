@@ -3,7 +3,7 @@
     <v-row class="mx-0 pl-3">
       <v-card class="crop-card">
         <v-card-title class="pa-0">
-          <v-img class="px-2" src="@/assets/icons/wallet.svg" height="23" contain/>
+          <v-img class="mx-2" src="@/assets/icons/wallet.svg" height="23" width="23" contain/>
           <h1 class="text-left">Tengo en mi billetera</h1>
         </v-card-title>
       </v-card>

@@ -176,9 +176,9 @@ export default {
       this.amount = amount;
       this.reset();
       this.waitingDialog = true;
+      this.txCurrency = this.info.underlyingSymbol;
       switch (action) {
         case 'Depositar':
-          this.txCurrency = this.info.underlyingSymbol;
           this.market.supply(this.account, this.amount)
             .then(() => this.comptroller
               .includeAsCollateral(this.account, this.marketAddress))
@@ -186,13 +186,13 @@ export default {
               this.waitingDialog = false;
               this.successDialog = true;
             })
-            .catch(() => {
+            .catch((e) => {
+              console.error(e);
               this.waitingDialog = false;
               this.errorDialog = true;
             });
           break;
         case 'Pedir prestado':
-          this.txCurrency = this.info.symbol;
           this.comptroller
             .includeAsCollateral(this.account, this.marketAddress)
             .then(() => this.market
@@ -208,11 +208,9 @@ export default {
             });
           break;
         case 'Retirar':
-          this.txCurrency = this.info.symbol;
           console.log('redeem');
           break;
         case 'Pagar':
-          this.txCurrency = this.info.symbol;
           console.log('repay');
           break;
         default:

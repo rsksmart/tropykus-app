@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container class="tutorials mt-8 container">
-      <v-row class="pa-3 pl-5">
+      <v-row class="ma-0 px-3 pl-5">
         <v-card class="crop-card">
           <v-card-title class="pa-0">
             <v-icon class="px-2" left color="#fff">mdi-help-circle-outline</v-icon>
@@ -9,7 +9,7 @@
           </v-card-title>
         </v-card>
       </v-row>
-      <v-row>
+      <v-row class="ma-0">
         <v-col cols="3" class="px-5">
           <v-card class="container" color="#013E2F">
             <v-row class="mx-2 my-1">

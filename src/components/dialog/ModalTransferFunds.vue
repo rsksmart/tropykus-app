@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       dialog: this.showModal,
-
       steps: [
         { number: 1, text: 'Inicia sesión en la plataforma donde tienes tus fondos.' },
         { number: 2, text: 'Busca la criptomoneda que quieres transferir.' },

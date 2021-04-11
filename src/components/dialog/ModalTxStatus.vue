@@ -1,24 +1,19 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
-    <v-card class="modal-transaction-status">
-      <div class="card-content mx-auto">
-        <div class="mb-5">
-          <div v-if="stage === 'in-progress'">
-            <div class="text-center">
-              <v-progress-circular
-                indeterminate
-                color="#ff9153"
-                :width="15"
-                :size="180"
-              ></v-progress-circular>
-            </div>
-          </div>
-          <div v-else>
-            <v-img width="180" :src="dialogImg"
-                   class="mx-auto" alt="action icon" />
-          </div>
-        </div>
-        <h2 class="text-center px-10">{{ dialogText }}</h2>
+  <v-dialog v-model="dialog" width="350">
+    <v-card class="modal-transaction-status" height="400">
+      <div class="container">
+        <v-row class="ma-0 d-flex justify-center">
+          <template v-if="stage === 'in-progress'">
+            <v-progress-circular indeterminate color="#ff9153" :width="10" :size="90" />
+          </template>
+          <template v-else>
+            <v-img height="90" :src="dialogImg" position="center center"
+                   alt="action icon" contain />
+          </template>
+        </v-row>
+        <v-row class="ma-0 mt-8 mx-3 d-flex justify-center align-center">
+          <h2 class="text-center">{{ dialogText }}</h2>
+        </v-row>
       </div>
     </v-card>
   </v-dialog>
@@ -63,9 +58,9 @@ export default {
     dialogText() {
       switch (this.stage) {
         case 'error':
-          return this.inBorrowMenu ? 'No tienes fondos ahorrados. Necesitas tener fondos'
-            + 'ahorrados como  garantia para el préstamo.' : 'No tienes fondos suficientes'
-            + ' en tu billetera';
+          return this.inBorrowMenu ? 'No tienes fondos ahorrados. Necesitas tener fondos '
+              + 'ahorrados como  garantía para el préstamo.' : 'No se pudo completar el depósito '
+              + 'necesitas tener fondos suficientes';
         case 'success':
           return this.inBorrowMenu ? `Has pedido prestado ${this
             .txAmount} ${this.txCryptocurrency}` : `Has depositado ${this
@@ -78,4 +73,4 @@ export default {
     },
   },
 };
-</script>
+</script>%

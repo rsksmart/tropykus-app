@@ -3,20 +3,11 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 644px;
+  height: 100%;
   color: #fff !important;
-
-  .card-content {
-    width: 90%;
-    padding-top: 167px;
-  }
-
-  .dialog-text {
-    max-width: 384px;
-  }
-
+  padding-top: 80px;
   h2 {
-    font-size: 30px;
-    line-height: 33px;
+    font-size: 28px;
+    line-height: 30px;
   }
 }

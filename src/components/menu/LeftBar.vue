@@ -1,12 +1,6 @@
 <template>
   <div class="left-bar">
-    <v-row class="mx-0 my-2">
-      <v-btn @click="$router.push({ name: 'Balance' })"
-             width="50" height="50" depressed>
-        <v-img contain height="43" src="@/assets/icons/home.svg" />
-      </v-btn>
-    </v-row>
-    <v-row class="ma-0">
+    <v-row class="ma-0 mt-2">
       <v-btn @click="$router.push({ name: 'Supply' })"
              width="50" height="50" depressed>
         <v-img contain height="43" src="@/assets/icons/pig.svg" />

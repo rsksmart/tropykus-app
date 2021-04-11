@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="350" >
-    <v-card class="modal-save" v-click-outside="onClickOutside">
-      <v-row class="button ma-0 mt-3 d-flex justify-center justify-space-around">
+    <v-card class="user-action" v-click-outside="onClickOutside">
+      <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
         <v-btn
             depressed
             color="transparent"
