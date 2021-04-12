@@ -110,10 +110,15 @@ export default {
       return this.inBorrowMenu ? '#FF9153' : '#E65D3D';
     },
     buttonLabel() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Pagar';
+      return this.inBorrowMenu ? 'Pedir prestado' : 'Pagar (pronto)';
     },
     validAmount() {
-      return this.amount > 0;
+      return this.amount > 0 && this.inBorrowMenu;
+    },
+  },
+  watch: {
+    inBorrowMenu() {
+      this.amount = null;
     },
   },
   methods: {
