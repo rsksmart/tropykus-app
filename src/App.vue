@@ -14,7 +14,7 @@
         <v-row class="mx-0 my-5 d-flex justify-center">
           <p class="text-center ma-0">
             Ten en cuenta que las comisones para realizar cualquier transacción deben ser pagadas en
-            RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropyco.
+            RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropykus.
           </p>
         </v-row>
         <v-row class="mx-0 mt-8 mb-6 d-flex justify-center">

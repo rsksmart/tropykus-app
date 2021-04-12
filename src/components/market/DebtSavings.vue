@@ -26,26 +26,37 @@
       <v-divider color="#BEBEBE"/>
     </v-row>
     <v-row class="mx-0 mb-1 container">
-      <v-col cols="7" class="pa-0 d-flex align-center">
+      <v-col cols="6" class="d-flex align-center">
         <div>
           <v-row class="mx-0">
-            <p>Precio actual</p>
+            <p>{{ borrowSupplyBalanceLabel }}</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ tokenBalance }} {{ info.underlyingSymbol }} =</p>
+            <p class="boldie">
+              {{ info.balance | twoDecimals }}
+              {{ info.underlyingSymbol }} =
+            </p>
           </v-row>
           <v-row class="mx-0">
-            <p class="italique">{{ tokenPrice | formatPrice }}</p>
+            <p class="italique">{{ tokenPrice | formatPrice }} USD</p>
           </v-row>
         </div>
       </v-col>
-      <v-col cols="5" class="pa-0">
-        <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ info.rate }}%</h2>
-        </v-row>
-        <v-row class="mx-0 d-flex justify-end">
-          <p class="text-right">{{ rateLabel }}</p>
-        </v-row>
+      <v-col cols="6" class="d-flex align-center">
+        <div>
+          <v-row class="mx-0">
+            <p>{{ payRedeemBalanceLabel }}</p>
+          </v-row>
+          <v-row class="mx-0">
+            <p class="boldie">
+              {{ info.balancePlusInterest | twoDecimals }}
+              {{ info.underlyingSymbol }} =
+            </p>
+          </v-row>
+          <v-row class="mx-0">
+            <p class="italique">{{ tokenInterestPrice | formatPrice }} USD</p>
+          </v-row>
+        </div>
       </v-col>
     </v-row>
   </v-card>
@@ -62,13 +73,12 @@ export default {
       db: this.$firebase.firestore(),
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
-      underlyingBalance: 3,
-      cTokenBalance: 35,
-      cTokenExchangeRate: 0.02,
       info: {
         name: null,
         symbol: null,
-        rate: null,
+        balance: 0,
+        balancePlusInterest: 0,
+        exchangeRate: null,
         savings: null,
         price: null,
         underlyingPrice: null,
@@ -89,15 +99,25 @@ export default {
   },
   computed: {
     ...mapState({
-      walletAddress: (state) => state.Session.account,
+      walletAddress: (state) => state.Session.walletAddress,
+      chainId: (state) => state.Session.chainId,
+      account: (state) => state.Session.account,
     }),
-    tokenBalance() {
-      return this.inBorrowMenu ? this.cTokenBalance : this.underlyingBalance;
+    borrowSupplyBalanceLabel() {
+      return this.inBorrowMenu ? 'Pediste prestado' : 'Tienes depositado';
+    },
+    payRedeemBalanceLabel() {
+      return this.inBorrowMenu ? 'Debes pagar' : 'Has ganado';
     },
     tokenPrice() {
       return this.inBorrowMenu
-        ? this.cTokenBalance * this.cTokenExchangeRate * this.info.underlyingPrice
-        : this.underlyingBalance * this.info.underlyingPrice;
+        ? this.info.balance * this.info.exchangeRate * this.info.underlyingPrice
+        : this.info.balance * this.info.underlyingPrice;
+    },
+    tokenInterestPrice() {
+      return this.inBorrowMenu
+        ? this.info.balancePlusInterest * this.info.exchangeRate * this.info.underlyingPrice
+        : this.info.balancePlusInterest * this.info.underlyingPrice;
     },
     buttonColor() {
       return this.inBorrowMenu ? '#F24646' : '#4696A6';
@@ -125,11 +145,14 @@ export default {
       this.info.symbol = await this.market.symbol;
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.underlying = await this.market.underlying();
+      this.info.balance = this.inBorrowMenu
+        ? await this.market.balanceOf(this.marketAddress)
+        : await this.market.borrowBalanceStored(this.marketAddress);
+      this.info.balancePlusInterest = this.inBorrowMenu
+        ? await this.market.updatedUnderlyingBalance(this.marketAddress)
+        : await this.market.borrowBalanceCurrent(this.marketAddress);
+      this.info.exchangeRate = await this.market.exchangeRateCurrent();
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.info.rate = this.inBorrowMenu
-        ? await this.market.borrowRateAPY()
-        : await this.market.supplyRateAPY();
-      this.info.rate = this.info.rate.toFixed(2);
       this.getSymbolImg();
       if (this.chainId) {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);

@@ -5,7 +5,7 @@
       <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
     </template>
     <template v-else>
-<!--      <savings :inBorrowMenu="inBorrowMenu" :savings="savings" />-->
+      <savings :inBorrowMenu="inBorrowMenu" :savings="savings" />
 <!--      <on-my-wallet />-->
       <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
     </template>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-// import Savings from '@/components/users/Savings.vue';
+import Savings from '@/components/users/Savings.vue';
 // import Debts from '@/components/users/Debts.vue';
 // import OnMyWallet from '@/components/users/OnMyWallet.vue';
 import Suggestions from '@/components/users/Suggestions.vue';
@@ -56,7 +56,7 @@ export default {
     },
   },
   components: {
-    // Savings,
+    Savings,
     // Debts,
     // OnMyWallet,
     Suggestions,
