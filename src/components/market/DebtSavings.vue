@@ -7,7 +7,7 @@
             <v-img position="left center" height="40" :src="symbolImg" contain/>
           </v-col>
           <v-col class="pa-0">
-            <h1>{{ token }}</h1>
+            <h1>{{ info.underlyingSymbol }}</h1>
           </v-col>
           <v-col class="pa-0 d-flex justify-center align-center">
             <a :href="marketOnExplorer" target="_blank">
@@ -32,7 +32,7 @@
             <p>Precio actual</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">1 {{ tokenBalance }} {{ token }} =</p>
+            <p class="boldie">1 {{ tokenBalance }} {{ info.underlyingSymbol }} =</p>
           </v-row>
           <v-row class="mx-0">
             <p class="italique">{{ tokenPrice | formatPrice }}</p>
@@ -91,9 +91,6 @@ export default {
     ...mapState({
       walletAddress: (state) => state.Session.account,
     }),
-    token() {
-      return this.inBorrowMenu ? this.info.symbol : this.info.underlyingPrice;
-    },
     tokenBalance() {
       return this.inBorrowMenu ? this.cTokenBalance : this.underlyingBalance;
     },

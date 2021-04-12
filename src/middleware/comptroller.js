@@ -14,6 +14,10 @@ export default class Comptroller {
     return this.instance.callStatic.getAllMarkets();
   }
 
+  getAssetsIn(address) {
+    return this.instance.callStatic.getAssetsIn(address);
+  }
+
   includeAsCollateral(account, marketAddress) {
     const accountSigner = signer(account);
     return this.instance.connect(accountSigner).enterMarkets([marketAddress]);

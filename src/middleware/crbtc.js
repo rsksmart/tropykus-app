@@ -4,7 +4,7 @@ import Market from '@/middleware/market';
 export default class CRbtc extends Market {
   constructor(address = '', chainId) {
     super(address, CRBTCAbi, chainId);
-    this.internalUnderlyingAssetSymbol = 'RBTC';
+    this.internalUnderlyingAssetSymbol = 'tRBTC';
     this.type = 'CRBTC';
   }
 

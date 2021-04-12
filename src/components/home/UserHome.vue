@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <template v-if="inBorrowMenu">
-      <debts />
+<!--      <debts />-->
       <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
     </template>
     <template v-else>
-      <savings />
-      <on-my-wallet />
+<!--      <savings :inBorrowMenu="inBorrowMenu" :savings="savings" />-->
+<!--      <on-my-wallet />-->
       <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
     </template>
   </div>
 </template>
 
 <script>
-import Savings from '@/components/users/Savings.vue';
-import Debts from '@/components/users/Debts.vue';
-import OnMyWallet from '@/components/users/OnMyWallet.vue';
+// import Savings from '@/components/users/Savings.vue';
+// import Debts from '@/components/users/Debts.vue';
+// import OnMyWallet from '@/components/users/OnMyWallet.vue';
 import Suggestions from '@/components/users/Suggestions.vue';
 import { Comptroller } from '@/middleware';
 import { mapState } from 'vuex';
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       suggestions: null,
+      savings: null,
       comptroller: null,
     };
   },
@@ -43,19 +44,21 @@ export default {
   methods: {
     async load() {
       this.suggestions = await this.comptroller.allMarkets;
+      this.savings = await this.comptroller.getAssetsIn(this.walletAddress);
     },
   },
   watch: {
     chainId(val) {
       this.suggestions = null;
+      this.savings = null;
       this.comptroller = new Comptroller(val);
       this.load();
     },
   },
   components: {
-    Savings,
-    Debts,
-    OnMyWallet,
+    // Savings,
+    // Debts,
+    // OnMyWallet,
     Suggestions,
   },
   created() {
