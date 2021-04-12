@@ -17,7 +17,7 @@
         </v-row>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-start">
-        <v-btn depressed :color="buttonColor" width="100%" height="30">
+        <v-btn depressed :color="buttonColor" width="100%" height="30" :disabled="!inBorrowMenu">
           {{ buttonName }}
         </v-btn>
       </v-col>
@@ -26,7 +26,7 @@
       <v-divider color="#BEBEBE"/>
     </v-row>
     <v-row class="mx-0 mb-1 container">
-      <v-col cols="6" class="d-flex align-center">
+      <v-col cols="7" class="d-flex align-center">
         <div>
           <v-row class="mx-0">
             <p>{{ borrowSupplyBalanceLabel }}</p>
@@ -34,15 +34,15 @@
           <v-row class="mx-0">
             <p class="boldie">
               {{ info.balance | twoDecimals }}
-              {{ info.underlyingSymbol }} =
+              {{ info.underlyingSymbol }}
             </p>
           </v-row>
           <v-row class="mx-0">
-            <p class="italique">{{ tokenPrice | formatPrice }} USD</p>
+            <p class="italique">= {{ tokenPrice | formatPrice }} USD</p>
           </v-row>
         </div>
       </v-col>
-      <v-col cols="6" class="d-flex align-center">
+      <v-col cols="5" class="d-flex align-center">
         <div>
           <v-row class="mx-0">
             <p>{{ payRedeemBalanceLabel }}</p>
@@ -50,11 +50,11 @@
           <v-row class="mx-0">
             <p class="boldie">
               {{ info.balancePlusInterest | twoDecimals }}
-              {{ info.underlyingSymbol }} =
+              {{ info.underlyingSymbol }}
             </p>
           </v-row>
           <v-row class="mx-0">
-            <p class="italique">{{ tokenInterestPrice | formatPrice }} USD</p>
+            <p class="italique">= {{ tokenInterestPrice | formatPrice }} USD</p>
           </v-row>
         </div>
       </v-col>
