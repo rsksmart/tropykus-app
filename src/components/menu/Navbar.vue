@@ -1,7 +1,7 @@
 <template>
   <v-app-bar color="rgba(1, 62, 47, 0.85)" flat height="70" absolute
              v-bind:class="{ 'tutorial-navbar': isTutorial }" class="navbar">
-    <router-link :to="{ name: 'Home' }">
+    <router-link :to="{ name: 'Supply' }">
       <v-img height="48" width="372" position="left center" src="@/assets/tropykus.svg" contain />
     </router-link>
     <v-spacer />
