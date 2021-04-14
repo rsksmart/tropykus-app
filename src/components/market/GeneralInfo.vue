@@ -172,6 +172,10 @@ export default {
       this.successDialog = false;
       this.errorDialog = false;
     },
+    showError() {
+      this.waitingDialog = false;
+      this.errorDialog = true;
+    },
     async menuAction({ amount, action }) {
       this.amount = amount;
       this.reset();
@@ -180,11 +184,16 @@ export default {
       switch (action) {
         case 'Depositar':
           this.market.supply(this.account, this.amount)
-            .then(() => this.comptroller
-              .includeAsCollateral(this.account, this.marketAddress))
-            .then(() => {
+            .then((res) => {
+              if (res === undefined) return this.showError();
+              return this.comptroller
+                .includeAsCollateral(this.account, this.marketAddress);
+            })
+            .then((res) => {
+              if (res === undefined) return this.showError();
               this.waitingDialog = false;
               this.successDialog = true;
+              return this.successDialog;
             })
             .catch((e) => {
               console.error(e);
@@ -195,11 +204,15 @@ export default {
         case 'Pedir prestado':
           this.comptroller
             .includeAsCollateral(this.account, this.marketAddress)
-            .then(() => this.market
-              .borrow(this.account, this.amount))
-            .then(() => {
+            .then((res) => {
+              if (res === undefined) return this.showError();
+              return this.market.borrow(this.account, this.amount);
+            })
+            .then((res) => {
+              if (res === undefined) return this.showError();
               this.waitingDialog = false;
               this.successDialog = true;
+              return this.successDialog;
             })
             .catch((e) => {
               console.error(e);

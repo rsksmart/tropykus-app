@@ -84,10 +84,10 @@ export default class Market {
     return Number(await this.instance.callStatic.balanceOf(address)) / factor;
   }
 
-  async updatedUnderlyingBalance(address) {
-    const cTokensBalance = await this.balanceOf(address);
-    const exchangeRate = await this.exchangeRateCurrent();
-    return await cTokensBalance / exchangeRate;
+  async currentBalanceOfCTokenInUnderlying(address) {
+    const cTokenBalance = await this.balanceOf(address);
+    const exchangeRate = await this.exchangeRateStored();
+    return (cTokenBalance * exchangeRate);
   }
 
   async borrowBalanceStored(address) {
@@ -100,6 +100,10 @@ export default class Market {
 
   async exchangeRateCurrent() {
     return Number(await this.instance.callStatic.exchangeRateCurrent()) / factor;
+  }
+
+  async exchangeRateStored() {
+    return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
   }
 
   async balanceOfUnderlyingInWallet(account) {

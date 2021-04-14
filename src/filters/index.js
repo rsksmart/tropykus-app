@@ -1,6 +1,5 @@
 import Vue from 'vue';
 
-Vue.filter('formatPrice', (value) => `$ ${Number(value).toLocaleString('es')}`);
+Vue.filter('formatPrice', (value) => `$ ${Number(value).toLocaleString('es', { minimumFractionDigits: 4 })}`);
 
-Vue.filter('twoDecimals', (value) => `${value.toFixed(2)
-  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
+Vue.filter('formatDecimals', (value) => Number(value).toLocaleString('es', { minimumFractionDigits: 4 }));

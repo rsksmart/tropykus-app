@@ -27,7 +27,7 @@
             {{ actionBalance }}
           </p>
           <p class="ma-0 p-bold p-name-data">
-            {{ info.underlyingBalance | twoDecimals }} {{ info.underlyingSymbol }}
+            {{ info.underlyingBalance | formatDecimals }} {{ info.underlyingSymbol }}
           </p>
           <p class="ma-0 mb-6 p-italic">
             ={{ info.underlyingBalance * info.underlyingPrice | formatPrice }} USD

@@ -18,7 +18,7 @@
     <template v-else>
       <template v-if="debtsLoaded">
         <v-row class="mx-0 mt-4">
-          <v-col cols="4" v-for="(market, idx) in myBorrowing"
+          <v-col cols="4" v-for="(market, idx) in debts"
                  :key="`market-${idx}`">
             <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
           </v-col>
@@ -40,27 +40,27 @@ import DebtSavings from '@/components/market/DebtSavings.vue';
 
 export default {
   name: 'Debts',
-  data() {
-    return {
-      myBorrowing: null,
-      inBorrowMenu: true,
-    };
+  props: {
+    inBorrowMenu: {
+      required: true,
+      type: Boolean,
+    },
+    debts: {
+      required: false,
+      type: Array,
+      default: null,
+    },
   },
   computed: {
     loadingDebts() {
-      return this.myBorrowing === null;
+      return this.debts === null;
     },
     debtsLoaded() {
-      return this.myBorrowing?.length > 0;
+      return this.debts?.length > 0;
     },
   },
   components: {
     DebtSavings,
-  },
-  created() {
-    setTimeout(() => {
-      this.myBorrowing = [];
-    }, 1000);
   },
 };
 </script>

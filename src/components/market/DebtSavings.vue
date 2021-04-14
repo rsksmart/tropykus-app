@@ -17,7 +17,7 @@
         </v-row>
       </v-col>
       <v-col cols="5" class="pa-0 d-flex align-start">
-        <v-btn depressed :color="buttonColor" width="100%" height="30" :disabled="!inBorrowMenu">
+        <v-btn depressed :color="buttonColor" width="100%" height="30" disabled>
           {{ buttonName }}
         </v-btn>
       </v-col>
@@ -26,38 +26,18 @@
       <v-divider color="#BEBEBE"/>
     </v-row>
     <v-row class="mx-0 mb-1 container">
-      <v-col cols="7" class="d-flex align-center">
-        <div>
-          <v-row class="mx-0">
-            <p>{{ borrowSupplyBalanceLabel }}</p>
-          </v-row>
-          <v-row class="mx-0">
-            <p class="boldie">
-              {{ info.balance | twoDecimals }}
-              {{ info.underlyingSymbol }}
-            </p>
-          </v-row>
-          <v-row class="mx-0">
-            <p class="italique">= {{ tokenPrice | formatPrice }} USD</p>
-          </v-row>
-        </div>
-      </v-col>
-      <v-col cols="5" class="d-flex align-center">
         <div>
           <v-row class="mx-0">
             <p>{{ payRedeemBalanceLabel }}</p>
           </v-row>
           <v-row class="mx-0">
             <p class="boldie">
-              {{ info.balancePlusInterest | twoDecimals }}
+              {{ info.balancePlusInterest | formatDecimals }}
               {{ info.underlyingSymbol }}
+              <span class="italique"> = {{ tokenInterestPrice | formatPrice }} USD</span>
             </p>
           </v-row>
-          <v-row class="mx-0">
-            <p class="italique">= {{ tokenInterestPrice | formatPrice }} USD</p>
-          </v-row>
         </div>
-      </v-col>
     </v-row>
   </v-card>
 </template>
@@ -77,6 +57,7 @@ export default {
         name: null,
         symbol: null,
         balance: 0,
+        userBalance: 0,
         balancePlusInterest: 0,
         exchangeRate: null,
         savings: null,
@@ -112,12 +93,10 @@ export default {
     tokenPrice() {
       return this.inBorrowMenu
         ? this.info.balance * this.info.exchangeRate * this.info.underlyingPrice
-        : this.info.balance * this.info.underlyingPrice;
+        : this.info.userBalance * this.info.underlyingPrice;
     },
     tokenInterestPrice() {
-      return this.inBorrowMenu
-        ? this.info.balancePlusInterest * this.info.exchangeRate * this.info.underlyingPrice
-        : this.info.balancePlusInterest * this.info.underlyingPrice;
+      return this.info.balancePlusInterest * this.info.underlyingPrice;
     },
     buttonColor() {
       return this.inBorrowMenu ? '#F24646' : '#4696A6';
@@ -145,12 +124,6 @@ export default {
       this.info.symbol = await this.market.symbol;
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.underlying = await this.market.underlying();
-      this.info.balance = this.inBorrowMenu
-        ? await this.market.balanceOf(this.marketAddress)
-        : await this.market.borrowBalanceStored(this.marketAddress);
-      this.info.balancePlusInterest = this.inBorrowMenu
-        ? await this.market.updatedUnderlyingBalance(this.marketAddress)
-        : await this.market.borrowBalanceCurrent(this.marketAddress);
       this.info.exchangeRate = await this.market.exchangeRateCurrent();
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.getSymbolImg();
@@ -161,6 +134,12 @@ export default {
         this.info.balance = await this.market.balanceOf(this.walletAddress);
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
+        // this.info.userBalance = this.inBorrowMenu
+        //   ? await this.market.borrowBalanceStored(this.walletAddress)
+        //   : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
+        this.info.balancePlusInterest = this.inBorrowMenu
+          ? await this.market.borrowBalanceCurrent(this.walletAddress)
+          : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
       }
     },
     isCRbtc() {
