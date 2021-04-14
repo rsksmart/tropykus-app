@@ -29,7 +29,7 @@
             </v-btn>
           </v-col>
           <v-col class="d-flex justify-center">
-            <v-btn @click="$router.push({ name: 'BtcToRbtc' })"
+            <v-btn @click="closeAndRedirect"
                    width="95%" color="#4CB163">
               Convertir BTC a RBTC
             </v-btn>
@@ -56,6 +56,12 @@ export default {
     ...mapState({
       chainId: (state) => state.Session.chainId,
     }),
+  },
+  methods: {
+    closeAndRedirect() {
+      this.$router.push({ name: 'BtcToRbtc' });
+      this.btcToRbtcDialog = false;
+    },
   },
   watch: {
     chainId(val) {
