@@ -31,7 +31,7 @@
           <v-col class="d-flex justify-center">
             <v-btn @click="$router.push({ name: 'BtcToRbtc' })"
                    width="95%" color="#4CB163">
-              Conviertir BTC a RBTC
+              Convertir BTC a RBTC
             </v-btn>
           </v-col>
         </v-row>
