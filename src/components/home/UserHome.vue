@@ -34,6 +34,7 @@ export default {
       comptroller: null,
       savings: [],
       debts: [],
+      marketsLoaded: false,
     };
   },
   props: {
@@ -48,10 +49,10 @@ export default {
       walletAddress: (state) => state.Session.walletAddress,
     }),
     savingsList() {
-      return this.savings.length === 0 ? null : this.savings;
+      return this.marketsLoaded ? this.savings : null;
     },
     debtsList() {
-      return this.debts.length === 0 ? null : this.debts;
+      return this.marketsLoaded ? this.debts : null;
     },
   },
   methods: {
@@ -72,7 +73,7 @@ export default {
             })
             .then((borrowBalanceCurrent) => {
               if (borrowBalanceCurrent > 0) this.debts.push(marketAddress);
-              return this.debts;
+              this.marketsLoaded = true;
             })
             .catch(console.error);
         });
