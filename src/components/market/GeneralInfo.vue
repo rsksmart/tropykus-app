@@ -184,38 +184,28 @@ export default {
       switch (action) {
         case 'Depositar':
           this.market.supply(this.account, this.amount)
-            .then((res) => {
-              if (res === undefined) return this.showError();
-              return this.comptroller
-                .includeAsCollateral(this.account, this.marketAddress);
-            })
-            .then((res) => {
-              if (res === undefined) return this.showError();
+            .then(() => this.comptroller
+              .enterMarkets(this.account, this.marketAddress))
+            .then(() => {
               this.waitingDialog = false;
               this.successDialog = true;
               return this.successDialog;
             })
-            .catch((e) => {
-              console.error(e);
+            .catch(() => {
               this.waitingDialog = false;
               this.errorDialog = true;
             });
           break;
         case 'Pedir prestado':
           this.comptroller
-            .includeAsCollateral(this.account, this.marketAddress)
-            .then((res) => {
-              if (res === undefined) return this.showError();
-              return this.market.borrow(this.account, this.amount);
-            })
-            .then((res) => {
-              if (res === undefined) return this.showError();
+            .enterMarkets(this.account, this.marketAddress)
+            .then(() => this.market.borrow(this.account, this.amount))
+            .then(() => {
               this.waitingDialog = false;
               this.successDialog = true;
               return this.successDialog;
             })
-            .catch((e) => {
-              console.error(e);
+            .catch(() => {
               this.waitingDialog = false;
               this.errorDialog = true;
             });

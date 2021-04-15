@@ -146,16 +146,15 @@ export default class Market {
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
     const gasLimit = 250000;
     if (await Market.isCRbtc(this.marketAddress)) {
-      await this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
-    } else {
-      await this.instance.connect(accountSigner).mint(amount, { gasLimit });
+      return this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
     }
+    return this.instance.connect(accountSigner).mint(amount, { gasLimit });
   }
 
   async borrow(account, amountIntended) {
     const accountSigner = signer(account);
     const amount = await Market.getAmountDecimals(amountIntended);
     const gasLimit = 250000;
-    await this.instance.connect(accountSigner).borrow(amount, { gasLimit });
+    return this.instance.connect(accountSigner).borrow(amount, { gasLimit });
   }
 }
