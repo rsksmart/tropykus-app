@@ -88,7 +88,7 @@ export default {
       return this.inBorrowMenu ? 'Pediste prestado' : 'Tienes depositado';
     },
     payRedeemBalanceLabel() {
-      return this.inBorrowMenu ? 'Debes pagar' : 'Has ganado';
+      return this.inBorrowMenu ? 'Debes pagar' : 'Ahorros más ganancias';
     },
     tokenPrice() {
       return this.inBorrowMenu

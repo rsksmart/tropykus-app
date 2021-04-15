@@ -131,7 +131,7 @@ export default {
     },
     borrowOrRepay() {
       this.$emit('action', {
-        amount: this.amount,
+        amountIntended: this.amount,
         action: this.buttonLabel,
       });
     },

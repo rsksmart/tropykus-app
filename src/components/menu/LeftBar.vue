@@ -8,7 +8,7 @@
             <v-img contain height="43" src="@/assets/icons/pig.svg" />
           </v-btn>
         </template>
-        <span>Depósitos</span>
+        <span>Ahorros</span>
       </v-tooltip>
     </v-row>
     <v-row class="mx-0 my-2">

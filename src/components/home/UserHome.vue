@@ -2,12 +2,12 @@
   <div class="container">
     <template v-if="inBorrowMenu">
       <debts :inBorrowMenu="inBorrowMenu" :debts="debtsList" />
-      <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
+      <suggestions @borrow="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
     </template>
     <template v-else>
       <savings :inBorrowMenu="inBorrowMenu" :savings="savingsList" />
       <!--      <on-my-wallet />-->
-      <suggestions :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
+      <suggestions @supply="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
     </template>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
       this.suggestions = await this.comptroller.allMarkets;
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       if (this.walletAddress) {
-        this.assetsIn.forEach((marketAddress) => {
+        await this.assetsIn.forEach((marketAddress) => {
           Market.isCRbtc(marketAddress)
             .then((isCRbtc) => {
               const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
@@ -68,16 +68,19 @@ export default {
               return Promise.all([market, market.balanceOf(this.walletAddress)]);
             })
             .then(([market, balanceOf]) => {
-              if (balanceOf > 0) this.savings.push(marketAddress);
+              if (balanceOf > 0 && this.savings.indexOf(marketAddress) === -1) {
+                this.savings.push(marketAddress);
+              }
               return market.borrowBalanceCurrent(this.walletAddress);
             })
             .then((borrowBalanceCurrent) => {
-              if (borrowBalanceCurrent > 0) this.debts.push(marketAddress);
-              this.marketsLoaded = true;
-            })
-            .catch(console.error);
+              if (borrowBalanceCurrent > 0 && this.debts.indexOf(marketAddress) === -1) {
+                this.debts.push(marketAddress);
+              }
+            });
         });
       }
+      this.marketsLoaded = true;
     },
   },
   watch: {
@@ -97,6 +100,7 @@ export default {
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.load();
+    this.comptroller.instance.on('MarketEntered', () => this.load());
   },
 };
 </script>

@@ -100,7 +100,7 @@ export default {
       return this.inSupplyMenu ? 42 : 50;
     },
     actionBalance() {
-      return this.inBorrowMenu ? 'En tu billetera:' : 'Tienes depositado:';
+      return this.inSupplyMenu ? 'En tu billetera:' : 'Tienes depositado:';
     },
     actionDescription() {
       const desc = 'Escribe la cantidad que vas a';
@@ -141,7 +141,7 @@ export default {
     },
     supplyOrRedeem() {
       this.$emit('action', {
-        amount: this.amount,
+        amountIntended: this.amount,
         action: this.buttonLabel,
       });
     },

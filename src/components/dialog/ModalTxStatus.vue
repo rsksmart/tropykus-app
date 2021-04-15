@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="350">
+  <v-dialog v-model="dialog" width="350" :persistent="stage === 'in-progress'">
     <v-card class="modal-transaction-status" height="400">
       <div class="container">
         <v-row class="ma-0 d-flex justify-center">
@@ -58,9 +58,7 @@ export default {
     dialogText() {
       switch (this.stage) {
         case 'error':
-          return this.inBorrowMenu ? 'No tienes fondos ahorrados. Necesitas tener fondos '
-              + 'ahorrados como  garantía para el préstamo.' : 'No se pudo completar el depósito '
-              + 'necesitas tener fondos suficientes';
+          return this.inBorrowMenu ? 'No se pudo completar el préstamo.' : 'No se pudo completar el depósito.';
         case 'success':
           return this.inBorrowMenu ? `Has pedido prestado ${this
             .txAmount} ${this.txCryptocurrency}` : `Has depositado ${this

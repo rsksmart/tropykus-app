@@ -52,20 +52,20 @@
     <template v-if="supplyBorrowDialog">
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
                  @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"
-                 :inBorrowMenu="inBorrowMenu" />
+                 :inBorrowMenu="inBorrowMenu"/>
     </template>
     <template v-if="waitingDialog">
       <modal-tx-status :showModal="waitingDialog" :stage="'in-progress'"
-                       :inBorrowMenu="inBorrowMenu" />
+                       :inBorrowMenu="inBorrowMenu"/>
     </template>
     <template v-if="successDialog">
       <modal-tx-status :showModal="successDialog" :stage="'success'"
                        :txAmount="amount" :txCryptocurrency="txCurrency"
-                       :inBorrowMenu="inBorrowMenu" />
+                       :inBorrowMenu="inBorrowMenu"/>
     </template>
     <template v-if="errorDialog">
       <modal-tx-status :showModal="errorDialog" :stage="'error'"
-                       :inBorrowMenu="inBorrowMenu" />
+                       :inBorrowMenu="inBorrowMenu"/>
     </template>
   </v-card>
 </template>
@@ -176,39 +176,37 @@ export default {
       this.waitingDialog = false;
       this.errorDialog = true;
     },
-    async menuAction({ amount, action }) {
-      this.amount = amount;
+    showSuccess() {
+      this.waitingDialog = false;
+      this.successDialog = true;
+    },
+    async menuAction({ amountIntended, action }) {
+      this.amount = amountIntended;
       this.reset();
       this.waitingDialog = true;
       this.txCurrency = this.info.underlyingSymbol;
       switch (action) {
         case 'Depositar':
-          this.market.supply(this.account, this.amount)
-            .then(() => this.comptroller
-              .enterMarkets(this.account, this.marketAddress))
+          await this.market.supply(this.account, this.amount)
+            .then(() => this.comptroller.enterMarkets(this.account, this.marketAddress))
             .then(() => {
-              this.waitingDialog = false;
-              this.successDialog = true;
-              return this.successDialog;
+              this.market.instance.on('Mint', () => {
+                this.showSuccess();
+                this.$emit('supply');
+              });
             })
-            .catch(() => {
-              this.waitingDialog = false;
-              this.errorDialog = true;
-            });
+            .catch(() => this.showError());
           break;
         case 'Pedir prestado':
-          this.comptroller
-            .enterMarkets(this.account, this.marketAddress)
+          await this.comptroller.enterMarkets(this.account, this.marketAddress)
             .then(() => this.market.borrow(this.account, this.amount))
             .then(() => {
-              this.waitingDialog = false;
-              this.successDialog = true;
-              return this.successDialog;
+              this.market.instance.on('Borrow', () => {
+                this.showSuccess();
+                this.$emit('borrow');
+              });
             })
-            .catch(() => {
-              this.waitingDialog = false;
-              this.errorDialog = true;
-            });
+            .catch(() => this.showError());
           break;
         case 'Retirar':
           console.log('redeem');
@@ -219,6 +217,13 @@ export default {
         default:
           break;
       }
+      this.market.instance.on('Failure', (from, to, amount, event) => {
+        console.info(`Failure Event: ${JSON.stringify(event)}`);
+        const { error, detail, info } = event.args;
+        console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
+        this.waitingDialog = false;
+        this.errorDialog = true;
+      });
       await this.updateMarketInfo();
     },
     async updateMarketInfo() {
