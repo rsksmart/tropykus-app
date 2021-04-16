@@ -48,14 +48,14 @@ export default class Market {
   }
 
   async underlyingAssetInstance() {
-    return new ethers.Contract(await this.underlying(), StandardTokenAbi, Vue.web3);
+    return new ethers.Contract(await this.underlying(), StandardTokenAbi, this.web3);
   }
 
   async underlyingAssetSymbol() {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      Vue.web3,
+      this.web3,
     );
     return underlyingAsset.callStatic.symbol();
   }
@@ -64,7 +64,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      Vue.web3,
+      this.web3,
     );
     return underlyingAsset.callStatic.decimals();
   }
@@ -108,24 +108,23 @@ export default class Market {
   }
 
   async getInitialSupply(address) {
-    const supplyEvents = await this.instance.queryFilter('Mint');
+    const supplyEvents = await this.instance.queryFilter('Mint', -1000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
-    console.log(`Supplier: ${address}, addressSupplied: ${addressSupplied}`);
+    console.log(`supplier: ${address}, initialSupply: ${addressSupplied}`);
     return addressSupplied;
   }
 
   async getInitialBorrow(address) {
-    const supplyEvents = await this.instance.queryFilter('Borrow');
+    const supplyEvents = await this.instance.queryFilter('Borrow', -1000);
     let addressBorrowed = 0;
     supplyEvents.forEach((supply) => {
       const { borrower, borrowAmount } = supply.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
-    console.log(`Borrower: ${address}, addressBorrowed: ${addressBorrowed}`);
     return addressBorrowed;
   }
 
@@ -141,7 +140,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       underlyingAssetSymbol,
       StandardTokenAbi,
-      Vue.web3,
+      this.web3,
     );
     return Number(await underlyingAsset.callStatic.balanceOf(address)) / factor;
   }
@@ -150,7 +149,7 @@ export default class Market {
     const priceOracleProxyInstance = new ethers.Contract(
       addresses[chainId].priceOracleProxy,
       PriceOracleProxyAbi,
-      Vue.web3,
+      this.web3,
     );
     return Number(await priceOracleProxyInstance.callStatic.getUnderlyingPrice(this.marketAddress))
       / factor;
@@ -170,7 +169,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      Vue.web3,
+      this.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
     const gasLimit = 250000;
