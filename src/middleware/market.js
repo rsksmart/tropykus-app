@@ -14,8 +14,9 @@ const factor = 1e18;
 export default class Market {
   constructor(address = '', MarketAbi, chainId) {
     this.marketAddress = address.toLowerCase();
-    this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
-    this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
+    this.web3 = chainId === 31 ? Vue.web3Ws : Vue.web3;
+    this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, this.web3);
+    this.instance = new ethers.Contract(this.marketAddress, MarketAbi, this.web3);
   }
 
   static async isCRbtc(address) {

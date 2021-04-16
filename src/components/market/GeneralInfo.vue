@@ -193,6 +193,7 @@ export default {
               this.market.instance.on('Mint', () => {
                 this.showSuccess();
                 this.$emit('supply');
+                this.updateMarketInfo();
               });
             })
             .catch(() => this.showError());
@@ -204,6 +205,7 @@ export default {
               this.market.instance.on('Borrow', () => {
                 this.showSuccess();
                 this.$emit('borrow');
+                this.updateMarketInfo();
               });
             })
             .catch(() => this.showError());
@@ -224,7 +226,6 @@ export default {
         this.waitingDialog = false;
         this.errorDialog = true;
       });
-      await this.updateMarketInfo();
     },
     async updateMarketInfo() {
       this.info.name = await this.market.name;
