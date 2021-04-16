@@ -107,6 +107,34 @@ export default class Market {
     return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
   }
 
+  async getInitialSupply(address) {
+    const supplyEvents = await this.instance.queryFilter('Mint');
+    let addressSupplied = 0;
+    supplyEvents.forEach((supply) => {
+      const { minter, mintAmount } = supply.args;
+      if (minter === address) addressSupplied += Number(mintAmount) / factor;
+    });
+    console.log(`Supplier: ${address}, addressSupplied: ${addressSupplied}`);
+    return addressSupplied;
+  }
+
+  async getInitialBorrow(address) {
+    const supplyEvents = await this.instance.queryFilter('Borrow');
+    let addressBorrowed = 0;
+    supplyEvents.forEach((supply) => {
+      const { borrower, borrowAmount } = supply.args;
+      if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
+    });
+    console.log(`Borrower: ${address}, addressBorrowed: ${addressBorrowed}`);
+    return addressBorrowed;
+  }
+
+  async getEarnings(address) {
+    const initial = await this.getInitialSupply(address);
+    const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address);
+    return updatedSupply - initial;
+  }
+
   async balanceOfUnderlyingInWallet(account) {
     const address = await account.getAddress();
     const underlyingAssetSymbol = await this.underlying();
