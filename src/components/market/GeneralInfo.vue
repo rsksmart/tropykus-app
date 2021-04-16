@@ -100,6 +100,8 @@ export default {
         underlyingBalance: null,
         underlying: null,
         underlyingSymbol: null,
+        cash: null,
+        liquidity: null,
       },
       walletDialog: false,
       supplyBorrowDialog: false,
@@ -237,6 +239,7 @@ export default {
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
       this.info.rate = this.info.rate.toFixed(2);
+      this.info.cash = await this.market.getCash();
       this.getSymbolImg();
       if (this.chainId) {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
@@ -245,6 +248,7 @@ export default {
         this.info.balance = await this.market.balanceOf(this.walletAddress);
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
+        this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
       }
     },
     isCRbtc() {

@@ -107,6 +107,10 @@ export default class Market {
     return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
   }
 
+  async getCash() {
+    return Number(await this.instance.callStatic.getCash()) / factor;
+  }
+
   async balanceOfUnderlyingInWallet(account) {
     const address = await account.getAddress();
     const underlyingAssetSymbol = await this.underlying();
