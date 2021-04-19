@@ -20,7 +20,8 @@
         <v-row class="mx-0 mt-4">
           <v-col :cols="4" v-for="(market, idx) in suggestions"
                  :key="`market-${idx}`">
-            <general-info @supply="$emit('supply')" @borrow="$emit('borrow')"
+            <general-info @supply="$emit('success')" @borrow="$emit('success')"
+                          @redeem="$emit('success')"
                           :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
         </v-row>

@@ -125,6 +125,7 @@ export default class Market {
       const { borrower, borrowAmount } = supply.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
+    console.log(`borrower: ${address}, initialBorrow: ${addressBorrowed}`);
     return addressBorrowed;
   }
 
@@ -186,7 +187,15 @@ export default class Market {
   async borrow(account, amountIntended) {
     const accountSigner = signer(account);
     const amount = await Market.getAmountDecimals(amountIntended);
-    const gasLimit = 300000;
+    const gasLimit = 250000;
     return this.instance.connect(accountSigner).borrow(amount, { gasLimit });
+  }
+
+  async redeem(account, amountIntended) {
+    const accountSigner = signer(account);
+    const exchangeRate = await this.exchangeRateCurrent();
+    const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
+    const gasLimit = 250000;
+    return this.instance.connect(accountSigner).redeem(amount, { gasLimit });
   }
 }

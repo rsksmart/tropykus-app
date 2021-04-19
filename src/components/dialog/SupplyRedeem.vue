@@ -114,10 +114,10 @@ export default {
       return this.inSupplyMenu ? '#4CB163' : '#51C1AF';
     },
     buttonLabel() {
-      return this.inSupplyMenu ? 'Depositar' : 'Retirar (pronto)';
+      return this.inSupplyMenu ? 'Depositar' : 'Retirar';
     },
     validAmount() {
-      return this.amount > 0 && this.inSupplyMenu && typeof this
+      return this.amount > 0 && typeof this
         .rules.minBalance() !== 'string';
     },
   },

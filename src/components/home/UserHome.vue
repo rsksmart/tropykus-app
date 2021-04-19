@@ -2,12 +2,12 @@
   <div class="container">
     <template v-if="inBorrowMenu">
       <debts :inBorrowMenu="inBorrowMenu" :debts="debtsList" />
-      <suggestions @borrow="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
+      <suggestions @success="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
     </template>
     <template v-else>
       <savings :inBorrowMenu="inBorrowMenu" :savings="savingsList" />
       <!--      <on-my-wallet />-->
-      <suggestions @supply="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
+      <suggestions @success="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
     </template>
   </div>
 </template>

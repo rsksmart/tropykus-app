@@ -213,7 +213,15 @@ export default {
             .catch(() => this.showError());
           break;
         case 'Retirar':
-          console.log('redeem');
+          this.market.redeem(this.account, this.amount)
+            .then(() => {
+              this.market.instance.on('Redeem', () => {
+                this.showSuccess();
+                this.$emit('redeem');
+                this.updateMarketInfo();
+              });
+            })
+            .catch(console.error);
           break;
         case 'Pagar':
           console.log('repay');
