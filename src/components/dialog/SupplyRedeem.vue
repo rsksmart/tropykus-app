@@ -56,7 +56,7 @@
           <p class="ma-0 mt-5 mb-2">{{ actionDescription }}</p>
         </div>
         <v-text-field placeholder="Escribe el monto" type="number"
-                      v-model="amount" solo dense />
+                      v-model="amount" solo dense  :rules="[rules.minBalance]" />
         <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                width="300" :disabled="!validAmount" @click="supplyOrRedeem">
           {{ buttonLabel }}
@@ -80,6 +80,10 @@ export default {
       amount: null,
       db: this.$firebase.firestore(),
       symbolImg: null,
+      rules: {
+        minBalance: () => Number(this.amount) <= Number(this
+          .info.underlyingBalance) || 'No tienes fondos suficientes',
+      },
     };
   },
   props: {
@@ -113,7 +117,8 @@ export default {
       return this.inSupplyMenu ? 'Depositar' : 'Retirar (pronto)';
     },
     validAmount() {
-      return this.amount > 0 && this.inSupplyMenu;
+      return this.amount > 0 && this.inSupplyMenu && typeof this
+        .rules.minBalance() !== 'string';
     },
   },
   watch: {

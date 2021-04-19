@@ -30,7 +30,7 @@
             {{ info.underlyingBalance | formatDecimals }} {{ info.underlyingSymbol }}
           </p>
           <p class="ma-0 mb-6 p-italic">
-            ={{ info.underlyingBalance * info.underlyingPrice | formatPrice }} USD
+            ={{ underlyingPrice | formatPrice }} USD
           </p>
         </div>
         <v-spacer></v-spacer>
@@ -56,7 +56,8 @@
           <p class="ma-0 mt-5 mb-2">{{ actionDescription }}</p>
         </div>
         <v-text-field placeholder="Escribe el monto" type="number"
-                      v-model="amount" solo dense />
+                      v-model="amount" solo dense
+                      :rules="[rules.marketCash, rules.liquidity]" />
         <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                width="300" :disabled="!validAmount" @click="borrowOrRepay">
           {{ buttonLabel }}
@@ -80,6 +81,12 @@ export default {
       amount: null,
       db: this.$firebase.firestore(),
       symbolImg: null,
+      rules: {
+        liquidity: () => Number(this.amountAsUnderlyingPrice) <= Number(this
+          .info.liquidity) || 'Tu no tienes suficiente colateral',
+        marketCash: () => Number(this.amount) <= Number(this
+          .info.cash) || 'Este mercado no tiene fondos suficientes',
+      },
     };
   },
   props: {
@@ -106,6 +113,9 @@ export default {
       const desc = 'Escribe la cantidad que vas a';
       return this.inBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`;
     },
+    amountAsUnderlyingPrice() {
+      return Number(this.amount * this.info.underlyingPrice);
+    },
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#E65D3D';
     },
@@ -113,7 +123,9 @@ export default {
       return this.inBorrowMenu ? 'Pedir prestado' : 'Pagar (pronto)';
     },
     validAmount() {
-      return this.amount > 0 && this.inBorrowMenu;
+      return this.amount > 0 && this.inBorrowMenu && typeof this
+        .rules.liquidity() !== 'string' && typeof this
+        .rules.marketCash() !== 'string';
     },
   },
   watch: {

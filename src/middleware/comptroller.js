@@ -19,6 +19,11 @@ export default class Comptroller {
     return this.instance.callStatic.getAssetsIn(address);
   }
 
+  async getAccountLiquidity(address) {
+    const liquidityResponse = await this.instance.callStatic.getAccountLiquidity(address);
+    return liquidityResponse[1] / 1e18;
+  }
+
   enterMarkets(account, marketAddress) {
     const accountSigner = signer(account);
     return this.instance.connect(accountSigner).enterMarkets([marketAddress]);
