@@ -1,6 +1,6 @@
 <template>
   <div class="left-bar">
-    <v-row class="ma-0 mt-2">
+    <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn @click="$router.push({ name: 'Supply' })" width="50"
@@ -11,7 +11,7 @@
         <span>Ahorros</span>
       </v-tooltip>
     </v-row>
-    <v-row class="mx-0 my-2">
+    <v-row class="mx-0 my-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn @click="$router.push({ name: 'Borrow' })" width="50"
@@ -22,7 +22,7 @@
         <span>Pedir prestado</span>
       </v-tooltip>
     </v-row>
-    <v-row class="ma-0 mb-2">
+    <v-row class="ma-0 mb-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn @click="$router.push({ name: 'Tutorials' })" width="50"
@@ -33,8 +33,8 @@
         <span>Tutoriales</span>
       </v-tooltip>
     </v-row>
-    <v-divider class="mx-2" color="#BEBEBE" />
-    <v-row class="ma-0 mt-2">
+    <v-divider class="mx-2 mx-2" color="#BEBEBE" />
+    <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn href="https://github.com/TruStartUp/tropykus-protocol"
@@ -46,7 +46,7 @@
         <span>Repositorio</span>
       </v-tooltip>
     </v-row>
-    <v-row class="ma-0 my-2">
+    <v-row class="ma-0 my-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn href="https://twitter.com/tropykus"
@@ -58,7 +58,7 @@
         <span>Twitter</span>
       </v-tooltip>
     </v-row>
-    <v-row class="ma-0 mb-2">
+    <v-row class="ma-0 mb-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn href="https://t.me/tropykus"

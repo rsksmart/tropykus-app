@@ -21,7 +21,7 @@
       </v-row>
       <v-row class="d-flex justify-center ma-0 ">
         <div class="modal-container mt-6 ml-6">
-          <v-img :src="actionIcon" class="my-3" :width="actionIconWidth"
+          <v-img :src="actionIcon" class="my-3" width="64"
                  alt="action icon" contain />
           <p class="title-modal-rate ma-0">
             {{ actionBalance }}
@@ -83,10 +83,10 @@ export default {
       db: this.$firebase.firestore(),
       symbolImg: null,
       rules: {
-        liquidity: () => Number(this.amountAsUnderlyingPrice) <= Number(this
-          .info.liquidity) || 'Tu no tienes suficiente colateral',
-        marketCash: () => Number(this.amount) <= Number(this
-          .info.cash) || 'Este mercado no tiene fondos suficientes',
+        liquidity: () => (this.inBorrowMenu ? Number(this.amountAsUnderlyingPrice) <= Number(this
+          .info.liquidity) : true) || 'Tu no tienes suficiente colateral',
+        marketCash: () => (this.inBorrowMenu ? Number(this.amount) <= Number(this
+          .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
       },
     };
   },
@@ -103,9 +103,6 @@ export default {
   computed: {
     actionIcon() {
       return this.inBorrowMenu ? Borrow : Pay;
-    },
-    actionIconWidth() {
-      return this.inBorrowMenu ? 42 : 50;
     },
     actionBalance() {
       return this.inBorrowMenu ? 'Puedes pedir prestado:' : 'Debes pagar:';
@@ -124,7 +121,7 @@ export default {
       return this.inBorrowMenu ? 'Pedir prestado' : 'Pagar (pronto)';
     },
     validAmount() {
-      return this.amount > 0 && this.inBorrowMenu && typeof this
+      return this.amount > 0 && typeof this
         .rules.liquidity() !== 'string' && typeof this
         .rules.marketCash() !== 'string';
     },

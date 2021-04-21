@@ -107,6 +107,8 @@ export default {
         underlyingSymbol: null,
         cash: null,
         liquidity: null,
+        supplyBalance: null,
+        borrowBalance: null,
       },
       walletDialog: false,
       supplyBorrowDialog: false,
@@ -199,7 +201,7 @@ export default {
       this.reset();
       switch (action) {
         case constants.USER_ACTION_MINT:
-          this.txSummaryDialog = true;
+          this.txSummaryDialog = false; // true
           await this.market.supply(this.account, this.amount)
             .then(() => this.comptroller.enterMarkets(this.account, this.marketAddress))
             .then(() => {
@@ -283,6 +285,10 @@ export default {
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
         this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+        this.info.supplyBalance = await this.market
+          .currentBalanceOfCTokenInUnderlying(this.walletAddress);
+        this.info.borrowBalance = await this.market
+          .borrowBalanceCurrent(this.walletAddress);
       }
     },
     isCRbtc() {

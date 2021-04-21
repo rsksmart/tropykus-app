@@ -108,17 +108,28 @@ export default class Market {
   }
 
   async getInitialSupply(address) {
-    const supplyEvents = await this.instance.queryFilter('Mint', -1000);
+    const supplyEvents = await this.instance.queryFilter('Mint', 1769509, 'latest');
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
-    return addressSupplied;
+    const redeemAmount = await this.getRedeems();
+    return addressSupplied - redeemAmount;
+  }
+
+  async getRedeems(address) {
+    const redeemEvents = await this.instance.queryFilter('Redeem', 1769509, 'latest');
+    let addressRedeem = 0;
+    redeemEvents.forEach((redeem) => {
+      const { redeemer, redeemAmount } = redeem.args;
+      if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
+    });
+    return addressRedeem;
   }
 
   async getInitialBorrow(address) {
-    const supplyEvents = await this.instance.queryFilter('Borrow', -1000);
+    const supplyEvents = await this.instance.queryFilter('Borrow', -30000);
     let addressBorrowed = 0;
     supplyEvents.forEach((supply) => {
       const { borrower, borrowAmount } = supply.args;

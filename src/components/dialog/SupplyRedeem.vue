@@ -27,7 +27,7 @@
             {{ actionBalance }}
           </p>
           <p class="ma-0 p-bold p-name-data">
-            {{ info.underlyingBalance | formatDecimals }} {{ info.underlyingSymbol }}
+            {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
           </p>
           <p class="ma-0 mb-6 p-italic">
             ={{ info.underlyingBalance * info.underlyingPrice | formatPrice }} USD
@@ -56,7 +56,8 @@
           <p class="ma-0 mt-5 mb-2">{{ actionDescription }}</p>
         </div>
         <v-text-field placeholder="Escribe el monto" type="number"
-                      v-model="amount" solo dense  :rules="[rules.minBalance]" />
+                      v-model="amount" solo dense
+                      :rules="[rules.minBalance, rules.marketCash, rules.supplyBalance]" />
         <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                width="300" :disabled="!validAmount" @click="supplyOrRedeem">
           {{ buttonLabel }}
@@ -82,8 +83,12 @@ export default {
       db: this.$firebase.firestore(),
       symbolImg: null,
       rules: {
-        minBalance: () => Number(this.amount) <= Number(this
-          .info.underlyingBalance) || 'No tienes fondos suficientes',
+        minBalance: () => (this.inSupplyMenu ? Number(this.amount) <= Number(this
+          .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
+        supplyBalance: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
+          .info.supplyBalance) : true) || 'No tienes suficiente depositado',
+        marketCash: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
+          .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
       },
     };
   },
@@ -116,6 +121,9 @@ export default {
     },
     buttonLabel() {
       return this.inSupplyMenu ? 'Depositar' : 'Retirar';
+    },
+    tokenBalance() {
+      return this.inSupplyMenu ? this.underlyingBalance : this.info.supplyBalance;
     },
     validAmount() {
       return this.amount > 0 && typeof this
