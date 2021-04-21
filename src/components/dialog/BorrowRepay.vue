@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import * as constants from '@/store/constants';
 import Borrow from '@/assets/icons/borrow.svg';
 import Pay from '@/assets/icons/pay.svg';
 
@@ -144,7 +145,7 @@ export default {
     borrowOrRepay() {
       this.$emit('action', {
         amountIntended: this.amount,
-        action: this.buttonLabel,
+        action: this.inBorrowMenu ? constants.USER_ACTION_BORROW : constants.USER_ACTION_REPAY,
       });
     },
   },

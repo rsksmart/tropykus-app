@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import * as constants from '@/store/constants';
 import WalletIcon from '@/assets/icons/wallet.svg';
 import PigIcon from '@/assets/icons/pig.svg';
 
@@ -147,7 +148,7 @@ export default {
     supplyOrRedeem() {
       this.$emit('action', {
         amountIntended: this.amount,
-        action: this.buttonLabel,
+        action: this.inSupplyMenu ? constants.USER_ACTION_MINT : constants.USER_ACTION_REDEEM,
       });
     },
   },

@@ -114,7 +114,6 @@ export default class Market {
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
-    console.log(`supplier: ${address}, initialSupply: ${addressSupplied}`);
     return addressSupplied;
   }
 
@@ -125,7 +124,6 @@ export default class Market {
       const { borrower, borrowAmount } = supply.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
-    console.log(`borrower: ${address}, initialBorrow: ${addressBorrowed}`);
     return addressBorrowed;
   }
 

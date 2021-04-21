@@ -47,35 +47,33 @@
       </v-col>
     </v-row>
     <template v-if="walletDialog">
-      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
+      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false" />
     </template>
     <template v-if="supplyBorrowDialog">
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
                  @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"
-                 :inBorrowMenu="inBorrowMenu"/>
+                 :inBorrowMenu="inBorrowMenu" />
     </template>
     <template v-if="waitingDialog">
-      <modal-tx-status :showModal="waitingDialog" :stage="'in-progress'"
-                       :inBorrowMenu="inBorrowMenu"/>
+      <loading :showModal="waitingDialog" />
     </template>
     <template v-if="successDialog">
-      <modal-tx-status :showModal="successDialog" :stage="'success'"
-                       :txAmount="amount" :txCryptocurrency="txCurrency"
-                       :inBorrowMenu="inBorrowMenu"/>
+      <success-dialog :showModal="successDialog" :amount="amount"
+                      :underlyingSymbol="info.underlyingSymbol" :action="currentAction"
+                      @close="successDialog = false" />
     </template>
     <template v-if="errorDialog">
-      <modal-tx-status :showModal="errorDialog" :stage="'error'"
-                       :inBorrowMenu="inBorrowMenu"/>
+      <error-dialog :showModal="errorDialog" :action="currentAction"
+                    @close="errorDialog = false" />
+    </template>
+    <template v-if="txSummaryDialog">
+      <tx-summary :showModal="txSummaryDialog" :action="currentAction" />
     </template>
   </v-card>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
-import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
-import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
-import ModalTxStatus from '@/components/dialog/ModalTxStatus.vue';
-import BorrowRepay from '@/components/dialog/BorrowRepay.vue';
 import * as constants from '@/store/constants';
 import {
   CToken,
@@ -83,6 +81,13 @@ import {
   Market,
   Comptroller,
 } from '@/middleware';
+import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
+import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
+import Loading from '@/components/dialog/Loading.vue';
+import BorrowRepay from '@/components/dialog/BorrowRepay.vue';
+import TxSummary from '@/components/dialog/TxSummary.vue';
+import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
+import ErrorDialog from '@/components/dialog/ErrorDialog.vue';
 
 export default {
   name: 'GeneralInfo',
@@ -108,10 +113,11 @@ export default {
       waitingDialog: false,
       successDialog: false,
       errorDialog: false,
+      txSummaryDialog: false,
       market: null,
       amount: null,
-      txCurrency: null,
       comptroller: null,
+      currentAction: null,
     };
   },
   props: {
@@ -173,68 +179,88 @@ export default {
       this.waitingDialog = false;
       this.successDialog = false;
       this.errorDialog = false;
+      this.txSummaryDialog = false;
+    },
+    showWaiting() {
+      this.reset();
+      this.waitingDialog = true;
     },
     showError() {
-      this.waitingDialog = false;
+      this.reset();
       this.errorDialog = true;
     },
     showSuccess() {
-      this.waitingDialog = false;
+      this.reset();
       this.successDialog = true;
     },
     async menuAction({ amountIntended, action }) {
       this.amount = amountIntended;
+      this.currentAction = action;
       this.reset();
-      this.waitingDialog = true;
-      this.txCurrency = this.info.underlyingSymbol;
       switch (action) {
-        case 'Depositar':
+        case constants.USER_ACTION_MINT:
+          this.txSummaryDialog = true;
           await this.market.supply(this.account, this.amount)
             .then(() => this.comptroller.enterMarkets(this.account, this.marketAddress))
             .then(() => {
-              this.market.instance.on('Mint', () => {
-                this.showSuccess();
-                this.$emit('supply');
-                this.updateMarketInfo();
+              this.showWaiting();
+              this.market.instance.on('Mint', (from) => {
+                if (from === this.walletAddress) {
+                  this.showSuccess();
+                  this.$emit('success');
+                  this.updateMarketInfo();
+                }
               });
             })
-            .catch(() => this.showError());
+            .catch(this.showError);
           break;
-        case 'Pedir prestado':
+        case constants.USER_ACTION_BORROW:
+          this.txSummaryDialog = true;
           await this.comptroller.enterMarkets(this.account, this.marketAddress)
-            .then(() => this.market.borrow(this.account, this.amount))
             .then(() => {
-              this.market.instance.on('Borrow', () => {
-                this.showSuccess();
-                this.$emit('borrow');
-                this.updateMarketInfo();
+              this.showWaiting();
+              return this.market.borrow(this.account, this.amount);
+            })
+            .then(() => {
+              this.showWaiting();
+              this.market.instance.on('Borrow', (from) => {
+                if (from === this.walletAddress) {
+                  this.showSuccess();
+                  this.$emit('success');
+                  this.updateMarketInfo();
+                }
               });
             })
-            .catch(() => this.showError());
+            .catch(this.showError);
           break;
-        case 'Retirar':
+        case constants.USER_ACTION_REDEEM:
+          this.txSummaryDialog = true;
           this.market.redeem(this.account, this.amount)
             .then(() => {
-              this.market.instance.on('Redeem', () => {
-                this.showSuccess();
-                this.$emit('redeem');
-                this.updateMarketInfo();
+              this.showWaiting();
+              this.market.instance.on('Redeem', (from) => {
+                if (from === this.walletAddress) {
+                  this.showSuccess();
+                  this.$emit('success');
+                  this.updateMarketInfo();
+                }
               });
             })
-            .catch(console.error);
+            .catch(this.showError);
           break;
-        case 'Pagar':
+        case constants.USER_ACTION_REPAY:
           console.log('repay');
           break;
         default:
           break;
       }
       this.market.instance.on('Failure', (from, to, amount, event) => {
-        console.info(`Failure Event: ${JSON.stringify(event)}`);
+        console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
-        this.waitingDialog = false;
-        this.errorDialog = true;
+        if (this.walletAddress === from) {
+          this.showError();
+        }
       });
     },
     async updateMarketInfo() {
@@ -267,7 +293,10 @@ export default {
     ConnectWallet,
     SupplyRedeem,
     BorrowRepay,
-    ModalTxStatus,
+    Loading,
+    TxSummary,
+    SuccessDialog,
+    ErrorDialog,
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
