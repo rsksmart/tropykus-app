@@ -115,7 +115,9 @@ export default class Market {
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
     const redeemAmount = await this.getRedeems(address);
-    return addressSupplied - redeemAmount;
+    const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
+    const initial = addressSupplied - redeemAmount;
+    return initial >= 0 ? initial : supplyBalance;
   }
 
   async getRedeems(address) {
@@ -136,7 +138,9 @@ export default class Market {
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
     const repayAmount = await this.getRepays(address);
-    return addressBorrowed - repayAmount;
+    const borrowBalance = await this.borrowBalanceCurrent(address);
+    const initial = addressBorrowed - repayAmount;
+    return initial >= 0 ? initial : borrowBalance;
   }
 
   async getRepays(address) {
@@ -191,16 +195,16 @@ export default class Market {
   async supply(account, amountIntended) {
     const accountSigner = signer(account);
     const value = await Market.getAmountDecimals(amountIntended);
+    const gasLimit = 250000;
+    if (await Market.isCRbtc(this.marketAddress)) {
+      return this.instance.connect(accountSigner).mint({ value, gasLimit });
+    }
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
       this.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
-    const gasLimit = 250000;
-    if (await Market.isCRbtc(this.marketAddress)) {
-      return this.instance.connect(accountSigner).mint({ value, gasLimit });
-    }
     return this.instance.connect(accountSigner).mint(value, { gasLimit });
   }
 

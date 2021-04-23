@@ -62,13 +62,17 @@ export default {
     },
   },
   methods: {
-    forceDebts() {
+    async forceDebts() {
+      await this.load();
       this.debtKey += 1;
     },
-    forceSavings() {
+    async forceSavings() {
+      await this.load();
       this.savKey += 1;
     },
     async load() {
+      this.savings = [];
+      this.debts = [];
       this.suggestions = await this.comptroller.allMarkets;
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       if (this.walletAddress) {
@@ -77,7 +81,10 @@ export default {
             .then((isCRbtc) => {
               const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
                 : new CToken(marketAddress, this.chainId);
-              return Promise.all([market, market.balanceOf(this.walletAddress)]);
+              return Promise.all([
+                market,
+                market.balanceOf(this.walletAddress),
+              ]);
             })
             .then(([market, balanceOf]) => {
               if (balanceOf > 0 && this.savings.indexOf(marketAddress) === -1) {

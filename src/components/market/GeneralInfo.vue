@@ -120,6 +120,7 @@ export default {
       amount: null,
       comptroller: null,
       currentAction: null,
+      allMarkets: [],
     };
   },
   props: {
@@ -199,12 +200,16 @@ export default {
       this.amount = amountIntended;
       this.currentAction = action;
       this.reset();
+      const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       switch (action) {
         case constants.USER_ACTION_MINT:
+          this.allMarkets = await this.comptroller.allMarkets;
+          if (assetsIn.indexOf(this.marketAddress) === -1) {
+            await this.comptroller.enterMarkets(this.account, this.allMarkets);
+          }
           // this.txSummaryDialog = true; // TODO
           this.showWaiting();
           await this.market.supply(this.account, this.amount)
-            .then(() => this.comptroller.enterMarkets(this.account, this.marketAddress))
             .then(() => {
               this.market.instance.on('Mint', (from) => {
                 if (from === this.walletAddress) {
@@ -218,8 +223,7 @@ export default {
         case constants.USER_ACTION_BORROW:
           // this.txSummaryDialog = true; // TODO
           this.showWaiting();
-          await this.comptroller.enterMarkets(this.account, this.marketAddress)
-            .then(() => this.market.borrow(this.account, this.amount))
+          await this.market.borrow(this.account, this.amount)
             .then(() => {
               this.market.instance.on('Borrow', (from) => {
                 if (from === this.walletAddress) {

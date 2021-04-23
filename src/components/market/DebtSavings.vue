@@ -33,11 +33,16 @@
             <p>{{ borrowSupplyBalanceLabel }}</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">
-              {{ info.initialBalance | formatDecimals }}
-              {{ info.underlyingSymbol }}
-              <span class="italique"> = {{ tokenPrice | formatPrice }} USD</span>
-            </p>
+            <v-tooltip top color="#52826E">
+              <template v-slot:activator="{ on, attrs }">
+                <p class="boldie" v-bind="attrs" v-on="on">
+                  {{ info.initialBalance | formatDecimals }}
+                  {{ info.underlyingSymbol }}
+                  <span class="italique"> = {{ tokenPrice | formatPrice }} USD</span>
+                </p>
+              </template>
+              <span>{{ info.initialBalance }}</span>
+            </v-tooltip>
           </v-row>
         </div>
       </v-col>
@@ -47,18 +52,23 @@
             <p>{{ payRedeemBalanceLabel }}</p>
           </v-row>
           <v-row class="mx-0">
-            <p class="boldie">
-              {{ info.interestBalance | formatDecimals }}
-              {{ info.underlyingSymbol }}
-              <span class="italique"> = {{ tokenInterestPrice | formatPrice }} USD</span>
-            </p>
+            <v-tooltip top color="#52826E">
+              <template v-slot:activator="{ on, attrs }">
+                <p class="boldie" v-bind="attrs" v-on="on">
+                  {{ info.interestBalance | formatDecimals }}
+                  {{ info.underlyingSymbol }}
+                  <span class="italique"> = {{ tokenInterestPrice | formatPrice }} USD</span>
+                </p>
+              </template>
+              <span>{{ info.interestBalance }}</span>
+            </v-tooltip>
           </v-row>
         </div>
       </v-col>
     </v-row>
     <template v-if="borrowRepayDialog">
       <borrow-repay :showModal="borrowRepayDialog" :inBorrowMenu="false"
-                    :info="info" @action="repay" />
+                    :info="info" @action="repay" @closed="borrowRepayDialog = false" />
     </template>
     <template v-if="waitingDialog">
       <loading :showModal="waitingDialog" />

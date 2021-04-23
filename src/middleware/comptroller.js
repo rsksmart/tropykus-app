@@ -24,8 +24,8 @@ export default class Comptroller {
     return liquidityResponse[1] / 1e18;
   }
 
-  enterMarkets(account, marketAddress) {
+  enterMarkets(account, marketAddresses) {
     const accountSigner = signer(account);
-    return this.instance.connect(accountSigner).enterMarkets([marketAddress]);
+    return this.instance.connect(accountSigner).enterMarkets(marketAddresses);
   }
 }
