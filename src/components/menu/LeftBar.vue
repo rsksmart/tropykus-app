@@ -33,6 +33,17 @@
         <span>Tutoriales</span>
       </v-tooltip>
     </v-row>
+    <v-row class="ma-0 mb-2 mx-2">
+      <v-tooltip right color="#52826E">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn @click="$router.push({ name: 'Overview' })" width="50"
+                 height="64" depressed v-bind="attrs" v-on="on">
+            <v-img contain height="43" src="@/assets/icons/info.svg" />
+          </v-btn>
+        </template>
+        <span>Mercados</span>
+      </v-tooltip>
+    </v-row>
     <v-divider class="mx-2 mx-2" color="#BEBEBE" />
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">

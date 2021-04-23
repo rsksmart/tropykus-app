@@ -73,7 +73,7 @@ export default {
     // Create a Helper file
     round(number) {
       return Math.round((number + Number.EPSILON) * 100) / 100;
-    }
-  }
+    },
+  },
 };
 </script>
