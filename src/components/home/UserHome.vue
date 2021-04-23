@@ -1,21 +1,25 @@
 <template>
   <div class="container">
     <template v-if="inBorrowMenu">
-      <debts :inBorrowMenu="inBorrowMenu" :debts="debtsList" />
-      <suggestions @success="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions" />
+      <debts :inBorrowMenu="inBorrowMenu"
+             :debts="debtsList" :key="debtKey" />
+      <suggestions @actionSucceed="forceDebts" :inBorrowMenu="inBorrowMenu"
+                   :suggestions="suggestions" />
     </template>
     <template v-else>
-      <savings :inBorrowMenu="inBorrowMenu" :savings="savingsList" />
+      <savings :inBorrowMenu="inBorrowMenu"
+               :savings="savingsList" :key="savKey" />
       <!--      <on-my-wallet />-->
-      <suggestions @success="load" :inBorrowMenu="inBorrowMenu" :suggestions="suggestions"  />
+      <suggestions @actionSucceed="forceSavings" :inBorrowMenu="inBorrowMenu"
+                   :suggestions="suggestions" />
     </template>
   </div>
 </template>
 
 <script>
+// import OnMyWallet from '@/components/users/OnMyWallet.vue';
 import Savings from '@/components/users/Savings.vue';
 import Debts from '@/components/users/Debts.vue';
-// import OnMyWallet from '@/components/users/OnMyWallet.vue';
 import Suggestions from '@/components/users/Suggestions.vue';
 import {
   Comptroller,
@@ -35,6 +39,8 @@ export default {
       savings: [],
       debts: [],
       marketsLoaded: false,
+      debtKey: 0,
+      savKey: 1,
     };
   },
   props: {
@@ -56,7 +62,17 @@ export default {
     },
   },
   methods: {
+    async forceDebts() {
+      await this.load();
+      this.debtKey += 1;
+    },
+    async forceSavings() {
+      await this.load();
+      this.savKey += 1;
+    },
     async load() {
+      this.savings = [];
+      this.debts = [];
       this.suggestions = await this.comptroller.allMarkets;
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       if (this.walletAddress) {
@@ -65,7 +81,10 @@ export default {
             .then((isCRbtc) => {
               const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
                 : new CToken(marketAddress, this.chainId);
-              return Promise.all([market, market.balanceOf(this.walletAddress)]);
+              return Promise.all([
+                market,
+                market.balanceOf(this.walletAddress),
+              ]);
             })
             .then(([market, balanceOf]) => {
               if (balanceOf > 0 && this.savings.indexOf(marketAddress) === -1) {

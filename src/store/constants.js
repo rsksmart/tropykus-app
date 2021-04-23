@@ -1,10 +1,10 @@
 export const WALLET_LIQUALITY = 'WALLET_LIQUALITY';
 export const WALLET_METAMASK = 'WALLET_METAMASK';
 
-export const NETWORK_ID = +process.env.VUE_APP_NETWORK_ID || 30;
-export const WS_PROVIDER = process.env.VUE_APP_WS_PROVIDER || 'wss://public-node.rsk.co:433';
-export const HTTP_PROVIDER = process.env.VUE_APP_HTTP_PROVIDER || 'https://public-node.rsk.co:433';
-export const COMMIT_HASH = process.env.VUE_APP_GIT_HASH || '';
+export const USER_ACTION_MINT = 'USER_ACTION_MINT';
+export const USER_ACTION_BORROW = 'USER_ACTION_BORROW';
+export const USER_ACTION_REDEEM = 'USER_ACTION_REDEEM';
+export const USER_ACTION_REPAY = 'USER_ACTION_REPAY';
 
 // actions
 export const SESSION_CONNECT_WEB3 = 'SESSION_CONNECT_WEB3';

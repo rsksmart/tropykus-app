@@ -5,37 +5,37 @@
         <v-btn
             depressed
             color="transparent"
-            @click="inBorrowMenu = true"
-            :class="inBorrowMenu ? 'button-save' : 'button-save-click'"
+            @click="isInBorrowMenu = true"
+            :class="isInBorrowMenu ? 'button-save' : 'button-save-click'"
         >
           Pedir prestado
         </v-btn>
         <v-btn
             depressed
             color="transparent"
-            @click="inBorrowMenu = false"
-            :class="inBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
+            @click="isInBorrowMenu = false"
+            :class="isInBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
           Pagar
         </v-btn>
       </v-row>
       <v-row class="d-flex justify-center ma-0 ">
         <div class="modal-container mt-6 ml-6">
-          <v-img :src="actionIcon" class="my-3" :width="actionIconWidth"
+          <v-img :src="actionIcon" class="my-3" width="64"
                  alt="action icon" contain />
           <p class="title-modal-rate ma-0">
             {{ actionBalance }}
           </p>
           <p class="ma-0 p-bold p-name-data">
-            {{ info.underlyingBalance | formatDecimals }} {{ info.underlyingSymbol }}
+            {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
           </p>
           <p class="ma-0 mb-6 p-italic">
-            ={{ underlyingPrice | formatPrice }} USD
+            ={{ tokenPrice | formatPrice }} USD
           </p>
         </div>
         <v-spacer></v-spacer>
         <div class="d-flex flex-column modal-container-img mr-6 mt-6">
-          <div :class="inBorrowMenu ? 'modal-icon' : 'modal-icon-click'">
+          <div :class="isInBorrowMenu ? 'modal-icon' : 'modal-icon-click'">
             <v-img class="mr-2" width="42" height="42" :src="symbolImg" contain />
             <div>
               <p class="ma-0 p-bold p-name mt-2">
@@ -44,7 +44,7 @@
               <p class="ma-0 p-italic">= {{ info.underlyingPrice | formatPrice }} USD</p>
             </div>
           </div>
-          <template v-if="inBorrowMenu">
+          <template v-if="isInBorrowMenu">
             <p class="ma-0 mb-1">Interés Anual</p>
             <p class="ma-0 modal-rate">{{ info.rate }} %</p>
           </template>
@@ -57,7 +57,8 @@
         </div>
         <v-text-field placeholder="Escribe el monto" type="number"
                       v-model="amount" solo dense
-                      :rules="[rules.marketCash, rules.liquidity]" />
+                      :rules="[rules.marketCash, rules.liquidity,
+                      rules.minBalance, rules.borrowBalance]" />
         <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                width="300" :disabled="!validAmount" @click="borrowOrRepay">
           {{ buttonLabel }}
@@ -68,6 +69,7 @@
 </template>
 
 <script>
+import * as constants from '@/store/constants';
 import Borrow from '@/assets/icons/borrow.svg';
 import Pay from '@/assets/icons/pay.svg';
 
@@ -77,15 +79,19 @@ export default {
     return {
       showModalConnectWallet: false,
       dialog: this.showModal,
-      inBorrowMenu: true,
+      isInBorrowMenu: this.inBorrowMenu,
       amount: null,
       db: this.$firebase.firestore(),
       symbolImg: null,
       rules: {
-        liquidity: () => Number(this.amountAsUnderlyingPrice) <= Number(this
-          .info.liquidity) || 'Tu no tienes suficiente colateral',
-        marketCash: () => Number(this.amount) <= Number(this
-          .info.cash) || 'Este mercado no tiene fondos suficientes',
+        liquidity: () => (this.isInBorrowMenu ? Number(this.amountAsUnderlyingPrice) <= Number(this
+          .info.liquidity) : true) || 'No tienes suficiente colateral',
+        marketCash: () => (this.isInBorrowMenu ? Number(this.amount) <= Number(this
+          .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
+        minBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
+          .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
+        borrowBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
+          .info.borrowBalance) : true) || 'No debes tanto',
       },
     };
   },
@@ -98,38 +104,48 @@ export default {
       type: Object,
       required: true,
     },
+    inBorrowMenu: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     actionIcon() {
-      return this.inBorrowMenu ? Borrow : Pay;
-    },
-    actionIconWidth() {
-      return this.inBorrowMenu ? 42 : 50;
+      return this.isInBorrowMenu ? Borrow : Pay;
     },
     actionBalance() {
-      return this.inBorrowMenu ? 'Puedes pedir prestado:' : 'Debes pagar:';
+      return this.isInBorrowMenu ? 'Puedes pedir prestado:' : 'Debes pagar:';
     },
     actionDescription() {
       const desc = 'Escribe la cantidad que vas a';
-      return this.inBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`;
+      return this.isInBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`;
     },
     amountAsUnderlyingPrice() {
       return Number(this.amount * this.info.underlyingPrice);
     },
     buttonColor() {
-      return this.inBorrowMenu ? '#FF9153' : '#E65D3D';
+      return this.isInBorrowMenu ? '#FF9153' : '#E65D3D';
     },
     buttonLabel() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Pagar (pronto)';
+      return this.isInBorrowMenu ? 'Pedir prestado' : 'Pagar';
+    },
+    tokenBalance() {
+      return this.isInBorrowMenu ? (this.info.liquidity / this.info
+        .underlyingPrice) : this.info.borrowBalance;
+    },
+    tokenPrice() {
+      return this.tokenBalance * this.info.underlyingPrice;
     },
     validAmount() {
-      return this.amount > 0 && this.inBorrowMenu && typeof this
+      return this.amount > 0 && typeof this
         .rules.liquidity() !== 'string' && typeof this
-        .rules.marketCash() !== 'string';
+        .rules.marketCash() !== 'string' && typeof this
+        .rules.minBalance() !== 'string' && typeof this
+        .rules.borrowBalance() !== 'string';
     },
   },
   watch: {
-    inBorrowMenu() {
+    isInBorrowMenu() {
       this.amount = null;
     },
   },
@@ -144,7 +160,7 @@ export default {
     borrowOrRepay() {
       this.$emit('action', {
         amountIntended: this.amount,
-        action: this.buttonLabel,
+        action: this.isInBorrowMenu ? constants.USER_ACTION_BORROW : constants.USER_ACTION_REPAY,
       });
     },
   },

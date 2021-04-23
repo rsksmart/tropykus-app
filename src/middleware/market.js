@@ -108,25 +108,49 @@ export default class Market {
   }
 
   async getInitialSupply(address) {
-    const supplyEvents = await this.instance.queryFilter('Mint', -1000);
+    const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
-    console.log(`supplier: ${address}, initialSupply: ${addressSupplied}`);
-    return addressSupplied;
+    const redeemAmount = await this.getRedeems(address);
+    const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
+    const initial = addressSupplied - redeemAmount;
+    return initial >= 0 ? initial : supplyBalance;
+  }
+
+  async getRedeems(address) {
+    const redeemEvents = await this.instance.queryFilter('Redeem', -500000);
+    let addressRedeem = 0;
+    redeemEvents.forEach((redeem) => {
+      const { redeemer, redeemAmount } = redeem.args;
+      if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
+    });
+    return addressRedeem;
   }
 
   async getInitialBorrow(address) {
-    const supplyEvents = await this.instance.queryFilter('Borrow', -1000);
+    const supplyEvents = await this.instance.queryFilter('Borrow', -500000);
     let addressBorrowed = 0;
-    supplyEvents.forEach((supply) => {
-      const { borrower, borrowAmount } = supply.args;
+    supplyEvents.forEach((borrow) => {
+      const { borrower, borrowAmount } = borrow.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
-    console.log(`borrower: ${address}, initialBorrow: ${addressBorrowed}`);
-    return addressBorrowed;
+    const repayAmount = await this.getRepays(address);
+    const borrowBalance = await this.borrowBalanceCurrent(address);
+    const initial = addressBorrowed - repayAmount;
+    return initial >= 0 ? initial : borrowBalance;
+  }
+
+  async getRepays(address) {
+    const supplyEvents = await this.instance.queryFilter('RepayBorrow', -500000);
+    let addressRepayed = 0;
+    supplyEvents.forEach((repay) => {
+      const { borrower, repayAmount } = repay.args;
+      if (borrower === address) addressRepayed += Number(repayAmount) / factor;
+    });
+    return addressRepayed;
   }
 
   async getEarnings(address) {
@@ -170,18 +194,18 @@ export default class Market {
 
   async supply(account, amountIntended) {
     const accountSigner = signer(account);
-    const amount = await Market.getAmountDecimals(amountIntended);
+    const value = await Market.getAmountDecimals(amountIntended);
+    const gasLimit = 250000;
+    if (await Market.isCRbtc(this.marketAddress)) {
+      return this.instance.connect(accountSigner).mint({ value, gasLimit });
+    }
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
       this.web3,
     );
-    await underlyingAsset.connect(accountSigner).approve(this.marketAddress, amount);
-    const gasLimit = 250000;
-    if (await Market.isCRbtc(this.marketAddress)) {
-      return this.instance.connect(accountSigner).mint({ value: amount, gasLimit });
-    }
-    return this.instance.connect(accountSigner).mint(amount, { gasLimit });
+    await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
+    return this.instance.connect(accountSigner).mint(value, { gasLimit });
   }
 
   async borrow(account, amountIntended) {
@@ -197,5 +221,22 @@ export default class Market {
     const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
     const gasLimit = 250000;
     return this.instance.connect(accountSigner).redeem(amount, { gasLimit });
+  }
+
+  async repay(account, amountIntended) {
+    const accountSigner = signer(account);
+    const exchangeRate = 1; // await this.exchangeRateCurrent();
+    const value = await ethers.utils.parseEther(`${amountIntended / exchangeRate}`);
+    const gasLimit = 250000;
+    const underlyingAsset = new ethers.Contract(
+      await this.underlying(),
+      StandardTokenAbi,
+      this.web3,
+    );
+    await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
+    if (await Market.isCRbtc(this.marketAddress)) {
+      return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit });
+    }
+    return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit });
   }
 }

@@ -86,12 +86,6 @@ p {
   line-height: 25px;
 }
 
-.float-right {
-  position: absolute;
-  right: 10px;
-  top: 10px
-}
-
 .step-number {
   color: #fff;
   background-color: #4cb163;

@@ -20,7 +20,8 @@
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in savings"
                  :key="`market-${idx}`">
-            <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
+            <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market"
+                          @success="$emit('success')" />
           </v-col>
         </v-row>
       </template>
