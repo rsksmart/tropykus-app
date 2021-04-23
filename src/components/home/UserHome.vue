@@ -63,11 +63,9 @@ export default {
   },
   methods: {
     forceDebts() {
-      console.log('Action success from debts');
       this.debtKey += 1;
     },
     forceSavings() {
-      console.log('Action success from savings');
       this.savKey += 1;
     },
     async load() {

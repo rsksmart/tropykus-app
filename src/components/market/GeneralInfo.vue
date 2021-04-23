@@ -36,7 +36,7 @@
           </v-row>
           <v-row class="mx-0">
             <p class="boldie">1 {{ info.underlyingSymbol }} =</p>
-            <p class="italique">{{ info.underlyingPrice | formatPrice }}</p>
+            <p class="italique">{{ info.underlyingPrice | formatPrice }} USD</p>
           </v-row>
         </div>
       </v-col>
