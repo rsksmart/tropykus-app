@@ -17,6 +17,11 @@ export default [
     component: () => import(/* webpackChunkName: "Balance" */ '@/views/Balance.vue'),
   },
   {
+    path: '/overview',
+    name: 'Overview',
+    component: () => import(/* webpackChunkName: "Overview" */ '@/views/Overview.vue'),
+  },
+  {
     path: '/tutorials',
     name: 'Tutorials',
     component: () => import(/* webpackChunkName: "Tutorials" */ '@/views/Tutorials.vue'),

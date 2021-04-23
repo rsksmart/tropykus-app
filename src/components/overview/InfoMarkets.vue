@@ -3,7 +3,7 @@
           color="#013E2F" width="90%" height="603" flat>
     <div class="overview-info">
       <v-row class="d-flex flex-column">
-        <h3>Total depositado</h3>
+        <h3>{{`Total ${type==='totalSupply'? 'depositado': 'prestado'}`}}</h3>
         <v-divider></v-divider>
       </v-row>
       <v-row class="d-flex align-baseline">
@@ -15,7 +15,7 @@
           <p>Mercados</p>
         </div>
         <div v-for="(market, idx) in marketsData" :key="`deposit-${idx}`"
-          class="overview-markets d-flex flex-column justify-space-between">
+          class="overview-markets d-flex flex-column justify-space-between mt-4">
           <div class="d-flex justify-space-between">
             <p>{{market.symbol}}</p> <!--Dinámico-->
             <p>
@@ -41,7 +41,7 @@
         <v-divider></v-divider>
         <div class="d-flex justify-space-between mt-5">
           <p>Volumen depositado del día</p>
-          <p># de depositantes</p>
+          <p>{{`# ${type==='totalSupply'? 'depositantes': 'prestatarios'}`}}</p>
         </div>
         <div class="d-flex justify-space-between">
           <h2>$89,086.01</h2>

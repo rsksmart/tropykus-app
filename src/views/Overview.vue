@@ -24,12 +24,12 @@
           </v-row>
         </div>
       </v-row>
-      <button @click="getData"> GET DATA </button>
+      <!-- <button @click="getData">d</button> -->
       <v-row class="mt-8 mb-5 pl-16">
         <h2>Todos los mercados</h2>
       </v-row>
       <v-row class="d-flex justify-center mb-10">
-       <total-markets/>
+       <total-markets :marketsData="marketsData"/>
       </v-row>
     </div>
   </div>
@@ -39,7 +39,6 @@
 import { mapState } from 'vuex';
 import InfoMarkets from '@/components/overview/InfoMarkets.vue';
 import TotalMarkets from '@/components/overview/TotalMarkets.vue';
-// import GeneralInfo from '@/components/market/GeneralInfo.vue';
 
 import {
   Comptroller,
@@ -52,6 +51,7 @@ export default {
   name: 'Overview',
   data() {
     return {
+      db: this.$firebase.firestore(),
       comptroller: undefined,
       markets: [],
       marketsData: [],
@@ -70,14 +70,12 @@ export default {
     },
   },
   methods: {
-    getSymbolImg() {
-      this.db
+    getSymbolImg(symbol) {
+      return this.db
         .collection('markets-symbols')
-        .doc(this.info.symbol)
+        .doc(symbol)
         .get()
-        .then((response) => {
-          this.symbolImg = response.data().imageURL;
-        })
+        .then((response) => response.data().imageURL)
         .catch(console.error);
     },
     async getData() {
@@ -92,31 +90,53 @@ export default {
           .then((isCRbtc) => {
             const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
               : new CToken(marketAddress, this.chainId);
+            console.log('aaa', market);
             return Promise.all([
+              market.name,
               market.underlyingAssetSymbol(),
               market.instance.totalSupply(),
               market.instance.totalBorrows(),
+              market.supplyRateAPY(),
+              market.borrowRateAPY(),
             ]);
           })
-          .then(([symbol, totalSupply, totalBorrow]) => {
-            // console.log('Market symbol', symbol);
-            // console.log('totalSupply', totalSupply);
-            // console.log('totalBorrows', totalBorrows);
-            this.marketsData.push({ symbol, totalSupply, totalBorrow });
-            const data = { symbol, totalSupply, totalBorrow };
-            console.log(this.marketsData);
+          .then(([name, symbol, totalSupply, totalBorrow, supplyRate, borrowRate]) => (
+            Promise.all([
+              name,
+              symbol,
+              this.getSymbolImg(symbol),
+              totalSupply,
+              totalBorrow,
+              supplyRate,
+              borrowRate,
+            ])
+          ))
+          .then(([name, symbol, symbolUrl, totalSupply, totalBorrow, supplyRate, borrowRate]) => {
+            console.log('Market name', name);
+            console.log('Market symbol', symbol);
+            console.log('Url', symbolUrl);
+            console.log('totalSupply', totalSupply);
+            console.log('totalBorrows', totalBorrow);
+            console.log('supplyRate', supplyRate);
+            console.log('borrowRate', borrowRate);
+            const data = {
+              name,
+              symbol,
+              symbolUrl,
+              totalSupply,
+              totalBorrow,
+              supplyRate,
+              borrowRate,
+            };
+            this.marketsData.push(data);
+            console.log('MarketData', this.marketsData);
             return data;
           })
       ));
-      console.log('data', marketData);
       const mData = await Promise.all(marketData);
       console.log('sum', mData);
-
       this.totalSupply = this.sumAll(mData, 'totalSupply');
-      console.log('sumSupply', this.totalSupply);
-
       this.totalBorrow = this.sumAll(mData, 'totalBorrow');
-      console.log('sumBorrow', this.totalBorrow);
     },
     sumAll(arr, key) {
       return arr.reduce((accumulator, value) => accumulator + Number(value[key]) / 1e18, 0);
@@ -124,7 +144,13 @@ export default {
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
-    // this.load();
+    this.getData();
+  },
+  watch: {
+    chainId(val) {
+      this.comptroller = new Comptroller(val);
+      this.getData();
+    },
   },
   components: {
     // GeneralInfo,
