@@ -20,7 +20,8 @@
         <v-row class="mx-0 mt-4">
           <v-col cols="4" v-for="(market, idx) in debts"
                  :key="`market-${idx}`">
-            <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market" />
+            <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market"
+                          @success="forceReload" :key="key" />
           </v-col>
         </v-row>
       </template>
@@ -40,6 +41,11 @@ import DebtSavings from '@/components/market/DebtSavings.vue';
 
 export default {
   name: 'Debts',
+  data() {
+    return {
+      key: 0,
+    };
+  },
   props: {
     inBorrowMenu: {
       required: true,
@@ -57,6 +63,11 @@ export default {
     },
     debtsLoaded() {
       return this.debts?.length > 0;
+    },
+  },
+  methods: {
+    forceReload() {
+      this.key += 1;
     },
   },
   components: {

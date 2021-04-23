@@ -20,8 +20,7 @@
         <v-row class="mx-0 mt-4">
           <v-col :cols="4" v-for="(market, idx) in suggestions"
                  :key="`market-${idx}`">
-            <general-info @supply="$emit('success')" @borrow="$emit('success')"
-                          @redeem="$emit('success')"
+            <general-info @success="forceReload" :key="key"
                           :inBorrowMenu="inBorrowMenu" :marketAddress="market"/>
           </v-col>
         </v-row>
@@ -42,6 +41,11 @@ import GeneralInfo from '@/components/market/GeneralInfo.vue';
 
 export default {
   name: 'Suggestions',
+  data() {
+    return {
+      key: 0,
+    };
+  },
   props: {
     inBorrowMenu: {
       required: true,
@@ -59,6 +63,13 @@ export default {
     },
     suggestionsLoaded() {
       return this.suggestions?.length > 0;
+    },
+  },
+  methods: {
+    forceReload() {
+      this.key += 1;
+      console.log('Emitting action succeed');
+      this.$emit('actionSucceed');
     },
   },
   components: {

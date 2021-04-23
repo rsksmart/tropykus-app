@@ -60,7 +60,7 @@
     <template v-if="successDialog">
       <success-dialog :showModal="successDialog" :amount="amount"
                       :underlyingSymbol="info.underlyingSymbol" :action="currentAction"
-                      @close="successDialog = false" />
+                      @close="actionSucceed" />
     </template>
     <template v-if="errorDialog">
       <error-dialog :showModal="errorDialog" :action="currentAction"
@@ -201,15 +201,14 @@ export default {
       this.reset();
       switch (action) {
         case constants.USER_ACTION_MINT:
-          this.txSummaryDialog = false; // true
+          // this.txSummaryDialog = true; // TODO
+          this.showWaiting();
           await this.market.supply(this.account, this.amount)
             .then(() => this.comptroller.enterMarkets(this.account, this.marketAddress))
             .then(() => {
-              this.showWaiting();
               this.market.instance.on('Mint', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
-                  this.$emit('success');
                   this.updateMarketInfo();
                 }
               });
@@ -217,18 +216,14 @@ export default {
             .catch(this.showError);
           break;
         case constants.USER_ACTION_BORROW:
-          this.txSummaryDialog = true;
+          // this.txSummaryDialog = true; // TODO
+          this.showWaiting();
           await this.comptroller.enterMarkets(this.account, this.marketAddress)
+            .then(() => this.market.borrow(this.account, this.amount))
             .then(() => {
-              this.showWaiting();
-              return this.market.borrow(this.account, this.amount);
-            })
-            .then(() => {
-              this.showWaiting();
               this.market.instance.on('Borrow', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
-                  this.$emit('success');
                   this.updateMarketInfo();
                 }
               });
@@ -236,14 +231,13 @@ export default {
             .catch(this.showError);
           break;
         case constants.USER_ACTION_REDEEM:
-          this.txSummaryDialog = true;
+          // this.txSummaryDialog = true; // TODO
+          this.showWaiting();
           this.market.redeem(this.account, this.amount)
             .then(() => {
-              this.showWaiting();
               this.market.instance.on('Redeem', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
-                  this.$emit('success');
                   this.updateMarketInfo();
                 }
               });
@@ -251,7 +245,20 @@ export default {
             .catch(this.showError);
           break;
         case constants.USER_ACTION_REPAY:
-          console.log('repay');
+          this.showWaiting();
+          this.market.repay(this.account, this.amount)
+            .then(() => {
+              this.market.instance.on('RepayBorrow', (from) => {
+                if (from === this.walletAddress) {
+                  this.showSuccess();
+                  this.updateMarketInfo();
+                }
+              });
+            })
+            .catch((e) => {
+              console.log(e);
+              this.showError();
+            });
           break;
         default:
           break;
@@ -264,6 +271,10 @@ export default {
           this.showError();
         }
       });
+    },
+    actionSucceed() {
+      this.successDialog = false;
+      this.$emit('success');
     },
     async updateMarketInfo() {
       this.info.name = await this.market.name;

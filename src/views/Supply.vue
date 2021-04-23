@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <component :is="currentComponent" :inBorrowMenu="inBorrowMenu" />
+    <component :is="currentComponent" :inBorrowMenu="inBorrowMenu" :key="key" />
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       inBorrowMenu: false,
+      key: 0,
     };
   },
   computed: {
@@ -28,6 +29,16 @@ export default {
   components: {
     Landing,
     UserHome,
+  },
+  created() {
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', () => {
+        this.key += 1;
+      });
+      window.ethereum.on('chainChanged', () => {
+        this.key += 1;
+      });
+    }
   },
 };
 </script>

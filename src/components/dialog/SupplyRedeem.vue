@@ -30,7 +30,7 @@
             {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
           </p>
           <p class="ma-0 mb-6 p-italic">
-            ={{ info.underlyingBalance * info.underlyingPrice | formatPrice }} USD
+            ={{ tokenPrice | formatPrice }} USD
           </p>
         </div>
         <v-spacer></v-spacer>
@@ -123,7 +123,10 @@ export default {
       return this.inSupplyMenu ? 'Depositar' : 'Retirar';
     },
     tokenBalance() {
-      return this.inSupplyMenu ? this.underlyingBalance : this.info.supplyBalance;
+      return this.inSupplyMenu ? this.info.underlyingBalance : this.info.supplyBalance;
+    },
+    tokenPrice() {
+      return this.tokenBalance * this.info.underlyingPrice;
     },
     validAmount() {
       return this.amount > 0 && typeof this

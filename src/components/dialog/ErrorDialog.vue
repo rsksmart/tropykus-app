@@ -43,13 +43,13 @@ export default {
     dialogText() {
       switch (this.action) {
         case constants.USER_ACTION_MINT:
-          return 'No se pudo completar el depósito';
+          return 'No se pudo completar el depósito. Intenta más tarde.';
         case constants.USER_ACTION_REDEEM:
-          return 'No se pudo completar el retiro';
+          return 'No se pudo completar el retiro. Intenta más tarde.';
         case constants.USER_ACTION_BORROW:
-          return 'No se pudo completar el préstamo';
+          return 'No se pudo completar el préstamo. Intenta más tarde.';
         case constants.USER_ACTION_REPAY:
-          return 'No se pudo completar el pago';
+          return 'No se pudo completar el pago. Intenta más tarde.';
         default:
           return '';
       }
