@@ -41,13 +41,10 @@ export default class Market {
     return this.instance.callStatic.decimals();
   }
 
-  get totalSupply() {
-    return this.instance.callStatic.totalSupply();
-  }
-
-  get totalBorrows() {
-    return this.instance.callStatic.totalBorrows();
-  }
+  // async totalSupplyUSD() {
+  //   const totalSupply = await this.instance.callStatic.totalSupply();
+  //   const totalSupplyInCtokens = Number(totalSupply)/1e18;
+  // }
 
   async underlying() {
     const { underlyingAssetAddress } = await this
