@@ -28,7 +28,7 @@
         <h2>Todos los mercados</h2>
       </v-row>
       <v-row class="d-flex justify-center mb-10">
-       <total-markets :marketsData="marketsData"/>
+        <total-markets :marketsData="marketsData"/>
       </v-row>
     </div>
   </div>
@@ -78,52 +78,48 @@ export default {
         .catch(console.error);
     },
     async getData() {
-      if (!this.walletAddress) return;
-      console.log('walletAddress', this.walletAddress);
-      console.log('wA', !!this.walletAddress);
       this.comptroller = new Comptroller(this.chainId);
-      this.suggestions = await this.comptroller.allMarkets;
-
-      const marketData = await this.suggestions.map(async (marketAddress) => (
-        Market.isCRbtc(marketAddress)
-          .then((isCRbtc) => {
-            const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
-              : new CToken(marketAddress, this.chainId);
-            console.log('aaa', market);
-            return Promise.all([
-              market.name,
-              market.underlyingAssetSymbol(),
-              market.instance.totalSupply(),
-              market.instance.totalBorrows(),
-              market.supplyRateAPY(),
-              market.borrowRateAPY(),
-            ]);
-          })
-          .then(([name, symbol, totalSupply, totalBorrow, supplyRate, borrowRate]) => (
-            Promise.all([
-              name,
-              symbol,
-              this.getSymbolImg(symbol),
-              totalSupply,
-              totalBorrow,
-              supplyRate,
-              borrowRate,
-            ])
-          ))
-          .then(([name, symbol, symbolUrl, totalSupply, totalBorrow, supplyRate, borrowRate]) => {
-            const data = {
-              name,
-              symbol,
-              symbolUrl,
-              totalSupply,
-              totalBorrow,
-              supplyRate,
-              borrowRate,
-            };
-            this.marketsData.push(data);
-            return data;
-          })
-      ));
+      this.markets = await this.comptroller.allMarkets;
+      const marketData = await this.markets
+        .map(async (marketAddress) => (
+          Market.isCRbtc(marketAddress)
+            .then((isCRbtc) => {
+              const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
+                : new CToken(marketAddress, this.chainId);
+              return Promise.all([
+                market.name,
+                market.underlyingAssetSymbol(),
+                market.instance.totalSupply(),
+                market.instance.totalBorrows(),
+                market.supplyRateAPY(),
+                market.borrowRateAPY(),
+              ]);
+            })
+            .then(([name, symbol, totalSupply, totalBorrow, supplyRate, borrowRate]) => (
+              Promise.all([
+                name,
+                symbol,
+                this.getSymbolImg(symbol),
+                totalSupply,
+                totalBorrow,
+                supplyRate,
+                borrowRate,
+              ])
+            ))
+            .then(([name, symbol, symbolUrl, totalSupply, totalBorrow, supplyRate, borrowRate]) => {
+              const data = {
+                name,
+                symbol,
+                symbolUrl,
+                totalSupply,
+                totalBorrow,
+                supplyRate,
+                borrowRate,
+              };
+              this.marketsData.push(data);
+              return data;
+            })
+        ));
       const mData = await Promise.all(marketData);
       this.totalSupply = this.sumAll(mData, 'totalSupply');
       this.totalBorrow = this.sumAll(mData, 'totalBorrow');
