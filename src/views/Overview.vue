@@ -24,7 +24,6 @@
           </v-row>
         </div>
       </v-row>
-      <!-- <button @click="getData">d</button> -->
       <v-row class="mt-8 mb-5 pl-16">
         <h2>Todos los mercados</h2>
       </v-row>
@@ -112,13 +111,6 @@ export default {
             ])
           ))
           .then(([name, symbol, symbolUrl, totalSupply, totalBorrow, supplyRate, borrowRate]) => {
-            console.log('Market name', name);
-            console.log('Market symbol', symbol);
-            console.log('Url', symbolUrl);
-            console.log('totalSupply', totalSupply);
-            console.log('totalBorrows', totalBorrow);
-            console.log('supplyRate', supplyRate);
-            console.log('borrowRate', borrowRate);
             const data = {
               name,
               symbol,
@@ -129,12 +121,10 @@ export default {
               borrowRate,
             };
             this.marketsData.push(data);
-            console.log('MarketData', this.marketsData);
             return data;
           })
       ));
       const mData = await Promise.all(marketData);
-      console.log('sum', mData);
       this.totalSupply = this.sumAll(mData, 'totalSupply');
       this.totalBorrow = this.sumAll(mData, 'totalBorrow');
     },
@@ -153,7 +143,6 @@ export default {
     },
   },
   components: {
-    // GeneralInfo,
     InfoMarkets,
     TotalMarkets,
   },
