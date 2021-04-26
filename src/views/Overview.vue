@@ -89,30 +89,62 @@ export default {
               return Promise.all([
                 market.name,
                 market.underlyingAssetSymbol(),
-                market.instance.totalSupply(),
-                market.instance.totalBorrows(),
+                market.totalSupplyUSD(this.chainId),
+                market.totalBorrowsUSD(this.chainId),
+                market.totalSupplyInUnderlying(),
+                market.totalBorrowsInUnderlying(),
+                market.underlyingAssetName(),
                 market.supplyRateAPY(),
                 market.borrowRateAPY(),
               ]);
             })
-            .then(([name, symbol, totalSupply, totalBorrow, supplyRate, borrowRate]) => (
-              Promise.all([
+            .then(
+              ([
                 name,
                 symbol,
-                this.getSymbolImg(symbol),
                 totalSupply,
                 totalBorrow,
+                totalSupplyInUnderlying,
+                totalBorrowsInUnderlying,
+                underlyingAssetName,
                 supplyRate,
                 borrowRate,
-              ])
-            ))
-            .then(([name, symbol, symbolUrl, totalSupply, totalBorrow, supplyRate, borrowRate]) => {
+              ]) => (
+                Promise.all([
+                  name,
+                  symbol,
+                  this.getSymbolImg(symbol),
+                  totalSupply,
+                  totalBorrow,
+                  totalSupplyInUnderlying,
+                  totalBorrowsInUnderlying,
+                  underlyingAssetName,
+                  supplyRate,
+                  borrowRate,
+                ])
+              ),
+            )
+            .then(([
+              name,
+              symbol,
+              symbolUrl,
+              totalSupply,
+              totalBorrow,
+              totalSupplyInUnderlying,
+              totalBorrowsInUnderlying,
+              underlyingAssetName,
+              supplyRate,
+              borrowRate,
+            ]) => {
               const data = {
                 name,
                 symbol,
                 symbolUrl,
                 totalSupply,
                 totalBorrow,
+                totalSupplyInUnderlying,
+                totalBorrowsInUnderlying,
+                underlyingAssetName,
                 supplyRate,
                 borrowRate,
               };
@@ -125,7 +157,7 @@ export default {
       this.totalBorrow = this.sumAll(mData, 'totalBorrow');
     },
     sumAll(arr, key) {
-      return arr.reduce((accumulator, value) => accumulator + Number(value[key]) / 1e18, 0);
+      return arr.reduce((accumulator, value) => accumulator + value[key], 0);
     },
   },
   created() {

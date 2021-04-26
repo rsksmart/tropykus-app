@@ -25,10 +25,10 @@
           <td>
             <div class="d-flex align-center justify-center">
               <div class="d-flex justify-space-between" style="width: 160px">
-                <img :src="market.symbolUrl" contain/>
+                <img :src="market.symbolUrl" alt="market icon" />
                 <div class="d-flex justify-center flex-column align-center">
-                  <span class="font-weight-bold">{{market.name}}</span>
-                  <span>{{market.symbol}}</span>
+                  <span class="font-weight-bold">{{ market.underlyingAssetName }}</span>
+                  <span>{{ market.symbol }}</span>
                 </div>
               </div>
             </div>
@@ -36,18 +36,18 @@
           <td>
             <div class="d-flex justify-center flex-column align-center">
                 <span class="font-weight-bold">
-                  {{`${round(Number(market.totalSupply)/1e18)} ${market.symbol}`}}
+                  {{ market.totalSupplyInUnderlying| formatDecimals }} {{market.symbol}}
                 </span>
-                <span>0 USD</span>
+                <span>{{ market.totalSupply | formatPrice }} USD</span>
             </div>
           </td>
           <td>{{`${round(market.supplyRate)}%`}}</td>
           <td>
             <div class="d-flex justify-center flex-column align-center">
                 <span class="font-weight-bold">
-                  {{`${round(Number(market.totalBorrow)/1e18)} ${market.symbol}`}}
+                  {{ market.totalBorrowsInUnderlying | formatDecimals }} {{ market.symbol }}
                 </span>
-                <span>0 USD</span>
+                <span>{{ market.totalBorrow | formatPrice }} USD</span>
             </div>
           <td>{{`${round(market.borrowRate)}%`}}</td>
         </tr>

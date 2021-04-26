@@ -41,10 +41,31 @@ export default class Market {
     return this.instance.callStatic.decimals();
   }
 
-  // async totalSupplyUSD() {
-  //   const totalSupply = await this.instance.callStatic.totalSupply();
-  //   const totalSupplyInCtokens = Number(totalSupply)/1e18;
-  // }
+  async totalSupplyInUnderlying() {
+    const totalSupply = Number(await this.instance.callStatic.totalSupply()) / 1e18;
+    const exchangeRate = await this.exchangeRateCurrent();
+    return totalSupply * exchangeRate;
+  }
+
+  async totalBorrowsInUnderlying() {
+    const totalBorrows = Number(await this.instance.callStatic.totalBorrows()) / 1e18;
+    const exchangeRate = await this.exchangeRateCurrent();
+    return totalBorrows * exchangeRate;
+  }
+
+  async totalSupplyUSD(chainId) {
+    const totalSupply = Number(await this.instance.callStatic.totalSupply()) / 1e18;
+    const exchangeRate = await this.exchangeRateCurrent();
+    const price = await this.underlyingCurrentPrice(chainId);
+    return totalSupply * exchangeRate * price;
+  }
+
+  async totalBorrowsUSD(chainId) {
+    const totalBorrows = Number(await this.instance.callStatic.totalBorrows()) / 1e18;
+    const exchangeRate = await this.exchangeRateCurrent();
+    const price = await this.underlyingCurrentPrice(chainId);
+    return totalBorrows * exchangeRate * price;
+  }
 
   async underlying() {
     const { underlyingAssetAddress } = await this
@@ -52,8 +73,13 @@ export default class Market {
     return underlyingAssetAddress;
   }
 
-  async underlyingAssetInstance() {
-    return new ethers.Contract(await this.underlying(), StandardTokenAbi, this.web3);
+  async underlyingAssetName() {
+    const underlyingAsset = new ethers.Contract(
+      await this.underlying(),
+      StandardTokenAbi,
+      this.web3,
+    );
+    return underlyingAsset.callStatic.name();
   }
 
   async underlyingAssetSymbol() {

@@ -7,15 +7,15 @@
         <v-divider></v-divider>
       </v-row>
       <v-row class="d-flex align-baseline">
-        <h2>{{totalMarkets}}</h2> <!--Dinámico-->
-        <p class="ml-5"><span>+4,06%</span></p> <!--Dinámico-->
+        <h2>{{ totalMarkets | formatPrice }}</h2> <!--Dinámico-->
+        <p class="ml-5"><span>+#,##%</span></p> <!--Dinámico-->
       </v-row>
       <v-row class="d-flex flex-column" style="height: 60%;">
         <div class="mb-2" style="height: 10%;">
           <p>Mercados</p>
         </div>
         <div v-for="(market, idx) in marketsData" :key="`deposit-${idx}`"
-          class="overview-markets d-flex flex-column justify-space-between mt-4">
+          class="overview-markets d-flex flex-column justify-space-between mt-2">
           <div class="d-flex justify-space-between">
             <p>{{market.symbol}}</p> <!--Dinámico-->
             <p>
@@ -31,7 +31,7 @@
               rounded
               :value="`${totalMarkets === 0
               ? 0
-              : ((Number(market[type]) / 1e18) * 100 / totalMarkets)}`"
+              : (market[type] * 100 / totalMarkets)}`"
               height="7">
             </v-progress-linear>
           </div>
@@ -44,8 +44,8 @@
           <p>{{`# ${type==='totalSupply'? 'depositantes': 'prestatarios'}`}}</p>
         </div>
         <div class="d-flex justify-space-between">
-          <h2>$89,086.01</h2>
-          <h2>913</h2>
+          <h2>$##.###,##</h2>
+          <h2>###</h2>
         </div>
       </v-row>
     </div>
@@ -73,7 +73,7 @@ export default {
     value(market) {
       const value = this.totalMarkets === 0
         ? 0
-        : (((Number(market) / 1e18) * 100) / this.totalMarkets);
+        : (market * 100) / this.totalMarkets;
       return Math.round((value + Number.EPSILON) * 100) / 100;
     },
   },
