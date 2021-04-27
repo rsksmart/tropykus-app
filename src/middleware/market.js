@@ -48,23 +48,19 @@ export default class Market {
   }
 
   async totalBorrowsInUnderlying() {
-    const totalBorrows = Number(await this.instance.callStatic.totalBorrows()) / 1e18;
-    const exchangeRate = await this.exchangeRateCurrent();
-    return totalBorrows * exchangeRate;
+    return Number(await this.instance.callStatic.totalBorrows()) / 1e18;
   }
 
   async totalSupplyUSD(chainId) {
-    const totalSupply = Number(await this.instance.callStatic.totalSupply()) / 1e18;
-    const exchangeRate = await this.exchangeRateCurrent();
+    const totalSupplyInUnderlying = await this.totalSupplyInUnderlying();
     const price = await this.underlyingCurrentPrice(chainId);
-    return totalSupply * exchangeRate * price;
+    return totalSupplyInUnderlying * price;
   }
 
   async totalBorrowsUSD(chainId) {
-    const totalBorrows = Number(await this.instance.callStatic.totalBorrows()) / 1e18;
-    const exchangeRate = await this.exchangeRateCurrent();
+    const totalBorrowsInUnderlying = await this.totalBorrowsInUnderlying();
     const price = await this.underlyingCurrentPrice(chainId);
-    return totalBorrows * exchangeRate * price;
+    return totalBorrowsInUnderlying * price;
   }
 
   async underlying() {
