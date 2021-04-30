@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" width="350">
-    <v-card class="user-action" v-click-outside="onClickOutside">
-      <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
+  <v-dialog v-model="dialog" width="65%" max-height="65%">
+    <v-card class="borrow-repay" v-click-outside="onClickOutside" width="100%" height="84vh">
+      <!-- <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
         <v-btn
             depressed
             color="transparent"
@@ -63,7 +63,85 @@
                width="300" :disabled="!validAmount" @click="borrowOrRepay">
           {{ buttonLabel }}
         </v-btn>
+      </v-row> -->
+      <v-row class="button ma-auto pt-3 d-flex justify-center justify-space-around">
+        <v-btn
+            depressed
+            color="transparent"
+            @click="isInBorrowMenu = true"
+            :class="isInBorrowMenu ? 'button-save' : 'button-save-click'"
+        >
+          Pedir prestado
+        </v-btn>
+        <v-btn
+            depressed
+            color="transparent"
+            @click="isInBorrowMenu = false"
+            :class="isInBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
+        >
+          Pagar
+        </v-btn>
       </v-row>
+      <div class="mt-5 ma-auto container cualquiera">
+        <v-row class="ma-auto mb-2">
+         <h1>RUSDT</h1> <!--logo del mercado y nombre dinamico-->
+        </v-row>
+        <v-row class="ma-auto d-flex" style="height:97%; width:94%;">
+          <div class="d-flex flex-column ma-auto" style="width:40%; height:100%">
+            <v-row>
+              <p>Simulador de colateral</p>
+            </v-row>
+            <v-row>
+              <div class="collateral-chart">
+              </div>
+            </v-row>
+            <v-row>
+              <div class="risk-charts">
+                <v-progress-circular class="risk-graph" :size="130" :width="16"
+                  :value="100" color="#A3C5AB"/>
+              </div>
+            </v-row>
+          </div>
+          <div class="d-flex flex-column" style="width:60%;">
+            <div class="d-flex justify-space-between">
+              <div class="d-flex flex-column">
+                <p>Puedes pedir prestado</p>
+                <h2>2.000 RUSDT</h2>
+                <p><span>$2.000USD</span></p>
+              </div>
+              <div>
+                <p>Tasa de interés anual <br> dinámica actual</p>
+                <h2>8,54%</h2>
+              </div>
+            </div>
+            <v-divider></v-divider>
+            <div>
+              <p>Escribe la cantidad que vas a pedir prestada.</p>
+              <form>
+                <input type="text" id="" name="">
+              </form>
+              <div>
+                <v-slider 
+                  step="3"
+                  min="1"
+                  max="100"
+                  color="#FFBD98"
+                  track-color=" #062E24"
+                  tick-size="4">
+                </v-slider>
+                <div class="d-flex justify-space-between">
+                  <p>1%</p>
+                  <p>100%</p>
+                </div>
+              </div>
+            </div>
+            <v-divider></v-divider>
+            <div>
+              <p>Elige como colateral una o varias de tus cryptos depositadas</p>
+            </div>
+          </div>
+        </v-row>
+      </div>
     </v-card>
   </v-dialog>
 </template>
@@ -72,6 +150,8 @@
 import * as constants from '@/store/constants';
 import Borrow from '@/assets/icons/borrow.svg';
 import Pay from '@/assets/icons/pay.svg';
+import HappyFace from '@/assets/health/face-happy.png';
+import SadFace from '@/assets/health/face-sad.png';
 
 export default {
   name: 'BorrowRepay',
