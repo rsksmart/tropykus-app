@@ -96,6 +96,8 @@ export default {
                 market.underlyingAssetName(),
                 market.supplyRateAPY(),
                 market.borrowRateAPY(),
+                market.suppliedLast24Hours(this.chainId),
+                market.borrowedLast24Hours(),
               ]);
             })
             .then(
@@ -109,6 +111,8 @@ export default {
                 underlyingAssetName,
                 supplyRate,
                 borrowRate,
+                suppliedLast24Hours,
+                borrowedLast24Hours,
               ]) => (
                 Promise.all([
                   name,
@@ -121,6 +125,8 @@ export default {
                   underlyingAssetName,
                   supplyRate,
                   borrowRate,
+                  suppliedLast24Hours,
+                  borrowedLast24Hours,
                 ])
               ),
             )
@@ -135,6 +141,8 @@ export default {
               underlyingAssetName,
               supplyRate,
               borrowRate,
+              suppliedLast24Hours,
+              borrowedLast24Hours,
             ]) => {
               const data = {
                 name,
@@ -147,6 +155,8 @@ export default {
                 underlyingAssetName,
                 supplyRate,
                 borrowRate,
+                suppliedLast24Hours,
+                borrowedLast24Hours,
               };
               this.marketsData.push(data);
               return data;

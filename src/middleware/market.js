@@ -266,4 +266,31 @@ export default class Market {
     }
     return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit });
   }
+
+  async suppliedLast24Hours(chainId) {
+    const supplyEvents = await this.instance.queryFilter('Mint', -2880);
+    const price = await this.underlyingCurrentPrice(chainId);
+    let total = 0;
+    const accounts = [];
+    supplyEvents.forEach((supply) => {
+      if (accounts.indexOf(supply.args.minter) === -1) {
+        accounts.push(supply.args.minter);
+        total += (Number(supply.args.mintAmount) / 1e18) * price;
+      }
+    });
+    return { total, accounts };
+  }
+
+  async borrowedLast24Hours() {
+    const borrowEvents = await this.instance.queryFilter('Borrow', -2880);
+    let total = 0;
+    const accounts = [];
+    borrowEvents.forEach((borrow) => {
+      if (accounts.indexOf(borrow.args.borrower) === -1) {
+        accounts.push(borrow.args.borrower);
+        total += (Number(borrow.args.borrowAmount) / 1e18);
+      }
+    });
+    return { total, accounts };
+  }
 }
