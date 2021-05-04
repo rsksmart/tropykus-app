@@ -56,8 +56,8 @@
           <p class="ma-0 mt-5 mb-2">{{ actionDescription }}</p>
         </div>
         <v-text-field placeholder="Escribe el monto" type="number"
-                      v-model="amount" solo dense
-                      :rules="[rules.minBalance, rules.marketCash, rules.supplyBalance]" />
+            v-model="amount" solo dense
+            :rules="[rules.leverage, rules.minBalance, rules.marketCash, rules.supplyBalance]" />
         <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
                width="300" :disabled="!validAmount" @click="supplyOrRedeem">
           {{ buttonLabel }}
@@ -83,6 +83,8 @@ export default {
       db: this.$firebase.firestore(),
       symbolImg: null,
       rules: {
+        leverage: () => (this.inSupplyMenu ? this.info.borrowBalance <= 0
+          : true) || 'Tienes una deuda activa en este mercado, paga primero para poder depositar',
         minBalance: () => (this.inSupplyMenu ? Number(this.amount) <= Number(this
           .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
         supplyBalance: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
@@ -130,7 +132,10 @@ export default {
     },
     validAmount() {
       return this.amount > 0 && typeof this
-        .rules.minBalance() !== 'string';
+        .rules.minBalance() !== 'string' && typeof this
+        .rules.leverage() !== 'string' && typeof this
+        .rules.supplyBalance() !== 'string' && typeof this
+        .rules.marketCash() !== 'string';
     },
   },
   watch: {

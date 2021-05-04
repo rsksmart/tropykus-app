@@ -17,6 +17,7 @@ export default class Market {
     this.web3 = chainId === 31 ? Vue.web3Ws : Vue.web3;
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, this.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, this.web3);
+    this.gasLimit = 2300000;
   }
 
   static async isCRbtc(address) {
@@ -111,6 +112,7 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
+      console.log(`supply event: ${JSON.stringify(supply)}`);
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
@@ -124,6 +126,7 @@ export default class Market {
     const redeemEvents = await this.instance.queryFilter('Redeem', -500000);
     let addressRedeem = 0;
     redeemEvents.forEach((redeem) => {
+      console.log(`redeem event: ${JSON.stringify(redeem)}`);
       const { redeemer, redeemAmount } = redeem.args;
       if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
     });
@@ -134,6 +137,7 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('Borrow', -500000);
     let addressBorrowed = 0;
     supplyEvents.forEach((borrow) => {
+      console.log(`borrow event: ${JSON.stringify(borrow)}`);
       const { borrower, borrowAmount } = borrow.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
@@ -147,6 +151,7 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('RepayBorrow', -500000);
     let addressRepayed = 0;
     supplyEvents.forEach((repay) => {
+      console.log(`Repay event: ${JSON.stringify(repay)}`);
       const { borrower, repayAmount } = repay.args;
       if (borrower === address) addressRepayed += Number(repayAmount) / factor;
     });
@@ -195,9 +200,8 @@ export default class Market {
   async supply(account, amountIntended) {
     const accountSigner = signer(account);
     const value = await Market.getAmountDecimals(amountIntended);
-    const gasLimit = 250000;
     if (await Market.isCRbtc(this.marketAddress)) {
-      return this.instance.connect(accountSigner).mint({ value, gasLimit });
+      return this.instance.connect(accountSigner).mint({ value, gasLimit: this.gasLimit });
     }
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
@@ -205,29 +209,26 @@ export default class Market {
       this.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
-    return this.instance.connect(accountSigner).mint(value, { gasLimit });
+    return this.instance.connect(accountSigner).mint(value, { gasLimit: this.gasLimit });
   }
 
   async borrow(account, amountIntended) {
     const accountSigner = signer(account);
     const amount = await Market.getAmountDecimals(amountIntended);
-    const gasLimit = 250000;
-    return this.instance.connect(accountSigner).borrow(amount, { gasLimit });
+    return this.instance.connect(accountSigner).borrow(amount, { gasLimit: this.gasLimit });
   }
 
   async redeem(account, amountIntended) {
     const accountSigner = signer(account);
     const exchangeRate = await this.exchangeRateCurrent();
     const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
-    const gasLimit = 250000;
-    return this.instance.connect(accountSigner).redeem(amount, { gasLimit });
+    return this.instance.connect(accountSigner).redeem(amount, { gasLimit: this.gasLimit });
   }
 
   async repay(account, amountIntended) {
     const accountSigner = signer(account);
     const exchangeRate = 1; // await this.exchangeRateCurrent();
     const value = await ethers.utils.parseEther(`${amountIntended / exchangeRate}`);
-    const gasLimit = 250000;
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
@@ -235,8 +236,8 @@ export default class Market {
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
     if (await Market.isCRbtc(this.marketAddress)) {
-      return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit });
+      return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit: this.gasLimit });
     }
-    return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit });
+    return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit: this.gasLimit });
   }
 }
