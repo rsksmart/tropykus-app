@@ -20,4 +20,9 @@ export default class CRbtc extends Market {
   async supply(account, amountIntended) {
     await super.supply(account, amountIntended, true);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  async underlyingAssetName() {
+    return 'tRSK Bitcoin';
+  }
 }

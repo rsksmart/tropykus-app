@@ -3,18 +3,18 @@
     <v-card class="user-action" v-click-outside="onClickOutside">
       <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
         <v-btn
-            depressed
-            color="transparent"
-            @click="isInBorrowMenu = true"
-            :class="isInBorrowMenu ? 'button-save' : 'button-save-click'"
+          depressed
+          color="transparent"
+          @click="isInBorrowMenu = true"
+          :class="isInBorrowMenu ? 'button-save' : 'button-save-click'"
         >
           Pedir prestado
         </v-btn>
         <v-btn
-            depressed
-            color="transparent"
-            @click="isInBorrowMenu = false"
-            :class="isInBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
+          depressed
+          color="transparent"
+          @click="isInBorrowMenu = false"
+          :class="isInBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
           Pagar
         </v-btn>

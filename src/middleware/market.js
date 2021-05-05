@@ -42,14 +42,41 @@ export default class Market {
     return this.instance.callStatic.decimals();
   }
 
+  async totalSupplyInUnderlying() {
+    const totalSupply = Number(await this.instance.callStatic.totalSupply()) / 1e18;
+    const exchangeRate = await this.exchangeRateCurrent();
+    return totalSupply * exchangeRate;
+  }
+
+  async totalBorrowsInUnderlying() {
+    return Number(await this.instance.callStatic.totalBorrows()) / 1e18;
+  }
+
+  async totalSupplyUSD(chainId) {
+    const totalSupplyInUnderlying = await this.totalSupplyInUnderlying();
+    const price = await this.underlyingCurrentPrice(chainId);
+    return totalSupplyInUnderlying * price;
+  }
+
+  async totalBorrowsUSD(chainId) {
+    const totalBorrowsInUnderlying = await this.totalBorrowsInUnderlying();
+    const price = await this.underlyingCurrentPrice(chainId);
+    return totalBorrowsInUnderlying * price;
+  }
+
   async underlying() {
     const { underlyingAssetAddress } = await this
       .lens.callStatic.cTokenMetadata(this.marketAddress);
     return underlyingAssetAddress;
   }
 
-  async underlyingAssetInstance() {
-    return new ethers.Contract(await this.underlying(), StandardTokenAbi, this.web3);
+  async underlyingAssetName() {
+    const underlyingAsset = new ethers.Contract(
+      await this.underlying(),
+      StandardTokenAbi,
+      this.web3,
+    );
+    return underlyingAsset.callStatic.name();
   }
 
   async underlyingAssetSymbol() {
@@ -239,5 +266,32 @@ export default class Market {
       return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit: this.gasLimit });
     }
     return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit: this.gasLimit });
+  }
+
+  async suppliedLast24Hours(chainId) {
+    const supplyEvents = await this.instance.queryFilter('Mint', -2880);
+    const price = await this.underlyingCurrentPrice(chainId);
+    let total = 0;
+    const accounts = [];
+    supplyEvents.forEach((supply) => {
+      if (accounts.indexOf(supply.args.minter) === -1) {
+        accounts.push(supply.args.minter);
+        total += (Number(supply.args.mintAmount) / 1e18) * price;
+      }
+    });
+    return { total, accounts };
+  }
+
+  async borrowedLast24Hours() {
+    const borrowEvents = await this.instance.queryFilter('Borrow', -2880);
+    let total = 0;
+    const accounts = [];
+    borrowEvents.forEach((borrow) => {
+      if (accounts.indexOf(borrow.args.borrower) === -1) {
+        accounts.push(borrow.args.borrower);
+        total += (Number(borrow.args.borrowAmount) / 1e18);
+      }
+    });
+    return { total, accounts };
   }
 }
