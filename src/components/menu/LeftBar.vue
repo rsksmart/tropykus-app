@@ -44,6 +44,7 @@
         <span>Mercados</span>
       </v-tooltip>
     </v-row>
+    <div class="custom-spacer" />
     <v-divider class="mx-2 mx-2" color="#BEBEBE" />
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
@@ -94,11 +95,20 @@ export default {
     }),
   },
   methods: {
-    isWalletConnected() {
-      return !!this.walletAddress;
+    getSymbolImg() {
+      this.db
+        .collection('markets-symbols')
+        .doc(this.info.symbol)
+        .get()
+        .then((response) => {
+          this.symbolImg = response.data().imageURL;
+        })
+        .catch(console.error);
     },
-    linkToLandingOrHomeUser() {
-      if (this.isWalletConnected) return 'UserHome';
+  },
+  watch: {
+    walletAddress() {
+      if (this.walletAddress) return 'UserHome';
       return 'Home';
     },
   },

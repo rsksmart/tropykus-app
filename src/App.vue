@@ -1,8 +1,8 @@
 <template>
   <v-app class="app">
-    <navbar/>
+    <navbar :marketAddresses="markets" />
     <left-bar />
-    <router-view/>
+    <router-view />
     <v-dialog v-model="btcToRbtcDialog" width="350"
               overlay-opacity="0.8" overlay-color="#000">
       <v-card class="modal-convert-btn container" color="#013E2F">
@@ -44,12 +44,15 @@
 import { mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
+import { Comptroller } from '@/middleware';
 
 export default {
   name: 'App',
   data() {
     return {
       btcToRbtcDialog: true,
+      comptroller: null,
+      markets: [],
     };
   },
   computed: {
@@ -62,6 +65,9 @@ export default {
       this.$router.push({ name: 'BtcToRbtc' });
       this.btcToRbtcDialog = false;
     },
+    async loadMarkets() {
+      this.markets = await this.comptroller.allMarkets;
+    },
   },
   watch: {
     chainId(val) {
@@ -69,6 +75,10 @@ export default {
         this.$forceUpdate();
       }
     },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.loadMarkets();
   },
   components: {
     Navbar,

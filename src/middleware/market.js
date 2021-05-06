@@ -139,7 +139,6 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
-      console.log(`supply event: ${JSON.stringify(supply)}`);
       const { minter, mintAmount } = supply.args;
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
@@ -153,7 +152,6 @@ export default class Market {
     const redeemEvents = await this.instance.queryFilter('Redeem', -500000);
     let addressRedeem = 0;
     redeemEvents.forEach((redeem) => {
-      console.log(`redeem event: ${JSON.stringify(redeem)}`);
       const { redeemer, redeemAmount } = redeem.args;
       if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
     });
@@ -164,7 +162,6 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('Borrow', -500000);
     let addressBorrowed = 0;
     supplyEvents.forEach((borrow) => {
-      console.log(`borrow event: ${JSON.stringify(borrow)}`);
       const { borrower, borrowAmount } = borrow.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
@@ -178,7 +175,6 @@ export default class Market {
     const supplyEvents = await this.instance.queryFilter('RepayBorrow', -500000);
     let addressRepayed = 0;
     supplyEvents.forEach((repay) => {
-      console.log(`Repay event: ${JSON.stringify(repay)}`);
       const { borrower, repayAmount } = repay.args;
       if (borrower === address) addressRepayed += Number(repayAmount) / factor;
     });

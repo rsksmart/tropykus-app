@@ -39,6 +39,18 @@ const actions = {
       commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
     }
   },
+  [constants.SESSION_DISCONNECT_WALLET]: ({ commit }) => {
+    const web3 = new ethers.providers.JsonRpcProvider(process.env.VUE_APP_RSK_NODE);
+    const format = web3.formatter.formats;
+    format.receipt.root = format.receipt.logsBloom;
+    Object.assign(web3.formatter, { format });
+    // eslint-disable-next-line no-multi-assign
+    Vue.prototype.$web3 = Vue.web3 = web3;
+    commit(constants.SESSION_SET_PROPERTY, { walletAddress: undefined });
+    commit(constants.SESSION_SET_PROPERTY, { account: undefined });
+    commit(constants.SESSION_SET_PROPERTY, { wallet: undefined });
+    commit(constants.SESSION_SET_PROPERTY, { chainId: 31 });
+  },
 };
 
 const mutations = {
