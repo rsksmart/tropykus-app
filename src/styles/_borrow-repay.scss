@@ -74,10 +74,22 @@
       }
     }
     input{
+      outline: none;
       height: 62px;
       width: 100%;
       background: #225948;
       border-radius: 5px;
+      font-weight: bold;
+      font-size: 40px;
+      caret-color: #D9CFC9;
+      color: #FFFFFF;
+      &::placeholder{
+        margin-left: 2rem;
+        font-size: 20px;
+        color: #A3B8A7;
+        text-align: right;
+        visibility: visible;
+      }
     }
 
     .v-slider {

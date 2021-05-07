@@ -4,6 +4,7 @@ import 'firebase/analytics';
 import 'firebase/storage';
 import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
+import * as chart from 'chart.js';
 import { firebaseConfig } from '../firebaseConfig';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
@@ -38,5 +39,6 @@ new Vue({
   router,
   store,
   vuetify,
+  chart,
   render: (h) => h(App),
 }).$mount('#app');

@@ -82,9 +82,10 @@
           Pagar
         </v-btn>
       </v-row>
-      <div class="mt-5 ma-auto container cualquiera">
+      <div class="ma-auto container cualquiera">
         <v-row class="ma-auto mb-2">
-         <h1>RUSDT</h1> <!--logo del mercado y nombre dinamico-->
+          <!-- <v-img position="left center" height="20" :src="symbolImg" contain/> -->
+          <h1>{{ info.underlyingSymbol }}</h1>
         </v-row>
         <v-row class="ma-auto d-flex" style="height:97%; width:94%;">
           <div class="d-flex flex-column ma-auto" style="width:40%; height:100%">
@@ -93,6 +94,7 @@
             </v-row>
             <v-row>
               <div class="collateral-chart">
+                <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
               </div>
             </v-row>
             <v-row>
@@ -102,32 +104,49 @@
               </div>
             </v-row>
           </div>
-          <div class="d-flex flex-column" style="width:60%;">
-            <div class="d-flex justify-space-between">
-              <div class="d-flex flex-column">
-                <p>Puedes pedir prestado</p>
-                <h2>2.000 RUSDT</h2>
-                <p><span>$2.000USD</span></p>
+          <div class="d-flex flex-column justify-space-around" style="width:60%;">
+            <div class="d-flex flex-column justify-space-between">
+              <div class="d-flex justify-space-between mb-4">
+                <div class="d-flex flex-column">
+                  <p>Puedes pedir prestado</p>
+                  <h2>{{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
+                  <p><span>{{ tokenPrice | formatPrice }} USD</span></p>
+                </div>
+                <div class="d-flex">
+                  <div>
+                    <p>Tasa de interés anual <br> dinámica actual</p>
+                    <h2 class="ma-0 modal-rate">{{ info.rate }} %</h2>
+                  </div>
+                  <v-tooltip right>
+                     <template v-slot:activator="{ on, attrs }">
+                      <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
+                        v-bind="attrs" v-on="on">
+                        mdi-information
+                      </v-icon>
+                     </template>
+                     <span>La tasa de interés varía cuando <br> otros usuarios
+                           realizan <br> transacciones en el protocolo.</span>
+                  </v-tooltip>
+                </div>
               </div>
-              <div>
-                <p>Tasa de interés anual <br> dinámica actual</p>
-                <h2>8,54%</h2>
-              </div>
+              <v-divider></v-divider>
             </div>
-            <v-divider></v-divider>
             <div>
               <p>Escribe la cantidad que vas a pedir prestada.</p>
               <form>
-                <input type="text" id="" name="">
+                <input type="text" id="" name="" :value="hola" placeholder="MÁX">
               </form>
               <div>
-                <v-slider 
+                <v-slider
+                  hide-details
                   step="3"
                   min="1"
                   max="100"
                   color="#FFBD98"
                   track-color=" #062E24"
-                  tick-size="4">
+                  tick-size="4"
+                  v-model="sliderValue"
+                  @change="handleBalance">
                 </v-slider>
                 <div class="d-flex justify-space-between">
                   <p>1%</p>
@@ -136,9 +155,15 @@
               </div>
             </div>
             <v-divider></v-divider>
-            <div>
-              <p>Elige como colateral una o varias de tus cryptos depositadas</p>
+            <div class="d-flex">
+              <!-- <p>Elige como colateral una o varias de tus cryptos depositadas</p> -->
+              <v-img  src="@/assets/icons/infoMarkets.svg" width="51" height="45" contain />
+              <p>Por defecto, todos tus depósitos se <br> utilizan como colateral
+                 para realizar un <br> préstamo en cualquier mercado.</p>
             </div>
+            <v-btn disabled>
+              Pedir prestado
+            </v-btn>
           </div>
         </v-row>
       </div>
@@ -150,13 +175,14 @@
 import * as constants from '@/store/constants';
 import Borrow from '@/assets/icons/borrow.svg';
 import Pay from '@/assets/icons/pay.svg';
-import HappyFace from '@/assets/health/face-happy.png';
-import SadFace from '@/assets/health/face-sad.png';
+// import HappyFace from '@/assets/health/face-happy.png';
+// import SadFace from '@/assets/health/face-sad.png';
 
 export default {
   name: 'BorrowRepay',
   data() {
     return {
+      sliderValue: 0,
       showModalConnectWallet: false,
       dialog: this.showModal,
       isInBorrowMenu: this.inBorrowMenu,
@@ -172,6 +198,23 @@ export default {
           .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
         borrowBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
           .info.borrowBalance) : true) || 'No debes tanto',
+      },
+      chartData: [
+        ['Year', 'Asia', 'Europe'],
+        ['2012', 900, 390],
+        ['2013', 1000, 0],
+      ],
+      chartOptions: {
+        isStacked: true,
+        backgroundColor: 'transparent',
+        slices: [
+          { color: '#E65D3D' },
+          { color: '#DBD332' },
+          { color: '#4CB163' },
+        ],
+        legend: {
+          textStyle: { color: '#FFF' },
+        },
       },
     };
   },
@@ -230,6 +273,16 @@ export default {
     },
   },
   methods: {
+    getSymbolImg() {
+      this.db
+        .collection('markets-symbols')
+        .doc(this.info.symbol)
+        .get()
+        .then((response) => {
+          this.symbolImg = response.data().imageURL;
+        })
+        .catch(console.error);
+    },
     outsideConnectWallet() {
       this.showModalConnectWallet = false;
     },
@@ -243,6 +296,18 @@ export default {
         action: this.isInBorrowMenu ? constants.USER_ACTION_BORROW : constants.USER_ACTION_REPAY,
       });
     },
+    created() {
+      this.getSymbolImg();
+    },
+    handleBalance() {
+      const balance = (this.sliderValue * this.info.liquidity) / 100;
+      console.log('balance', this.info.balance);
+      console.log('balance slider', this.sliderValue);
+      console.log(balance);
+    },
+  },
+  mounted() {
+    console.log('Pollo:', this.info);
   },
 };
 </script>
