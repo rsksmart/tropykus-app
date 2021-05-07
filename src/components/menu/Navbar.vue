@@ -105,8 +105,8 @@ export default {
     }),
     buttonLabel() {
       if (this.chainId === 31 && typeof this
-        .walletAddress === 'string') return 'Desconnectar billetera';
-      if (typeof this.walletAddress !== 'string') return 'Connectar billetera';
+        .walletAddress === 'string') return 'Desconectar billetera';
+      if (typeof this.walletAddress !== 'string') return 'Conectar billetera';
       return '';
     },
     accountCutOff() {

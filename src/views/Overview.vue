@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container overview">
-      <v-row class="my-5 ma-0 pl-16">
-        <h1>Información de los mercados</h1>
+      <v-row class="mb-5 ma-0 pl-16">
+        <h1 class="mt-0">Información de los mercados</h1>
       </v-row>
       <v-row class="d-flex justify-center">
         <div class="container">

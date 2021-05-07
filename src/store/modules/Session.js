@@ -22,7 +22,7 @@ const state = {
 const actions = {
   [constants.SESSION_CONNECT_WEB3]: async ({ commit, dispatch }, wallet) => {
     if (window.ethereum) {
-      await window.ethereum.enable();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
       // eslint-disable-next-line no-multi-assign
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(window.ethereum);
       const account = await Vue.web3.getSigner();
@@ -33,10 +33,15 @@ const actions = {
       dispatch(constants.SESSION_GET_CHAIN_ID);
     }
   },
-  [constants.SESSION_GET_CHAIN_ID]: async ({ commit }) => {
+  [constants.SESSION_GET_CHAIN_ID]: ({ commit }) => {
     if (window.ethereum) {
       const chainId = window?.ethereum?.chainId ?? 31;
-      commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
+      if (window.ethereum.isLiquality) {
+        commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(Number(`0x${chainId}`), 10) });
+      }
+      if (window.ethereum.isMetaMask) {
+        commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
+      }
     }
   },
   [constants.SESSION_DISCONNECT_WALLET]: ({ commit }) => {

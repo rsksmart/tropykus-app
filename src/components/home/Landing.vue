@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-container class="mt-8">
+    <v-container>
       <v-row class="mx-0 pl-3">
         <v-card class="crop-card">
           <v-card-title class="pa-0">

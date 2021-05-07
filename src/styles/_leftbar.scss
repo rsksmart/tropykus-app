@@ -12,7 +12,7 @@
 
   .v-btn {
     background-color: transparent !important;
-    &:focus, &:visited, &:active, &:hover {
+    &:focus, &:visited, &:active, &:hover, .selected {
       background-color: rgba(163, 197, 171, 0.5) !important;
     }
   }
