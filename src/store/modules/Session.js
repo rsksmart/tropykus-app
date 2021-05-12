@@ -27,8 +27,7 @@ const actions = {
       provider = window.ethereum;
       if (wallet === constants.WALLET_LIQUALITY && window.ethereum.isLiquality) {
         provider = window.rsk;
-      }
-      if (wallet === constants.WALLET_METAMASK && window.ethereum.isMetaMask) {
+      } else if (wallet === constants.WALLET_METAMASK && window.ethereum.isMetaMask) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -45,6 +44,8 @@ const actions = {
             },
           ],
         });
+      } else {
+        return;
       }
       // eslint-disable-next-line no-multi-assign
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
@@ -72,6 +73,7 @@ const actions = {
     commit(constants.SESSION_SET_PROPERTY, { walletAddress: undefined });
     commit(constants.SESSION_SET_PROPERTY, { account: undefined });
     commit(constants.SESSION_SET_PROPERTY, { wallet: undefined });
+    commit(constants.SESSION_SET_PROPERTY, { provider: undefined });
     commit(constants.SESSION_SET_PROPERTY, { chainId: 31 });
     const web3 = new ethers.providers.JsonRpcProvider(process.env.VUE_APP_RSK_NODE);
     const format = web3.formatter.formats;
