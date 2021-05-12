@@ -5,6 +5,8 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   font-style: normal;
 }
 
+
+
 .v-btn {
   text-transform: none !important;
   letter-spacing: normal !important;
@@ -45,4 +47,36 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 
 .redish {
   color: #fff !important;
+}
+
+.p1-descriptions {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 15px;
+  color: #FFFFFF;
+}
+
+.p2-reading-values {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFF;
+}
+
+.p3-USD-values{
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+.b1-main {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 22px;
+  color: #FFFFFF;
 }

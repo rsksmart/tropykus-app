@@ -1,73 +1,73 @@
 <template>
   <v-card width="100%" class="market-card container" color="#013E2F">
-    <v-row class="mx-0 mt-1 container">
-      <v-col cols="7" class="pa-0">
-        <v-row class="mx-0">
-          <v-col class="pa-0 d-flex justify-start">
-            <v-img position="left center" height="40" :src="symbolImg" contain/>
-          </v-col>
-          <v-col class="pa-0">
-            <h1>{{ info.underlyingSymbol }}</h1>
-          </v-col>
-          <v-col class="pa-0 d-flex justify-center align-center">
-            <a :href="marketOnExplorer" target="_blank">
-              <v-img height="16" src="@/assets/icons/link.svg" contain/>
-            </a>
-          </v-col>
-        </v-row>
+    <v-row class="ma-0 container">
+      <v-col cols="auto" class="pa-0 pr-2 d-flex align-center">
+        <v-img position="left center" height="40" width="40" :src="symbolImg" contain/>
       </v-col>
-      <v-col cols="5" class="pa-0">
-        <v-row class="mx-0 d-flex justify-end">
-          <h2 class="text-right">{{ info.rate }}%</h2>
-        </v-row>
-        <v-row class="mx-0 d-flex justify-end">
-          <p class="text-right">{{ rateLabel }}</p>
-        </v-row>
+      <v-col class="pa-0 d-flex align-center">
+        <h1>{{ info.underlyingSymbol }}</h1>
+      </v-col>
+      <v-col cols="auto" class="pa-0 d-flex justify-center align-center">
+        <a :href="marketOnExplorer" target="_blank">
+          <v-img height="16" src="@/assets/icons/link.svg" contain/>
+        </a>
       </v-col>
     </v-row>
-    <v-row class="mx-0 container">
+    <v-row class="ma-0 mx-3">
       <v-divider color="#BEBEBE"/>
     </v-row>
-    <v-row class="mx-0 container">
-      <v-col cols="7" class="pa-0 d-flex align-center">
-        <div>
-          <v-row class="mx-0">
-            <p>Precio actual</p>
-          </v-row>
-          <v-row class="mx-0">
-            <p class="boldie">1 {{ info.underlyingSymbol }} =</p>
-            <p class="italique">{{ info.underlyingPrice | formatPrice }} USD</p>
-          </v-row>
-        </div>
+    <div class="container">
+      <v-row class="ma-0">
+        <p class="p1-descriptions">{{ marketBalanceLabel }}</p>
+      </v-row>
+      <v-row class="ma-0">
+        <p class="p2-reading-values">{{ marketBalance | formatDecimals(info
+          .underlyingSymbol ) }} {{ info.underlyingSymbol }}</p>
+      </v-row>
+      <v-row class="ma-0">
+        <p class="p3-USD-values">{{ marketBalanceInUSD | formatPrice }} USD</p>
+      </v-row>
+    </div>
+    <v-row class="ma-0 mx-3">
+      <v-divider color="#BEBEBE"/>
+    </v-row>
+    <v-row class="ma-0 container">
+      <v-col cols="8" class="pa-0">
+        <p class="p1-descriptions">
+          Tasa de {{ rateLabel }} <br> dinámica actual
+        </p>
       </v-col>
-      <v-col cols="5" class="pa-0 d-flex align-center">
-        <v-btn depressed :color="buttonColor" width="100%" height="30" @click="supplyOrBorrow">
-          {{ buttonName }}
-        </v-btn>
+      <v-col cols="4" class="pa-0 d-flex justify-end">
+        <p class="text-right p2-reading-values">{{ info.rate }}%</p>
       </v-col>
     </v-row>
+    <v-row class="ma-0 container">
+      <v-btn depressed :color="buttonColor" width="100%" height="44" @click="supplyOrBorrow">
+        <span class="b1-main">{{ buttonName }}</span>
+      </v-btn>
+    </v-row>
     <template v-if="walletDialog">
-      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false" />
+      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
     </template>
     <template v-if="supplyBorrowDialog">
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
                  @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"
-                 :inBorrowMenu="inBorrowMenu" />
+                 :inBorrowMenu="inBorrowMenu"/>
     </template>
     <template v-if="waitingDialog">
-      <loading :showModal="waitingDialog" />
+      <loading :showModal="waitingDialog"/>
     </template>
     <template v-if="successDialog">
       <success-dialog :showModal="successDialog" :amount="amount"
                       :underlyingSymbol="info.underlyingSymbol" :action="currentAction"
-                      @close="actionSucceed" />
+                      @close="actionSucceed"/>
     </template>
     <template v-if="errorDialog">
       <error-dialog :showModal="errorDialog" :action="currentAction"
-                    @close="errorDialog = false" />
+                    @close="errorDialog = false"/>
     </template>
     <template v-if="txSummaryDialog">
-      <tx-summary :showModal="txSummaryDialog" :action="currentAction" />
+      <tx-summary :showModal="txSummaryDialog" :action="currentAction"/>
     </template>
   </v-card>
 </template>
@@ -109,6 +109,7 @@ export default {
         liquidity: null,
         supplyBalance: null,
         borrowBalance: null,
+        totalBorrows: null,
       },
       walletDialog: false,
       supplyBorrowDialog: false,
@@ -142,20 +143,29 @@ export default {
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
     }),
+    marketBalanceLabel() {
+      return this.inBorrowMenu ? 'Total prestado' : 'Liquidez del mercado';
+    },
+    marketBalance() {
+      return this.inBorrowMenu ? this.info.totalBorrows : this.info.cash;
+    },
+    marketBalanceInUSD() {
+      return this.marketBalance * this.info.underlyingPrice;
+    },
     supplyBorrowComponent() {
       return this.inBorrowMenu ? 'BorrowRepay' : 'SupplyRedeem';
     },
     buttonColor() {
-      return this.inBorrowMenu ? '#FF9153' : '#51C1AF';
+      return this.inBorrowMenu ? '#FF9153' : '#4CB163';
     },
     buttonName() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Ahorrar';
+      return this.inBorrowMenu ? 'Pedir prestado' : 'Depositar';
     },
     marketOnExplorer() {
       return `${this.baseExplorerURL}/${this.marketAddress}`;
     },
     rateLabel() {
-      return this.inBorrowMenu ? 'Interés anual' : 'Rendimiento anual';
+      return this.inBorrowMenu ? 'interés anual' : 'rendimiento anual';
     },
   },
   methods: {
@@ -291,6 +301,7 @@ export default {
         : await this.market.supplyRateAPY();
       this.info.rate = this.info.rate.toFixed(2);
       this.info.cash = await this.market.getCash();
+      this.info.totalBorrows = await this.market.totalBorrowsInUnderlying();
       this.getSymbolImg();
       if (this.chainId) {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
