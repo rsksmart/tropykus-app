@@ -5,7 +5,7 @@
         <v-img position="left center" height="40" width="40" :src="symbolImg" contain/>
       </v-col>
       <v-col class="pa-0 d-flex align-center">
-        <h1>{{ info.underlyingSymbol }}</h1>
+        <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
       </v-col>
       <v-col cols="auto" class="pa-0 d-flex justify-center align-center">
         <a :href="marketOnExplorer" target="_blank">
@@ -299,7 +299,7 @@ export default {
       this.info.rate = this.inBorrowMenu
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
-      this.info.rate = this.info.rate.toFixed(2);
+      this.info.rate = this.info.rate.toFixed(3);
       this.info.cash = await this.market.getCash();
       this.info.totalBorrows = await this.market.totalBorrowsInUnderlying();
       this.getSymbolImg();

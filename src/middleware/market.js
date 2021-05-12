@@ -181,10 +181,16 @@ export default class Market {
     return addressRepayed;
   }
 
+  async getDebtInterest(address) {
+    const borrowBalanceCurrent = await this.borrowBalanceCurrent(address);
+    const borrowAPY = await this.borrowRateAPY();
+    return borrowBalanceCurrent * (borrowAPY / 100);
+  }
+
   async getEarnings(address) {
-    const initial = await this.getInitialSupply(address);
     const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address);
-    return updatedSupply - initial;
+    const supplyAPY = await this.supplyRateAPY();
+    return updatedSupply * (supplyAPY / 100);
   }
 
   async getCash() {
