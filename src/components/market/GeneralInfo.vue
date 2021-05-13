@@ -21,8 +21,15 @@
         <p class="p1-descriptions">{{ marketBalanceLabel }}</p>
       </v-row>
       <v-row class="ma-0">
-        <p class="p2-reading-values">{{ marketBalance | formatDecimals(info
-          .underlyingSymbol ) }} {{ info.underlyingSymbol }}</p>
+        <v-tooltip top color="#52826E">
+          <template v-slot:activator="{ on, attrs }">
+            <p class="p2-reading-values" v-bind="attrs" v-on="on">
+              {{ marketBalance | formatDecimals(info
+              .underlyingSymbol ) }} {{ info.underlyingSymbol }}
+            </p>
+          </template>
+          <span>{{ marketBalance }}</span>
+        </v-tooltip>
       </v-row>
       <v-row class="ma-0">
         <p class="p3-USD-values">{{ marketBalanceInUSD | formatPrice }} USD</p>

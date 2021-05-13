@@ -17,7 +17,7 @@ export default class Market {
     this.web3 = chainId === 31 ? Vue.web3Ws : Vue.web3;
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, this.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, this.web3);
-    this.gasLimit = 2300000;
+    this.gasLimit = 300000;
   }
 
   static async isCRbtc(address) {
@@ -136,48 +136,62 @@ export default class Market {
   }
 
   async getInitialSupply(address) {
+    console.log('getInitialSupply..');
     const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
-      const { minter, mintAmount } = supply.args;
+      console.log(`Mint args: ${JSON.stringify(supply.args)}`);
+      const [minter, mintAmount] = supply.args;
+      console.log(`Mint amount: ${Number(mintAmount) / factor}`);
+      console.log(`${minter} === ${address} => ${minter === address}`);
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
+    console.log(`Mint events: ${addressSupplied}`);
     const redeemAmount = await this.getRedeems(address);
-    const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
+    // const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
     const initial = addressSupplied - redeemAmount;
-    return initial >= 0 ? initial : supplyBalance;
+    return initial; // >= 0 ? initial : supplyBalance;
   }
 
   async getRedeems(address) {
+    console.log('getRedeems..');
     const redeemEvents = await this.instance.queryFilter('Redeem', -500000);
     let addressRedeem = 0;
     redeemEvents.forEach((redeem) => {
-      const { redeemer, redeemAmount } = redeem.args;
+      console.log(`Redeem args: ${JSON.stringify(redeem.args)}`);
+      const [redeemer, redeemAmount] = redeem.args;
       if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
     });
+    console.log(`Redeem events: ${addressRedeem}`);
     return addressRedeem;
   }
 
   async getInitialBorrow(address) {
-    const supplyEvents = await this.instance.queryFilter('Borrow', -500000);
+    console.log('getInitialBorrow..');
+    const borrowEvents = await this.instance.queryFilter('Borrow', -500000);
     let addressBorrowed = 0;
-    supplyEvents.forEach((borrow) => {
-      const { borrower, borrowAmount } = borrow.args;
+    borrowEvents.forEach((borrow) => {
+      console.log(`Repay args: ${JSON.stringify(borrow.args)}`);
+      const [borrower, borrowAmount] = borrow.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
+    console.log(`Borrow events: ${addressBorrowed}`);
     const repayAmount = await this.getRepays(address);
-    const borrowBalance = await this.borrowBalanceCurrent(address);
+    // const borrowBalance = await this.borrowBalanceCurrent(address);
     const initial = addressBorrowed - repayAmount;
-    return initial >= 0 ? initial : borrowBalance;
+    return initial; // >= 0 ? initial : borrowBalance;
   }
 
   async getRepays(address) {
+    console.log('getRepays..');
     const supplyEvents = await this.instance.queryFilter('RepayBorrow', -500000);
     let addressRepayed = 0;
     supplyEvents.forEach((repay) => {
-      const { borrower, repayAmount } = repay.args;
+      console.log(`Repay args: ${JSON.stringify(repay.args)}`);
+      const [borrower, repayAmount] = repay.args;
       if (borrower === address) addressRepayed += Number(repayAmount) / factor;
     });
+    console.log(`Repay events: ${addressRepayed}`);
     return addressRepayed;
   }
 
@@ -191,6 +205,20 @@ export default class Market {
     const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address);
     const supplyAPY = await this.supplyRateAPY();
     return updatedSupply * (supplyAPY / 100);
+  }
+
+  async eventsEarnings(address) {
+    console.log('Get earnings');
+    const initial = await this.getInitialSupply(address);
+    const total = await this.currentBalanceOfCTokenInUnderlying(address);
+    return total - initial;
+  }
+
+  async eventsInterest(address) {
+    console.log('Get interest');
+    const initial = await this.getInitialBorrow(address);
+    const total = await this.borrowBalanceCurrent(address);
+    return total - initial;
   }
 
   async getCash() {

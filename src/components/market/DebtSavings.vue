@@ -22,8 +22,15 @@
           <p class="p1-descriptions">Total {{ borrowSupplyBalanceLabel }}</p>
         </v-row>
         <v-row class="ma-0">
-          <p class="p2-reading-values">{{ info.totalBalance | formatDecimals(info
-            .underlyingSymbol ) }} {{ info.underlyingSymbol }}</p>
+          <v-tooltip top color="#52826E">
+            <template v-slot:activator="{ on, attrs }">
+              <p class="p2-reading-values" v-bind="attrs" v-on="on">
+                {{info.totalBalance | formatDecimals(info
+                .underlyingSymbol)}} {{info.underlyingSymbol}}
+              </p>
+            </template>
+            <span>{{ info.totalBalance  }}</span>
+          </v-tooltip>
         </v-row>
         <v-row class="ma-0">
           <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
@@ -34,8 +41,15 @@
           <p class="p1-descriptions">{{ payRedeemBalanceLabel }}</p>
         </v-row>
         <v-row class="ma-0">
-          <p class="p2-reading-values">{{ info.interestBalance | formatDecimals(info
-            .underlyingSymbol ) }} {{ info.underlyingSymbol }}</p>
+          <v-tooltip top color="#52826E">
+            <template v-slot:activator="{ on, attrs }">
+              <p class="p2-reading-values" v-bind="attrs" v-on="on">
+                {{info.interestBalance | formatDecimals(info
+                    .underlyingSymbol) }} {{ info.underlyingSymbol }}
+              </p>
+            </template>
+            <span>{{ info.interestBalance  }}</span>
+          </v-tooltip>
         </v-row>
         <v-row class="ma-0">
           <p class="p3-USD-values">{{ tokenInterestPrice | formatPrice }} USD</p>
@@ -63,22 +77,22 @@
     </v-row>
     <template v-if="supplyRepayDialog">
       <component :is="supplyRepayComponent" :showModal="supplyRepayDialog" :inBorrowMenu="false"
-                 :info="info" @action="menuAction" @closed="supplyRepayDialog = false" />
+                 :info="info" @action="menuAction" @closed="supplyRepayDialog = false"/>
     </template>
     <template v-if="waitingDialog">
-      <loading :showModal="waitingDialog" />
+      <loading :showModal="waitingDialog"/>
     </template>
     <template v-if="successDialog">
       <success-dialog :showModal="successDialog" :amount="amount"
                       :underlyingSymbol="info.underlyingSymbol" :action="currentAction"
-                      @close="actionSucceed" />
+                      @close="actionSucceed"/>
     </template>
     <template v-if="errorDialog">
       <error-dialog :showModal="errorDialog" :action="currentAction"
-                    @close="errorDialog = false" />
+                    @close="errorDialog = false"/>
     </template>
     <template v-if="txSummaryDialog">
-      <tx-summary :showModal="txSummaryDialog" :action="currentAction" />
+      <tx-summary :showModal="txSummaryDialog" :action="currentAction"/>
     </template>
   </v-card>
 </template>
@@ -133,6 +147,8 @@ export default {
       txSummaryDialog: false,
       amount: null,
       currentAction: null,
+      earnings: null,
+      interest: null,
     };
   },
   props: {
@@ -155,7 +171,7 @@ export default {
       return this.inBorrowMenu ? 'a pagar' : 'depositado';
     },
     payRedeemBalanceLabel() {
-      return this.inBorrowMenu ? 'Intereses acumulados' : 'Ganancias históricas';
+      return this.inBorrowMenu ? 'Aproximación de intereses acumulados' : 'Aproximación de ganancias anuales';
     },
     tokenPrice() {
       return this.info.totalBalance * this.info.underlyingPrice;
@@ -174,6 +190,9 @@ export default {
     },
     rateLabel() {
       return this.inBorrowMenu ? 'interés anual' : 'rendimiento anual';
+    },
+    interestEvents() {
+      return this.inBorrowMenu ? this.interest : this.earnings;
     },
   },
   methods: {
@@ -282,7 +301,8 @@ export default {
     },
     getSymbolImg() {
       this.db
-        .collection('markets-symbols').doc(this.info.symbol).get().then((response) => {
+        .collection('markets-symbols').doc(this.info.symbol)
+        .get().then((response) => {
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
@@ -343,6 +363,17 @@ export default {
         this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
           : new CToken(this.marketAddress, this.chainId);
         this.updateMarketInfo();
+        // console.log('Get events');
+        // return this.inBorrowMenu ? this.market
+        // .eventsInterest('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa')
+        //   : this.market.eventsEarnings('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa');
+        // })
+        // .then((res) => {
+        //   if (this.inBorrowMenu) {
+        //     this.interest = res;
+        //   } else {
+        //     this.earnings = res;
+        //   }
       })
       .catch(console.error);
   },
