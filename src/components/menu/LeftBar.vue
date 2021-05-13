@@ -3,20 +3,22 @@
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="$router.push({ name: 'Supply' })" width="50"
+          <v-btn @click="redirect(constants.ROUTE_NAMES.SAVINGS)" width="50"
+                 v-bind:class="{ selected: views.inSavings }"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/pig.svg" />
+            <v-img contain height="43" src="@/assets/icons/pig.svg"/>
           </v-btn>
         </template>
-        <span>Ahorros</span>
+        <span>Depositos</span>
       </v-tooltip>
     </v-row>
     <v-row class="mx-0 my-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="$router.push({ name: 'Borrow' })" width="50"
+          <v-btn @click="redirect(constants.ROUTE_NAMES.DEBTS)" width="50"
+                 v-bind:class="{ selected: views.inDebts }"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/borrow.svg" />
+            <v-img contain height="43" src="@/assets/icons/borrow.svg"/>
           </v-btn>
         </template>
         <span>Pedir prestado</span>
@@ -25,9 +27,10 @@
     <v-row class="ma-0 mb-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="$router.push({ name: 'Tutorials' })" width="50"
+          <v-btn @click="redirect(constants.ROUTE_NAMES.TUTORIALS)" width="50"
+                 v-bind:class="{ selected: views.inTutorials }" color="transparent"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/tutorials.svg" />
+            <v-img contain height="43" src="@/assets/icons/tutorials.svg"/>
           </v-btn>
         </template>
         <span>Tutoriales</span>
@@ -36,23 +39,24 @@
     <v-row class="ma-0 mb-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="$router.push({ name: 'Overview' })" width="50"
+          <v-btn @click="redirect(constants.ROUTE_NAMES.OVERVIEW)" width="50"
+                 v-bind:class="{ selected: views.inOverview }"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/info.svg" />
+            <v-img contain height="43" src="@/assets/icons/info.svg"/>
           </v-btn>
         </template>
         <span>Mercados</span>
       </v-tooltip>
     </v-row>
-    <div class="custom-spacer" />
-    <v-divider class="mx-2 mx-2" color="#BEBEBE" />
+    <div class="custom-spacer"/>
+    <v-divider class="mx-2 mx-2" color="#BEBEBE"/>
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
           <v-btn href="https://github.com/TruStartUp/tropykus-protocol"
                  target="_blank" rel="noopener" width="50"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/github.svg" />
+            <v-img contain height="43" src="@/assets/icons/github.svg"/>
           </v-btn>
         </template>
         <span>Repositorio</span>
@@ -64,7 +68,7 @@
           <v-btn href="https://twitter.com/tropykus"
                  target="_blank" rel="noopener" width="50"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/twitter.svg" />
+            <v-img contain height="43" src="@/assets/icons/twitter.svg"/>
           </v-btn>
         </template>
         <span>Twitter</span>
@@ -76,7 +80,7 @@
           <v-btn href="https://t.me/tropykus"
                  target="_blank" rel="noopener" width="50"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/telegram.svg" />
+            <v-img contain height="43" src="@/assets/icons/telegram.svg"/>
           </v-btn>
         </template>
         <span>Telegram</span>
@@ -86,12 +90,25 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import * as constants from '@/store/constants';
 
 export default {
   name: 'LeftBar',
+  data() {
+    return {
+      constants,
+      views: {
+        inSavings: true,
+        inDebts: false,
+        inTutorials: false,
+        inOverview: false,
+      },
+    };
+  },
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
+      routePath: (state) => state.route.path,
     }),
   },
   methods: {
@@ -104,6 +121,31 @@ export default {
           this.symbolImg = response.data().imageURL;
         })
         .catch(console.error);
+    },
+    redirect(routePath) {
+      this.views.inSavings = false;
+      this.views.inDebts = false;
+      this.views.inTutorials = false;
+      this.views.inOverview = false;
+      console.log(routePath);
+      switch (routePath) {
+        case constants.ROUTE_NAMES.SAVINGS:
+          this.views.inSavings = true;
+          break;
+        case constants.ROUTE_NAMES.DEBTS:
+          this.views.inDebts = true;
+          break;
+        case constants.ROUTE_NAMES.TUTORIALS:
+          this.views.inTutorials = true;
+          break;
+        case constants.ROUTE_NAMES.OVERVIEW:
+          this.views.inOverview = true;
+          break;
+        default:
+          this.views.inSavings = true;
+          break;
+      }
+      this.$router.push({ name: routePath });
     },
   },
   watch: {

@@ -7,6 +7,13 @@ export const USER_ACTION_REDEEM = 'USER_ACTION_REDEEM';
 export const USER_ACTION_REPAY = 'USER_ACTION_REPAY';
 
 export const RBTC_SYMBOL = 'tRBTC';
+export const ROUTE_NAMES = {
+  BALANCE: 'Balance',
+  SAVINGS: 'Supply',
+  DEBTS: 'Borrow',
+  TUTORIALS: 'Tutorials',
+  OVERVIEW: 'Overview',
+};
 
 // actions
 export const SESSION_CONNECT_WEB3 = 'SESSION_CONNECT_WEB3';
