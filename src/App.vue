@@ -35,6 +35,10 @@
             </v-btn>
           </v-col>
         </v-row>
+        <v-row class="ma-0 d-flex justify-center">
+          <v-checkbox hide-details dark v-model="dontShowWelcomeModal"
+            label="No volver a mostrar" class="mt-0" />
+        </v-row>
       </v-card>
     </v-dialog>
   </v-app>
@@ -53,6 +57,7 @@ export default {
       btcToRbtcDialog: true,
       comptroller: null,
       markets: [],
+      dontShowWelcomeModal: false,
     };
   },
   computed: {
@@ -75,10 +80,18 @@ export default {
         this.$forceUpdate();
       }
     },
+    dontShowWelcomeModal() {
+      localStorage.flag = !this.dontShowWelcomeModal;
+    },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.loadMarkets();
+  },
+  mounted() {
+    if (localStorage.flag) {
+      this.btcToRbtcDialog = localStorage.flag === 'true';
+    }
   },
   components: {
     Navbar,
