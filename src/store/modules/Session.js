@@ -49,6 +49,7 @@ const actions = {
       }
       // eslint-disable-next-line no-multi-assign
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
       const account = await Vue.web3.getSigner();
       const walletAddress = await account.getAddress();
       commit(constants.SESSION_SET_PROPERTY, { provider });
