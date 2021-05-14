@@ -23,6 +23,10 @@
     .button-withdraw-click {
       border-bottom: 2px solid #fff !important;
     }
+    .v-btn__content {
+      color: #fff !important;
+      font-weight: bold !important;
+    }
   }
 
   .cualquiera {
@@ -59,22 +63,52 @@
     }
     .risk-charts {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
       width: 322px;
-      height: 234px;
+      height: 264px;
       border: 1px solid #FFFFFF;
       border-radius: 10px;
+      .risk{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+          }
       .risk-graph {
         position: relative !important;
-        top: 0;
+        // top: 0;
         display: flex;
         justify-content: center;
-        opacity: 0.3;
+      }
+      .risk-img {
+        position: absolute !important;
+        // left: 44%;
+        // bottom: 56%;
+        top: 34%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .risk-title {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 6px !important;
+        h3 {
+          color: #FFFFFF;
+          font-size: 14px;
+          text-transform: uppercase;
+        }
+      }
+      .risk-description {
+        display: flex;
+        justify-content: center;
+        text-align: center;
       }
     }
-    input{
-      outline: none;
+    input {
+      outline: none; 
       height: 62px;
       width: 100%;
       background: #225948;

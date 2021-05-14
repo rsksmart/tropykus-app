@@ -68,7 +68,7 @@
     </v-row>
     <template v-if="borrowRepayDialog">
       <borrow-repay :showModal="borrowRepayDialog" :inBorrowMenu="false"
-                    :info="info" @action="repay" @closed="borrowRepayDialog = false" />
+                    :info="info"  @action="repay" @closed="borrowRepayDialog = false" />
     </template>
     <template v-if="waitingDialog">
       <loading :showModal="waitingDialog" />
