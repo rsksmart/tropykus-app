@@ -132,11 +132,13 @@
             </div>
             <div>
               <p>Escribe la cantidad que vas a pedir prestada.</p>
-              <form>
-                <input type="text" id="" name="" @change="handleBalance"
+              <form @submit.prevent>
+                <input type="text" id="" name=""
+                        v-model="borrowValue"
+                        @input="handleSlider"
                         :rules="[rules.marketCash, rules.liquidity,
                         rules.minBalance, rules.borrowBalance]"
-                        :value="borrowValue" placeholder="MÁX">
+                        placeholder="MÁX">
               </form>
               <div>
                 <v-slider
@@ -199,7 +201,7 @@ export default {
     return {
       markets: [],
       comptroller: null,
-      riskValue: 1,
+      riskValue: 100,
       borrowValue: 0,
       sliderValue: 0,
       showModalConnectWallet: false,
@@ -219,20 +221,34 @@ export default {
           .info.borrowBalance) : true) || 'No debes tanto',
       },
       chartData: [
-        ['Year', 'Asia', { role: 'style' }, 'Europe', { role: 'style' }],
-        ['Cantidad a pedir prestado', 0, '#FFBD98', 0, '#F66514'],
+        ['', '', { role: 'style' }, '', { role: 'style' }],
         ['Colateral', 0, '#FF9153', 0, ''],
+        ['Cantidad a pedir prestado', 0, '#FFBD98', 0, '#F66514'],
       ],
       chartOptions: {
-        isStacked: true,
-        width: 167,
-        height: 206,
+        width: 300,
+        height: 200,
         backgroundColor: 'transparent',
         legend: {
           textStyle: { color: '#FFF' },
         },
         vAxis: {
           title: 'Monto',
+          colors: ['#9575cd', '#33ac71'],
+          labelStyle: { color: '#FFF' },
+          titleTextStyle: { color: '#FFF' },
+          titlePosition: { position: 'right' },
+          textStyle: { color: '#FFF' },
+          gridLines: { count: 10 },
+          legend: 'none',
+          viewWindow: {
+            max: 100,
+            min: 0,
+          },
+        },
+        hAxis: {
+          textStyle: { color: '#FFF' },
+          legend: 'none',
         },
       },
     };
@@ -332,9 +348,15 @@ export default {
       const tempData = [...this.chartData];
       this.borrowValue = balance;
       tempData[2][1] = (balance * 100) / this.tokenBalance;
-      console.log(tempData[2][1]);
       this.chartData = tempData;
-      console.log(this.chartData);
+    },
+    handleSlider() {
+      const value = (this.borrowValue / this.tokenBalance) * 100;
+      this.sliderValue = value;
+      const balance = (this.sliderValue * this.tokenBalance) / 100;
+      const tempData = [...this.chartData];
+      tempData[2][1] = (balance * 100) / this.tokenBalance;
+      this.chartData = tempData;
     },
     async getMarkets() {
       const marketsAddresses = await this.comptroller.allMarkets;
@@ -352,8 +374,15 @@ export default {
     this.comptroller = new Comptroller(this.chainId);
     this.getMarkets();
   },
-  mounted() {
+  async mounted() {
     if (this.info.symbol) this.getSymbolImg();
+    const tempData = [...this.chartData];
+    const colateral = await this.comptroller.getAccountLiquidity(this.address);
+    console.log('colateral:', colateral);
+    console.log('colateral1:', colateral * 100);
+    console.log('colateral2:', colateral / 100);
+    tempData[1][1] = (colateral * 100);
+    this.chartData = tempData;
   },
 };
 </script>

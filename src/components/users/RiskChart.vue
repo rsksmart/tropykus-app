@@ -49,26 +49,26 @@ export default {
   },
   computed: {
     riskImage() {
-      if (this.riskRate > 40 && this.riskRate <= 100) return HappyFace;
-      if (this.riskRate > 60 && this.riskRate <= 40) return SeriousFace;
-      if (this.riskRate > 0 && this.riskRate <= 60) return WorryFace;
+      if (this.riskRate > 60 && this.riskRate <= 100) return HappyFace;
+      if (this.riskRate > 40 && this.riskRate <= 60) return SeriousFace;
+      if (this.riskRate >= 0 && this.riskRate <= 40) return WorryFace;
       return SadFace;
     },
     riskTitle() {
       if (this.riskRate === 100) return 'Sin riesgo';
-      if (this.riskRate > 40 && this.riskRate < 100) return 'Riesgo bajo';
-      if (this.riskRate > 60 && this.riskRate <= 40) return 'Riesgo medio';
-      if (this.riskRate > 0 && this.riskRate <= 60) return 'Riesgo alto';
+      if (this.riskRate > 60 && this.riskRate < 100) return 'Riesgo bajo';
+      if (this.riskRate > 40 && this.riskRate <= 60) return 'Riesgo medio';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return 'Riesgo alto';
       return 'Escribe otro valor';
     },
     riskDescription() {
-      if (this.riskRate > 40 && this.riskRate <= 100) {
+      if (this.riskRate > 60 && this.riskRate <= 100) {
         return 'No tienes riesgo de ser liquidado';
       }
-      if (this.riskRate > 60 && this.riskRate <= 40) {
+      if (this.riskRate > 40 && this.riskRate <= 60) {
         return 'Podría ser liquidado tu colateral ten precaución';
       }
-      if (this.riskRate > 0 && this.riskRate <= 60) {
+      if (this.riskRate >= 0 && this.riskRate <= 40) {
         return 'Es probable que pierdas tu colateral. Ten precaución';
       }
       return 'No es posible calcular el riesgo';
