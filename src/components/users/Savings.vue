@@ -23,7 +23,7 @@
       <template v-else>
         <v-row class="mx-0 pl-3 py-4">
           <v-card color="#013E2F" width="100%" class="container">
-            <p class="ma-0 whiteish">No has ahorrado cryptos aún</p>
+            <p class="ma-0 whiteish">No has depositado criptos aún</p>
           </v-card>
         </v-row>
       </template>

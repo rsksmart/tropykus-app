@@ -83,7 +83,7 @@ export default {
       db: this.$firebase.firestore(),
       symbolImg: null,
       rules: {
-        leverage: () => (this.inSupplyMenu ? this.info.borrowBalance > 0
+        leverage: () => (this.inSupplyMenu ? this.info.borrowBalance <= 0
           : true) || 'No puedes depositar en este mercado, tienes una deuda activa.'
           + 'Paga tu deuda e intenta más tarde.',
         minBalance: () => (this.inSupplyMenu ? Number(this.amount) <= Number(this
