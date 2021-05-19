@@ -1,12 +1,7 @@
 <template>
   <v-container>
-    <v-row class="mx-0 pl-3">
-      <v-card class="crop-card">
-        <v-card-title class="pa-0">
-          <v-img class="mx-2" src="@/assets/icons/pay.svg" height="23" width="23" contain/>
-          <h1 class="text-left">Mis Deudas</h1>
-        </v-card-title>
-      </v-card>
+    <v-row class="ma-0 mb-5 pl-3">
+      <h3 class="text-left h3-sections-heading">Mis deudas</h3>
     </v-row>
     <template v-if="loadingDebts">
       <v-row class="mx-0 mt-4">

@@ -104,19 +104,15 @@ export default {
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address',
       info: {
-        name: null,
-        symbol: null,
-        rate: null,
-        balance: null,
-        underlyingPrice: null,
-        underlyingBalance: null,
-        underlying: null,
         underlyingSymbol: null,
         cash: null,
+        rate: null,
+        totalBorrows: null,
+        underlyingPrice: null,
+        underlyingBalance: null,
         liquidity: null,
         supplyBalance: null,
         borrowBalance: null,
-        totalBorrows: null,
       },
       walletDialog: false,
       supplyBorrowDialog: false,
@@ -179,7 +175,7 @@ export default {
     getSymbolImg() {
       this.db
         .collection('markets-symbols')
-        .doc(this.info.symbol)
+        .doc(this.info.underlyingSymbol)
         .get()
         .then((response) => {
           this.symbolImg = response.data().imageURL;
@@ -298,23 +294,18 @@ export default {
       this.$emit('success');
     },
     async updateMarketInfo() {
-      this.info.name = await this.market.name;
-      this.info.symbol = await this.market.symbol;
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.info.underlying = await this.market.underlying();
-      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
+      this.info.cash = await this.market.getCash();
       this.info.rate = this.inBorrowMenu
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
       this.info.rate = this.info.rate.toFixed(3);
-      this.info.cash = await this.market.getCash();
       this.info.totalBorrows = await this.market.totalBorrowsInUnderlying();
       this.getSymbolImg();
       if (this.chainId) {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
       }
       if (this.walletAddress) {
-        this.info.balance = await this.market.balanceOf(this.walletAddress);
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
         this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);

@@ -25,11 +25,13 @@
           <v-tooltip top color="#52826E">
             <template v-slot:activator="{ on, attrs }">
               <p class="p2-reading-values" v-bind="attrs" v-on="on">
-                {{info.totalBalance | formatDecimals(info
-                .underlyingSymbol)}} {{info.underlyingSymbol}}
+                {{
+                  info.totalBalance | formatDecimals(info
+                    .underlyingSymbol)
+                }} {{ info.underlyingSymbol }}
               </p>
             </template>
-            <span>{{ info.totalBalance  }}</span>
+            <span>{{ info.totalBalance }}</span>
           </v-tooltip>
         </v-row>
         <v-row class="ma-0">
@@ -44,11 +46,13 @@
           <v-tooltip top color="#52826E">
             <template v-slot:activator="{ on, attrs }">
               <p class="p2-reading-values" v-bind="attrs" v-on="on">
-                {{info.interestBalance | formatDecimals(info
-                    .underlyingSymbol) }} {{ info.underlyingSymbol }}
+                {{
+                  info.interestBalance | formatDecimals(info
+                    .underlyingSymbol)
+                }} {{ info.underlyingSymbol }}
               </p>
             </template>
-            <span>{{ info.interestBalance  }}</span>
+            <span>{{ info.interestBalance }}</span>
           </v-tooltip>
         </v-row>
         <v-row class="ma-0">
@@ -70,14 +74,23 @@
       </v-col>
     </v-row>
     <v-row class="ma-0 container">
-      <v-btn depressed :color="buttonColor" width="100%" height="44"
-             @click="repayOrSupply">
-        <span class="b1-main">{{ buttonName }}</span>
-      </v-btn>
+      <v-col class="pa-0 pr-1" cols="6">
+        <v-btn depressed :color="buttonColor" width="100%" height="44"
+               @click="repayOrSupply(true)">
+          <span class="b1-main">{{ supplyBorrowLabel }}</span>
+        </v-btn>
+      </v-col>
+      <v-col class="pa-0 pl-1" cols="6">
+        <v-btn depressed outlined color="#FFF" width="100%" height="44"
+               @click="repayOrSupply(false)">
+          <span class="b1-main">{{ redeemRepayLabel }}</span>
+        </v-btn>
+      </v-col>
     </v-row>
     <template v-if="supplyRepayDialog">
-      <component :is="supplyRepayComponent" :showModal="supplyRepayDialog" :inBorrowMenu="false"
-                 :info="info" @action="menuAction" @closed="supplyRepayDialog = false"/>
+      <component :is="supplyRepayComponent" :showModal="supplyRepayDialog"
+                 :inBorrowMenu="buttonAction" :info="info" @action="menuAction"
+                 @closed="supplyRepayDialog = false"/>
     </template>
     <template v-if="waitingDialog">
       <loading :showModal="waitingDialog"/>
@@ -122,22 +135,16 @@ export default {
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
       comptroller: null,
       info: {
-        name: null,
-        symbol: null,
-        balance: null,
-        rate: null,
-        interestBalance: null,
-        totalBalance: null,
-        underlyingBalance: null,
-        exchangeRate: null,
-        savings: null,
-        price: null,
-        underlyingPrice: null,
-        available: null,
-        underlying: null,
+        underlyingSymbol: null,
         cash: null,
+        rate: null,
+        underlyingPrice: null,
+        underlyingBalance: null,
         liquidity: null,
+        interestBalance: null,
+        supplyBalance: null,
         borrowBalance: null,
+        totalBalance: null,
       },
       supplyRepayDialog: false,
       supplyRepayComponent: 'SupplyRedeem',
@@ -149,6 +156,7 @@ export default {
       currentAction: null,
       earnings: null,
       interest: null,
+      buttonAction: null,
     };
   },
   props: {
@@ -171,7 +179,7 @@ export default {
       return this.inBorrowMenu ? 'a pagar' : 'depositado';
     },
     payRedeemBalanceLabel() {
-      return this.inBorrowMenu ? 'Aproximación de intereses acumulados' : 'Aproximación de ganancias anuales';
+      return this.inBorrowMenu ? 'Intereses acumulados aproximados' : 'Ganancias aproximadas';
     },
     tokenPrice() {
       return this.info.totalBalance * this.info.underlyingPrice;
@@ -182,22 +190,52 @@ export default {
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#4CB163';
     },
-    buttonName() {
-      return this.inBorrowMenu ? 'Pagar' : 'Depositar';
-    },
     marketOnExplorer() {
       return `${this.baseExplorerURL}/${this.marketAddress}`;
     },
     rateLabel() {
       return this.inBorrowMenu ? 'interés anual' : 'rendimiento anual';
     },
-    interestEvents() {
-      return this.inBorrowMenu ? this.interest : this.earnings;
+    supplyBorrowLabel() {
+      return this.inBorrowMenu ? 'Pedir prestado' : 'Depositar';
+    },
+    redeemRepayLabel() {
+      return this.inBorrowMenu ? 'Pagar' : 'Retirar';
     },
   },
+  components: {
+    BorrowRepay,
+    Loading,
+    TxSummary,
+    SuccessDialog,
+    ErrorDialog,
+    SupplyRedeem,
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.isCRbtc()
+      .then((isCRbtc) => {
+        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+          : new CToken(this.marketAddress, this.chainId);
+        this.updateMarketInfo();
+        // console.log('Get events');
+        // return this.inBorrowMenu ? this.market
+        // .eventsInterest('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa')
+        //   : this.market.eventsEarnings('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa');
+        // })
+        // .then((res) => {
+        //   if (this.inBorrowMenu) {
+        //     this.interest = res;
+        //   } else {
+        //     this.earnings = res;
+        //   }
+      })
+      .catch(console.error);
+  },
   methods: {
-    repayOrSupply() {
+    repayOrSupply(buttonAction) {
       this.supplyRepayDialog = true;
+      this.buttonAction = buttonAction;
       this.supplyRepayComponent = this.inBorrowMenu ? 'BorrowRepay' : 'SupplyRedeem';
     },
     reset() {
@@ -301,7 +339,8 @@ export default {
     },
     getSymbolImg() {
       this.db
-        .collection('markets-symbols').doc(this.info.symbol)
+        .collection('markets-symbols')
+        .doc(this.info.underlyingSymbol)
         .get().then((response) => {
           this.symbolImg = response.data().imageURL;
         })
@@ -312,11 +351,6 @@ export default {
       this.$emit('success');
     },
     async updateMarketInfo() {
-      this.info.name = await this.market.name;
-      this.info.symbol = await this.market.symbol;
-      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.info.underlying = await this.market.underlying();
-      this.info.exchangeRate = await this.market.exchangeRateCurrent();
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.cash = await this.market.getCash();
       this.info.rate = this.inBorrowMenu
@@ -328,54 +362,24 @@ export default {
         this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
       }
       if (this.walletAddress) {
-        this.info.balance = await this.market.balanceOf(this.walletAddress);
-        this.info.underlyingBalance = await this.market
-          .balanceOfUnderlyingInWallet(this.account);
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
         this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+        this.info.interestBalance = this.inBorrowMenu
+          ? await this.market.getDebtInterest(this.walletAddress)
+          : await this.market.getEarnings(this.walletAddress);
+        this.info.supplyBalance = await this.market
+          .currentBalanceOfCTokenInUnderlying(this.walletAddress);
         this.info.borrowBalance = await this.market
           .borrowBalanceCurrent(this.walletAddress);
         this.info.totalBalance = this.inBorrowMenu
           ? this.info.borrowBalance
           : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
-        this.info.interestBalance = this.inBorrowMenu
-          ? await this.market.getDebtInterest(this.walletAddress)
-          : await this.market.getEarnings(this.walletAddress);
       }
     },
     isCRbtc() {
       return Market.isCRbtc(this.marketAddress);
     },
-  },
-  components: {
-    BorrowRepay,
-    Loading,
-    TxSummary,
-    SuccessDialog,
-    ErrorDialog,
-    SupplyRedeem,
-  },
-  created() {
-    this.comptroller = new Comptroller(this.chainId);
-    this.isCRbtc()
-      .then((isCRbtc) => {
-        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
-          : new CToken(this.marketAddress, this.chainId);
-        this.updateMarketInfo();
-        // console.log('Get events');
-        // return this.inBorrowMenu ? this.market
-        // .eventsInterest('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa')
-        //   : this.market.eventsEarnings('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa');
-        // })
-        // .then((res) => {
-        //   if (this.inBorrowMenu) {
-        //     this.interest = res;
-        //   } else {
-        //     this.earnings = res;
-        //   }
-      })
-      .catch(console.error);
   },
 };
 </script>

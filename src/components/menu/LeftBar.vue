@@ -98,7 +98,7 @@ export default {
     return {
       constants,
       views: {
-        inSavings: true,
+        inSavings: false,
         inDebts: false,
         inTutorials: false,
         inOverview: false,
@@ -108,7 +108,6 @@ export default {
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
-      routePath: (state) => state.route.path,
     }),
   },
   methods: {
@@ -122,12 +121,13 @@ export default {
         })
         .catch(console.error);
     },
-    redirect(routePath) {
+    reset() {
       this.views.inSavings = false;
       this.views.inDebts = false;
       this.views.inTutorials = false;
       this.views.inOverview = false;
-      console.log(routePath);
+    },
+    highlightRoute(routePath) {
       switch (routePath) {
         case constants.ROUTE_NAMES.SAVINGS:
           this.views.inSavings = true;
@@ -145,6 +145,10 @@ export default {
           this.views.inSavings = true;
           break;
       }
+    },
+    redirect(routePath) {
+      this.reset();
+      this.highlightRoute(routePath);
       this.$router.push({ name: routePath });
     },
   },

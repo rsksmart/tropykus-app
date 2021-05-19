@@ -3,14 +3,14 @@
     <template v-if="inBorrowMenu">
       <debts :inBorrowMenu="inBorrowMenu"
              :debts="debtsList" :key="debtKey" />
-      <suggestions @actionSucceed="forceDebts" :inBorrowMenu="inBorrowMenu"
+      <suggestions class="mt-8" @actionSucceed="forceDebts" :inBorrowMenu="inBorrowMenu"
                    :suggestions="suggestions" />
     </template>
     <template v-else>
       <savings :inBorrowMenu="inBorrowMenu"
                :savings="savingsList" :key="savKey" />
       <!--      <on-my-wallet />-->
-      <suggestions @actionSucceed="forceSavings" :inBorrowMenu="inBorrowMenu"
+      <suggestions class="mt-8" @actionSucceed="forceSavings" :inBorrowMenu="inBorrowMenu"
                    :suggestions="suggestions" />
     </template>
   </div>

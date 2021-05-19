@@ -78,7 +78,7 @@ export default {
     return {
       showModalConnectWallet: false,
       dialog: this.showModal,
-      inSupplyMenu: true,
+      inSupplyMenu: this.inBorrowMenu,
       amount: null,
       db: this.$firebase.firestore(),
       symbolImg: null,
@@ -101,6 +101,10 @@ export default {
     },
     info: {
       type: Object,
+      required: true,
+    },
+    inBorrowMenu: {
+      type: Boolean,
       required: true,
     },
   },
