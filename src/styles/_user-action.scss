@@ -1,9 +1,9 @@
 .withdraw-size {
-  width: 35% !important;
+  width: 680px !important;
   max-height: 90%
 }
 .borrow-size {
-  width: 60% !important;
+  width: 1004px !important;
   max-height: 90%
 }
 .user-action {
@@ -13,10 +13,8 @@
     background-color: #405A50 !important;
     color: #fff !important;
   }
-  .cualquiera {
-    height: 85%;
-    width: 90%;
-
+  .slider-container{
+    margin-top: 26px ;
     h1, h2, p {
       color: #fff;
     }
@@ -50,8 +48,9 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      margin-top: 18px;
       width: 322px;
-      height: 264px;
+      height: 251px;
       border: 1px solid #FFFFFF;
       border-radius: 10px;
       .risk{
@@ -89,25 +88,6 @@
         display: flex;
         justify-content: center;
         text-align: center;
-      }
-    }
-    input {
-      outline: none; 
-      height: 62px;
-      width: 100%;
-      background: #225948;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 40px;
-      padding-left: 15px;
-      caret-color: #D9CFC9;
-      color: #FFFFFF;
-      &::placeholder{
-        margin-left: 2rem;
-        font-size: 20px;
-        color: #A3B8A7;
-        text-align: right;
-        visibility: visible;
       }
     }
 

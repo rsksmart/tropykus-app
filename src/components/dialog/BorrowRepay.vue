@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="borrow-repay"> -->
     <v-dialog v-model="dialog" :content-class="isInBorrowMenu ? 'borrow-size' : 'withdraw-size'">
-      <v-card class="user-action" v-click-outside="onClickOutside" width="100%" height="84vh">
+      <v-card class="user-action" v-click-outside="onClickOutside" width="100%" height="88vh">
         <!-- <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
           <v-btn
               depressed
@@ -65,7 +65,7 @@
             {{ buttonLabel }}
           </v-btn>
         </v-row> -->
-        <v-row class="button ma-auto pt-3 d-flex justify-center justify-space-around">
+        <v-row class="button ma-auto d-flex justify-center justify-space-around">
           <v-btn
               depressed
               color="transparent"
@@ -83,11 +83,19 @@
             Pagar
           </v-btn>
         </v-row>
-        <div class="ma-auto container cualquiera">
-          <v-row class="d-flex ma-auto mb-2">
-            <img class="mr-7" height="42" :src="symbolImg" />
-            <h1>{{ info.underlyingSymbol }}</h1>
+        <div class="slider-container">
+          <v-row class="ma-0 mt-5">
+            <v-col cols="auto" class="px-0">
+              <v-img class="mr-2" width="32" height="32" :src="symbolImg" contain/>
+            </v-col>
+            <v-col>
+              <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
+            </v-col>
           </v-row>
+         <!-- v-row class="d-flex  mb-2">
+            <v-img class="mr-2" height="32" :src="symbolImg" contain/>
+            <h1>{{ info.underlyingSymbol }}</h1>
+          </v-row> < -->
           <template v-if="isInBorrowMenu">
             <v-row class="ma-auto d-flex" style="height:97%; width:100%;">
               <div class="d-flex flex-column justify-space-between" style="height:100%;width:40%;">
@@ -136,15 +144,31 @@
                 </div>
                 <div>
                   <p>Escribe la cantidad que vas a pedir prestada.</p>
-                  <form @submit.prevent>
-                    <input type="text" id="" name=""
+                  <v-row class="ma-0 input-box" v-bind:class="[ validAmount
+                    ? 'valid' : amount === null ? '' : 'invalid' ]">
+                    <v-col class="pa-0">
+                      <v-text-field type="number" v-model="amount" dark
+                                    :rules="[rules.marketCash, rules.liquidity,
+                                    rules.minBalance, rules.borrowBalance]"
+                                    class="input-text"
+                                    dense full-width single-line solo flat
+                                    height="62" @input="handleSlider"/>
+                    </v-col>
+                    <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
+                      <v-btn height="40" text color="#A3B8A7" @click="setMaxAmount">
+                        MÁX
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <!-- <form @submit.prevent> -->
+                    <!-- <input type="text" id="" name=""
                             maxlength="6"
                             v-model="borrowValue"
                             @input="handleSlider"
                             :rules="[rules.marketCash, rules.liquidity,
                             rules.minBalance, rules.borrowBalance]"
                             placeholder="MÁX">
-                  </form>
+                  </form> -->
                   <div>
                     <v-slider
                       hide-details
@@ -175,12 +199,12 @@
                 </div>
                 <v-btn  height="42" :color="buttonColor" :disabled="!validAmount"
                   @click="borrowOrRepay">
-                  Pedir prestado
+                  {{ buttonLabel }}
                 </v-btn>
               </div>
             </v-row>
           </template>
-          <template v-if="!isInBorrowMenu">
+          <template v-else>
             <div class="d-flex justify-space-between mb-4">
               <div class="d-flex flex-column">
                 <p class="title-modal-rate ma-0">
@@ -192,8 +216,8 @@
               <div class="d-flex">
                 <div>
                   <p>Debes pagar</p>
-                  <h2>{{ interestBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
-                  <p>{{ tokenInterestPrice | formatPrice }} USD</p>
+                  <h2>{{ info.totalBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
+                  <p>{{ tokenPrice | formatPrice }} USD</p>
                 </div>
                 <v-tooltip right>
                   <template v-slot:activator="{ on, attrs }">
@@ -207,6 +231,46 @@
               </div>
             </div>
             <v-divider class="mt-10"></v-divider>
+            <v-row class="ma-0 mt-10 input-box" v-bind:class="[ validAmount
+              ? 'valid' : amount === null ? '' : 'invalid' ]">
+              <v-col class="pa-0">
+                <v-text-field type="number" v-model="amount" dark
+                              :rules="[rules.marketCash, rules.liquidity,
+                              rules.minBalance, rules.borrowBalance]"
+                               class="input-text"
+                              dense full-width single-line solo flat
+                              height="62" @input="handleRepayBalance"/>
+              </v-col>
+              <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
+                <v-btn height="40" text color="#A3B8A7" @click="setMaxAmount">
+                  MÁX
+                </v-btn>
+              </v-col>
+            </v-row>
+            <div>
+              <v-slider
+                hide-details
+                min="1"
+                max="100"
+                color="#FFBD98"
+                track-color=" #062E24"
+                tick-size="4"
+                thumb-label
+                v-model="sliderValue"
+                @change="handleBalance"
+                class="mt-12">
+              </v-slider>
+              <div class="d-flex justify-space-between">
+                <p>1%</p>
+                <p>100%</p>
+              </div>
+            </div>
+            <div class="mt-16 pt-9">
+              <v-btn  height="42" :color="buttonColor" :disabled="!validAmount"
+                @click="borrowOrRepay" width="100%">
+                {{ buttonLabel }}
+              </v-btn>
+            </div>
           </template>
         </div>
       </v-card>
@@ -237,8 +301,9 @@ export default {
       markets: [],
       comptroller: null,
       riskValue: 100,
-      borrowValue: 0,
+      amount: 0,
       sliderValue: 0,
+      totalBalance: null,
       showModalConnectWallet: false,
       dialog: this.showModal,
       isInBorrowMenu: this.inBorrowMenu,
@@ -247,11 +312,11 @@ export default {
       rules: {
         liquidity: () => (this.isInBorrowMenu ? Number(this.amountAsUnderlyingPrice) <= Number(this
           .info.liquidity) : true) || 'No tienes suficiente colateral',
-        marketCash: () => (this.isInBorrowMenu ? Number(this.borrowValue) <= Number(this
+        marketCash: () => (this.isInBorrowMenu ? Number(this.amount) <= Number(this
           .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
-        minBalance: () => (!this.isInBorrowMenu ? Number(this.borrowValue) <= Number(this
+        minBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
           .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
-        borrowBalance: () => (!this.isInBorrowMenu ? Number(this.borrowValue) <= Number(this
+        borrowBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
           .info.borrowBalance) : true) || 'No debes tanto',
       },
       chartData: [
@@ -317,7 +382,7 @@ export default {
       return this.isInBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`;
     },
     amountAsUnderlyingPrice() {
-      return Number(this.borrowValue * this.info.underlyingPrice);
+      return Number(this.amount * this.info.underlyingPrice);
     },
     buttonColor() {
       return this.isInBorrowMenu ? '#FF9153' : '#E65D3D';
@@ -329,17 +394,14 @@ export default {
       return this.isInBorrowMenu ? (this.info.liquidity / this.info
         .underlyingPrice) : this.info.borrowBalance;
     },
-    tokenInterestPrice() {
-      return this.info.interestBalance * this.info.underlyingPrice;
-    },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;
     },
     borrowValueInUSD() {
-      return this.borrowValue * this.info.underlyingPrice;
+      return this.amount * this.info.underlyingPrice;
     },
     validAmount() {
-      return this.borrowValue > 0 && typeof this
+      return this.amount > 0 && typeof this
         .rules.liquidity() !== 'string' && typeof this
         .rules.marketCash() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
@@ -348,9 +410,9 @@ export default {
   },
   watch: {
     isInBorrowMenu() {
-      this.borrowValue = null;
+      this.amount = null;
     },
-    async borrowValue() {
+    async amount() {
       this.riskValue = await this.comptroller
         .hypotheticalHealthFactor(this.markets, this.chainId,
           this.address, this.borrowValueInUSD) * 100;
@@ -360,7 +422,7 @@ export default {
     getSymbolImg() {
       this.db
         .collection('markets-symbols')
-        .doc(this.info.symbol)
+        .doc(this.info.underlyingSymbol)
         .get()
         .then((response) => {
           this.symbolImg = response.data().imageURL;
@@ -376,27 +438,24 @@ export default {
     },
     borrowOrRepay() {
       this.$emit('action', {
-        amountIntended: this.borrowValue,
+        amountIntended: this.amount,
         action: this.isInBorrowMenu ? constants.USER_ACTION_BORROW : constants.USER_ACTION_REPAY,
       });
     },
     handleBalance() {
       const balance = (this.sliderValue * this.tokenBalance) / 100;
       const tempData = [...this.chartData];
-      this.borrowValue = balance;
+      this.amount = balance;
       tempData[2][1] = (balance * 100) / this.tokenBalance;
       this.chartData = tempData;
     },
     handleRepayBalance() {
-      const balance = (this.sliderValue * this.tokenBalance) / 100;
-      const tempData = [...this.chartData];
-      this.borrowValue = balance;
-      tempData[2][1] = (balance * 100) / this.tokenBalance;
-      this.chartData = tempData;
+      const value = (this.amount / this.info.totalBalance) * 100;
+      this.sliderValue = value;
     },
     handleSlider() {
-      const value = (this.borrowValue / this.tokenBalance) * 100;
-      this.sliderValue = value.toFixed(3);
+      const value = (this.amount / this.tokenBalance) * 100;
+      this.sliderValue = value;
       const balance = (this.sliderValue * this.tokenBalance) / 100;
       const tempData = [...this.chartData];
       tempData[2][1] = (balance * 100) / this.tokenBalance;
@@ -413,13 +472,21 @@ export default {
         }
       });
     },
+    setMaxAmount() {
+      if (this.inBorrowMenu) {
+        this.amount = this.tokenBalance;
+      } else {
+        this.amount = this.info.totalBalance;
+      }
+      this.handleSlider();
+    },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.getMarkets();
   },
   async mounted() {
-    if (this.info.symbol) this.getSymbolImg();
+    this.getSymbolImg();
     const tempData = [...this.chartData];
     const colateral = await this.comptroller.getAccountLiquidity(this.address);
     tempData[1][1] = (colateral * 100);
