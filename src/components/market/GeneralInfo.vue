@@ -109,6 +109,7 @@ export default {
         cash: null,
         rate: null,
         totalBorrows: null,
+        totalBalance: null,
         underlyingPrice: null,
         underlyingBalance: null,
         liquidity: null,
@@ -318,6 +319,12 @@ export default {
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
         this.info.borrowBalance = await this.market
           .borrowBalanceCurrent(this.walletAddress);
+        this.info.interestBalance = this.inBorrowMenu
+          ? await this.market.getDebtInterest(this.walletAddress)
+          : await this.market.getEarnings(this.walletAddress);
+        this.info.totalBalance = this.inBorrowMenu
+          ? this.info.borrowBalance
+          : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
       }
     },
     isCRbtc() {

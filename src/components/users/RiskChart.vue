@@ -1,6 +1,21 @@
 <template>
-  <v-card class="container" color="#013E2F">
-    <v-row class="ma-0">
+  <v-card class="container" color="#013E2F" elevation="0">
+    <div class="risk">
+      <div class="d-flex justify-center">
+        <v-img class="risk-img" width="40" height="40" :src="riskImage" />
+        <v-progress-circular class="risk-graph" :size="100" :width="15"
+                             :value="riskRate" :color="chartColor" />
+      </div>
+      <div>
+        <v-row class="risk-title ma-0">
+          <h3>{{ riskTitle }}</h3>
+        </v-row>
+        <v-row class="risk-description ma-0">
+          <p class="ma-0">{{ riskDescription }}</p>
+        </v-row>
+      </div>
+    </div>
+    <!-- <v-row class="ma-0">
       <v-col cols="5" class="d-flex justify-center">
         <v-img class="risk-img" width="40" height="40" :src="riskImage" />
         <v-progress-circular class="risk-graph" :size="100" :width="15"
@@ -14,54 +29,56 @@
           <p class="ma-0">{{ riskDescription }}</p>
         </v-row>
       </v-col>
-    </v-row>
+    </v-row> -->
   </v-card>
 </template>
 
 <script>
 import HappyFace from '@/assets/health/face-happy.png';
 import SeriousFace from '@/assets/health/face-serious.png';
-import WorryFace from '@/assets/health/face-worry.png';
+import SurpisedFace from '@/assets/health/face-surprised.png';
 import SadFace from '@/assets/health/face-sad.png';
 
 export default {
   name: 'RiskChart',
-  data() {
-    return {
-      riskRate: 30,
-    };
+  props: {
+    riskRate: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
     riskImage() {
       if (this.riskRate > 60 && this.riskRate <= 100) return HappyFace;
-      if (this.riskRate > 30 && this.riskRate <= 60) return SeriousFace;
-      if (this.riskRate > 0 && this.riskRate <= 30) return WorryFace;
+      if (this.riskRate > 40 && this.riskRate <= 60) return SeriousFace;
+      if (this.riskRate >= 0 && this.riskRate <= 40) return SurpisedFace;
       return SadFace;
     },
     riskTitle() {
-      if (this.riskRate > 60 && this.riskRate <= 100) return 'Riesgo mínimo';
-      if (this.riskRate > 30 && this.riskRate <= 60) return 'Riesgo medio';
-      if (this.riskRate > 0 && this.riskRate <= 30) return 'Riesgo alto';
-      return 'Garantías liquidadas';
+      if (this.riskRate === 100) return 'Sin riesgo';
+      if (this.riskRate > 60 && this.riskRate < 100) return 'Riesgo bajo';
+      if (this.riskRate > 40 && this.riskRate <= 60) return 'Riesgo medio';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return 'Riesgo alto';
+      return 'Escribe otro valor';
     },
     riskDescription() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
-        return 'Puedes seguir ahorrando y pidiendo prestado';
+        return 'No tienes riesgo de ser liquidado';
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return 'Puedes seguir ahorrando, pero ten cuidado con los montos que pides prestados';
+        return 'Podría ser liquidado tu colateral ten precaución';
       }
-      if (this.riskRate > 30 && this.riskRate <= 40) {
-        return 'Estàs muy cerca de ser liquidado. Puedes aumentar tus ahorros '
-            + 'o pagar todas tus deudas antes de que pierdas tus fondos.';
+      if (this.riskRate >= 0 && this.riskRate <= 40) {
+        return 'Es probable que pierdas tu colateral. Ten precaución';
       }
-      return 'Tus garantias ya no respaldan las deudas que tenias y has sido liquidado.';
+      return 'No es posible calcular el riesgo';
     },
     chartColor() {
-      if (this.riskRate > 60 && this.riskRate <= 100) return '#4CB163';
-      if (this.riskRate > 30 && this.riskRate <= 60) return '#FF9153';
-      if (this.riskRate > 0 && this.riskRate <= 30) return '#E65D3D';
-      return 'tranparent';
+      if (this.riskRate === 100) return 'transparent';
+      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
+      if (this.riskRate > 40 && this.riskRate <= 60) return '#FF9153';
+      if (this.riskRate > 0 && this.riskRate <= 40) return '#FF9153';
+      return 'transparent';
     },
   },
 };

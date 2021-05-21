@@ -127,6 +127,11 @@ export default class Market {
     return Number(await this.instance.callStatic.borrowBalanceCurrent(address)) / factor;
   }
 
+  async borrowBalanceInUSD(chainId, address) {
+    const price = await this.underlyingCurrentPrice(chainId);
+    return await this.borrowBalanceCurrent(address) * price;
+  }
+
   async exchangeRateCurrent() {
     return Number(await this.instance.callStatic.exchangeRateCurrent()) / factor;
   }

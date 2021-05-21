@@ -22,17 +22,21 @@
     font-size: 12px;
     color: #FFF;
   }
-  .risk-img {
-    position: absolute !important;
-    top: 35%;
+
+  .risk{
     display: flex;
-    justify-content: center;
-  }
-  .risk-graph {
-    position: relative !important;
-    top: 0;
-    display: flex;
-    justify-content: center;
+    .risk-img {
+      position: absolute !important;
+      top: 35%;
+      display: flex;
+      justify-content: center;
+    }
+    .risk-graph {
+      position: relative !important;
+      top: 0;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .theme--light.v-data-table {
