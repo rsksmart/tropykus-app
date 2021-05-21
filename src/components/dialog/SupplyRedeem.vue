@@ -63,7 +63,7 @@
                 </p>
               </v-col>
               <v-col cols="auto" class="pa-0 mt-1">
-                <v-tooltip right color="#52826E" :close-delay="10000">
+                <v-tooltip right color="#52826E">
                   <template v-slot:activator="{ on, attrs }">
                     <v-img v-bind="attrs" v-on="on" width="16" height="16"
                            src="@/assets/icons/info.svg" contain/>
