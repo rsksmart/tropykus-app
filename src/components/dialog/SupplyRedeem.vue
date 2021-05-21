@@ -174,11 +174,11 @@
           </v-col>
           <v-col class="pa-0">
             <p class="p6-reading-values">
-              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
+              {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
             </p>
           </v-col>
           <v-col class="pa-0">
-            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
+            <p class="p3-USD-values">{{ possibleEarningsUSD | formatPrice }} USD</p>
           </v-col>
         </v-row>
         <v-row class="ma-0 mt-3">
@@ -187,11 +187,11 @@
           </v-col>
           <v-col class="pa-0">
             <p class="p6-reading-values">
-              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
+              {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
             </p>
           </v-col>
           <v-col class="pa-0">
-            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
+            <p class="p3-USD-values">{{ possibleEarningsPlusDepositUSD | formatPrice }} USD</p>
           </v-col>
         </v-row>
       </template>
@@ -301,6 +301,19 @@ export default {
         .rules.leverage() !== 'string' && typeof this
         .rules.supplyBalance() !== 'string' && typeof this
         .rules.marketCash() !== 'string';
+    },
+    possibleEarnings() {
+      return (this.amount * (this.info.rate / 100)) + (this.info.interestBalance);
+    },
+    possibleEarningsUSD() {
+      return this.possibleEarnings * this.info.underlyingPrice;
+    },
+    possibleEarningsPlusDeposit() {
+      return this.possibleEarnings > this.info.interestBalance ? +this.info
+        .supplyBalance + +this.amount + +this.possibleEarnings : this.info.supplyBalance;
+    },
+    possibleEarningsPlusDepositUSD() {
+      return this.possibleEarningsPlusDeposit * this.info.underlyingPrice;
     },
   },
   watch: {

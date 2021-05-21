@@ -112,6 +112,7 @@ export default {
         underlyingPrice: null,
         underlyingBalance: null,
         liquidity: null,
+        interestBalance: null,
         supplyBalance: null,
         borrowBalance: null,
       },
@@ -309,6 +310,9 @@ export default {
       if (this.walletAddress) {
         this.info.underlyingBalance = await this.market
           .balanceOfUnderlyingInWallet(this.account);
+        this.info.interestBalance = this.inBorrowMenu
+          ? await this.market.getDebtInterest(this.walletAddress)
+          : await this.market.getEarnings(this.walletAddress);
         this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
