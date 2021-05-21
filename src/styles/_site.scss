@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 div, p, h1, h2, h3, h4, h5, h6, body, button {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-style: normal;
 }
+
+
 
 .v-btn {
   text-transform: none !important;
@@ -45,4 +47,73 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 
 .redish {
   color: #fff !important;
+}
+
+.h2-heading {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 34px;
+  color: #FFFFFF;
+}
+
+.h3-sections-heading {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFF;
+}
+
+.p1-descriptions {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 15px;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.p2-reading-values {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.p3-USD-values{
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.p5-feedback {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px !important;
+  line-height: 10px !important;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.p6-reading-values {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.b1-main {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 22px;
+  color: #FFFFFF;
 }

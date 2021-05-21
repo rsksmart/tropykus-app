@@ -17,14 +17,14 @@ require('./filters');
 
 sync(store, router);
 
-const web3 = new ethers.providers.JsonRpcProvider('https://public-node.testnet.rsk.co');
+const web3 = new ethers.providers.JsonRpcProvider(process.env.VUE_APP_RSK_NODE);
 const format = web3.formatter.formats;
 format.receipt.root = format.receipt.logsBloom;
 Object.assign(web3.formatter, { format });
 // eslint-disable-next-line no-multi-assign
 Vue.prototype.$web3 = Vue.web3 = web3;
 
-const web3Ws = new ethers.providers.JsonRpcProvider(process.env.VUE_APP_RSK_NODE);
+const web3Ws = new ethers.providers.WebSocketProvider(process.env.VUE_APP_WS_PROVIDER);
 const formatWs = web3Ws.formatter.formats;
 formatWs.receipt.root = formatWs.receipt.logsBloom;
 Object.assign(web3Ws.formatter, { format: formatWs });

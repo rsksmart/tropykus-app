@@ -1,14 +1,18 @@
 .left-bar {
   position: absolute;
-  top: 20%;
+  top: 112px;
   background-color: #023f30;
   width: 80px;
-  height: 512px;
+  height: 640px;
   border-radius: 0 10px 10px 0;
+
+  .custom-spacer {
+    height: 120px;
+  }
 
   .v-btn {
     background-color: transparent !important;
-    &:focus, &:visited, &:active, &:hover {
+    &:focus, &:visited, &:active, &:hover, &.selected {
       background-color: rgba(163, 197, 171, 0.5) !important;
     }
   }

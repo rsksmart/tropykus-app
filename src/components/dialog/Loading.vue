@@ -6,7 +6,7 @@
           <v-progress-circular indeterminate color="#ff9153" :width="10" :size="90"/>
         </v-row>
         <v-row class="ma-0 mt-8 mx-3 d-flex justify-center align-center">
-          <h2 class="text-center">Esperando a que las transacciones se minen</h2>
+          <h2 class="text-center">Confirmando la transacción en la red</h2>
         </v-row>
       </div>
     </v-card>

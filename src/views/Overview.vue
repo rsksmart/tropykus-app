@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container overview">
-      <v-row class="my-5 ma-0 pl-16">
-        <h1>Información de los mercados</h1>
+      <v-row class="ma-0 mt-5 mb-5 pl-12 ml-12">
+        <h3 class="text-left h3-sections-heading">Información de los mercados</h3>
       </v-row>
       <v-row class="d-flex justify-center">
         <div class="container">
@@ -24,8 +24,8 @@
           </v-row>
         </div>
       </v-row>
-      <v-row class="mt-8 mb-5 pl-16">
-        <h2>Todos los mercados</h2>
+      <v-row class="ma-0 mt-5 mb-5 pl-12 ml-12">
+        <h3 class="text-left h3-sections-heading">Todos los mercados</h3>
       </v-row>
       <v-row class="d-flex justify-center mb-10">
         <total-markets :marketsData="marketsData"/>

@@ -6,8 +6,18 @@ export const USER_ACTION_BORROW = 'USER_ACTION_BORROW';
 export const USER_ACTION_REDEEM = 'USER_ACTION_REDEEM';
 export const USER_ACTION_REPAY = 'USER_ACTION_REPAY';
 
+export const RBTC_SYMBOL = 'tRBTC';
+export const ROUTE_NAMES = {
+  BALANCE: 'Balance',
+  SAVINGS: 'Supply',
+  DEBTS: 'Borrow',
+  TUTORIALS: 'Tutorials',
+  OVERVIEW: 'Overview',
+};
+
 // actions
 export const SESSION_CONNECT_WEB3 = 'SESSION_CONNECT_WEB3';
+export const SESSION_DISCONNECT_WALLET = 'SESSION_DISCONNECT_WALLET';
 export const SESSION_GET_CHAIN_ID = 'SESSION_GET_CHAIN_ID';
 
 // mutations

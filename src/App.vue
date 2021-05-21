@@ -1,8 +1,8 @@
 <template>
   <v-app class="app">
-    <navbar/>
+    <navbar :marketAddresses="markets" />
     <left-bar />
-    <router-view/>
+    <router-view />
     <v-dialog v-model="btcToRbtcDialog" width="350"
               overlay-opacity="0.8" overlay-color="#000">
       <v-card class="modal-convert-btn container" color="#013E2F">
@@ -13,8 +13,8 @@
         </v-row>
         <v-row class="mx-0 my-5 d-flex justify-center">
           <p class="text-center ma-0">
-            Ten en cuenta que las comisones para realizar cualquier transacción deben ser pagadas en
-            RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropykus.
+            Ten en cuenta que las comisiones para realizar cualquier transacción deben ser
+            pagadas en RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropykus.
           </p>
         </v-row>
         <v-row class="mx-0 mt-8 mb-6 d-flex justify-center">
@@ -35,6 +35,10 @@
             </v-btn>
           </v-col>
         </v-row>
+        <v-row class="ma-0 d-flex justify-center">
+          <v-checkbox hide-details dark v-model="dontShowWelcomeModal"
+            label="No volver a mostrar" class="mt-0" />
+        </v-row>
       </v-card>
     </v-dialog>
   </v-app>
@@ -44,12 +48,16 @@
 import { mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
+import { Comptroller } from '@/middleware';
 
 export default {
   name: 'App',
   data() {
     return {
       btcToRbtcDialog: true,
+      comptroller: null,
+      markets: [],
+      dontShowWelcomeModal: false,
     };
   },
   computed: {
@@ -62,6 +70,9 @@ export default {
       this.$router.push({ name: 'BtcToRbtc' });
       this.btcToRbtcDialog = false;
     },
+    async loadMarkets() {
+      this.markets = await this.comptroller.allMarkets;
+    },
   },
   watch: {
     chainId(val) {
@@ -69,6 +80,18 @@ export default {
         this.$forceUpdate();
       }
     },
+    dontShowWelcomeModal() {
+      localStorage.flag = !this.dontShowWelcomeModal;
+    },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.loadMarkets();
+  },
+  mounted() {
+    if (localStorage.flag) {
+      this.btcToRbtcDialog = localStorage.flag === 'true';
+    }
   },
   components: {
     Navbar,
