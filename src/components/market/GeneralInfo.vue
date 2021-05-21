@@ -58,7 +58,8 @@
     </template>
     <template v-if="supplyBorrowDialog">
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
-                 @action="menuAction" :info="info" @closed="supplyBorrowDialog = false"
+                 @action="menuAction" :info="{ market, ...info }"
+                 @closed="supplyBorrowDialog = false"
                  :inBorrowMenu="inBorrowMenu"/>
     </template>
     <template v-if="waitingDialog">

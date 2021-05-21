@@ -89,7 +89,7 @@
     </v-row>
     <template v-if="supplyRepayDialog">
       <component :is="supplyRepayComponent" :showModal="supplyRepayDialog"
-                 :inBorrowMenu="buttonAction" :info="info" @action="menuAction"
+                 :inBorrowMenu="buttonAction" :info="{ market, ...info }" @action="menuAction"
                  @closed="supplyRepayDialog = false"/>
     </template>
     <template v-if="waitingDialog">
@@ -157,6 +157,7 @@ export default {
       earnings: null,
       interest: null,
       buttonAction: null,
+      market: null,
     };
   },
   props: {
@@ -218,17 +219,6 @@ export default {
         this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
           : new CToken(this.marketAddress, this.chainId);
         this.updateMarketInfo();
-        // console.log('Get events');
-        // return this.inBorrowMenu ? this.market
-        // .eventsInterest('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa')
-        //   : this.market.eventsEarnings('0x9c4aAE754FF8c963966B26CE8206EF0271c614aa');
-        // })
-        // .then((res) => {
-        //   if (this.inBorrowMenu) {
-        //     this.interest = res;
-        //   } else {
-        //     this.earnings = res;
-        //   }
       })
       .catch(console.error);
   },

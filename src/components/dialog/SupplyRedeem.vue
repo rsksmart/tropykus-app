@@ -1,66 +1,218 @@
 <template>
-  <v-dialog v-model="dialog" width="350" >
+  <v-dialog v-model="dialog" width="680" overlay-color="#000" overlay-opacity="0.8">
     <v-card class="user-action" v-click-outside="onClickOutside">
       <v-row class="button ma-0 pt-3 d-flex justify-center justify-space-around">
         <v-btn
-            depressed
-            color="transparent"
-            @click="inSupplyMenu = true"
-            :class="inSupplyMenu ? 'button-save' : 'button-save-click'"
+          height="80"
+          depressed
+          color="transparent"
+          @click="inSupplyMenu = true"
+          :class="inSupplyMenu ? 'button-save' : 'button-save-click'"
         >
           Depositar
         </v-btn>
         <v-btn
-            depressed
-            color="transparent"
-            @click="inSupplyMenu = false"
-            :class="inSupplyMenu ? 'button-withdraw' : 'button-withdraw-click'"
+          height="80"
+          depressed
+          color="transparent"
+          @click="inSupplyMenu = false"
+          :class="inSupplyMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
           Retirar
         </v-btn>
       </v-row>
-      <v-row class="d-flex justify-center ma-0 ">
-        <div class="modal-container mt-6 ml-6">
-          <v-img :src="actionIcon" class="my-3" :width="actionIconWidth"
-                 alt="action icon" contain />
-          <p class="title-modal-rate ma-0">
-            {{ actionBalance }}
-          </p>
-          <p class="ma-0 p-bold p-name-data">
-            {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
-          </p>
-          <p class="ma-0 mb-6 p-italic">
-            ={{ tokenPrice | formatPrice }} USD
-          </p>
-        </div>
-        <v-spacer></v-spacer>
-        <div class="d-flex flex-column modal-container-img mr-6 mt-6">
-          <div :class="inSupplyMenu ? 'modal-icon' : 'modal-icon-click'">
-            <v-img class="mr-2" width="42" height="42" :src="symbolImg" contain />
-            <div>
-              <p class="ma-0 p-bold p-name mt-2">
-                1 {{ info.underlyingSymbol }}
-              </p>
-              <p class="ma-0 p-italic">= {{ info.underlyingPrice | formatPrice }} USD</p>
-            </div>
-          </div>
-          <template v-if="inSupplyMenu">
-            <p class="ma-0 mb-1">Rendimiento Anual</p>
-            <p class="ma-0 modal-rate">{{ info.rate }} %</p>
-          </template>
-        </div>
+      <v-row class="ma-0 mt-3">
+        <v-col cols="auto">
+          <v-img class="mr-2" width="32" height="32" :src="symbolImg" contain/>
+        </v-col>
+        <v-col>
+          <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
+        </v-col>
       </v-row>
-      <v-row class="d-flex align-center flex-column ma-0">
-        <div class="modal-line"/>
-        <div class="d-flex justify-start modal-contain-subtitle">
-          <p class="ma-0 mt-5 mb-2">{{ actionDescription }}</p>
-        </div>
-        <v-text-field placeholder="Escribe el monto" type="number"
-            v-model="amount" solo dense
-            :rules="[rules.leverage, rules.minBalance, rules.marketCash, rules.supplyBalance]" />
-        <v-btn class="modal-button mb-6" height="42" :color="buttonColor"
+      <v-row class="d-flex justify-center ma-0 ">
+        <v-col cols="6">
+          <v-row class="ma-0">
+            <v-col class="pa-0 d-flex align-center">
+              <p class="p1-descriptions">
+                {{ actionBalance }}
+              </p>
+            </v-col>
+            <v-col cols="auto" class="pa-0">
+              <v-btn icon @click="refresh">
+                <v-img width="16" height="16" src="@/assets/icons/refresh.svg" contain/>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row class="ma-0">
+            <p class="p2-reading-values">
+              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}
+            </p>
+          </v-row>
+          <v-row class="ma-0">
+            <p class="p3-USD-values">
+              {{ tokenPrice | formatPrice }} USD
+            </p>
+          </v-row>
+        </v-col>
+        <v-col cols="6">
+          <template v-if="inSupplyMenu">
+            <v-row class="ma-0">
+              <v-col class="pa-0 d-flex justify-end">
+                <p class="p1-descriptions">
+                  Tasa de ganancia <br> anual dinámica actual
+                </p>
+              </v-col>
+              <v-col cols="auto" class="pa-0">
+                <v-tooltip right color="#52826E">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-img v-bind="attrs" v-on="on" width="16" height="16"
+                           src="@/assets/icons/info.svg" contain/>
+                  </template>
+                  <span class="p5-feedback">
+                    La tasa de interés varía cuando<br>
+                    otros usuarios realizan<br>
+                    transacciones en el protocolo.
+                  </span>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+            <v-row class="ma-0 d-flex justify-end mr-15 pr-5">
+              <p class="p2-reading-values">
+                {{ info.rate }} %
+              </p>
+            </v-row>
+          </template>
+        </v-col>
+      </v-row>
+      <v-divider color="#FFF" class="my-3"/>
+      <v-row class="ma-0 mb-3">
+        <p class="p1-descriptions">{{ actionDescription }}</p>
+      </v-row>
+      <v-row class="ma-0 input-box" v-bind:class="[ validAmount
+      ? 'valid' : amount === null ? '' : 'invalid' ]">
+        <v-col class="pa-0">
+          <v-text-field type="number" v-model="amount" dark
+                        :rules="[rules.leverage, rules.minBalance, rules
+                        .marketCash, rules.supplyBalance]" class="input-text"
+                        dense full-width single-line solo flat
+                        height="62" @change="setPercentageSlider"/>
+        </v-col>
+        <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
+          <v-btn height="40" text color="#A3B8A7" @click="setMaxAmount">
+            MÁX
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row class="ma-0 mt-3">
+        <v-slider
+          hide-details
+          min="1"
+          max="100"
+          color="#4CB163"
+          track-color=" #4CB163"
+          tick-size="4"
+          thumb-label
+          v-model="sliderAmountPercentage" class="mt-6" @click="setAmount" />
+      </v-row>
+      <v-row class="ma-0">
+        <v-col class="pa-0 d-flex justify-start">
+          <span class="p1-descriptions">1%</span>
+        </v-col>
+        <v-col class="pa-0 d-flex justify-end">
+          <span class="p1-descriptions">100%</span>
+        </v-col>
+      </v-row>
+<!--      <template v-if="inSupplyMenu">-->
+<!--        <v-divider color="#FFF" class="my-3"/>-->
+<!--        <v-row class="ma-0">-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p1-descriptions">-->
+<!--              Mira cuanto puedes ganar con tu depósito en el periodo de tiempo que elijas-->
+<!--            </p>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0" cols="auto">-->
+<!--            <v-tooltip right color="#52826E">-->
+<!--              <template v-slot:activator="{ on, attrs }">-->
+<!--                <v-img v-bind="attrs" v-on="on" width="16" height="16"-->
+<!--                       src="@/assets/icons/info.svg" contain/>-->
+<!--              </template>-->
+<!--              <span class="p5-feedback">-->
+<!--                Esta calculadora solo simula las<br>-->
+<!--                ganancias que se podrían obtener en<br>-->
+<!--                cierto periodo de tiempo. Las cifras<br>-->
+<!--                mostradas varian segùn la tasa anual<br>-->
+<!--                de ganancia dinámica y los precios de<br>-->
+<!--                las criptomonedas, por lo tanto no es<br>-->
+<!--                una garantia de las gananicas futuras.-->
+<!--              </span>-->
+<!--            </v-tooltip>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--        <v-row class="ma-0 mt-3">-->
+<!--          <v-slider-->
+<!--            hide-details-->
+<!--            min="1"-->
+<!--            max="5"-->
+<!--            color="#4CB163"-->
+<!--            track-color=" #4CB163"-->
+<!--            tick-size="4"-->
+<!--            thumb-label-->
+<!--            v-model="sliderYear"/>-->
+<!--        </v-row>-->
+<!--        <v-row class="ma-0">-->
+<!--          <v-col class="pa-0 d-flex justify-start">-->
+<!--            <span class="p1-descriptions">1 año</span>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0 d-flex justify-end">-->
+<!--            <span class="p1-descriptions">5 años</span>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--        <v-row class="ma-0 mt-6">-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p1-descriptions">Total ganancias</p>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p6-reading-values">-->
+<!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
+<!--            </p>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--        <v-row class="ma-0 mt-3">-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p1-descriptions">Total ganancias + depósito</p>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p6-reading-values">-->
+<!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
+<!--            </p>-->
+<!--          </v-col>-->
+<!--          <v-col class="pa-0">-->
+<!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--      </template>-->
+<!--      <template v-else>-->
+<!--        <v-divider color="#FFF" class="my-3"/>-->
+<!--        <v-row class="ma-0 mb-6">-->
+<!--          <p class="p1-descriptions">-->
+<!--            Si no quieres que tus fondos sean enviados desde Tropykus a la>-->
+<!--            billetera desde la <br>-->
+<!--            que estás conectado, escribe la dirección RSK en donde quieres-->
+<!--            retirar tus fondos.-->
+<!--          </p>-->
+<!--        </v-row>-->
+<!--        <v-row class="ma-0 simple-input">-->
+<!--          <v-text-field v-model="rskAddress" type="text" solo dense flat dark-->
+<!--                        label="Escribe la dirección RSK (Opcional)"/>-->
+<!--        </v-row>-->
+<!--      </template>-->
+      <v-row class="ma-0 mt-6">
+        <v-btn class="button" height="42" color="#4CB163" block
                width="300" :disabled="!validAmount" @click="supplyOrRedeem">
-          {{ buttonLabel }}
+          <span class="b1-main">{{ buttonLabel }}</span>
         </v-btn>
       </v-row>
     </v-card>
@@ -71,25 +223,33 @@
 import * as constants from '@/store/constants';
 import WalletIcon from '@/assets/icons/wallet.svg';
 import PigIcon from '@/assets/icons/pig.svg';
+import { mapState } from 'vuex';
 
 export default {
   name: 'SupplyRedeem',
   data() {
     return {
+      rskAddress: null,
+      sliderAmountPercentage: 0,
+      sliderYear: 0,
       showModalConnectWallet: false,
       dialog: this.showModal,
       inSupplyMenu: this.inBorrowMenu,
       amount: null,
       db: this.$firebase.firestore(),
       symbolImg: null,
+      data: {
+        underlyingBalance: null,
+        supplyBalance: null,
+      },
       rules: {
         leverage: () => (this.inSupplyMenu ? this.info.borrowBalance <= 0
           : true) || 'No puedes depositar en este mercado, tienes una deuda activa.'
-          + 'Paga tu deuda e intenta más tarde.',
+          + ' Paga tu deuda e intenta más tarde.',
         minBalance: () => (this.inSupplyMenu ? Number(this.amount) <= Number(this
-          .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
+          .data.underlyingBalance) : true) || 'No tienes fondos suficientes',
         supplyBalance: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
-          .info.supplyBalance) : true) || 'No tienes suficiente depositado',
+          .data.supplyBalance) : true) || 'No tienes suficiente depositado',
         marketCash: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
           .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
       },
@@ -110,27 +270,25 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.walletAddress,
+      account: (state) => state.Session.account,
+    }),
     actionIcon() {
       return this.inSupplyMenu ? WalletIcon : PigIcon;
     },
-    actionIconWidth() {
-      return this.inSupplyMenu ? 42 : 50;
-    },
     actionBalance() {
-      return this.inSupplyMenu ? 'En tu billetera:' : 'Tienes depositado:';
+      return this.inSupplyMenu ? 'Tienes en tu billetera:' : 'Tienes depositado:';
     },
     actionDescription() {
       const desc = 'Escribe la cantidad que vas a';
       return this.inSupplyMenu ? `${desc} depositar` : `${desc} retirar`;
     },
-    buttonColor() {
-      return this.inSupplyMenu ? '#4CB163' : '#51C1AF';
-    },
     buttonLabel() {
       return this.inSupplyMenu ? 'Depositar' : 'Retirar';
     },
     tokenBalance() {
-      return this.inSupplyMenu ? this.info.underlyingBalance : this.info.supplyBalance;
+      return this.inSupplyMenu ? this.data.underlyingBalance : this.data.supplyBalance;
     },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;
@@ -146,13 +304,15 @@ export default {
   watch: {
     inSupplyMenu() {
       this.amount = null;
+      this.sliderAmountPercentage = 0;
+      this.sliderYear = 0;
     },
   },
   methods: {
     getSymbolImg() {
       this.db
         .collection('markets-symbols')
-        .doc(this.info.symbol)
+        .doc(this.info.underlyingSymbol)
         .get()
         .then((response) => {
           this.symbolImg = response.data().imageURL;
@@ -172,9 +332,31 @@ export default {
         action: this.inSupplyMenu ? constants.USER_ACTION_MINT : constants.USER_ACTION_REDEEM,
       });
     },
+    async refresh() {
+      this.data.underlyingBalance = await this.info.market
+        .balanceOfUnderlyingInWallet(this.account);
+      this.data.supplyBalance = await this.info.market
+        .currentBalanceOfCTokenInUnderlying(this.walletAddress);
+    },
+    setMaxAmount() {
+      if (this.inSupplyMenu) {
+        this.amount = this.data.underlyingBalance;
+      } else {
+        this.amount = this.info.cash > this.data.supplyBalance
+          ? this.data.supplyBalance : this.info.cash;
+      }
+      this.setPercentageSlider();
+    },
+    setAmount() {
+      this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
+    },
+    setPercentageSlider() {
+      this.sliderAmountPercentage = (this.amount * 100) / this.tokenBalance;
+    },
   },
   created() {
     this.getSymbolImg();
+    this.refresh();
   },
 };
 </script>
