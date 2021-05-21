@@ -29,8 +29,8 @@
           <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center ma-0 ">
-        <v-col cols="6">
+      <v-row class="ma-0 d-flex justify-space-between">
+        <v-col cols="6" class="px-0">
           <v-row class="ma-0">
             <v-col class="pa-0 d-flex align-center">
               <p class="p1-descriptions">
@@ -54,10 +54,10 @@
             </p>
           </v-row>
         </v-col>
-        <v-col cols="6">
-          <template v-if="inSupplyMenu">
+        <template v-if="inSupplyMenu" class="d-flex justify-end">
+          <v-col cols="4" class="px-0">
             <v-row class="ma-0">
-              <v-col class="pa-0 d-flex justify-end">
+              <v-col class="pa-0">
                 <p class="p1-descriptions">
                   Tasa de ganancia <br> anual dinámica actual
                 </p>
@@ -76,13 +76,13 @@
                 </v-tooltip>
               </v-col>
             </v-row>
-            <v-row class="ma-0 d-flex justify-end mr-15 pr-5">
+            <v-row class="ma-0">
               <p class="p2-reading-values">
                 {{ info.rate }} %
               </p>
             </v-row>
-          </template>
-        </v-col>
+          </v-col>
+        </template>
       </v-row>
       <v-divider color="#FFF" class="my-3"/>
       <v-row class="ma-0 mb-3">
@@ -112,7 +112,7 @@
           track-color=" #4CB163"
           tick-size="4"
           thumb-label
-          v-model="sliderAmountPercentage" class="mt-6" @click="setAmount" />
+          v-model="sliderAmountPercentage" class="mt-6" @click="setAmount"/>
       </v-row>
       <v-row class="ma-0">
         <v-col class="pa-0 d-flex justify-start">
@@ -122,93 +122,94 @@
           <span class="p1-descriptions">100%</span>
         </v-col>
       </v-row>
-<!--      <template v-if="inSupplyMenu">-->
-<!--        <v-divider color="#FFF" class="my-3"/>-->
-<!--        <v-row class="ma-0">-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p1-descriptions">-->
-<!--              Mira cuanto puedes ganar con tu depósito en el periodo de tiempo que elijas-->
-<!--            </p>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0" cols="auto">-->
-<!--            <v-tooltip right color="#52826E">-->
-<!--              <template v-slot:activator="{ on, attrs }">-->
-<!--                <v-img v-bind="attrs" v-on="on" width="16" height="16"-->
-<!--                       src="@/assets/icons/info.svg" contain/>-->
-<!--              </template>-->
-<!--              <span class="p5-feedback">-->
-<!--                Esta calculadora solo simula las<br>-->
-<!--                ganancias que se podrían obtener en<br>-->
-<!--                cierto periodo de tiempo. Las cifras<br>-->
-<!--                mostradas varian segùn la tasa anual<br>-->
-<!--                de ganancia dinámica y los precios de<br>-->
-<!--                las criptomonedas, por lo tanto no es<br>-->
-<!--                una garantia de las gananicas futuras.-->
-<!--              </span>-->
-<!--            </v-tooltip>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--        <v-row class="ma-0 mt-3">-->
-<!--          <v-slider-->
-<!--            hide-details-->
-<!--            min="1"-->
-<!--            max="5"-->
-<!--            color="#4CB163"-->
-<!--            track-color=" #4CB163"-->
-<!--            tick-size="4"-->
-<!--            thumb-label-->
-<!--            v-model="sliderYear"/>-->
-<!--        </v-row>-->
-<!--        <v-row class="ma-0">-->
-<!--          <v-col class="pa-0 d-flex justify-start">-->
-<!--            <span class="p1-descriptions">1 año</span>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0 d-flex justify-end">-->
-<!--            <span class="p1-descriptions">5 años</span>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--        <v-row class="ma-0 mt-6">-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p1-descriptions">Total ganancias</p>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p6-reading-values">-->
-<!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
-<!--            </p>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--        <v-row class="ma-0 mt-3">-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p1-descriptions">Total ganancias + depósito</p>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p6-reading-values">-->
-<!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
-<!--            </p>-->
-<!--          </v-col>-->
-<!--          <v-col class="pa-0">-->
-<!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--      </template>-->
-<!--      <template v-else>-->
-<!--        <v-divider color="#FFF" class="my-3"/>-->
-<!--        <v-row class="ma-0 mb-6">-->
-<!--          <p class="p1-descriptions">-->
-<!--            Si no quieres que tus fondos sean enviados desde Tropykus a la>-->
-<!--            billetera desde la <br>-->
-<!--            que estás conectado, escribe la dirección RSK en donde quieres-->
-<!--            retirar tus fondos.-->
-<!--          </p>-->
-<!--        </v-row>-->
-<!--        <v-row class="ma-0 simple-input">-->
-<!--          <v-text-field v-model="rskAddress" type="text" solo dense flat dark-->
-<!--                        label="Escribe la dirección RSK (Opcional)"/>-->
-<!--        </v-row>-->
-<!--      </template>-->
+      <!--      <template v-if="inSupplyMenu">-->
+      <!--        <v-divider color="#FFF" class="my-3"/>-->
+      <!--        <v-row class="ma-0">-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p1-descriptions">-->
+      <!--              Mira cuanto puedes ganar con tu depósito en el periodo-->
+      <!--              de tiempo que elijas-->
+      <!--            </p>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0" cols="auto">-->
+      <!--            <v-tooltip right color="#52826E">-->
+      <!--              <template v-slot:activator="{ on, attrs }">-->
+      <!--                <v-img v-bind="attrs" v-on="on" width="16" height="16"-->
+      <!--                       src="@/assets/icons/info.svg" contain/>-->
+      <!--              </template>-->
+      <!--              <span class="p5-feedback">-->
+      <!--                Esta calculadora solo simula las<br>-->
+      <!--                ganancias que se podrían obtener en<br>-->
+      <!--                cierto periodo de tiempo. Las cifras<br>-->
+      <!--                mostradas varian segùn la tasa anual<br>-->
+      <!--                de ganancia dinámica y los precios de<br>-->
+      <!--                las criptomonedas, por lo tanto no es<br>-->
+      <!--                una garantia de las gananicas futuras.-->
+      <!--              </span>-->
+      <!--            </v-tooltip>-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--        <v-row class="ma-0 mt-3">-->
+      <!--          <v-slider-->
+      <!--            hide-details-->
+      <!--            min="1"-->
+      <!--            max="5"-->
+      <!--            color="#4CB163"-->
+      <!--            track-color=" #4CB163"-->
+      <!--            tick-size="4"-->
+      <!--            thumb-label-->
+      <!--            v-model="sliderYear"/>-->
+      <!--        </v-row>-->
+      <!--        <v-row class="ma-0">-->
+      <!--          <v-col class="pa-0 d-flex justify-start">-->
+      <!--            <span class="p1-descriptions">1 año</span>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0 d-flex justify-end">-->
+      <!--            <span class="p1-descriptions">5 años</span>-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--        <v-row class="ma-0 mt-6">-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p1-descriptions">Total ganancias</p>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p6-reading-values">-->
+      <!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
+      <!--            </p>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--        <v-row class="ma-0 mt-3">-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p1-descriptions">Total ganancias + depósito</p>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p6-reading-values">-->
+      <!--              {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}-->
+      <!--            </p>-->
+      <!--          </v-col>-->
+      <!--          <v-col class="pa-0">-->
+      <!--            <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--      </template>-->
+      <!--      <template v-else>-->
+      <!--        <v-divider color="#FFF" class="my-3"/>-->
+      <!--        <v-row class="ma-0 mb-6">-->
+      <!--          <p class="p1-descriptions">-->
+      <!--            Si no quieres que tus fondos sean enviados desde Tropykus a la>-->
+      <!--            billetera desde la <br>-->
+      <!--            que estás conectado, escribe la dirección RSK en donde quieres-->
+      <!--            retirar tus fondos.-->
+      <!--          </p>-->
+      <!--        </v-row>-->
+      <!--        <v-row class="ma-0 simple-input">-->
+      <!--          <v-text-field v-model="rskAddress" type="text" solo dense flat dark-->
+      <!--                        label="Escribe la dirección RSK (Opcional)"/>-->
+      <!--        </v-row>-->
+      <!--      </template>-->
       <v-row class="ma-0 mt-6">
         <v-btn class="button" height="42" color="#4CB163" block
                width="300" :disabled="!validAmount" @click="supplyOrRedeem">
