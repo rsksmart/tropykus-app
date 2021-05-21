@@ -95,9 +95,10 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 .p5-feedback {
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 13px;
+  font-size: 12px !important;
+  line-height: 10px !important;
   color: #FFFFFF;
+  margin: 0 !important;
 }
 
 .p6-reading-values {
