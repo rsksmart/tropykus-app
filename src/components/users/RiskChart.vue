@@ -36,7 +36,7 @@
 <script>
 import HappyFace from '@/assets/health/face-happy.png';
 import SeriousFace from '@/assets/health/face-serious.png';
-import WorryFace from '@/assets/health/face-worry.png';
+import SurpisedFace from '@/assets/health/face-surprised.png';
 import SadFace from '@/assets/health/face-sad.png';
 
 export default {
@@ -51,7 +51,7 @@ export default {
     riskImage() {
       if (this.riskRate > 60 && this.riskRate <= 100) return HappyFace;
       if (this.riskRate > 40 && this.riskRate <= 60) return SeriousFace;
-      if (this.riskRate >= 0 && this.riskRate <= 40) return WorryFace;
+      if (this.riskRate >= 0 && this.riskRate <= 40) return SurpisedFace;
       return SadFace;
     },
     riskTitle() {
@@ -75,7 +75,9 @@ export default {
     },
     chartColor() {
       if (this.riskRate === 100) return 'transparent';
-      if (this.riskRate < 100 && this.riskRate > 0) return '#FF9153';
+      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
+      if (this.riskRate > 40 && this.riskRate <= 60) return '#FF9153';
+      if (this.riskRate > 0 && this.riskRate <= 40) return '#FF9153';
       return 'transparent';
     },
   },
