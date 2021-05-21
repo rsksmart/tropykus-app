@@ -1,6 +1,6 @@
 .user-action {
   background-color: #013e2f !important;
-  padding: 45px 70px 70px 70px;
+  padding: 25px 65px 50px 65px;
 
   .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
     background-color: #405A50 !important;
@@ -38,7 +38,7 @@
   }
 
   .custom-spacer {
-    height: 170px;
+    height: 160px;
   }
 
   .input-box {
@@ -76,7 +76,8 @@
 
     .v-messages__message {
       color: #FFF !important;
-      line-height: 13px !important;
+      font-size: 10px !important;
+      line-height: 11px !important;
     }
   }
 

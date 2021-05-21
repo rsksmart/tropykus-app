@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="680" overlay-color="#000" overlay-opacity="0.8">
+  <v-dialog v-model="dialog" width="600" overlay-color="#000" overlay-opacity="0.8">
     <v-card class="user-action" v-click-outside="onClickOutside">
       <v-row class="button ma-0 d-flex justify-center justify-space-around">
         <v-btn
@@ -9,7 +9,7 @@
           @click="inSupplyMenu = true"
           :class="inSupplyMenu ? 'button-save' : 'button-save-click'"
         >
-          Depositar
+          <span class="b1-main">Depositar</span>
         </v-btn>
         <v-btn
           height="80"
@@ -18,19 +18,19 @@
           @click="inSupplyMenu = false"
           :class="inSupplyMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
-          Retirar
+          <span class="b1-main">Retirar</span>
         </v-btn>
       </v-row>
       <v-row class="ma-0 mt-5">
-        <v-col cols="auto" class="px-0">
+        <v-col cols="auto" class="px-0 py-2">
           <v-img class="mr-2" width="32" height="32" :src="symbolImg" contain/>
         </v-col>
-        <v-col>
+        <v-col class="py-2">
           <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
         </v-col>
       </v-row>
       <v-row class="ma-0 d-flex justify-space-between">
-        <v-col cols="7" class="px-0">
+        <v-col cols="7" class="px-0 py-2">
           <v-row class="ma-0">
             <v-col class="pa-0 d-flex align-center">
               <p class="p1-descriptions">
@@ -55,7 +55,7 @@
           </v-row>
         </v-col>
         <template v-if="inSupplyMenu" class="d-flex justify-end">
-          <v-col cols="4" class="px-0">
+          <v-col cols="4" class="px-0 py-2">
             <v-row class="ma-0">
               <v-col class="pa-0 mt-2">
                 <p class="p1-descriptions">
@@ -103,7 +103,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row class="ma-0 mt-3">
+      <v-row class="ma-0">
         <v-slider
           hide-details
           min="1"
@@ -112,7 +112,7 @@
           track-color=" #4CB163"
           tick-size="4"
           thumb-label
-          v-model="sliderAmountPercentage" class="mt-6" @click="setAmount"/>
+          v-model="sliderAmountPercentage" class="mt-3" @click="setAmount"/>
       </v-row>
       <v-row class="ma-0">
         <v-col class="pa-0 d-flex justify-start">
@@ -181,7 +181,7 @@
             <p class="p3-USD-values">{{ possibleEarningsUSD | formatPrice }} USD</p>
           </v-col>
         </v-row>
-        <v-row class="ma-0 mt-3">
+        <v-row class="ma-0">
           <v-col class="pa-0">
             <p class="p1-descriptions">Total ganancias + depósito</p>
           </v-col>
@@ -303,14 +303,16 @@ export default {
         .rules.marketCash() !== 'string';
     },
     possibleEarnings() {
-      return (this.amount * (this.info.rate / 100)) + (this.info.interestBalance);
+      return ((this.amount * (this.info.rate / 100)) + (this.info
+        .interestBalance)) * this.sliderYear;
     },
     possibleEarningsUSD() {
       return this.possibleEarnings * this.info.underlyingPrice;
     },
     possibleEarningsPlusDeposit() {
-      return this.possibleEarnings > this.info.interestBalance ? +this.info
-        .supplyBalance + +this.amount + +this.possibleEarnings : this.info.supplyBalance;
+      return this.possibleEarnings > this.info.interestBalance ? (+this.info
+        .supplyBalance + +this.amount + +this.possibleEarnings) * this
+        .sliderYear : this.info.supplyBalance;
     },
     possibleEarningsPlusDepositUSD() {
       return this.possibleEarningsPlusDeposit * this.info.underlyingPrice;
