@@ -22,7 +22,6 @@ cors.json
 ### Firebase ###
 node_modules/*
 .firebaserc
-package-lock.json
 
 ### Firebase Patch ###
 .runtimeconfig.json
