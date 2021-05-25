@@ -29,7 +29,7 @@ function keepAlive() {
   setTimeout(() => {
     web3Ws.send('');
     keepAlive();
-  }, 120000);
+  }, 40000);
 }
 keepAlive();
 const formatWs = web3Ws.formatter.formats;
