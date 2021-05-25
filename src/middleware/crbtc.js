@@ -1,14 +1,14 @@
 import CRBTCAbi from '@/abis/CRBTC.json';
 import Market from '@/middleware/market';
+import * as constants from '@/store/constants';
 
 export default class CRbtc extends Market {
   constructor(address = '', chainId) {
     super(address, CRBTCAbi, chainId);
-    this.internalUnderlyingAssetSymbol = 'tRBTC';
-    this.type = 'CRBTC';
+    this.internalUnderlyingAssetSymbol = constants.RBTC_SYMBOL;
   }
 
-  underlyingAssetSymbol() {
+  async underlyingAssetSymbol() {
     return this.internalUnderlyingAssetSymbol;
   }
 
@@ -23,6 +23,6 @@ export default class CRbtc extends Market {
 
   // eslint-disable-next-line class-methods-use-this
   async underlyingAssetName() {
-    return 'tRSK Bitcoin';
+    return `${this.internalUnderlyingAssetSymbol} Bitcoin`;
   }
 }

@@ -63,7 +63,6 @@ export default {
   methods: {
     forceReload() {
       this.key += 1;
-      console.log('Emitting action succeed');
       this.$emit('actionSucceed');
     },
   },

@@ -1,5 +1,6 @@
 .modal-connect-wallet {
   background-color: #013e2f !important;
+  padding: 36px 72px 36px 72px;
   .v-btn {
     background-color: rgba(163, 197, 171, 0.3) !important;
     width: 100%;
@@ -9,31 +10,9 @@
     text-transform: none !important;
     letter-spacing: 0;
   }
-  h1 {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 400;
-  }
-  img {
-    margin-bottom: 5px;
-  }
-  p {
-    color: #adc2bb;
-    width: 80px;
-    font-size: 14px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-  }
   a {
-    color: #fff !important;
-    font-size: 12px;
-    font-weight: bold;
     text-decoration: none !important;
-  }
-  h3 {
-    color: #fff;
-    font-size: 12px;
+    color: #FFF !important;
   }
   .subtitle {
     font-size: 10px;

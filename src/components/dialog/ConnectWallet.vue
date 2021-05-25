@@ -1,17 +1,17 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" width="350" overlay-opacity="0.8" overlay-color="#000">
+    <v-dialog v-model="dialog" width="500" overlay-opacity="0.8" overlay-color="#000">
       <v-card class="modal-connect-wallet container" v-click-outside="closeDialog">
-        <v-row class="ma-0 mt-4 mb-2 d-flex justify-center">
-          <h1 class="text-center">Conecta tu billetera</h1>
+        <v-row class="ma-0 mb-8 d-flex justify-center">
+          <h1 class="h3-sections-heading text-center">Conecta tu billetera</h1>
         </v-row>
-        <v-row class="mx-4  d-flex justify-center">
+        <v-row class="d-flex justify-center">
           <v-col cols="6" class="pa-0">
             <v-btn @click="connectWeb3Wallet(constants.WALLET_LIQUALITY)" class="mx-0">
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/liquality.svg"
                        alt="Liquality icon" contain position="center center" />
-                <p>Liquality</p>
+                <span class="b2-secondary">Liquality</span>
               </div>
             </v-btn>
           </v-col>
@@ -20,50 +20,49 @@
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/metamask.svg"
                        alt="MetaMask icon" contain position="center center" />
-                <p>Metamask</p>
+                <span class="b2-secondary">Metamask</span>
               </div>
             </v-btn>
           </v-col>
         </v-row>
-        <v-row class="mx-4 mb-4">
-          <v-col cols="4" class="pa-0">
-            <v-btn disabled class="mx-0">
+        <v-row class="mb-8 d-flex justify-space-between">
+          <v-col cols="4" class="pa-0 d-flex justify-start">
+            <v-btn disabled class="mx-0" width="120">
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/ledger.svg"
                        alt="Ledger icon" contain position="center center" />
-                <p>Ledger</p>
-                <p class="subtitle">(Pronto)</p>
+                <span class="b2-secondary disabled">Ledger</span>
+                <span class="b2-secondary disabled">(Pronto)</span>
               </div>
             </v-btn>
           </v-col>
-          <v-col cols="4" class="py-0">
-            <v-btn disabled class="mx-0">
+          <v-col cols="4" class="pa-0 d-flex justify-center">
+            <v-btn disabled class="mx-0" width="120">
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/trezor.svg"
                        alt="Trezor icon" contain position="center center"  />
-                <p>Trezor</p>
-                <p class="subtitle">(Pronto)</p>
+                <span class="b2-secondary disabled">Trezor</span>
+                <span class="b2-secondary disabled">(Pronto)</span>
               </div>
             </v-btn>
           </v-col>
-          <v-col cols="4" class="pa-0">
-            <v-btn disabled class="mx-0">
+          <v-col cols="4" class="pa-0 d-flex justify-end">
+            <v-btn  class="mx-0" @click="connectWeb3Wallet(constants.WALLET_CONNECT)"  width="120">
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/wallet-connect.svg"
-                       alt="Trezor icon" contain position="center center" />
-                <p>Billetera móvil</p>
-                <p class="subtitle">(Pronto)</p>
+                       alt="Wallet connect icon" contain position="center center" />
+                <span class="b2-secondary">Billetera móvil</span>
               </div>
             </v-btn>
           </v-col>
         </v-row>
-        <v-row class="ma-0 mb-3 d-flex justify-center">
-          <h3 class="text-center mr-1">
+        <v-row class="ma-0 d-flex justify-center">
+          <p class="p1-descriptions text-center mr-1">
             ¿No tienes billetera?
-            <a href="https://liquality.io/" target="_blank" rel="noopener">
+            <a class="p1-descriptions" href="https://liquality.io/" target="_blank" rel="noopener">
               Descargala
             </a>
-          </h3>
+          </p>
         </v-row>
       </v-card>
     </v-dialog>
