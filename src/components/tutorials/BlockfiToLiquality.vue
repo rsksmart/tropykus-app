@@ -80,7 +80,7 @@ export default {
         {
           number: 5,
           title:
-            'Digita la cantidad de BTC que quieres retira y la dirección de liquality a la cual quieres enviar los fondos. Luego presiona “Withdraw” y listo, ya puedes ahorrar y pedir prestado en Tropyco.',
+            'Digita la cantidad de BTC que quieres retira y la dirección de liquality a la cual quieres enviar los fondos. Luego presiona “Withdraw” y listo, ya puedes ahorrar y pedir prestado en Tropykus.',
           image: Step05,
         },
       ],
