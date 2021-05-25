@@ -25,6 +25,13 @@ Object.assign(web3.formatter, { format });
 Vue.prototype.$web3 = Vue.web3 = web3;
 
 const web3Ws = new ethers.providers.WebSocketProvider(process.env.VUE_APP_WS_PROVIDER);
+function keepAlive() {
+  setTimeout(() => {
+    web3Ws.send('');
+    keepAlive();
+  }, 120000);
+}
+keepAlive();
 const formatWs = web3Ws.formatter.formats;
 formatWs.receipt.root = formatWs.receipt.logsBloom;
 Object.assign(web3Ws.formatter, { format: formatWs });
