@@ -212,16 +212,6 @@ export default {
     ErrorDialog,
     SupplyRedeem,
   },
-  created() {
-    this.comptroller = new Comptroller(this.chainId);
-    this.isCRbtc()
-      .then((isCRbtc) => {
-        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
-          : new CToken(this.marketAddress, this.chainId);
-        this.updateMarketInfo();
-      })
-      .catch(console.error);
-  },
   methods: {
     repayOrSupply(buttonAction) {
       this.supplyRepayDialog = true;
@@ -370,6 +360,16 @@ export default {
     isCRbtc() {
       return Market.isCRbtc(this.marketAddress);
     },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.isCRbtc()
+      .then((isCRbtc) => {
+        this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+          : new CToken(this.marketAddress, this.chainId);
+        this.updateMarketInfo();
+      })
+      .catch(console.error);
   },
 };
 </script>

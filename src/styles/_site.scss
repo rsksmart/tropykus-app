@@ -120,3 +120,14 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   line-height: 18px;
   color: #FFFFFF;
 }
+
+.b2-secondary {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFF !important;
+  &.disabled {
+    color: #89B7A4 !important;
+  }
+}

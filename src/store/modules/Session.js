@@ -2,6 +2,7 @@ import store from '@/store';
 import * as constants from '@/store/constants';
 import Vue from 'vue';
 import { ethers } from 'ethers';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 
 const state = {
   walletAddress: undefined,
@@ -27,6 +28,7 @@ const actions = {
       provider = window.ethereum;
       if (wallet === constants.WALLET_LIQUALITY && window.ethereum.isLiquality) {
         provider = window.rsk;
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
       } else if (wallet === constants.WALLET_METAMASK && window.ethereum.isMetaMask) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
@@ -44,12 +46,17 @@ const actions = {
             },
           ],
         });
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+      } else if (wallet === constants.WALLET_CONNECT) {
+        provider = new WalletConnectProvider({
+          rpc: { 31: process.env.VUE_APP_RSK_NODE },
+        });
+        await provider.enable();
       } else {
         return;
       }
       // eslint-disable-next-line no-multi-assign
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
       const account = await Vue.web3.getSigner();
       const walletAddress = await account.getAddress();
       commit(constants.SESSION_SET_PROPERTY, { provider });
@@ -60,17 +67,23 @@ const actions = {
     }
   },
   [constants.SESSION_GET_CHAIN_ID]: ({ commit }) => {
+    if (state.wallet === constants.WALLET_CONNECT) {
+      commit(constants.SESSION_SET_PROPERTY, { chainId: state.provider.chainId });
+      return;
+    }
     if (window.ethereum) {
       const chainId = window?.ethereum?.chainId ?? 31;
       if (window.ethereum.isLiquality) {
         commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(Number(`0x${chainId}`), 10) });
+        return;
       }
       if (window.ethereum.isMetaMask) {
         commit(constants.SESSION_SET_PROPERTY, { chainId: Number(chainId) });
       }
     }
   },
-  [constants.SESSION_DISCONNECT_WALLET]: ({ commit }) => {
+  [constants.SESSION_DISCONNECT_WALLET]: async ({ commit }) => {
+    if (state.wallet === constants.WALLET_CONNECT) await state.provider.disconnect();
     commit(constants.SESSION_SET_PROPERTY, { walletAddress: undefined });
     commit(constants.SESSION_SET_PROPERTY, { account: undefined });
     commit(constants.SESSION_SET_PROPERTY, { wallet: undefined });

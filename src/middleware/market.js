@@ -5,6 +5,7 @@ import TropykusLensAbi from '@/abis/TropykusLens.json';
 import { addresses } from '@/middleware/constants';
 import { ethers } from 'ethers';
 import Vue from 'vue';
+import * as constants from '@/store/constants';
 import signer from './utils';
 
 const blocksPerDay = 2 * 60 * 24;
@@ -24,7 +25,7 @@ export default class Market {
     const instance = new ethers.Contract(address.toLowerCase(), CTokenAbi, Vue.web3);
     try {
       const result = await instance.callStatic.symbol();
-      return result === 'cRBTC';
+      return result === constants.CRBTC_SYMBOL;
     } catch (e) {
       return false;
     }
@@ -141,17 +142,12 @@ export default class Market {
   }
 
   async getInitialSupply(address) {
-    console.log('getInitialSupply..');
     const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
     supplyEvents.forEach((supply) => {
-      console.log(`Mint args: ${JSON.stringify(supply.args)}`);
       const [minter, mintAmount] = supply.args;
-      console.log(`Mint amount: ${Number(mintAmount) / factor}`);
-      console.log(`${minter} === ${address} => ${minter === address}`);
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
-    console.log(`Mint events: ${addressSupplied}`);
     const redeemAmount = await this.getRedeems(address);
     // const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
     const initial = addressSupplied - redeemAmount;
@@ -159,28 +155,22 @@ export default class Market {
   }
 
   async getRedeems(address) {
-    console.log('getRedeems..');
     const redeemEvents = await this.instance.queryFilter('Redeem', -500000);
     let addressRedeem = 0;
     redeemEvents.forEach((redeem) => {
-      console.log(`Redeem args: ${JSON.stringify(redeem.args)}`);
       const [redeemer, redeemAmount] = redeem.args;
       if (redeemer === address) addressRedeem += Number(redeemAmount) / factor;
     });
-    console.log(`Redeem events: ${addressRedeem}`);
     return addressRedeem;
   }
 
   async getInitialBorrow(address) {
-    console.log('getInitialBorrow..');
     const borrowEvents = await this.instance.queryFilter('Borrow', -500000);
     let addressBorrowed = 0;
     borrowEvents.forEach((borrow) => {
-      console.log(`Repay args: ${JSON.stringify(borrow.args)}`);
       const [borrower, borrowAmount] = borrow.args;
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
-    console.log(`Borrow events: ${addressBorrowed}`);
     const repayAmount = await this.getRepays(address);
     // const borrowBalance = await this.borrowBalanceCurrent(address);
     const initial = addressBorrowed - repayAmount;
@@ -188,15 +178,12 @@ export default class Market {
   }
 
   async getRepays(address) {
-    console.log('getRepays..');
     const supplyEvents = await this.instance.queryFilter('RepayBorrow', -500000);
     let addressRepayed = 0;
     supplyEvents.forEach((repay) => {
-      console.log(`Repay args: ${JSON.stringify(repay.args)}`);
       const [borrower, repayAmount] = repay.args;
       if (borrower === address) addressRepayed += Number(repayAmount) / factor;
     });
-    console.log(`Repay events: ${addressRepayed}`);
     return addressRepayed;
   }
 
@@ -213,14 +200,12 @@ export default class Market {
   }
 
   async eventsEarnings(address) {
-    console.log('Get earnings');
     const initial = await this.getInitialSupply(address);
     const total = await this.currentBalanceOfCTokenInUnderlying(address);
     return total - initial;
   }
 
   async eventsInterest(address) {
-    console.log('Get interest');
     const initial = await this.getInitialBorrow(address);
     const total = await this.borrowBalanceCurrent(address);
     return total - initial;

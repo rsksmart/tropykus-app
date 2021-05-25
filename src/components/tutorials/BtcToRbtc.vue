@@ -89,7 +89,7 @@ export default {
         },
         {
           number: 8,
-          title: 'Recibe tus BTC y ahorra en Tropyco',
+          title: 'Recibe tus BTC y ahorra en Tropykus',
           image: Step08,
         },
       ],

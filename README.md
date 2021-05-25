@@ -1,4 +1,4 @@
-# tropyco-app
+# tropykus-app
 
 ## Project setup
 ```
