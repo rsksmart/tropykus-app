@@ -10,6 +10,10 @@
   background-color: #013e2f !important;
   padding: 25px 65px 50px 65px;
 
+  .v-btn {
+    color: #fff !important;
+  }
+
   .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
     background-color: #405A50 !important;
     color: #fff !important;
@@ -59,7 +63,6 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
           }
       .risk-graph {
         position: relative !important;

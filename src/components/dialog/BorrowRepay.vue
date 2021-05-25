@@ -28,14 +28,10 @@
             <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
           </v-col>
         </v-row>
-        <!-- v-row class="d-flex  mb-2">
-          <v-img class="mr-2" height="32" :src="symbolImg" contain/>
-          <h1>{{ info.underlyingSymbol }}</h1>
-        </v-row> < -->
         <template v-if="isInBorrowMenu">
           <v-row class="ma-auto d-flex" style="height:97%; width:100%;">
             <div class="d-flex flex-column justify-space-between" style="height:100%;width:40%;">
-              <div>
+              <div class="mb-5">
                 <p>Simulador de colateral</p>
               </div>
               <div>
@@ -143,7 +139,7 @@
               <div>
                 <p>Debes pagar</p>
                 <h2>{{ info.totalBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
-                <p>{{ tokenPrice | formatPrice }} USD</p>
+                <p><span>{{ tokenPrice | formatPrice }} USD</span></p>
               </div>
               <v-tooltip right>
                 <template v-slot:activator="{ on, attrs }">
@@ -152,11 +148,12 @@
                     mdi-information
                   </v-icon>
                 </template>
-                <span></span>
+                <span>El valor corresponde a la cantidad <br> pedida prestada más los intereses <br>
+                  acumulados hasta la fecha de pago. </span>
               </v-tooltip>
             </div>
           </div>
-          <v-divider class="mt-10"></v-divider>
+          <v-divider class="mt-16 pb-5"></v-divider>
           <v-row class="ma-0 mt-10 input-box" v-bind:class="[ validAmount
             ? 'valid' : amount === null ? '' : 'invalid' ]">
             <v-col class="pa-0">
@@ -253,11 +250,12 @@ export default {
         width: 300,
         height: 200,
         backgroundColor: 'transparent',
+        tooltip: { isHTML: true },
         legend: {
-          position: "none"
+          position: 'none',
         },
         vAxis: {
-          title: 'Monto',
+          title: 'Monto en USD',
           colors: ['#9575cd', '#33ac71'],
           labelStyle: { color: '#FFF' },
           titleTextStyle: { color: '#FFF' },
@@ -265,7 +263,6 @@ export default {
           textStyle: { color: '#FFF' },
           gridLines: { count: 10 },
           viewWindow: {
-            max: 100,
             min: 0,
           },
         },
@@ -309,7 +306,7 @@ export default {
       return Number(this.amount * this.info.underlyingPrice);
     },
     buttonColor() {
-      return this.isInBorrowMenu ? '#FF9153' : '#E65D3D';
+      return this.isInBorrowMenu ? '#FF9153' : '#FF9153';
     },
     buttonLabel() {
       return this.isInBorrowMenu ? 'Pedir prestado' : 'Pagar';
@@ -368,9 +365,9 @@ export default {
     },
     handleBalance() {
       const balance = (this.sliderValue * this.tokenBalance) / 100;
-      const tempData = [...this.chartData];
       this.amount = balance.toFixed(10);
-      tempData[2][1] = (balance * 100) / this.tokenBalance;
+      const tempData = [...this.chartData];
+      tempData[2][1] = this.borrowValueInUSD;
       this.chartData = tempData;
     },
     handleRepayBalance() {
@@ -378,11 +375,11 @@ export default {
       this.sliderValue = value;
     },
     handleSlider() {
-      const value = (this.amount / this.tokenBalance) * 100
+      const value = (this.amount / this.tokenBalance) * 100;
       this.sliderValue = value;
-      const balance = (this.sliderValue * this.tokenBalance) / 100;
+      // const balance = (this.sliderValue * this.tokenBalance) / 100;
       const tempData = [...this.chartData];
-      tempData[2][1] = (balance * 100) / this.tokenBalance;
+      tempData[2][1] = this.borrowValueInUSD;
       this.chartData = tempData;
     },
     async getMarkets() {
@@ -412,8 +409,8 @@ export default {
   async mounted() {
     this.getSymbolImg();
     const tempData = [...this.chartData];
-    const colateral = await this.comptroller.getAccountLiquidity(this.address);
-    tempData[1][1] = (colateral * 100);
+    const collateral = await this.comptroller.getAccountLiquidity(this.address);
+    tempData[1][1] = (collateral);
     this.chartData = tempData;
   },
 };

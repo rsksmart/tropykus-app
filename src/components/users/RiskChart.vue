@@ -1,12 +1,12 @@
 <template>
   <v-card class="container" color="#013E2F" elevation="0">
     <div class="risk">
-      <div class="d-flex justify-center">
-        <v-img class="risk-img" width="40" height="40" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="100" :width="15"
-                             :value="riskRate" :color="chartColor" :rotate="180" />
+      <div class="d-flex justify-center mt-2">
+        <v-img class="risk-img" width="50" height="50" :src="riskImage" />
+        <v-progress-circular class="risk-graph" :size="125" :width="15"
+                             :value="100 - riskRate" :color="chartColor" :rotate="180" />
       </div>
-      <div>
+      <div class="mt-5">
         <v-row class="risk-title ma-0">
           <h3>{{ riskTitle }}</h3>
         </v-row>
@@ -51,10 +51,10 @@ export default {
         return 'No tienes riesgo de ser liquidado';
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return 'Podría ser liquidado tu colateral ten precaución';
+        return 'Podría ser liquidado tu colateral,\nten precaución';
       }
       if (this.riskRate >= 0 && this.riskRate <= 40) {
-        return 'Es probable que pierdas tu colateral. Ten precaución';
+        return 'Es probable que pierdas tu\ncolateral. Ten precaución';
       }
       return 'No es posible calcular el riesgo';
     },
