@@ -4,7 +4,7 @@
       <div class="d-flex justify-center">
         <v-img class="risk-img" width="40" height="40" :src="riskImage" />
         <v-progress-circular class="risk-graph" :size="100" :width="15"
-                             :value="riskRate" :color="chartColor" />
+                             :value="riskRate" :color="chartColor" :rotate="180" />
       </div>
       <div>
         <v-row class="risk-title ma-0">
@@ -15,21 +15,6 @@
         </v-row>
       </div>
     </div>
-    <!-- <v-row class="ma-0">
-      <v-col cols="5" class="d-flex justify-center">
-        <v-img class="risk-img" width="40" height="40" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="100" :width="15"
-                             :value="riskRate" :color="chartColor" />
-      </v-col>
-      <v-col cols="7">
-        <v-row class="ma-0">
-          <h3>{{ riskTitle }}</h3>
-        </v-row>
-        <v-row class="ma-0">
-          <p class="ma-0">{{ riskDescription }}</p>
-        </v-row>
-      </v-col>
-    </v-row> -->
   </v-card>
 </template>
 
@@ -75,9 +60,9 @@ export default {
     },
     chartColor() {
       if (this.riskRate === 100) return 'transparent';
-      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return '#FF9153';
       if (this.riskRate > 40 && this.riskRate <= 60) return '#FF9153';
-      if (this.riskRate > 0 && this.riskRate <= 40) return '#FF9153';
+      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
       return 'transparent';
     },
   },
