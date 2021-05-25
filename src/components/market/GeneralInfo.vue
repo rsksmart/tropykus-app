@@ -60,7 +60,7 @@
       <component :is="supplyBorrowComponent" :showModal="supplyBorrowDialog"
                  @action="menuAction" :info="{ market, ...info }"
                  @closed="supplyBorrowDialog = false"
-                 :inBorrowMenu="inBorrowMenu"/>
+                 :inBorrowMenu="true"/>
     </template>
     <template v-if="waitingDialog">
       <loading :showModal="waitingDialog"/>
