@@ -41,22 +41,22 @@ export default {
     },
     riskTitle() {
       if (this.riskRate === 100) return 'Sin riesgo';
-      if (this.riskRate > 60 && this.riskRate < 100) return 'Riesgo bajo';
-      if (this.riskRate > 40 && this.riskRate <= 60) return 'Riesgo medio';
-      if (this.riskRate >= 0 && this.riskRate <= 40) return 'Riesgo alto';
-      return 'Escribe otro valor';
+      if (this.riskRate > 60 && this.riskRate < 100) return this.$t('market.risk.titles.low-risk');
+      if (this.riskRate > 40 && this.riskRate <= 60) return this.$t('market.risk.titles.medium-risk');
+      if (this.riskRate >= 0 && this.riskRate <= 40) return this.$t('market.risk.titles.high-risk');
+      return this.$t('market.risk.titles.other');
     },
     riskDescription() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
-        return 'No tienes riesgo de ser liquidado';
+        return this.$t('market.risk.subtitles.low-risk');
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return 'Podría ser liquidado tu colateral,\nten precaución';
+        return this.$t('market.risk.subtitles.medium-risk');
       }
       if (this.riskRate >= 0 && this.riskRate <= 40) {
-        return 'Es probable que pierdas tu\ncolateral. Ten precaución';
+        return this.$t('market.risk.subtitles.high-risk');
       }
-      return 'No es posible calcular el riesgo';
+      return this.$t('market.risk.subtitles.other');
     },
     chartColor() {
       if (this.riskRate === 100) return 'transparent';

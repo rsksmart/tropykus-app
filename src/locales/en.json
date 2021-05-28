@@ -57,7 +57,6 @@
       "description9": "USD Amount",
       "description10": "Collateral",
       "description11": "Amount to borrow"
-
     },
     "repay": {
       "description1": "You borrowed",
@@ -89,16 +88,33 @@
       "button1": "Borrow"
     },
     "my-deposits":{
+      "title": "My deposits",
       "subtitle1": "deposited",
       "subtitle2": "Approximate earnings",
       "button1": "Deposit",
       "button2": "Withdraw"
     },
     "my-debts":{
+      "title": "My debts",
       "subtitle1": "to pay",
       "subtitle2": "Approximate accrued interest",
       "button1": "Borrow",
       "button2": "Pay"
+    },
+    "suggestions": "Suggestions for you",
+    "risk": {
+      "titles": {
+        "low-risk": "Low risk",
+        "medium-risk": "Medium risk",
+        "high-risk": "High risk",
+        "other": "Try another value"
+      },
+      "subtitles": {
+        "low-risk": "You do not have risk to be liquidated",
+        "medium-risk": "Your collateral could be liquidated\nbe careful",
+        "high-risk": "You are likely to lose your\ncollateral. Be careful",
+        "other": "Risk cannot be calculated"
+      }
     }
   },
   "menu": {
@@ -166,12 +182,14 @@
     "deposited-card": {
       "title": "Total deposited",
       "subtitle1": "Deposited volume of the day",
-      "subtitle2": "depositors"
+      "subtitle2": "depositors",
+      "subtitle3": "Deposit volume of the day"
     },
     "borrowed-card": {
       "title": "Total borrowed",
       "subtitle1": "Borrowed volume of the day",
-      "subtitle2": "borrowers"
+      "subtitle2": "borrowers",
+      "subtitle3": "Borrow volume of the day"
     },
     "markets-card": {
       "title1": "Market",

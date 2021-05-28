@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       constants,
-      lang: 'ES',
+      lang: 'EN',
       views: {
         inSavings: false,
         inDebts: false,
@@ -137,10 +137,10 @@ export default {
     changeLanguage() {
       if (this.$i18n.locale === 'es') {
         this.$i18n.locale = 'en';
-        this.lang = 'EN';
+        this.lang = 'ES';
       } else {
         this.$i18n.locale = 'es';
-        this.lang = 'ES';
+        this.lang = 'EN';
       }
     },
     getSymbolImg() {

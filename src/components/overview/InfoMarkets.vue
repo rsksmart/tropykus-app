@@ -41,7 +41,7 @@
       <v-row class="d-flex flex-column">
         <v-divider></v-divider>
         <div class="d-flex justify-space-between mt-5">
-          <p>Volumen {{ `${type === 'totalSupply' ? 'depositado' : 'prestado'}`}} del día</p>
+          <p>{{ volumenLabel }}</p>
           <p>{{ `# ${type === 'totalSupply' ?
               this.$t('overview.deposited-card.subtitle2') :
               this.$t('overview.borrowed-card.subtitle2')}` }}</p>
@@ -88,6 +88,10 @@ export default {
         people = people.concat(...market.borrowedLast24Hours.accounts);
       });
       return { total, people: new Set(people).size };
+    },
+    volumenLabel() {
+      return this.type === 'totalSupply' ? this.$t('overview.deposited-card.subtitle3') : this
+        .$t('overview.borrowed-card.subtitle3');
     },
   },
   methods: {

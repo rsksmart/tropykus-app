@@ -284,7 +284,8 @@ export default {
     },
     actionDescription() {
       const desc = this.$t('dialog.deposit.description4');
-      return this.inSupplyMenu ? `${desc} depositar` : `${desc} retirar`; // {{ $t('dialog.deposit.description5') }} : {{ $t('dialog.withdraw.description2') }}
+      return this.inSupplyMenu ? `${desc} ${this.$t('dialog.deposit.description5')}` : `${desc} ${this
+        .$t('dialog.withdraw.description2')}`;
     },
     buttonLabel() {
       return this.inSupplyMenu ? this.$t('dialog.supply-redeem.title1') : this.$t('dialog.supply-redeem.title2');

@@ -315,7 +315,8 @@ export default {
     },
     actionDescription() {
       const desc = this.$t('dialog.deposit.description4');
-      return this.isInBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`; // {{ $t('dialog.borrow.description4') }} : {{ $t('dialog.repay.description2') }}
+      return this.isInBorrowMenu ? `${desc} ${this.$t('dialog.borrow.description4')}`
+        : `${desc} ${this.$t('dialog.repay.description2')}`;
     },
     amountAsUnderlyingPrice() {
       return Number(this.amount * this.info.underlyingPrice);

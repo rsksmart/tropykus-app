@@ -89,16 +89,33 @@
       "button1": "Pedir prestado"
     },
     "my-deposits":{
+      "title": "Mis depósitos",
       "subtitle1": "depositado",
       "subtitle2": "Ganancias aproximadas",
       "button1": "Depositar",
       "button2": "Retirar"
     },
     "my-debts":{
+      "title": "Mis deudas",
       "subtitle1": "a pagar",
       "subtitle2": "Intereses acumulados aproximados",
       "button1": "Pedir prestado",
       "button2": "Pagar"
+    },
+    "suggestions": "Sugerencias para ti",
+    "risk": {
+      "titles": {
+        "low-risk": "Riesgo bajo",
+        "medium-risk": "Riesgo medio",
+        "high-risk": "Riesgo alto",
+        "other": "Escribe otro valor"
+      },
+      "subtitles": {
+        "low-risk": "No tienes riesgo de ser liquidado",
+        "medium-risk": "Podría ser liquidado tu colateral,\nten precaución",
+        "high-risk": "Es probable que pierdas tu\ncolateral. Ten precaución",
+        "other": "No es posible calcular el riesgo"
+      }
     }
   },
   "menu": {
@@ -166,12 +183,14 @@
     "deposited-card": {
       "title": "Total depositado",
       "subtitle1": "Volumen depositado del día",
-      "subtitle2": "depositantes"
+      "subtitle2": "depositantes",
+      "subtitle3": "Volumen depositado del día"
     },
     "borrowed-card": {
       "title": "Total prestado",
       "subtitle1": "Volumen prestado del día",
-      "subtitle2": "prestatarios"
+      "subtitle2": "prestatarios",
+      "subtitle3": "Volumen prestado del día"
     },
     "markets-card": {
       "title1": "Mercado",
