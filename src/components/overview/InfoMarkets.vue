@@ -3,7 +3,9 @@
           color="#013E2F" width="90%" height="603" flat>
     <div class="overview-info">
       <v-row class="d-flex flex-column">
-        <h3>{{ `Total ${type === 'totalSupply' ? 'depositado' : 'prestado'}` }}</h3>
+        <h3>{{ `Total ${type === 'totalSupply' ?
+          this.$t('overview.markets-card.title2') :
+          this.$t('overview.markets-card.title4')}` }}</h3>
         <v-divider></v-divider>
       </v-row>
       <v-row class="d-flex align-baseline">
@@ -40,7 +42,9 @@
         <v-divider></v-divider>
         <div class="d-flex justify-space-between mt-5">
           <p>Volumen {{ `${type === 'totalSupply' ? 'depositado' : 'prestado'}`}} del día</p>
-          <p>{{ `# ${type === 'totalSupply' ? 'depositantes' : 'prestatarios'}` }}</p>
+          <p>{{ `# ${type === 'totalSupply' ?
+              this.$t('overview.deposited-card.subtitle2') :
+              this.$t('overview.borrowed-card.subtitle2')}` }}</p>
         </div>
         <div class="d-flex justify-space-between">
           <h2>{{ last24Hours.total | formatPrice }}</h2>

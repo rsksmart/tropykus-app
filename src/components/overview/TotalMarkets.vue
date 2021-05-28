@@ -18,7 +18,6 @@
           </th>
           <th class="text-left">
             {{ $t('overview.markets-card.title5') }} <br>
-            {{ $t('overview.markets-card.subtitle') }}
           </th>
         </tr>
       </thead>

@@ -166,20 +166,20 @@
     "deposited-card": {
       "title": "Total deposited",
       "subtitle1": "Deposited volume of the day",
-      "subtitle2": "# depositors"
+      "subtitle2": "depositors"
     },
     "borrowed-card": {
       "title": "Total borrowed",
       "subtitle1": "Borrowed volume of the day",
-      "subtitle2": "# borrowers"
+      "subtitle2": "borrowers"
     },
     "markets-card": {
       "title1": "Market",
-      "title2": "Total deposited",
+      "title2": "deposited",
       "title3": "Current dynamic annual",
       "subtitle": "rate of return",
-      "title4": "Total borrowed",
-      "title5": "interest rate"
+      "title4": "borrowed",
+      "title5": "Current dynamic annual interest rate"
     }
   }
 }
