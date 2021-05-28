@@ -1,0 +1,205 @@
+{
+  "app": {
+    "popup": {
+      "title1": "Convierte de BTC a RBTC",
+      "description1": "Ten en cuenta que las comisiones para realizar cualquier transacción deben ser pagadas en RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropykus.",
+      "description2": "No volver a mostrar",
+      "button1": "Continuar",
+      "button2": "Convertir de BTC a RBTC"
+    }
+  },
+  "dialog": {
+    "wallet": {
+      "title1": "Conecta tu billetera",
+      "description1": "¿No tienes billetera?",
+      "description2": "Descargala",
+      "button1": "(Pronto)",
+      "button2": "Billetera móvil"
+    },
+    "supply-redeem": {
+      "title1": "Depositar",
+      "title2": "Retirar"
+    },
+    "deposit": {
+      "description1": "Tienes en tu billetera:",
+      "description2": "Tasa de ganancia",
+      "description3": "anual dinámica actual",
+      "description4": "Escribe la cantidad que vas a",
+      "description5": "depositar",
+      "description6": "Mira cuanto puedes ganar con tu depósito en el periodo de tiempo que elijas",
+      "description7": "Total ganancias",
+      "description8": "Total ganancias + depósito",
+      "description9": "año",
+      "description10": "años",
+      "tooltip1": "La tasa de interés varía cuando",
+      "tooltip2": "cuando otros usuarios realizan",
+      "tooltip3": "transacciones en el protocolo."
+
+    },
+    "withdraw": {
+      "description1": "Tienes depositado:",
+      "description2": "retirar"
+    },
+    "borrow-repay": {
+      "title1": "Pedir prestado",
+      "title2": "Pagar",
+      "description1": "Escribe la cantidad que vas a"
+    },
+    "borrow": {
+      "description1": "Puedes pedir prestado",
+      "description2": "Tasa de interés",
+      "description3": "anual dinámica actual",
+      "description4": "pedir prestada",
+      "description5": "Por defecto, todos tus depósitos se", 
+      "description6": "utilizan como colateral para realizar un",
+      "description7": "préstamo en cualquier mercado.",
+      "description8": "Simulador de colateral",
+      "description9": "Monto en USD",
+      "description10": "Colateral",
+      "description11": "Cantidad a pedir prestado"
+
+    },
+    "repay": {
+      "description1": "Pediste prestado",
+      "description2": "pagar",
+      "description3": "Debes pagar",
+      "tooltip1": "El valor corresponde a la cantidad",
+      "tooltip2": "pedida prestada más los intereses",
+      "tooltip3": "acumulados hasta la fecha de pago."
+    },
+    "loading": {
+      "title1": "Confirmando la transacción en la red"
+    }
+  },
+  "market": {
+    "title": "Mercados de criptos",
+    "general": {
+      "description1": "Tasa de",
+      "description2": "anual",
+      "description3": "dinámica actual"
+    },
+    "deposits": {
+      "subtitle1": "Liquidez del mercado",
+      "description1": "rendimiento",
+      "button1": "Depositar"
+    },
+    "borrow": {
+      "subtitle1": "Total prestado",
+      "description1": "interés",
+      "button1": "Pedir prestado"
+    },
+    "my-deposits":{
+      "title": "Mis depósitos",
+      "subtitle1": "depositado",
+      "subtitle2": "Ganancias aproximadas",
+      "button1": "Depositar",
+      "button2": "Retirar"
+    },
+    "my-debts":{
+      "title": "Mis deudas",
+      "subtitle1": "a pagar",
+      "subtitle2": "Intereses acumulados aproximados",
+      "button1": "Pedir prestado",
+      "button2": "Pagar"
+    },
+    "suggestions": "Sugerencias para ti",
+    "risk": {
+      "titles": {
+        "no-risk": "Sin riesgo",
+        "low-risk": "Riesgo bajo",
+        "medium-risk": "Riesgo medio",
+        "high-risk": "Riesgo alto",
+        "other": "Escribe otro valor"
+      },
+      "subtitles": {
+        "low-risk": "No tienes riesgo de ser liquidado",
+        "medium-risk": "Podría ser liquidado tu colateral,\nten precaución",
+        "high-risk": "Es probable que pierdas tu\ncolateral. Ten precaución",
+        "other": "No es posible calcular el riesgo"
+      }
+    }
+  },
+  "menu": {
+    "sidebar": {
+      "deposit": "Depositos",
+      "loan": "Pedir prestado",
+      "tutorial": "Tutoriales",
+      "markets": "Mercados",
+      "language": "Idioma",
+      "github": "Repositorio"
+    },
+    "navbar": {
+      "connect": "Conectar billetera",
+      "disconnect": "Desconectar billetera"
+    }
+  },
+  "tutorials": {
+    "title": "Tutoriales",
+    "title1": "Convierte",
+    "title2": "BTC a RBTC",
+    "title3": "Transfiere tus fondos",
+    "title4": "desde",
+    "button": "Ver tutorial",
+    "btc-rbtc": {
+      "title": "Cómo convertir mis BTC a rBTC",
+      "subtitle1": "Instala liquality en tu navegador",
+      "subtitle2": "Selecciona la red de Bitcoin",
+      "subtitle3": "Transfiere tus fondos a tu billetera Liquality",
+      "subtitle4": "Copia la dirección de destino para recibir tus Bitcoins",
+      "subtitle5": "Presiona la opción de “swap”",
+      "subtitle6": "Convierte BTC a RBTC",
+      "subtitle7": "Confirma la transacción",
+      "subtitle8": "Recibe tus BTC y ahorra en Tropykus"
+    },
+    "binance": {
+      "title": "Transfiere tus fondos desde",
+      "subtitle1": "Instala liquality en tu navegador",
+      "subtitle2": "Inicia sesión en Binance con tu cuenta",
+      "subtitle3": "Presiona la opción de “Wallet” ubicada en la esquina superior derecha y selecciona la opción “Fiat and spot”",
+      "subtitle4": "Busca la opción de “Withdraw” que aparece en el lado derecho del menú “Bitcoin”",
+      "subtitle5": "Selecciona la red Bitcoin y copia y pega tu dirección de Bitcoin de tu billetera Liquality",
+      "subtitle6": "Escribe el monto de BTC que quieres retirar",
+      "subtitle7": "Presiona el botón “Submit”"
+    },
+    "ledn": {
+      "title": "Transfiere tus BTC desde",
+      "subtitle1": "Instala liquality en tu navegador",
+      "subtitle2": "Inicia sesión en ledn con tu cuenta",
+      "subtitle3": "Presiona la opción de “Wallet” ubicada en la esquina superior derecha y selecciona la opción “Fiat and spot”",
+      "subtitle4": "Busca la opción de “Withdraw” que aparece en el lado derecho del menú “Bitcoin”"
+    },
+    "blockfi": {
+      "title": "Transfiere tus BTC desde",
+      "subtitle1": "Instala liquality en tu navegador",
+      "subtitle2": "Inicia sesión en Poloniex con tu cuenta",
+      "subtitle3": "Ve al menú “Balances” en la esquina superior derecha y selecciona la opción “Deposits & Withdrawals”",
+      "subtitle4": "Selecciona la opción de “Hide 0 Balances” y luego da click en la opción “Withdraw”",
+      "subtitle5": "Digita la cantidad de BTC que quieres retira y la dirección de liquality a la cual quieres enviar los fondos. Luego presiona “Withdraw” y listo, ya puedes ahorrar y pedir prestado en Tropykus."
+    }
+  },
+  "overview": {
+    "title1": "Información de los mercados",
+    "title2": "Todos los mercados",
+    "subtitle": "Mercados",
+    "deposited-card": {
+      "title": "Total depositado",
+      "subtitle1": "Volumen depositado del día",
+      "subtitle2": "depositantes",
+      "subtitle3": "Volumen depositado del día"
+    },
+    "borrowed-card": {
+      "title": "Total prestado",
+      "subtitle1": "Volumen prestado del día",
+      "subtitle2": "prestatarios",
+      "subtitle3": "Volumen prestado del día"
+    },
+    "markets-card": {
+      "title1": "Mercado",
+      "title2": "depositado",
+      "title3": "Tasa de ganancia anual",
+      "subtitle": "dinámica actual",
+      "title4": "prestado",
+      "title5": "Tasa de interés anual \rdinámica actual"
+    }
+  }
+}

@@ -5,7 +5,7 @@
         <router-link :to="{ name: 'Tutorials' }" class="mr-3">
           <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
-        <h1>Transfiere tus BTC desde</h1>
+        <h1>{{ $t('tutorials.binance.title') }}</h1>
         <img class="mx-2" src="@/assets/wallets/binance.svg" alt="Binance Logo" />
       </div>
 
@@ -50,39 +50,37 @@ export default {
       steps: [
         {
           number: 1,
-          title: 'Instala liquality en tu navegador',
+          title: this.$t('tutorials.binance.subtitle1'),
           image: Step01,
         },
         {
           number: 2,
-          title: 'Inicia sesión en Binance con tu cuenta',
+          title: this.$t('tutorials.binance.subtitle2'),
           image: Step02,
         },
         {
           number: 3,
-          title:
-            'Presiona la opción de “Wallet” ubicada en la esquina superior derecha y selecciona la opción “Fiat and spot”',
+          title: this.$t('tutorials.binance.subtitle3'),
           image: Step03,
         },
         {
           number: 4,
-          title: 'Busca la opción de “Withdraw” que aparece en el lado derecho del menú  “Bitcoin”',
+          title: this.$t('tutorials.binance.subtitle4'),
           image: Step04,
         },
         {
           number: 5,
-          title:
-            'Selecciona la red Bitcoin y copia y pega tu dirección de Bitcoin de tu billetera Liquality.',
+          title: this.$t('tutorials.binance.subtitle5'),
           image: Step05,
         },
         {
           number: 6,
-          title: 'Escribe el monto de BTC que quieres retirar y presiona el botón “Submit”.',
+          title: this.$t('tutorials.binance.subtitle6'),
           image: Step06,
         },
         {
           number: 7,
-          title: 'Escribe el monto de BTC que quieres retirar y presiona el botón “Submit”.',
+          title: this.$t('tutorials.binance.subtitle7'),
           image: Step07,
         },
       ],

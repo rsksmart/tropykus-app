@@ -3,26 +3,27 @@
           color="#013E2F" width="90%" height="603" flat>
     <div class="overview-info">
       <v-row class="d-flex flex-column">
-        <h3>{{ `Total ${type === 'totalSupply' ? 'depositado' : 'prestado'}` }}</h3>
+        <h3>{{ `Total ${type === 'totalSupply' ?
+          this.$t('overview.markets-card.title2') :
+          this.$t('overview.markets-card.title4')}` }}</h3>
         <v-divider></v-divider>
       </v-row>
       <v-row class="d-flex align-baseline">
-        <h2>{{ totalMarkets | formatPrice }}</h2> <!--Dinámico-->
-<!--        <p class="ml-5"><span>+#,##%</span></p> &lt;!&ndash;Dinámico&ndash;&gt;-->
+        <h2>{{ totalMarkets | formatPrice }}</h2>
       </v-row>
       <v-row class="d-flex flex-column" style="height: 60%;">
         <div class="mb-2" style="height: 10%;">
-          <p>Mercados</p>
+          <p>{{ $t('overview.subtitle') }}</p>
         </div>
         <div v-for="(market, idx) in marketsData" :key="`deposit-${idx}`"
              class="overview-markets d-flex flex-column justify-space-between mt-2">
           <div class="d-flex justify-space-between">
-            <p>{{ market.symbol }}</p> <!--Dinámico-->
+            <p>{{ market.symbol }}</p>
             <p>
               <span>
                   {{ (`${value(market[type])}%`) }}
                 </span>
-            </p><!--Dinámico-->
+            </p>
           </div>
           <div>
             <v-progress-linear
@@ -40,8 +41,10 @@
       <v-row class="d-flex flex-column">
         <v-divider></v-divider>
         <div class="d-flex justify-space-between mt-5">
-          <p>Volumen {{ `${type === 'totalSupply' ? 'depositado' : 'prestado'}`}} del día</p>
-          <p>{{ `# ${type === 'totalSupply' ? 'depositantes' : 'prestatarios'}` }}</p>
+          <p>{{ volumenLabel }}</p>
+          <p>{{ `# ${type === 'totalSupply' ?
+              this.$t('overview.deposited-card.subtitle2') :
+              this.$t('overview.borrowed-card.subtitle2')}` }}</p>
         </div>
         <div class="d-flex justify-space-between">
           <h2>{{ last24Hours.total | formatPrice }}</h2>
@@ -85,6 +88,10 @@ export default {
         people = people.concat(...market.borrowedLast24Hours.accounts);
       });
       return { total, people: new Set(people).size };
+    },
+    volumenLabel() {
+      return this.type === 'totalSupply' ? this.$t('overview.deposited-card.subtitle3') : this
+        .$t('overview.borrowed-card.subtitle3');
     },
   },
   methods: {

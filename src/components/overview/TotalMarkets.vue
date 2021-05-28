@@ -4,19 +4,20 @@
       <thead>
         <tr>
           <th class="text-left">
-            Mercado
+            {{ $t('overview.markets-card.title1') }}
           </th>
           <th class="text-left">
-            Total depositado
+            {{ $t('overview.markets-card.title2') }}
           </th>
           <th class="text-center">
-            Tasa de ganancia anual <br> dinámica actual
+            {{ $t('overview.markets-card.title3') }} <br>
+            {{ $t('overview.markets-card.subtitle') }}
           </th>
           <th class="text-left">
-            Total prestado
+           {{ $t('overview.markets-card.title4') }}
           </th>
           <th class="text-left">
-            Tasa de interés anual <br> dinámica actual
+            {{ $t('overview.markets-card.title5') }} <br>
           </th>
         </tr>
       </thead>

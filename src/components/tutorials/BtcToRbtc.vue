@@ -6,7 +6,7 @@
           <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
         <h1>
-          Cómo convertir mis BTC a rBTC
+          {{ $t('tutorials.btc-rbtc.title') }}
         </h1>
       </div>
 
@@ -54,42 +54,42 @@ export default {
       steps: [
         {
           number: 1,
-          title: 'Instala liquality en tu navegador',
+          title: this.$t('tutorials.btc-rbtc.subtitle1'),
           image: Step01,
         },
         {
           number: 2,
-          title: 'Selecciona la red de Bitcoin',
+          title: this.$t('tutorials.btc-rbtc.subtitle2'),
           image: Step02,
         },
         {
           number: 3,
-          title: 'Transfiere tus fondos a tu billetera Liquality',
+          title: this.$t('tutorials.btc-rbtc.subtitle3'),
           image: Step03,
         },
         {
           number: 4,
-          title: 'Copia la dirección de destino para recibir tus Bitcoins      ',
+          title: this.$t('tutorials.btc-rbtc.subtitle4'),
           image: Step04,
         },
         {
           number: 5,
-          title: 'Presiona la opción de “swap”',
+          title: this.$t('tutorials.btc-rbtc.subtitle5'),
           image: Step05,
         },
         {
           number: 6,
-          title: 'Convierte BTC a RBTC',
+          title: this.$t('tutorials.btc-rbtc.subtitle6'),
           image: Step06,
         },
         {
           number: 7,
-          title: 'Confirma la transacción',
+          title: this.$t('tutorials.btc-rbtc.subtitle7'),
           image: Step07,
         },
         {
           number: 8,
-          title: 'Recibe tus BTC y ahorra en Tropykus',
+          title: this.$t('tutorials.btc-rbtc.subtitle8'),
           image: Step08,
         },
       ],

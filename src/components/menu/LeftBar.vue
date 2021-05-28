@@ -9,7 +9,7 @@
             <v-img contain height="43" src="@/assets/icons/pig.svg"/>
           </v-btn>
         </template>
-        <span>Depositos</span>
+        <span>{{ $t('menu.sidebar.deposit') }}</span>
       </v-tooltip>
     </v-row>
     <v-row class="mx-0 my-2 mx-2">
@@ -21,7 +21,7 @@
             <v-img contain height="43" src="@/assets/icons/borrow.svg"/>
           </v-btn>
         </template>
-        <span>Pedir prestado</span>
+        <span>{{ $t('menu.sidebar.loan') }}</span>
       </v-tooltip>
     </v-row>
     <v-row class="ma-0 mb-2 mx-2">
@@ -33,7 +33,7 @@
             <v-img contain height="43" src="@/assets/icons/tutorials.svg"/>
           </v-btn>
         </template>
-        <span>Tutoriales</span>
+        <span>{{ $t('menu.sidebar.tutorial') }}</span>
       </v-tooltip>
     </v-row>
     <v-row class="ma-0 mb-2 mx-2">
@@ -45,10 +45,32 @@
             <v-img contain height="43" src="@/assets/icons/info.svg"/>
           </v-btn>
         </template>
-        <span>Mercados</span>
+        <span>{{ $t('menu.sidebar.markets') }}</span>
       </v-tooltip>
     </v-row>
+    <!-- <v-row class="ma-0 mb-2 mx-2">
+      <v-tooltip right color="#52826E">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn  width="50"
+            v-bind:class="{ selected: views.inOverview }"
+            height="64" depressed v-bind="attrs" v-on="on">
+          </v-btn>
+        </template>
+        <span>{{ $t('menu.sidebar.language') }}</span>
+      </v-tooltip>
+    </v-row> -->
     <div class="custom-spacer"/>
+    <v-row class="ma-0 mb-2 mx-2">
+      <v-tooltip right color="#52826E">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn @click="changeLanguage" width="50"
+                 height="64" depressed v-bind="attrs" v-on="on">
+            <h1>{{ lang }}</h1>
+          </v-btn>
+        </template>
+        <span>{{ $t('menu.sidebar.language') }}</span>
+      </v-tooltip>
+    </v-row>
     <v-divider class="mx-2 mx-2" color="#BEBEBE"/>
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
@@ -59,7 +81,7 @@
             <v-img contain height="43" src="@/assets/icons/github.svg"/>
           </v-btn>
         </template>
-        <span>Repositorio</span>
+        <span>{{ $t('menu.sidebar.github') }}</span>
       </v-tooltip>
     </v-row>
     <v-row class="ma-0 my-2 mx-2">
@@ -97,6 +119,7 @@ export default {
   data() {
     return {
       constants,
+      lang: 'EN',
       views: {
         inSavings: false,
         inDebts: false,
@@ -111,6 +134,15 @@ export default {
     }),
   },
   methods: {
+    changeLanguage() {
+      if (this.$i18n.locale === 'es') {
+        this.$i18n.locale = 'en';
+        this.lang = 'ES';
+      } else {
+        this.$i18n.locale = 'es';
+        this.lang = 'EN';
+      }
+    },
     getSymbolImg() {
       this.db
         .collection('markets-symbols')

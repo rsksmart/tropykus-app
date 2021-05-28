@@ -8,13 +8,12 @@
       <v-card class="modal-convert-btn container" color="#013E2F">
         <v-row class="mx-0 pt-5 mb-3 d-flex justify-center">
           <h1 class="text-center">
-            Convierte de BTC a RBTC
+            {{ $t('app.popup.title1') }}
           </h1>
         </v-row>
         <v-row class="mx-0 my-5 d-flex justify-center">
           <p class="text-center ma-0">
-            Ten en cuenta que las comisiones para realizar cualquier transacción deben ser
-            pagadas en RBTC, por lo tanto debes convertir tus BTC a RBTC para poder usar Tropykus.
+             {{ $t('app.popup.description1') }}
           </p>
         </v-row>
         <v-row class="mx-0 mt-8 mb-6 d-flex justify-center">
@@ -25,19 +24,19 @@
           <v-col class="d-flex justify-center">
             <v-btn @click="btcToRbtcDialog = false" width="95%"
                    outlined color="#fff">
-              Continuar
+              {{ $t('app.popup.button1') }}
             </v-btn>
           </v-col>
           <v-col class="d-flex justify-center">
             <v-btn @click="closeAndRedirect"
                    width="95%" color="#4CB163">
-              Convertir BTC a RBTC
+              {{ $t('app.popup.button2') }}
             </v-btn>
           </v-col>
         </v-row>
         <v-row class="ma-0 d-flex justify-center">
           <v-checkbox hide-details dark v-model="dontShowWelcomeModal"
-            label="No volver a mostrar" class="mt-0" />
+            :label="$t('app.popup.description2')" class="mt-0" />
         </v-row>
       </v-card>
     </v-dialog>

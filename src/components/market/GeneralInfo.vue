@@ -41,7 +41,12 @@
     <v-row class="ma-0 container">
       <v-col cols="8" class="pa-0">
         <p class="p1-descriptions">
-          Tasa de {{ rateLabel }} <br> dinámica actual
+          {{ $t('market.general.description1') }}
+          {{ rateLabel }}
+          {{ $t('market.general.description2') }}
+        </p>
+        <p class="p1-descriptions">
+          {{ $t('market.general.description3') }}
         </p>
       </v-col>
       <v-col cols="4" class="pa-0 d-flex justify-end">
@@ -150,7 +155,7 @@ export default {
       isLoggedIn: constants.SESSION_IS_CONNECTED,
     }),
     marketBalanceLabel() {
-      return this.inBorrowMenu ? 'Total prestado' : 'Liquidez del mercado';
+      return this.inBorrowMenu ? this.$t('market.borrow.subtitle1') : this.$t('market.deposits.subtitle1');
     },
     marketBalance() {
       return this.inBorrowMenu ? this.info.totalBorrows : this.info.cash;
@@ -165,13 +170,13 @@ export default {
       return this.inBorrowMenu ? '#FF9153' : '#4CB163';
     },
     buttonName() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Depositar';
+      return this.inBorrowMenu ? this.$t('market.borrow.button1') : this.$t('market.deposits.button1');
     },
     marketOnExplorer() {
       return `${this.baseExplorerURL}/${this.marketAddress}`;
     },
     rateLabel() {
-      return this.inBorrowMenu ? 'interés anual' : 'rendimiento anual';
+      return this.inBorrowMenu ? this.$t('market.borrow.description1') : this.$t('market.deposits.description1');
     },
   },
   methods: {

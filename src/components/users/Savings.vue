@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="ma-0 mb-5 pl-3">
-      <h3 class="text-left h3-sections-heading">Mis depósitos</h3>
+      <h3 class="text-left h3-sections-heading">{{ $t('market.my-deposits.title') }}</h3>
     </v-row>
     <template v-if="loadingSavings">
       <v-row class="mx-0 mt-4">

@@ -1,12 +1,12 @@
 <template>
   <v-card class="container" color="#013E2F" elevation="0">
     <div class="risk">
-      <div class="d-flex justify-center">
-        <v-img class="risk-img" width="40" height="40" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="100" :width="15"
-                             :value="riskRate" :color="chartColor" />
+      <div class="d-flex justify-center mt-2">
+        <v-img class="risk-img" width="50" height="50" :src="riskImage" />
+        <v-progress-circular class="risk-graph" :size="125" :width="15"
+                             :value="100 - riskRate" :color="chartColor" :rotate="180" />
       </div>
-      <div>
+      <div class="mt-5">
         <v-row class="risk-title ma-0">
           <h3>{{ riskTitle }}</h3>
         </v-row>
@@ -15,21 +15,6 @@
         </v-row>
       </div>
     </div>
-    <!-- <v-row class="ma-0">
-      <v-col cols="5" class="d-flex justify-center">
-        <v-img class="risk-img" width="40" height="40" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="100" :width="15"
-                             :value="riskRate" :color="chartColor" />
-      </v-col>
-      <v-col cols="7">
-        <v-row class="ma-0">
-          <h3>{{ riskTitle }}</h3>
-        </v-row>
-        <v-row class="ma-0">
-          <p class="ma-0">{{ riskDescription }}</p>
-        </v-row>
-      </v-col>
-    </v-row> -->
   </v-card>
 </template>
 
@@ -55,29 +40,29 @@ export default {
       return SadFace;
     },
     riskTitle() {
-      if (this.riskRate === 100) return 'Sin riesgo';
-      if (this.riskRate > 60 && this.riskRate < 100) return 'Riesgo bajo';
-      if (this.riskRate > 40 && this.riskRate <= 60) return 'Riesgo medio';
-      if (this.riskRate >= 0 && this.riskRate <= 40) return 'Riesgo alto';
-      return 'Escribe otro valor';
+      if (this.riskRate === 100) return this.$t('market.risk.titles.no-risk');
+      if (this.riskRate > 60 && this.riskRate < 100) return this.$t('market.risk.titles.low-risk');
+      if (this.riskRate > 40 && this.riskRate <= 60) return this.$t('market.risk.titles.medium-risk');
+      if (this.riskRate >= 0 && this.riskRate <= 40) return this.$t('market.risk.titles.high-risk');
+      return this.$t('market.risk.titles.other');
     },
     riskDescription() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
-        return 'No tienes riesgo de ser liquidado';
+        return this.$t('market.risk.subtitles.low-risk');
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return 'Podría ser liquidado tu colateral ten precaución';
+        return this.$t('market.risk.subtitles.medium-risk');
       }
       if (this.riskRate >= 0 && this.riskRate <= 40) {
-        return 'Es probable que pierdas tu colateral. Ten precaución';
+        return this.$t('market.risk.subtitles.high-risk');
       }
-      return 'No es posible calcular el riesgo';
+      return this.$t('market.risk.subtitles.other');
     },
     chartColor() {
       if (this.riskRate === 100) return 'transparent';
-      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return '#FF9153';
       if (this.riskRate > 40 && this.riskRate <= 60) return '#FF9153';
-      if (this.riskRate > 0 && this.riskRate <= 40) return '#FF9153';
+      if (this.riskRate > 60 && this.riskRate <= 100) return '#FF9153';
       return 'transparent';
     },
   },

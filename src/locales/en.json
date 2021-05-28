@@ -1,0 +1,203 @@
+{
+  "app":{
+    "popup": {
+      "title1": "Convert from BTC to BTC",
+      "description1": "Keep in mind that the commissions to carry out any transaction must be paid in RBTC, therefore you must convert your BTC to RBTC in order to use Tropykus.",
+      "description2": "Do not show again",
+      "button1": "Continue",
+      "button2": "Convert from BTC to BTC"
+    }
+  },
+  "dialog": {
+    "wallet": {
+      "title1": "Connect your wallet",
+      "description1": "Don't have a wallet?",
+      "description2": "Download it",
+      "button1": "(Soon)",
+      "button2": "Mobile wallet"
+    },
+    "supply-redeem": {
+      "title1": "Deposit",
+      "title2": "Withdraw"
+    },
+    "deposit": {
+      "description1": "You have in your wallet:",
+      "description2": "Current dynamic",
+      "description3": "annual profit rate",
+      "description4": "Write the amount you are going to ",
+      "description5": "deposit",
+      "description6": "See how much you can earn with your deposit in the period of time you choose",
+      "description7": "Total earnings",
+      "description8": "Total earnings + deposit",
+      "description9": "year",
+      "description10": "years",
+      "tooltip1": "The interest rate varies when ",
+      "tooltip2": "other users carry out ",
+      "tooltip3": "transactions in the protocol."
+    },
+    "withdraw": {
+      "description1": "You have deposited:",
+      "description2": "withdraw"
+    },
+    "borrow-repay": {
+      "title1": "Borrow",
+      "title2": "Pay",
+      "description1": "Write the amount you are going to"
+    },
+    "borrow": {
+      "description1": "You can borrow",
+      "description2": "Current dynamic",
+      "description3": "annual interest rate",
+      "description4": "borrow",
+      "description5": "By default, all your deposits are", 
+      "description6": "used as collateral to make a",
+      "description7": "loan in any market.",
+      "description8": "Collateral simulator",
+      "description9": "USD Amount",
+      "description10": "Collateral",
+      "description11": "Amount to borrow"
+    },
+    "repay": {
+      "description1": "You borrowed",
+      "description2": "pay",
+      "description3": "You must pay",
+      "tooltip1": "The value corresponds to the amount",
+      "tooltip2": "borrowed plus accrued interest",
+      "tooltip3": "acumulados hasta la fecha de pago."
+    },
+    "loading": {
+      "title1": "Confirming the transaction on the network"
+    }
+  },
+  "market": {
+    "title": "Crypto markets",
+    "general": {
+      "description1": "Current dynamic",
+      "description2": "annual",
+      "description3": "rate"
+    },
+    "deposits": {
+      "subtitle1": "Market liquidity",
+      "description1": "or return",
+      "button1": "Deposit"
+    },
+    "borrow": {
+      "subtitle1": "Total borrowed",
+      "description1": "interest",
+      "button1": "Borrow"
+    },
+    "my-deposits":{
+      "title": "My deposits",
+      "subtitle1": "deposited",
+      "subtitle2": "Approximate earnings",
+      "button1": "Deposit",
+      "button2": "Withdraw"
+    },
+    "my-debts":{
+      "title": "My debts",
+      "subtitle1": "to pay",
+      "subtitle2": "Approximate accrued interest",
+      "button1": "Borrow",
+      "button2": "Pay"
+    },
+    "suggestions": "Suggestions for you",
+    "risk": {
+      "titles": {
+        "no-risk": "Out of risk",
+        "low-risk": "Low risk",
+        "medium-risk": "Medium risk",
+        "high-risk": "High risk",
+        "other": "Try another value"
+      },
+      "subtitles": {
+        "low-risk": "You do not have risk to be liquidated",
+        "medium-risk": "Your collateral could be liquidated\nbe careful",
+        "high-risk": "You are likely to lose your\ncollateral. Be careful",
+        "other": "Risk cannot be calculated"
+      }
+    }
+  },
+  "menu": {
+    "sidebar": {
+      "deposit": "Deposits",
+      "loan": "Borrow",
+      "tutorial": "Tutorials",
+      "language": "Language",
+      "markets": "Markets",
+      "github": "Repository"
+    },
+    "navbar": {
+      "connect": "Connect wallet",
+      "disconnect": "Disconnect wallet"
+    }
+  },
+  "tutorials": {
+    "title": "Tutorials",
+    "title1": "Convert",
+    "title2": "BTC to RBTC",
+    "title3": "Transfer your funds",
+    "title4": "from",
+    "button": "See tutorial",
+    "btc-rbtc": {
+      "title": "How to convert my BTC to rBTC",
+      "subtitle1": "Install liquality in your browser",
+      "subtitle2": "Select the Bitcoin network",
+      "subtitle3": "Transfer your funds to your Liquality wallet",
+      "subtitle4": "Copy the destination address to receive your Bitcoins",
+      "subtitle5": "Press the “swap“ option",
+      "subtitle6": "Convert BTC to BTC",
+      "subtitle7": "Confirm the transaction",
+      "subtitle8": "Receive your BTC and save at Tropykus"
+    },
+    "binance": {
+      "title": "Transfer your funds from",
+      "subtitle1": "Install liquality in your browser",
+      "subtitle2": "Login to Binance with your account",
+      "subtitle3": "Press the option “Wallet“ located in the upper right corner and select the option “Fiat and spot“",
+      "subtitle4": "Look for the “Withdraw“ option that appears on the right side of the “Bitcoin“ menu.",
+      "subtitle5": "Select the Bitcoin network and copy and paste your Bitcoin address from your Liquality wallet.",
+      "subtitle6": "Write the amount of BTC you want to withdraw",
+      "subtitle7": "Press the “Submit” button"
+    },
+    "ledn": {
+      "title": "Transfer your BTC from",
+      "subtitle1": "Install liquality in your browser",
+      "subtitle2": "Login to ledn with your account",
+      "subtitle3": "Press the option “Wallet“ located in the upper right corner and select the option “Fiat and spot“",
+      "subtitle4": "Look for the “Withdraw“ option that appears on the right side of the “Bitcoin“ menu."
+    },
+    "blockfi": {
+      "title": "Transfer your BTC from",
+      "subtitle1": "Install liquality in your browser",
+      "subtitle2": "Login to Poloniex with your account",
+      "subtitle3": "Go to the “Balances“ menu in the upper right corner and select the “Deposits & Withdrawals“ option",
+      "subtitle4": "Select the “Hide 0 Balances” option and then click on the “Withdraw” option",
+      "subtitle5": "Enter the amount of BTC you want to withdraw and the liquality address to which you want to send the funds. Then press “Withdraw“ and voila, you can now save and borrow at Tropykus"
+    }
+  },
+  "overview": {
+    "title1": "Market information",
+    "title2": "All markets",
+    "subtitle": "Markets",
+    "deposited-card": {
+      "title": "Total deposited",
+      "subtitle1": "Deposited volume of the day",
+      "subtitle2": "depositors",
+      "subtitle3": "Deposit volume of the day"
+    },
+    "borrowed-card": {
+      "title": "Total borrowed",
+      "subtitle1": "Borrowed volume of the day",
+      "subtitle2": "borrowers",
+      "subtitle3": "Borrow volume of the day"
+    },
+    "markets-card": {
+      "title1": "Market",
+      "title2": "deposited",
+      "title3": "Current dynamic annual",
+      "subtitle": "rate of return",
+      "title4": "borrowed",
+      "title5": "Current dynamic annual interest rate"
+    }
+  }
+}
