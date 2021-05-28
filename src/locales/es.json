@@ -72,6 +72,7 @@
     }
   },
   "market": {
+    "title": "Mercados de criptos",
     "general": {
       "description1": "Tasa de",
       "description2": "anual",
@@ -108,6 +109,10 @@
       "markets": "Mercados",
       "language": "Idioma",
       "github": "Repositorio"
+    },
+    "navbar": {
+      "connect": "Conectar billetera",
+      "disconnect": "Desconectar billetera"
     }
   },
   "tutorials": {

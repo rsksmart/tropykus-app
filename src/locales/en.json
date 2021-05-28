@@ -72,6 +72,7 @@
     }
   },
   "market": {
+    "title": "Crypto markets",
     "general": {
       "description1": "Current dynamic",
       "description2": "annual",
@@ -105,9 +106,13 @@
       "deposit": "Deposits",
       "loan": "Borrow",
       "tutorial": "Tutorials",
-      "language": "language",
+      "language": "Language",
       "markets": "Markets",
       "github": "Repository"
+    },
+    "navbar": {
+      "connect": "Connect wallet",
+      "disconnect": "Disconnect wallet"
     }
   },
   "tutorials": {

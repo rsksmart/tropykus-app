@@ -60,6 +60,17 @@
       </v-tooltip>
     </v-row> -->
     <div class="custom-spacer"/>
+    <v-row class="ma-0 mb-2 mx-2">
+      <v-tooltip right color="#52826E">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn @click="changeLanguage" width="50"
+                 height="64" depressed v-bind="attrs" v-on="on">
+            <h1>{{ lang }}</h1>
+          </v-btn>
+        </template>
+        <span>{{ $t('menu.sidebar.language') }}</span>
+      </v-tooltip>
+    </v-row>
     <v-divider class="mx-2 mx-2" color="#BEBEBE"/>
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
@@ -108,6 +119,7 @@ export default {
   data() {
     return {
       constants,
+      lang: 'ES',
       views: {
         inSavings: false,
         inDebts: false,
@@ -122,6 +134,15 @@ export default {
     }),
   },
   methods: {
+    changeLanguage() {
+      if (this.$i18n.locale === 'es') {
+        this.$i18n.locale = 'en';
+        this.lang = 'EN';
+      } else {
+        this.$i18n.locale = 'es';
+        this.lang = 'ES';
+      }
+    },
     getSymbolImg() {
       this.db
         .collection('markets-symbols')

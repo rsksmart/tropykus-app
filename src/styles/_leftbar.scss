@@ -7,7 +7,7 @@
   border-radius: 0 10px 10px 0;
 
   .custom-spacer {
-    height: 120px;
+    height: 50px;
   }
 
   .v-btn {
@@ -16,4 +16,13 @@
       background-color: rgba(163, 197, 171, 0.5) !important;
     }
   }
+
+  h1 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+    color: #FFF;
+  }
+
 }
