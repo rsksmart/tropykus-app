@@ -2,7 +2,8 @@
   <div class="home">
     <div class="container overview">
       <v-row class="ma-0 mt-5 mb-5 pl-12 ml-12">
-        <h3 class="text-left h3-sections-heading">Información de los mercados</h3>
+        <h3 class="text-left h3-sections-heading">
+          {{ $t('overview.title1') }}</h3>
       </v-row>
       <v-row class="d-flex justify-center">
         <div class="container">
@@ -25,7 +26,9 @@
         </div>
       </v-row>
       <v-row class="ma-0 mt-5 mb-5 pl-12 ml-12">
-        <h3 class="text-left h3-sections-heading">Todos los mercados</h3>
+        <h3 class="text-left h3-sections-heading">
+          {{ $t('overview.title2') }}
+        </h3>
       </v-row>
       <v-row class="d-flex justify-center mb-10">
         <total-markets :marketsData="marketsData"/>

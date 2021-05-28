@@ -66,7 +66,9 @@
     <v-row class="ma-0 container">
       <v-col cols="8" class="pa-0">
         <p class="p1-descriptions">
-          Tasa de {{ rateLabel }} <br> dinámica actual
+          {{ $t('market.general.description1') }}
+          {{ rateLabel }}
+          {{ $t('market.general.description2') }}
         </p>
       </v-col>
       <v-col cols="4" class="pa-0 d-flex justify-end">
@@ -177,10 +179,10 @@ export default {
       account: (state) => state.Session.account,
     }),
     borrowSupplyBalanceLabel() {
-      return this.inBorrowMenu ? 'a pagar' : 'depositado';
+      return this.inBorrowMenu ? this.$t('market.my-debts.subtitle1') : this.$t('market.my-deposits.subtitle1');
     },
     payRedeemBalanceLabel() {
-      return this.inBorrowMenu ? 'Intereses acumulados aproximados' : 'Ganancias aproximadas';
+      return this.inBorrowMenu ? this.$t('market.my-debts.subtitle2') : this.$t('market.my-deposits.subtitle2');
     },
     tokenPrice() {
       return this.info.totalBalance * this.info.underlyingPrice;
@@ -195,13 +197,13 @@ export default {
       return `${this.baseExplorerURL}/${this.marketAddress}`;
     },
     rateLabel() {
-      return this.inBorrowMenu ? 'interés anual' : 'rendimiento anual';
+      return this.inBorrowMenu ? this.$t('market.borrow.description1') : this.$t('market.deposits.description1');
     },
     supplyBorrowLabel() {
-      return this.inBorrowMenu ? 'Pedir prestado' : 'Depositar';
+      return this.inBorrowMenu ? this.$t('market.my-debts.button1') : this.$t('market.my-deposits.button1');
     },
     redeemRepayLabel() {
-      return this.inBorrowMenu ? 'Pagar' : 'Retirar';
+      return this.inBorrowMenu ? this.$t('market.my-debts.button2') : this.$t('market.my-deposits.button2');
     },
   },
   components: {

@@ -6,7 +6,7 @@
           <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
         <h1>
-          Transfiere tus BTC desde
+          {{ $t('tutorials.ledn.title') }}
         </h1>
         <img class="mx-2" src="@/assets/wallets/ledn.svg" alt="Ledn Logo" />
       </div>
@@ -51,23 +51,22 @@ export default {
       steps: [
         {
           number: 1,
-          title: 'Instala liquality en tu navegador',
+          title: this.$t('tutorials.ledn.subtitle1'),
           image: Step01,
         },
         {
           number: 2,
-          title: 'Inicia sesión en ledn con tu cuenta',
+          title: this.$t('tutorials.ledn.subtitle2'),
           image: Step02,
         },
         {
           number: 3,
-          title:
-            'Presiona la opción de “Wallet” ubicada en la esquina superior derecha y selecciona la opción “Fiat and spot”',
+          title: this.$t('tutorials.ledn.subtitle3'),
           image: Step03,
         },
         {
           number: 4,
-          title: 'Busca la opción de “Withdraw” que aparece en el lado derecho del menú  “Bitcoin”',
+          title: this.$t('tutorials.ledn.subtitle4'),
           image: Step04,
         },
       ],

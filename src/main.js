@@ -11,6 +11,7 @@ import vuetify from './plugins/vuetify';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
+import i18n from './i18n';
 import './styles/main.scss';
 
 require('./filters');
@@ -47,5 +48,6 @@ new Vue({
   store,
   vuetify,
   chart,
+  i18n,
   render: (h) => h(App),
 }).$mount('#app');

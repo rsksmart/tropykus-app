@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" :content-class="isInBorrowMenu ? 'borrow-size' : 'withdraw-size'">
-    <v-card class="user-action" v-click-outside="onClickOutside" width="100%" height="88vh">
+    <v-card class="user-action" v-click-outside="onClickOutside" width="100%">
       <v-row class="button ma-auto d-flex justify-center justify-space-around">
         <v-btn
             depressed
@@ -8,7 +8,7 @@
             @click="isInBorrowMenu = true"
             :class="isInBorrowMenu ? 'button-save' : 'button-save-click'"
         >
-          Pedir prestado
+         {{ $t('dialog.borrow-repay.title1') }}
         </v-btn>
         <v-btn
             depressed
@@ -16,7 +16,7 @@
             @click="isInBorrowMenu = false"
             :class="isInBorrowMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
-          Pagar
+          {{ $t('dialog.borrow-repay.title2') }}
         </v-btn>
       </v-row>
       <div class="slider-container">
@@ -32,7 +32,8 @@
           <v-row class="ma-auto d-flex" style="height:97%; width:100%;">
             <div class="d-flex flex-column justify-space-between" style="height:100%;width:40%;">
               <div class="mb-5">
-                <p>Simulador de colateral</p>
+                <p class="p1-descriptions">
+                  {{ $t('dialog.borrow.description8') }}</p>
               </div>
               <div>
                 <div class="collateral-chart">
@@ -49,16 +50,19 @@
               <div class="d-flex flex-column justify-space-between">
                 <div class="d-flex justify-space-between mb-4">
                   <div class="d-flex flex-column">
-                    <p class="title-modal-rate ma-0">
+                    <p class="p1-descriptions">
                       {{ actionBalance }}
                     </p>
-                    <h2>{{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
-                    <p><span>{{ tokenPrice | formatPrice }} USD</span></p>
+                    <p class="p2-reading-values">
+                      {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}</p>
+                    <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
                   </div>
                   <div class="d-flex">
                     <div>
-                      <p>Tasa de interés anual <br> dinámica actual</p>
-                      <h2 class="ma-0 modal-rate">{{ info.rate }} %</h2>
+                      <p class="p1-descriptions">
+                          {{ $t('dialog.borrow.description2') }} <br>
+                          {{ $t('dialog.borrow.description3') }}</p>
+                      <p class="p2-reading-values">{{ info.rate }} %</p>
                     </div>
                     <v-tooltip right>
                       <template v-slot:activator="{ on, attrs }">
@@ -67,16 +71,19 @@
                           mdi-information
                         </v-icon>
                       </template>
-                      <span>La tasa de interés varía cuando <br> otros usuarios
-                            realizan <br> transacciones en el protocolo.</span>
+                      <span class="p5-feedback">
+                        {{ $t('dialog.deposit.tooltip1') }} <br>
+                        {{ $t('dialog.deposit.tooltip2') }} <br>
+                        {{ $t('dialog.deposit.tooltip3') }}
+                      </span>
                     </v-tooltip>
                   </div>
                 </div>
                 <v-divider></v-divider>
               </div>
               <div>
-                <p>Escribe la cantidad que vas a pedir prestada.</p>
-                <v-row class="ma-0 input-box" v-bind:class="[ validAmount
+                <p class="p1-descriptions">{{ actionDescription }}</p>
+                <v-row class="ma-0 mt-2 input-box" v-bind:class="[ validAmount
                   ? 'valid' : amount === null ? '' : 'invalid' ]">
                   <v-col class="pa-0">
                     <v-text-field type="number" v-model="amount" dark
@@ -106,8 +113,8 @@
                     class="mt-12">
                   </v-slider>
                   <div class="d-flex justify-space-between">
-                    <p>0%</p>
-                    <p>100%</p>
+                    <span class="p1-descriptions">0%</span>
+                    <span class="p1-descriptions">100%</span>
                   </div>
                 </div>
               </div>
@@ -115,8 +122,10 @@
               <div class="d-flex justify-center">
                 <div class="d-flex" style="width:60%;">
                   <v-img  src="@/assets/icons/infoMarkets.svg" width="51" height="45" contain />
-                  <p>Por defecto, todos tus depósitos se <br> utilizan como colateral
-                    para realizar un <br> préstamo en cualquier mercado.</p>
+                  <p class="p6-reading-values">
+                    {{ $t('dialog.borrow.description5') }} <br>
+                    {{ $t('dialog.borrow.description6') }} <br>
+                    {{ $t('dialog.borrow.description7') }}</p>
                 </div>
               </div>
               <v-btn  height="42" :color="buttonColor" :disabled="!validAmount"
@@ -129,17 +138,20 @@
         <template v-else>
           <div class="d-flex justify-space-between mb-4">
             <div class="d-flex flex-column">
-              <p class="title-modal-rate ma-0">
+              <p class="p1-descriptions">
                 {{ actionBalance }}
               </p>
-              <h2>{{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
-              <p><span>{{ tokenPrice | formatPrice }} USD</span></p>
+              <p class="p2-reading-values">
+                {{ tokenBalance | formatDecimals }} {{ info.underlyingSymbol }}</p>
+              <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
             </div>
             <div class="d-flex">
               <div>
-                <p>Debes pagar</p>
-                <h2>{{ info.totalBalance | formatDecimals }} {{ info.underlyingSymbol }}</h2>
-                <p><span>{{ tokenPrice | formatPrice }} USD</span></p>
+                <p class="p1-descriptions">
+                  {{ $t('dialog.repay.description3') }}</p>
+                <p class="p2-reading-values">
+                  {{ info.totalBalance | formatDecimals }} {{ info.underlyingSymbol }}</p>
+                <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
               </div>
               <v-tooltip right>
                 <template v-slot:activator="{ on, attrs }">
@@ -148,13 +160,16 @@
                     mdi-information
                   </v-icon>
                 </template>
-                <span>El valor corresponde a la cantidad <br> pedida prestada más los intereses <br>
-                  acumulados hasta la fecha de pago. </span>
+                <span class="p5-feedback">
+                  {{ $t('dialog.repay.tooltip1') }} <br>
+                  {{ $t('dialog.repay.tooltip2') }} <br>
+                  {{ $t('dialog.repay.tooltip3') }}</span>
               </v-tooltip>
             </div>
           </div>
           <v-divider class="mt-16 pb-5"></v-divider>
-          <v-row class="ma-0 mt-10 input-box" v-bind:class="[ validAmount
+          <p class="p1-descriptions">{{ actionDescription }}</p>
+          <v-row class="ma-0 mt-4 input-box" v-bind:class="[ validAmount
             ? 'valid' : amount === null ? '' : 'invalid' ]">
             <v-col class="pa-0">
               <v-text-field type="number" v-model="amount" dark
@@ -184,8 +199,8 @@
               class="mt-12">
             </v-slider>
             <div class="d-flex justify-space-between">
-              <p>0%</p>
-              <p>100%</p>
+              <span class="p1-descriptions">0%</span>
+              <span class="p1-descriptions">100%</span>
             </div>
           </div>
           <div class="mt-16 pt-9">
@@ -243,8 +258,8 @@ export default {
       },
       chartData: [
         ['', '', { role: 'style' }],
-        ['Colateral', 0, '#FF9153'],
-        ['Cantidad a pedir prestado', 0, '#FFBD98'],
+        [this.$t('dialog.borrow.description10'), 0, '#FF9153'],
+        [this.$t('dialog.borrow.description11'), 0, '#FFBD98'],
       ],
       chartOptions: {
         width: 300,
@@ -255,7 +270,7 @@ export default {
           position: 'none',
         },
         vAxis: {
-          title: 'Monto en USD',
+          title: this.$t('dialog.borrow.description9'),
           colors: ['#9575cd', '#33ac71'],
           labelStyle: { color: '#FFF' },
           titleTextStyle: { color: '#FFF' },
@@ -296,11 +311,11 @@ export default {
       return this.isInBorrowMenu ? Borrow : Pay;
     },
     actionBalance() {
-      return this.isInBorrowMenu ? 'Puedes pedir prestado' : 'Pediste prestado';
+      return this.isInBorrowMenu ? this.$t('dialog.borrow.description1') : this.$t('dialog.repay.description1');
     },
     actionDescription() {
-      const desc = 'Escribe la cantidad que vas a';
-      return this.isInBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`;
+      const desc = this.$t('dialog.deposit.description4');
+      return this.isInBorrowMenu ? `${desc} pedir prestada` : `${desc} pagar`; // {{ $t('dialog.borrow.description4') }} : {{ $t('dialog.repay.description2') }}
     },
     amountAsUnderlyingPrice() {
       return Number(this.amount * this.info.underlyingPrice);
@@ -309,7 +324,7 @@ export default {
       return this.isInBorrowMenu ? '#FF9153' : '#FF9153';
     },
     buttonLabel() {
-      return this.isInBorrowMenu ? 'Pedir prestado' : 'Pagar';
+      return this.isInBorrowMenu ? this.$t('dialog.borrow-repay.title1') : this.$t('dialog.borrow-repay.title2');
     },
     tokenBalance() {
       return this.isInBorrowMenu ? (this.info.liquidity / this.info

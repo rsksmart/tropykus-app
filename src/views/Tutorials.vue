@@ -2,7 +2,8 @@
   <div class="home">
     <v-container class="tutorials container">
       <v-row class="ma-0 mb-5 pl-3">
-        <h3 class="text-left h3-sections-heading">Tutoriales</h3>
+        <h3 class="text-left h3-sections-heading">
+          {{ $t('tutorials.title') }}</h3>
       </v-row>
       <v-row class="ma-0">
         <v-col cols="3" class="px-5">
@@ -12,14 +13,14 @@
                      src="@/assets/tutorials/btc-to-rbtc/BtcToRbtc.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
-              Convierte
+              {{ $t('tutorials.title1') }}
             </v-row>
             <v-row class="mx-0 mb-3 d-flex justify-center">
-              BTC a RBTC
+              {{ $t('tutorials.title2') }}
             </v-row>
             <v-row class="mx-0 my-2 d-flex justify-center">
               <v-btn depressed @click="$router.push({ name: 'BtcToRbtc'})">
-                Ver Tutorial
+                {{ $t('tutorials.button') }}
               </v-btn>
             </v-row>
           </v-card>
@@ -31,14 +32,14 @@
                      src="@/assets/tutorials/binance-to-liquality/BinanceToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
-              Transfiere tus fondos
+              {{ $t('tutorials.title3') }}
             </v-row>
             <v-row class="mx-0 mb-3 d-flex justify-center">
-              desde Binance
+              {{ $t('tutorials.title4') }} Binance
             </v-row>
             <v-row class="mx-0 my-2 d-flex justify-center">
               <v-btn depressed @click="$router.push({ name: 'BinanceToLiquality'})">
-                Ver Tutorial
+                {{ $t('tutorials.button') }}
               </v-btn>
             </v-row>
           </v-card>
@@ -50,14 +51,14 @@
                      src="@/assets/tutorials/ledn-to-liquality/LednToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
-              Transfiere tus fondos
+              {{ $t('tutorials.title3') }}
             </v-row>
             <v-row class="mx-0 mb-3 d-flex justify-center">
-              desde Ledn
+              {{ $t('tutorials.title4') }}  Ledn
             </v-row>
             <v-row class="mx-0 my-2 d-flex justify-center">
               <v-btn depressed @click="$router.push({ name: 'LednToLiquality'})">
-                Ver Tutorial
+                {{ $t('tutorials.button') }}
               </v-btn>
             </v-row>
           </v-card>
@@ -69,14 +70,14 @@
                      contain src="@/assets/tutorials/blockfi-to-liquality/BlockfiToLiquality.svg"/>
             </v-row>
             <v-row class="mx-0 d-flex justify-center">
-              Transfiere tus fondos
+              {{ $t('tutorials.title3') }}
             </v-row>
             <v-row class="mx-0 mb-3 d-flex justify-center">
-              desde BlockFi
+              {{ $t('tutorials.title4') }}  BlockFi
             </v-row>
             <v-row class="mx-0 my-2 d-flex justify-center">
               <v-btn depressed @click="$router.push({ name: 'BlockfiToLiquality'})">
-                Ver Tutorial
+                {{ $t('tutorials.button') }}
               </v-btn>
             </v-row>
           </v-card>

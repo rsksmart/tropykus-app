@@ -20,24 +20,6 @@
   }
   .slider-container{
     margin-top: 26px ;
-    h1, h2, p {
-      color: #fff;
-    }
-    h1 {
-      font-size: 32px;
-    }
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
-    }
-    p {
-      font-size: 14px;
-      margin: 0;
-      span{
-        font-style: italic;
-        font-weight: 400;
-      }
-    }
     .v-divider {
       border-top: 2px solid #BAB9B9;
     }
@@ -92,6 +74,9 @@
         display: flex;
         justify-content: center;
         text-align: center;
+        p {
+          color: #FFFFFF;
+        }
       }
     }
 

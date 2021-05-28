@@ -9,7 +9,7 @@
           @click="inSupplyMenu = true"
           :class="inSupplyMenu ? 'button-save' : 'button-save-click'"
         >
-          <span class="b1-main">Depositar</span>
+          <span class="b1-main">{{ $t('dialog.supply-redeem.title1') }}</span>
         </v-btn>
         <v-btn
           height="80"
@@ -18,7 +18,7 @@
           @click="inSupplyMenu = false"
           :class="inSupplyMenu ? 'button-withdraw' : 'button-withdraw-click'"
         >
-          <span class="b1-main">Retirar</span>
+          <span class="b1-main">{{ $t('dialog.supply-redeem.title2') }}</span>
         </v-btn>
       </v-row>
       <v-row class="ma-0 mt-5">
@@ -59,7 +59,8 @@
             <v-row class="ma-0">
               <v-col class="pa-0 mt-2">
                 <p class="p1-descriptions">
-                  Tasa de ganancia <br> anual dinámica actual
+                  {{ $t('dialog.deposit.description2') }}
+                  {{ $t('dialog.deposit.description3') }}
                 </p>
               </v-col>
               <v-col cols="auto" class="pa-0 mt-1">
@@ -69,9 +70,9 @@
                            src="@/assets/icons/info.svg" contain/>
                   </template>
                   <span class="p5-feedback">
-                    La tasa de interés varía cuando<br>
-                    otros usuarios realizan<br>
-                    transacciones en el protocolo.
+                    {{ $t('dialog.deposit.tooltip1') }} <br>
+                    {{ $t('dialog.deposit.tooltip2') }} <br>
+                    {{ $t('dialog.deposit.tooltip3') }}
                   </span>
                 </v-tooltip>
               </v-col>
@@ -127,8 +128,7 @@
         <v-row class="ma-0">
           <v-col class="pa-0">
             <p class="p1-descriptions">
-              Mira cuanto puedes ganar con tu depósito en el periodo
-              de tiempo que elijas
+              {{ $t('dialog.deposit.description6') }}
             </p>
           </v-col>
           <v-col class="pa-0" cols="auto">
@@ -162,15 +162,15 @@
         </v-row>
         <v-row class="ma-0">
           <v-col class="pa-0 d-flex justify-start">
-            <span class="p1-descriptions">1 año</span>
+            <span class="p1-descriptions">1 {{ $t('dialog.deposit.description9') }}</span>
           </v-col>
           <v-col class="pa-0 d-flex justify-end">
-            <span class="p1-descriptions">5 años</span>
+            <span class="p1-descriptions">5 {{ $t('dialog.deposit.description10') }}</span>
           </v-col>
         </v-row>
         <v-row class="ma-0 mt-6">
           <v-col class="pa-0">
-            <p class="p1-descriptions">Total ganancias</p>
+            <p class="p1-descriptions">{{ $t('dialog.deposit.description7') }}</p>
           </v-col>
           <v-col class="pa-0">
             <p class="p6-reading-values">
@@ -183,7 +183,7 @@
         </v-row>
         <v-row class="ma-0">
           <v-col class="pa-0">
-            <p class="p1-descriptions">Total ganancias + depósito</p>
+            <p class="p1-descriptions">{{ $t('dialog.deposit.description8') }}</p>
           </v-col>
           <v-col class="pa-0">
             <p class="p6-reading-values">
@@ -280,14 +280,14 @@ export default {
       return this.inSupplyMenu ? WalletIcon : PigIcon;
     },
     actionBalance() {
-      return this.inSupplyMenu ? 'Tienes en tu billetera:' : 'Tienes depositado:';
+      return this.inSupplyMenu ? this.$t('dialog.deposit.description1') : this.$t('dialog.withdraw.description2');
     },
     actionDescription() {
-      const desc = 'Escribe la cantidad que vas a';
-      return this.inSupplyMenu ? `${desc} depositar` : `${desc} retirar`;
+      const desc = this.$t('dialog.deposit.description4');
+      return this.inSupplyMenu ? `${desc} depositar` : `${desc} retirar`; // {{ $t('dialog.deposit.description5') }} : {{ $t('dialog.withdraw.description2') }}
     },
     buttonLabel() {
-      return this.inSupplyMenu ? 'Depositar' : 'Retirar';
+      return this.inSupplyMenu ? this.$t('dialog.supply-redeem.title1') : this.$t('dialog.supply-redeem.title2');
     },
     tokenBalance() {
       return this.inSupplyMenu ? this.data.underlyingBalance : this.data.supplyBalance;

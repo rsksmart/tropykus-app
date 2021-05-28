@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="500" overlay-opacity="0.8" overlay-color="#000">
       <v-card class="modal-connect-wallet container" v-click-outside="closeDialog">
         <v-row class="ma-0 mb-8 d-flex justify-center">
-          <h1 class="h3-sections-heading text-center">Conecta tu billetera</h1>
+          <h1 class="h3-sections-heading text-center">{{ $t('dialog.wallet.title1') }}</h1>
         </v-row>
         <v-row class="d-flex justify-center">
           <v-col cols="6" class="pa-0">
@@ -32,7 +32,7 @@
                 <v-img height="40" width="40" src="@/assets/wallets/ledger.svg"
                        alt="Ledger icon" contain position="center center" />
                 <span class="b2-secondary disabled">Ledger</span>
-                <span class="b2-secondary disabled">(Pronto)</span>
+                <span class="b2-secondary disabled">{{ $t('dialog.wallet.button1') }}</span>
               </div>
             </v-btn>
           </v-col>
@@ -42,7 +42,7 @@
                 <v-img height="40" width="40" src="@/assets/wallets/trezor.svg"
                        alt="Trezor icon" contain position="center center"  />
                 <span class="b2-secondary disabled">Trezor</span>
-                <span class="b2-secondary disabled">(Pronto)</span>
+                <span class="b2-secondary disabled">{{ $t('dialog.wallet.button1') }}</span>
               </div>
             </v-btn>
           </v-col>
@@ -51,16 +51,16 @@
               <div class="d-flex align-center flex-column">
                 <v-img height="40" width="40" src="@/assets/wallets/wallet-connect.svg"
                        alt="Wallet connect icon" contain position="center center" />
-                <span class="b2-secondary">Billetera móvil</span>
+                <span class="b2-secondary">{{ $t('dialog.wallet.button2') }}</span>
               </div>
             </v-btn>
           </v-col>
         </v-row>
         <v-row class="ma-0 d-flex justify-center">
           <p class="p1-descriptions text-center mr-1">
-            ¿No tienes billetera?
+            {{ $t('dialog.wallet.description1') }}
             <a class="p1-descriptions" href="https://liquality.io/" target="_blank" rel="noopener">
-              Descargala
+              {{ $t('dialog.wallet.description2') }}
             </a>
           </p>
         </v-row>

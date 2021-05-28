@@ -6,7 +6,7 @@
           <v-img height="28" src="@/assets/tutorials/left-arrow.svg" alt="Left arrow" contain/>
         </router-link>
         <h1>
-          Transfiere tus BTC desde
+          {{ $t('tutorials.blockfi.title') }}
         </h1>
         <img class="mx-2" src="@/assets/wallets/blockfi.svg" alt="Binance Logo" />
       </div>
@@ -57,30 +57,27 @@ export default {
       steps: [
         {
           number: 1,
-          title: 'Instala liquality en tu navegador',
+          title: this.$t('tutorials.blockfi.subtitle1'),
           image: Step01,
         },
         {
           number: 2,
-          title: 'Inicia sesión en Poloniex con tu cuenta',
+          title: this.$t('tutorials.blockfi.subtitle2'),
           image: Step02,
         },
         {
           number: 3,
-          title:
-            'Ve al menú “Balances” en la esquina superior derecha y selecciona la opción “Deposits & Withdrawals”.',
+          title: this.$t('tutorials.blockfi.subtitle3'),
           image: Step03,
         },
         {
           number: 4,
-          title:
-            'Selecciona la opción de “Hide 0 Balances” y luego da click en la opción “Withdraw”.',
+          title: this.$t('tutorials.blockfi.subtitle4'),
           image: Step04,
         },
         {
           number: 5,
-          title:
-            'Digita la cantidad de BTC que quieres retira y la dirección de liquality a la cual quieres enviar los fondos. Luego presiona “Withdraw” y listo, ya puedes ahorrar y pedir prestado en Tropykus.',
+          title: this.$t('tutorials.blockfi.subtitle5'),
           image: Step05,
         },
       ],

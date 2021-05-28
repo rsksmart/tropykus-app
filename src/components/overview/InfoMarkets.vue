@@ -7,22 +7,21 @@
         <v-divider></v-divider>
       </v-row>
       <v-row class="d-flex align-baseline">
-        <h2>{{ totalMarkets | formatPrice }}</h2> <!--Dinámico-->
-<!--        <p class="ml-5"><span>+#,##%</span></p> &lt;!&ndash;Dinámico&ndash;&gt;-->
+        <h2>{{ totalMarkets | formatPrice }}</h2>
       </v-row>
       <v-row class="d-flex flex-column" style="height: 60%;">
         <div class="mb-2" style="height: 10%;">
-          <p>Mercados</p>
+          <p>{{ $t('overview.subtitle') }}</p>
         </div>
         <div v-for="(market, idx) in marketsData" :key="`deposit-${idx}`"
              class="overview-markets d-flex flex-column justify-space-between mt-2">
           <div class="d-flex justify-space-between">
-            <p>{{ market.symbol }}</p> <!--Dinámico-->
+            <p>{{ market.symbol }}</p>
             <p>
               <span>
                   {{ (`${value(market[type])}%`) }}
                 </span>
-            </p><!--Dinámico-->
+            </p>
           </div>
           <div>
             <v-progress-linear
