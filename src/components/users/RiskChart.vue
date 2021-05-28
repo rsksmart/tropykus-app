@@ -40,7 +40,7 @@ export default {
       return SadFace;
     },
     riskTitle() {
-      if (this.riskRate === 100) return 'Sin riesgo';
+      if (this.riskRate === 100) return this.$t('market.risk.titles.no-risk');
       if (this.riskRate > 60 && this.riskRate < 100) return this.$t('market.risk.titles.low-risk');
       if (this.riskRate > 40 && this.riskRate <= 60) return this.$t('market.risk.titles.medium-risk');
       if (this.riskRate >= 0 && this.riskRate <= 40) return this.$t('market.risk.titles.high-risk');

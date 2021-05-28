@@ -105,6 +105,7 @@
     "suggestions": "Sugerencias para ti",
     "risk": {
       "titles": {
+        "no-risk": "Sin riesgo",
         "low-risk": "Riesgo bajo",
         "medium-risk": "Riesgo medio",
         "high-risk": "Riesgo alto",

@@ -34,7 +34,6 @@
       "tooltip1": "The interest rate varies when ",
       "tooltip2": "other users carry out ",
       "tooltip3": "transactions in the protocol."
-
     },
     "withdraw": {
       "description1": "You have deposited:",
@@ -104,6 +103,7 @@
     "suggestions": "Suggestions for you",
     "risk": {
       "titles": {
+        "no-risk": "Out of risk",
         "low-risk": "Low risk",
         "medium-risk": "Medium risk",
         "high-risk": "High risk",
