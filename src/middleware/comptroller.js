@@ -7,8 +7,8 @@ import signer from './utils';
 export default class Comptroller {
   constructor(chainId) {
     this.comptrollerAddress = addresses[chainId].comptroller;
-    this.web3 = chainId === 31 ? Vue.web3Ws : Vue.web3;
-    this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, this.web3);
+    this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
+    this.wsInstance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3Ws);
   }
 
   get allMarkets() {

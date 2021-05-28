@@ -227,7 +227,7 @@ export default {
           this.showWaiting();
           await this.market.supply(this.account, this.amount)
             .then(() => {
-              this.market.instance.on('Mint', (from) => {
+              this.market.wsInstance.on('Mint', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
                   this.updateMarketInfo();
@@ -241,7 +241,7 @@ export default {
           this.showWaiting();
           await this.market.borrow(this.account, this.amount)
             .then(() => {
-              this.market.instance.on('Borrow', (from) => {
+              this.market.wsInstance.on('Borrow', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
                   this.updateMarketInfo();
@@ -255,7 +255,7 @@ export default {
           this.showWaiting();
           this.market.redeem(this.account, this.amount)
             .then(() => {
-              this.market.instance.on('Redeem', (from) => {
+              this.market.wsInstance.on('Redeem', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
                   this.updateMarketInfo();
@@ -268,7 +268,7 @@ export default {
           this.showWaiting();
           this.market.repay(this.account, this.amount)
             .then(() => {
-              this.market.instance.on('RepayBorrow', (from) => {
+              this.market.wsInstance.on('RepayBorrow', (from) => {
                 if (from === this.walletAddress) {
                   this.showSuccess();
                   this.updateMarketInfo();
@@ -283,7 +283,7 @@ export default {
         default:
           break;
       }
-      this.market.instance.on('Failure', (from, to, amount, event) => {
+      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);

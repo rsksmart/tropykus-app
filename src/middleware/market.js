@@ -15,9 +15,9 @@ const factor = 1e18;
 export default class Market {
   constructor(address = '', MarketAbi, chainId) {
     this.marketAddress = address.toLowerCase();
-    this.web3 = chainId === 31 ? Vue.web3Ws : Vue.web3;
-    this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, this.web3);
-    this.instance = new ethers.Contract(this.marketAddress, MarketAbi, this.web3);
+    this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
+    this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
+    this.wsInstance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3Ws);
     this.gasLimit = 300000;
   }
 
@@ -75,7 +75,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     return underlyingAsset.callStatic.name();
   }
@@ -84,7 +84,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     return underlyingAsset.callStatic.symbol();
   }
@@ -93,7 +93,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     return underlyingAsset.callStatic.decimals();
   }
@@ -221,7 +221,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       underlyingAssetSymbol,
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     return Number(await underlyingAsset.callStatic.balanceOf(address)) / factor;
   }
@@ -230,7 +230,7 @@ export default class Market {
     const priceOracleProxyInstance = new ethers.Contract(
       addresses[chainId].priceOracleProxy,
       PriceOracleProxyAbi,
-      this.web3,
+      Vue.web3,
     );
     return Number(await priceOracleProxyInstance.callStatic.getUnderlyingPrice(this.marketAddress))
       / factor;
@@ -253,7 +253,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
     return this.instance.connect(accountSigner).mint(value, { gasLimit: this.gasLimit });
@@ -279,7 +279,7 @@ export default class Market {
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
-      this.web3,
+      Vue.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
     if (await Market.isCRbtc(this.marketAddress)) {

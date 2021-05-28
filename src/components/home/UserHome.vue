@@ -119,7 +119,7 @@ export default {
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.load();
-    this.comptroller.instance.on('MarketEntered', () => this.load());
+    this.comptroller.wsInstance.on('MarketEntered', () => this.load());
   },
 };
 </script>
