@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import Landing from '@/components/home/Landing.vue';
 import UserHome from '@/components/home/UserHome.vue';
 import * as constants from '@/store/constants';
@@ -21,6 +21,9 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
+    }),
+    ...mapState({
+      routePath: (state) => state.route.path,
     }),
     currentComponent() {
       return this.isLoggedIn ? 'UserHome' : 'Landing';
@@ -38,6 +41,9 @@ export default {
       window.ethereum.on('chainChanged', () => {
         this.key += 1;
       });
+    }
+    if (this.routePath === '/en') {
+      this.$i18n.locale = 'en';
     }
   },
 };

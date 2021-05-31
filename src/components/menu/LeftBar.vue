@@ -119,7 +119,6 @@ export default {
   data() {
     return {
       constants,
-      lang: 'EN',
       views: {
         inSavings: false,
         inDebts: false,
@@ -132,6 +131,9 @@ export default {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
     }),
+    lang() {
+      return this.$i18n.locale === 'en' ? 'ES' : 'EN';
+    },
   },
   methods: {
     changeLanguage() {
