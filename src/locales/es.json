@@ -102,10 +102,10 @@
       "title6": "Presiona el botón Sign en tu billetera para autorizar la transacción"
     },
     "success": {
-      "title1": "Has depositado",
-      "title2": "Has retirado",
-      "title3": "Has pedido prestado",
-      "title4": "Has pagado de tu deuda"
+      "title1": "Has depositado \n",
+      "title2": "Has retirado \n",
+      "title3": "Has pedido prestado \n",
+      "title4": "Has pagado de tu deuda \n"
     }
   },
   "market": {

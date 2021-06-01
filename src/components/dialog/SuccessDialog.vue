@@ -51,13 +51,13 @@ export default {
     dialogText() {
       switch (this.action) {
         case constants.USER_ACTION_MINT:
-          return this.$t('dialog.suceess.title1') + this.amount + this.underlyingSymbol;
+          return this.$t('dialog.success.title1') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_REDEEM:
-          return this.$t('dialog.suceess.title2') + this.amount + this.underlyingSymbol;
+          return this.$t('dialog.success.title2') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_BORROW:
-          return this.$t('dialog.suceess.title3') + this.amount + this.underlyingSymbol;
+          return this.$t('dialog.success.title3') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_REPAY:
-          return this.$t('dialog.suceess.title4') + this.amount + this.underlyingSymbol;
+          return this.$t('dialog.success.title4') + this.amount + this.underlyingSymbol;
         default:
           return '';
       }

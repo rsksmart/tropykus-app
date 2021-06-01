@@ -100,10 +100,10 @@
       "title6": "Press the Sign button on your wallet to authorize the transaction."
     },
     "success": {
-      "title1": "You have deposited",
-      "title2": "You have withdrawn",
-      "title3": "You have borrowed",
-      "title4": "You have paid your debt"
+      "title1": "You have deposited \n",
+      "title2": "You have withdrawn \n",
+      "title3": "You have borrowed \n",
+      "title4": "You have paid your debt \n"
     }
   },
   "market": {
