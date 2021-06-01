@@ -7,7 +7,7 @@ export default [
     component: Supply,
   },
   {
-    path: '/en',
+    path: '/es',
     name: 'Supply',
     component: Supply,
   },

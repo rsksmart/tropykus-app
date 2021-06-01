@@ -9,6 +9,7 @@
     }
   },
   "dialog": {
+    "button": "Continue",
     "wallet": {
       "title1": "Connect your wallet",
       "description1": "Don't have a wallet?",
@@ -18,7 +19,11 @@
     },
     "supply-redeem": {
       "title1": "Deposit",
-      "title2": "Withdraw"
+      "title2": "Withdraw",
+      "rule1": "You cannot deposit in this market, you have an active debt. Pay your debt and try again later.",
+      "rule2": "You do not have enough funds",
+      "rule3": "You do not have enough deposited",
+      "rule4": "This market is underfunded"
     },
     "deposit": {
       "description1": "You have in your wallet:",
@@ -42,7 +47,11 @@
     "borrow-repay": {
       "title1": "Borrow",
       "title2": "Pay",
-      "description1": "Write the amount you are going to"
+      "description1": "Write the amount you are going to",
+      "rule1": "You do not have enough collateral",
+      "rule2": "This market is underfunded",
+      "rule3": "You do not have sufficient funds",
+      "rule4": "You do not owe as much"
     },
     "borrow": {
       "description1": "You can borrow",
@@ -67,6 +76,34 @@
     },
     "loading": {
       "title1": "Confirming the transaction on the network"
+    },
+    "error": {
+      "description1": "The deposit could not be completed. Please try again later.",
+      "description2": "The withdrawal could not be completed. Please try again later.",
+      "description3": "The loan could not be completed. Please try again later.",
+      "description4": "Payment could not be completed. Please try again later."
+    },
+    "transfer-funds": {
+      "number1": "Log in to the platform where you have your funds.",
+      "number2": "Search for the cryptocurrency you want to transfer.",
+      "number3": "Select the “withdraw“ option",
+      "number4": "Then, you must copy your wallet address and place it in the field of the platform that indicates the receiving address.",
+      "number5": "Enter the amount you want to transfer.",
+      "number6": "Check that your funds have been correctly sent to your wallet."
+    },
+    "tx-summary": {
+      "title1": "Summary of the",
+      "title2": "Amount to",
+      "title3": "Transaction cost",
+      "title4": "Transaction speed",
+      "title5": "Total amount",
+      "title6": "Press the Sign button on your wallet to authorize the transaction."
+    },
+    "success": {
+      "title1": "You have deposited",
+      "title2": "You have withdrawn",
+      "title3": "You have borrowed",
+      "title4": "You have paid your debt"
     }
   },
   "market": {

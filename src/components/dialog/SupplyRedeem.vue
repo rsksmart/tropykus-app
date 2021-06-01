@@ -246,14 +246,13 @@ export default {
       },
       rules: {
         leverage: () => (this.inSupplyMenu ? this.info.borrowBalance <= 0
-          : true) || 'No puedes depositar en este mercado, tienes una deuda activa.'
-          + ' Paga tu deuda e intenta más tarde.',
+          : true) || this.$t('dialog.supply-redeem.rule1'),
         minBalance: () => (this.inSupplyMenu ? Number(this.amount) <= Number(this
-          .data.underlyingBalance) : true) || 'No tienes fondos suficientes',
+          .data.underlyingBalance) : true) || this.$t('dialog.supply-redeem.rule2'),
         supplyBalance: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
-          .data.supplyBalance) : true) || 'No tienes suficiente depositado',
+          .data.supplyBalance) : true) || this.$t('dialog.supply-redeem.rule3'),
         marketCash: () => (!this.inSupplyMenu ? Number(this.amount) <= Number(this
-          .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
+          .info.cash) : true) || this.$t('dialog.supply-redeem.rule4'),
       },
     };
   },

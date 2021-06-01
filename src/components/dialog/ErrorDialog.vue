@@ -11,7 +11,7 @@
         </v-row>
         <v-row class="ma-0 mt-10 d-flex justify-center">
           <v-btn color="#41A255" @click="close" width="200">
-            <span class="whiteish">Continuar</span>
+            <span class="whiteish">{{ $t('dialog.button') }}</span>
           </v-btn>
         </v-row>
       </div>
@@ -43,13 +43,13 @@ export default {
     dialogText() {
       switch (this.action) {
         case constants.USER_ACTION_MINT:
-          return 'No se pudo completar el depósito. Intenta más tarde.';
+          return this.$t('dialog.error.description1');
         case constants.USER_ACTION_REDEEM:
-          return 'No se pudo completar el retiro. Intenta más tarde.';
+          return this.$t('dialog.error.description2');
         case constants.USER_ACTION_BORROW:
-          return 'No se pudo completar el préstamo. Intenta más tarde.';
+          return this.$t('dialog.error.description3');
         case constants.USER_ACTION_REPAY:
-          return 'No se pudo completar el pago. Intenta más tarde.';
+          return this.$t('dialog.error.description4');
         default:
           return '';
       }

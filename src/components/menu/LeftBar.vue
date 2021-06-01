@@ -48,17 +48,6 @@
         <span>{{ $t('menu.sidebar.markets') }}</span>
       </v-tooltip>
     </v-row>
-    <!-- <v-row class="ma-0 mb-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn  width="50"
-            v-bind:class="{ selected: views.inOverview }"
-            height="64" depressed v-bind="attrs" v-on="on">
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.language') }}</span>
-      </v-tooltip>
-    </v-row> -->
     <div class="custom-spacer"/>
     <v-row class="ma-0 mb-2 mx-2">
       <v-tooltip right color="#52826E">

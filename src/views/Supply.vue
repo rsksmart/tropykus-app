@@ -42,8 +42,8 @@ export default {
         this.key += 1;
       });
     }
-    if (this.routePath === '/en') {
-      this.$i18n.locale = 'en';
+    if (this.routePath === '/es') {
+      this.$i18n.locale = 'es';
     }
   },
 };

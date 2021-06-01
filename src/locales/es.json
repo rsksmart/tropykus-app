@@ -9,6 +9,7 @@
     }
   },
   "dialog": {
+    "button": "Continuar",
     "wallet": {
       "title1": "Conecta tu billetera",
       "description1": "¿No tienes billetera?",
@@ -18,7 +19,11 @@
     },
     "supply-redeem": {
       "title1": "Depositar",
-      "title2": "Retirar"
+      "title2": "Retirar",
+      "rule1": "No puedes depositar en este mercado, tienes una deuda activa. Paga tu deuda e intenta más tarde.",
+      "rule2": "No tienes fondos suficientes",
+      "rule3": "No tienes suficiente depositado",
+      "rule4": "Este mercado no tiene fondos suficientes"
     },
     "deposit": {
       "description1": "Tienes en tu billetera:",
@@ -43,7 +48,11 @@
     "borrow-repay": {
       "title1": "Pedir prestado",
       "title2": "Pagar",
-      "description1": "Escribe la cantidad que vas a"
+      "description1": "Escribe la cantidad que vas a",
+      "rule1": "No tienes suficiente colateral",
+      "rule2": "Este mercado no tiene fondos suficientes",
+      "rule3": "No tienes fondos suficientes",
+      "rule4": "No debes tanto"
     },
     "borrow": {
       "description1": "Puedes pedir prestado",
@@ -69,6 +78,34 @@
     },
     "loading": {
       "title1": "Confirmando la transacción en la red"
+    },
+    "error": {
+      "description1": "No se pudo completar el depósito. Intenta más tarde",
+      "description2": "No se pudo completar el retiro. Intenta más tarde.",
+      "description3": "No se pudo completar el préstamo. Intenta más tarde.",
+      "description4": "No se pudo completar el pago. Intenta más tarde."
+    },
+    "transfer-funds": {
+      "number1": "Inicia sesión en la plataforma donde tienes tus fondos.",
+      "number2": "Busca la criptomoneda que quieres transferir.",
+      "number3": "Selecciona la opción de “retirar”",
+      "number4": "A continuación, debes copiar tu dirección de la billetera y colocarla en el campo de la plataforma que indica la dirección de recepción",
+      "number5": "Escribe el monto que quieres transferir.",
+      "number6": "Revisa que hayan sido enviados correctamente tus fondos a tu billetera."
+    },
+    "tx-summary": {
+      "title1": "Resumen del",
+      "title2": "Monto a",
+      "title3": "Costo de la transacción",
+      "title4": "Velocidad de la transacción",
+      "title5": "Monto total",
+      "title6": "Presiona el botón Sign en tu billetera para autorizar la transacción"
+    },
+    "success": {
+      "title1": "Has depositado",
+      "title2": "Has retirado",
+      "title3": "Has pedido prestado",
+      "title4": "Has pagado de tu deuda"
     }
   },
   "market": {

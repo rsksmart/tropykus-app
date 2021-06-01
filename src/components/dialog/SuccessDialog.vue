@@ -11,7 +11,7 @@
         </v-row>
         <v-row class="ma-0 mt-10 d-flex justify-center">
           <v-btn color="#41A255" @click="close" width="200">
-            <span class="whiteish">Continuar</span>
+            <span class="whiteish">{{ $t('dialog.button') }}</span>
           </v-btn>
         </v-row>
       </div>
@@ -51,13 +51,13 @@ export default {
     dialogText() {
       switch (this.action) {
         case constants.USER_ACTION_MINT:
-          return `Has depositado ${this.amount} ${this.underlyingSymbol}`;
+          return this.$t('dialog.suceess.title1') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_REDEEM:
-          return `Has retirado ${this.amount} ${this.underlyingSymbol}`;
+          return this.$t('dialog.suceess.title2') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_BORROW:
-          return `Has pedido prestado ${this.amount} ${this.underlyingSymbol}`;
+          return this.$t('dialog.suceess.title3') + this.amount + this.underlyingSymbol;
         case constants.USER_ACTION_REPAY:
-          return `Has pagado de tu deuda ${this.amount} ${this.underlyingSymbol}`;
+          return this.$t('dialog.suceess.title4') + this.amount + this.underlyingSymbol;
         default:
           return '';
       }

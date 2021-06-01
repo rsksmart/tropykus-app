@@ -248,13 +248,13 @@ export default {
       symbolImg: null,
       rules: {
         liquidity: () => (this.isInBorrowMenu ? Number(this.amountAsUnderlyingPrice) <= Number(this
-          .info.liquidity) : true) || 'No tienes suficiente colateral',
+          .info.liquidity) : true) || this.$t('dialog.borrow-repay.rule1'),
         marketCash: () => (this.isInBorrowMenu ? Number(this.amount) <= Number(this
-          .info.cash) : true) || 'Este mercado no tiene fondos suficientes',
+          .info.cash) : true) || this.$t('dialog.borrow-repay.rule2'),
         minBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
-          .info.underlyingBalance) : true) || 'No tienes fondos suficientes',
+          .info.underlyingBalance) : true) || this.$t('dialog.borrow-repay.rule3'),
         borrowBalance: () => (!this.isInBorrowMenu ? Number(this.amount) <= Number(this
-          .info.borrowBalance) : true) || 'No debes tanto',
+          .info.borrowBalance) : true) || this.$t('dialog.borrow-repay.rule4'),
       },
       chartData: [
         ['', '', { role: 'style' }],

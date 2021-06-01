@@ -34,7 +34,7 @@
         </div>
         <v-row class="ma-0">
           <v-btn @click="dialog = false" block color="#4cb163">
-            <span class="whiteish">Continuar</span>
+            <span class="whiteish">{{ $t('dialog.button') }}</span>
           </v-btn>
         </v-row>
       </v-container>
