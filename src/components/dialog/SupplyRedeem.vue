@@ -357,15 +357,16 @@ export default {
     },
     setMaxAmount() {
       if (this.inSupplyMenu) {
-        this.amount = this.data.underlyingBalance;
+        this.amount = this.data.underlyingBalance.toFixed(10);
       } else {
         this.amount = this.info.cash > this.data.supplyBalance
-          ? this.data.supplyBalance : this.info.cash;
+          ? this.data.supplyBalance.toFixed(10) : this.info.cash.toFixed(10);
       }
       this.setPercentageSlider();
     },
     setAmount() {
       this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
+      this.amount = this.amount.toFixed(10);
     },
     setPercentageSlider() {
       this.sliderAmountPercentage = (this.amount * 100) / this.tokenBalance;
