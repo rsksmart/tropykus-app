@@ -3,6 +3,18 @@
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
+          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE)" width="50"
+                 v-bind:class="{ selected: views.inBalance }"
+                 height="64" depressed v-bind="attrs" v-on="on">
+            <v-img contain height="43" src="@/assets/icons/home.svg"/>
+          </v-btn>
+        </template>
+        <span>{{ $t('menu.sidebar.balance') }}</span>
+      </v-tooltip>
+    </v-row>
+    <v-row class="ma-0 mt-2 mx-2">
+      <v-tooltip right color="#52826E">
+        <template v-slot:activator="{ on, attrs }">
           <v-btn @click="redirect(constants.ROUTE_NAMES.SAVINGS)" width="50"
                  v-bind:class="{ selected: views.inSavings }"
                  height="64" depressed v-bind="attrs" v-on="on">
@@ -30,7 +42,7 @@
           <v-btn @click="redirect(constants.ROUTE_NAMES.TUTORIALS)" width="50"
                  v-bind:class="{ selected: views.inTutorials }" color="transparent"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/tutorials.svg"/>
+            <v-img contain height="25" src="@/assets/icons/tutorials.svg"/>
           </v-btn>
         </template>
         <span>{{ $t('menu.sidebar.tutorial') }}</span>
@@ -42,7 +54,7 @@
           <v-btn @click="redirect(constants.ROUTE_NAMES.OVERVIEW)" width="50"
                  v-bind:class="{ selected: views.inOverview }"
                  height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/info.svg"/>
+            <v-img contain height="25" src="@/assets/icons/markets.svg"/>
           </v-btn>
         </template>
         <span>{{ $t('menu.sidebar.markets') }}</span>
@@ -109,6 +121,7 @@ export default {
     return {
       constants,
       views: {
+        inBalance: false,
         inSavings: false,
         inDebts: false,
         inTutorials: false,
@@ -145,6 +158,7 @@ export default {
         .catch(console.error);
     },
     reset() {
+      this.views.inBalance = false;
       this.views.inSavings = false;
       this.views.inDebts = false;
       this.views.inTutorials = false;
@@ -152,6 +166,9 @@ export default {
     },
     highlightRoute(routePath) {
       switch (routePath) {
+        case constants.ROUTE_NAMES.BALANCE:
+          this.views.inBalance = true;
+          break
         case constants.ROUTE_NAMES.SAVINGS:
           this.views.inSavings = true;
           break;

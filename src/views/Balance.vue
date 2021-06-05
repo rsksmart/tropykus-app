@@ -1,39 +1,41 @@
 <template>
   <div class="balance">
     <v-container class="mt-8 container">
-      <v-row class="ma-0">
-        <v-col cols="8" class="pa-0">
-          <v-row class="ma-0">
-            <my-balance />
-          </v-row>
-          <v-row class="ma-0">
-            <savings />
-          </v-row>
-          <v-row class="ma-0">
-            <debts />
-          </v-row>
-        </v-col>
-        <v-col cols="4" class="pa-0 mt-15">
-          <v-row class="ma-0">
-            <balance-chart />
-          </v-row>
-          <v-row class="ma-0 mt-4">
-            <risk-chart />
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row class="ma-0">
+      <div class="container" style="width: 1627px;">
+        <v-row class="mx-0 pl-3">
+          <h3 class="text-left h3-sections-heading">{{ $t('balance.title') }}</h3>
+        </v-row>
+        <v-row class="ma-0">
+            <v-col cols="5" class="pa-0 mt-10">
+              <v-row class="ma-0">
+                <balance-chart />
+              </v-row>
+            </v-col>
+            <v-col cols="7" class="pa-0">
+              <v-row class="ma-0">
+                <my-balance />
+              </v-row>
+              <v-row class="ma-0 mt-4">
+                <v-container class="ma-0">
+                  <risk-chart />
+                </v-container>
+              </v-row>
+              <!-- <v-row class="ma-0">
+                <savings />
+              </v-row>
+              <v-row class="ma-0">
+                <debts />
+              </v-row> -->
+            </v-col>
+        </v-row>
+      </div>
+      <v-row class="ma-0" style="width: 1627px;">
         <div class="container">
           <v-row class="mx-0 pl-3">
-            <v-card class="crop-card">
-              <v-card-title class="pa-0">
-                <v-img class="px-2" src="@/assets/icons/clock.svg" height="23" contain/>
-                <h1 class="text-left">Mi actividad</h1>
-              </v-card-title>
-            </v-card>
+            <h3 class="text-left h3-sections-heading">{{ $t('balance.subtitle4') }}</h3>
           </v-row>
           <v-row class="ma-0 pl-3 mt-4">
-            <v-row class="ma-0 mb-7">
+            <v-row class="ma-0 mb-7 d-flex justify-center">
               <v-simple-table class="mt-2">
                 <template v-slot:default>
                   <thead>

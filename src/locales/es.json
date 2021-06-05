@@ -158,6 +158,7 @@
   },
   "menu": {
     "sidebar": {
+      "balance": "Mi Balance",
       "deposit": "Depositos",
       "loan": "Pedir prestado",
       "tutorial": "Tutoriales",
@@ -238,5 +239,12 @@
       "title4": "prestado",
       "title5": "Tasa de interés anual \rdinámica actual"
     }
+  },
+  "balance": {
+    "title": "Balance general",
+    "subtitle1": "Mi billetera",
+    "subtitle2": "Mis depósitos",
+    "subtitle3": "Mis deudas",
+    "subtitle4": "Mi actividad"
   }
 }

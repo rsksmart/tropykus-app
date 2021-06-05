@@ -156,6 +156,7 @@
   },
   "menu": {
     "sidebar": {
+      "balance": "My Balance",
       "deposit": "Deposits",
       "loan": "Borrow",
       "tutorial": "Tutorials",
@@ -236,5 +237,12 @@
       "title4": "borrowed",
       "title5": "Current dynamic annual interest rate"
     }
+  },
+  "balance": {
+    "title": "Balance sheet",
+    "subtitle1": "My wallet",
+    "subtitle2": "My deposits",
+    "subtitle3": "My debts",
+    "subtitle4": "My activity"
   }
 }
