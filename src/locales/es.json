@@ -245,6 +245,18 @@
     "subtitle1": "Mi billetera",
     "subtitle2": "Mis depósitos",
     "subtitle3": "Mis deudas",
-    "subtitle4": "Mi actividad"
+    "subtitle4": "Mi actividad",
+    "my-balance": {
+      "title1": "Tienes depositado",
+      "subtitle1": "Depositados",
+      "subtitle2": "Ganancias históricas",
+      "title2": "Debes pagar",
+      "subtitle3": "Pedidos en préstamo",
+      "subtitle4": "Intereses acumulados"
+    },
+    "my-activity": {
+      "title": "No tienes depositos aún. Empieza a depositar.",
+      "button": "Depositar"
+    }
   }
 }

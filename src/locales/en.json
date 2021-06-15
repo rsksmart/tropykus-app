@@ -243,6 +243,18 @@
     "subtitle1": "My wallet",
     "subtitle2": "My deposits",
     "subtitle3": "My debts",
-    "subtitle4": "My activity"
+    "subtitle4": "My activity",
+    "my-balance": {
+      "title1": "You have deposited",
+      "subtitle1": "Deposited",
+      "subtitle2": "Historic earnings",
+      "title2": "You must pay",
+      "subtitle3": "Borrowing orders",
+      "subtitle4": "Accrued interest"
+    },
+    "my-activity": {
+      "title": "You have no deposits yet. Start depositing.",
+      "button": "Deposit"
+    }
   }
 }

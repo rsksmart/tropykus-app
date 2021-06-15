@@ -1,24 +1,44 @@
 <template>
-  <v-card class="container" color="#013E2F">
+  <v-card class="container" color="#013E2F" style="padding:30px;" height="496">
     <v-row class="ma-0 container">
       <v-col class="pa-0">
         <v-img class="px-2" src="@/assets/icons/dollar.svg" height="64" width="64"
                position="center center" contain/>
       </v-col>
-      <v-col cols="9" class="pa-0">
+      <v-col cols="8" class="pa-0">
         <v-row class="ma-0">
-          <h2 class="boldie">{{ userCashUSD | formatPrice }} USD</h2>
+          <h2 class="boldie">{{ userCashUSD }} USD</h2>
         </v-row>
         <v-row class="ma-0">
           <p class="ma-0">Balance neto</p>
         </v-row>
       </v-col>
+      <v-col>
+        <v-tooltip right>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
+              v-bind="attrs" v-on="on">
+              mdi-information
+            </v-icon>
+          </template>
+          <span class="p5-feedback">
+          </span>
+        </v-tooltip>
+      </v-col>
     </v-row>
     <v-divider color="#BEBEBE" />
     <div class="container">
-      <v-row class="ma-0">
-        <h3>Mis cryptos</h3>
-      </v-row>
+      <v-col cols="6">
+
+      </v-col>
+      <v-col cols="6">
+        <v-row class="ma-0">
+          <h3>Depósitos</h3>
+        </v-row>
+        <v-row>
+          <h3>Deudas</h3>
+        </v-row>
+      </v-col>
       <v-row class="ma-0">
         <GChart type="PieChart" :data="chartData" :options="chartOptions" />
       </v-row>
@@ -27,6 +47,14 @@
 </template>
 
 <script>
+import {
+  CRbtc,
+  CToken,
+  Market,
+  Comptroller,
+} from '@/middleware';
+import { mapState } from 'vuex';
+
 export default {
   name: 'BalanceChart',
   data() {
@@ -66,7 +94,33 @@ export default {
           textStyle: { color: '#FFF' },
         },
       },
+      comptroller: null,
+      marketAddresses: [],
+      markets: [],
     };
+  },
+  computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.walletAddress,
+      chainId: (state) => state.Session.chainId,
+    }),
+  },
+  methods: {
+    async getData() {
+      this.marketAddresses = await this.comptroller.allMarkets;
+      this.marketAddresses.forEach(async (marketAddress) => {
+        const isCRbtc = await Market.isCRbtc(marketAddress);
+        const market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+          : new CToken(this.marketAddress, this.chainId);
+        this.markets.push(market);
+      });
+      this.userCashUSD = await this.comptroller
+        .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
+    },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.getData();
   },
 };
 </script>

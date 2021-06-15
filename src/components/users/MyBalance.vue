@@ -10,7 +10,7 @@
     <template v-else>
       <v-row class="ma-0 mt-4">
         <v-col cols="6">
-          <v-card class="container" color="#013E2F" width="439">
+          <v-card class="container" color="#013E2F" width="439" height="263" style="padding:30px;">
             <v-row class="ma-0">
               <v-col class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
@@ -18,19 +18,42 @@
                          position="center center" contain/>
                 </v-row>
               </v-col>
-              <v-col cols="9" class="pa-0">
+              <v-col cols="6" class="pa-0">
                 <v-row class="ma-0">
-                  <h2 class="boldie">{{ totalSuppliedUSD | formatPrice }} USD</h2>
+                  <h2 class="boldie">{{ totalSuppliedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
-                  <p>Ahorrados</p>
+                  <p>Tienes depositado</p>
                 </v-row>
+              </v-col>
+              <v-col>
+               <v-tooltip right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
+                      v-bind="attrs" v-on="on">
+                      mdi-information
+                    </v-icon>
+                  </template>
+                  <span class="p5-feedback">
+                  </span>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+            <v-divider color="#BEBEBE" />
+            <v-row>
+              <v-col>
+                <h3>0 USD</h3>
+                <p>Depositados</p>
+              </v-col>
+              <v-col>
+                <h3>0 USD</h3>
+                <p>Ganancias historicas</p>
               </v-col>
             </v-row>
           </v-card>
         </v-col>
         <v-col cols="6">
-          <v-card class="container" color="#013E2F" width="439">
+          <v-card class="container" color="#013E2F" width="439" height="263" style="padding:30px;">
             <v-row class="ma-0">
               <v-col class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
@@ -38,13 +61,36 @@
                          position="center center" contain/>
                 </v-row>
               </v-col>
-              <v-col cols="9" class="pa-0">
+              <v-col cols="6" class="pa-0">
                 <v-row class="ma-0">
-                  <h2 class="boldie">{{ totalBorrowedUSD | formatPrice }} USD</h2>
+                  <h2 class="boldie">{{ totalBorrowedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
                   <p>Debes pagar</p>
                 </v-row>
+              </v-col>
+              <v-col>
+                 <v-tooltip right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
+                      v-bind="attrs" v-on="on">
+                      mdi-information
+                    </v-icon>
+                  </template>
+                  <span class="p5-feedback">
+                  </span>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+            <v-divider color="#BEBEBE" />
+            <v-row>
+              <v-col>
+                <h3>0 USD</h3>
+                <p>Pedidos en prestamo</p>
+              </v-col>
+              <v-col>
+                <h3>0 USD</h3>
+                <p>Intereses acumulados</p>
               </v-col>
             </v-row>
           </v-card>

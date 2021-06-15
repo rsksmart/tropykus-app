@@ -56,4 +56,32 @@ export default class Comptroller {
     return 1 - Math.min(1, 1 / await this
       .hypotheticalHealthRatio(markets, chainId, address, borrowBalanceInUSD));
   }
+
+  async totalBalanceInUSD(markets, accountAddress, chainId) {
+    return this.totalDepositsInUSD(markets, accountAddress, chainId)
+      - this.totalBorrowsInUSD(markets, accountAddress, chainId);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async totalDepositsInUSD(markets, accountAddress, chainId) {
+    let totalDeposits = 0;
+    markets.forEach(async (market) => {
+      const price = await market.underlyingCurrentPrice(chainId);
+      const totalDepositInUnderlying = await market
+        .currentBalanceOfCTokenInUnderlying(accountAddress);
+      totalDeposits += totalDepositInUnderlying * price;
+    });
+    return totalDeposits;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async totalBorrowsInUSD(markets, accountAddress, chainId) {
+    let totalBorrows = 0;
+    markets.forEach(async (market) => {
+      const price = await market.underlyingCurrentPrice(chainId);
+      const totalBorrowInUnderlying = await market.borrowBalanceCurrent(accountAddress);
+      totalBorrows += totalBorrowInUnderlying * price;
+    });
+    return totalBorrows;
+  }
 }
