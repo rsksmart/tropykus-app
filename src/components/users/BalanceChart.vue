@@ -17,7 +17,7 @@
         <v-tooltip right>
           <template v-slot:activator="{ on, attrs }">
             <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
-              v-bind="attrs" v-on="on">
+                    v-bind="attrs" v-on="on">
               mdi-information
             </v-icon>
           </template>
@@ -26,7 +26,7 @@
         </v-tooltip>
       </v-col>
     </v-row>
-    <v-divider color="#BEBEBE" />
+    <v-divider color="#BEBEBE"/>
     <div class="container">
       <v-col cols="6">
 
@@ -40,7 +40,7 @@
         </v-row>
       </v-col>
       <v-row class="ma-0">
-        <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+        <GChart type="PieChart" :data="chartData" :options="chartOptions"/>
       </v-row>
     </div>
   </v-card>
@@ -106,16 +106,26 @@ export default {
     }),
   },
   methods: {
+    async getMarkets() {
+      return new Promise((resolve, reject) => {
+        this.marketAddresses.forEach((marketAddress) => {
+          Market.isCRbtc(marketAddress)
+            .then((isCRbtc) => {
+              const market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
+                : new CToken(this.marketAddress, this.chainId);
+              return this.markets.push(market);
+            })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+    },
     async getData() {
       this.marketAddresses = await this.comptroller.allMarkets;
-      this.marketAddresses.forEach(async (marketAddress) => {
-        const isCRbtc = await Market.isCRbtc(marketAddress);
-        const market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
-          : new CToken(this.marketAddress, this.chainId);
-        this.markets.push(market);
-      });
+      await this.getMarkets();
+      console.log(this.markets);
       this.userCashUSD = await this.comptroller
-        .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
+        .totalBalanceInUSD(this.markets, '0x9c4aAE754FF8c963966B26CE8206EF0271c614aa', this.chainId);
     },
   },
   created() {

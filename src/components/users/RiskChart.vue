@@ -30,21 +30,21 @@ export default {
     return {
       riskChart: {
         borrow: {
-          noRisk : this.$t('market.risk.titles.no-risk'),
-          lowRisk : this.$t('market.risk.titles.low-risk'),
-          mediumRisk : this.$t('market.risk.titles.medium-risk'),
-          highRisk : this.$t('market.risk.titles.high-risk'),
-          other: this.$t('market.risk.titles.other')
+          noRisk: this.$t('market.risk.titles.no-risk'),
+          lowRisk: this.$t('market.risk.titles.low-risk'),
+          mediumRisk: this.$t('market.risk.titles.medium-risk'),
+          highRisk: this.$t('market.risk.titles.high-risk'),
+          other: this.$t('market.risk.titles.other'),
         },
         balance: {
-          noRisk : this.$t('market.risk.titles.no-risk'),
-          lowRisk : this.$t('market.risk.titles.low-risk'),
-          mediumRisk : this.$t('market.risk.titles.medium-risk'),
-          highRisk : this.$t('market.risk.titles.high-risk'),
-          other: this.$t('market.risk.titles.other')
+          noRisk: this.$t('market.risk.titles.no-risk'),
+          lowRisk: this.$t('market.risk.titles.low-risk'),
+          mediumRisk: this.$t('market.risk.titles.medium-risk'),
+          highRisk: this.$t('market.risk.titles.high-risk'),
+          other: this.$t('market.risk.titles.other'),
         },
       },
-    }
+    };
   },
   props: {
     riskRate: {
@@ -54,7 +54,7 @@ export default {
     typeChart: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     riskImage() {
@@ -65,8 +65,10 @@ export default {
     },
     riskTitle() {
       if (this.riskRate === 100) return this.riskChart[this.typeChart].noRisk;
-      if (this.riskRate > 60 && this.riskRate < 100) return  this.riskChart[this.typeChart].lowRisk;
-      if (this.riskRate > 40 && this.riskRate <= 60) return this.riskChart[this.typeChart].mediumRisk;
+      if (this.riskRate > 60 && this.riskRate < 100) return this.riskChart[this.typeChart].lowRisk;
+      if (this.riskRate > 40 && this.riskRate <= 60) {
+        return this.riskChart[this.typeChart].mediumRisk;
+      }
       if (this.riskRate >= 0 && this.riskRate <= 40) return this.riskChart[this.typeChart].highRisk;
       return this.riskChart[this.typeChart].other;
     },

@@ -58,20 +58,33 @@ export default class Comptroller {
   }
 
   async totalBalanceInUSD(markets, accountAddress, chainId) {
-    return this.totalDepositsInUSD(markets, accountAddress, chainId)
-      - this.totalBorrowsInUSD(markets, accountAddress, chainId);
+    // console.log(`markets: ${JSON.stringify(markets)}`);
+    console.log(`accountAddress: ${accountAddress}`);
+    console.log(`chainId: ${chainId}`);
+    const deposits = await this.totalDepositsInUSD(markets, accountAddress, chainId);
+    console.log(`Deposits: ${deposits}`);
+    return await this.totalDepositsInUSD(markets, accountAddress, chainId)
+      - await this.totalBorrowsInUSD(markets, accountAddress, chainId);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async totalDepositsInUSD(markets, accountAddress, chainId) {
-    let totalDeposits = 0;
-    markets.forEach(async (market) => {
-      const price = await market.underlyingCurrentPrice(chainId);
-      const totalDepositInUnderlying = await market
-        .currentBalanceOfCTokenInUnderlying(accountAddress);
-      totalDeposits += totalDepositInUnderlying * price;
+  totalDepositsInUSD(markets, accountAddress, chainId) {
+    return new Promise((resolve, reject) => {
+      let totalDeposits = 0;
+      markets.forEach((market, index) => {
+        Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.currentBalanceOfCTokenInUnderlying(accountAddress),
+        ])
+          .then(([price, totalDepositInUnderlying]) => {
+            console.log(`price: ${price}`);
+            console.log(`totalDepositInUnderlying: ${totalDepositInUnderlying}`);
+            totalDeposits += totalDepositInUnderlying * price;
+            if (index === markets.length - 1) resolve(totalDeposits);
+          })
+          .catch(reject);
+      });
     });
-    return totalDeposits;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -82,6 +95,7 @@ export default class Comptroller {
       const totalBorrowInUnderlying = await market.borrowBalanceCurrent(accountAddress);
       totalBorrows += totalBorrowInUnderlying * price;
     });
+    console.log(`totalBorrows: ${totalBorrows}`);
     return totalBorrows;
   }
 }

@@ -168,7 +168,7 @@ export default {
       switch (routePath) {
         case constants.ROUTE_NAMES.BALANCE:
           this.views.inBalance = true;
-          break
+          break;
         case constants.ROUTE_NAMES.SAVINGS:
           this.views.inSavings = true;
           break;
