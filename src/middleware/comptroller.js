@@ -58,11 +58,6 @@ export default class Comptroller {
   }
 
   async totalBalanceInUSD(markets, accountAddress, chainId) {
-    // console.log(`markets: ${JSON.stringify(markets)}`);
-    console.log(`accountAddress: ${accountAddress}`);
-    console.log(`chainId: ${chainId}`);
-    const deposits = await this.totalDepositsInUSD(markets, accountAddress, chainId);
-    console.log(`Deposits: ${deposits}`);
     return await this.totalDepositsInUSD(markets, accountAddress, chainId)
       - await this.totalBorrowsInUSD(markets, accountAddress, chainId);
   }
@@ -71,18 +66,16 @@ export default class Comptroller {
   totalDepositsInUSD(markets, accountAddress, chainId) {
     return new Promise((resolve, reject) => {
       let totalDeposits = 0;
-      markets.forEach((market, index) => {
-        Promise.all([
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
           market.underlyingCurrentPrice(chainId),
           market.currentBalanceOfCTokenInUnderlying(accountAddress),
         ])
-          .then((x) => {
-          // .then(([price, totalDepositInUnderlying]) => {
-            resolve(x)
-            // console.log(`price: ${x}`);
-            // console.log(`totalDepositInUnderlying: ${totalDepositInUnderlying}`);
-            // totalDeposits += totalDepositInUnderlying * price;
-            // if (index === markets.length - 1) resolve(totalDeposits);
+          .then(([price, totalDepositInUnderlying]) => {
+            totalDeposits += totalDepositInUnderlying * price;
+            counter += 1;
+            if (counter === markets.length - 1) resolve(totalDeposits);
           })
           .catch(reject);
       });
@@ -91,13 +84,21 @@ export default class Comptroller {
 
   // eslint-disable-next-line class-methods-use-this
   async totalBorrowsInUSD(markets, accountAddress, chainId) {
-    let totalBorrows = 0;
-    markets.forEach(async (market) => {
-      const price = await market.underlyingCurrentPrice(chainId);
-      const totalBorrowInUnderlying = await market.borrowBalanceCurrent(accountAddress);
-      totalBorrows += totalBorrowInUnderlying * price;
+    return new Promise((resolve, reject) => {
+      let totalBorrows = 0;
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.borrowBalanceCurrent(accountAddress),
+        ])
+          .then(([price, totalBorrowInUnderlying]) => {
+            totalBorrows += totalBorrowInUnderlying * price;
+            counter += 1;
+            if (counter === markets.length - 1) resolve(totalBorrows);
+          })
+          .catch(reject);
+      });
     });
-    console.log(`totalBorrows: ${totalBorrows}`);
-    return totalBorrows;
   }
 }

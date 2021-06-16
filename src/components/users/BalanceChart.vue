@@ -109,13 +109,17 @@ export default {
   methods: {
     async getMarkets() {
       return new Promise((resolve, reject) => {
-        this.marketAddresses.forEach(async (marketAddress, index) => {
+        let counter = 0;
+        this.marketAddresses.forEach(async (marketAddress) => {
           await Market.isCRbtc(marketAddress)
             .then((isCRbtc) => {
-              const market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
-                : new CToken(this.marketAddress, this.chainId);
-              this.markets.push(market);
-              if (index === this.marketAddresses.length - 1) resolve(this.markets);
+              counter += 1;
+              if (isCRbtc) {
+                this.markets.push(new CRbtc(marketAddress, this.chainId));
+              } else {
+                this.markets.push(new CToken(marketAddress, this.chainId));
+              }
+              if (counter === this.marketAddresses.length - 1) resolve(this.markets);
             })
             .catch(reject);
         });

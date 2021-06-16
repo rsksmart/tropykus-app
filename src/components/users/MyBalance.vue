@@ -103,12 +103,6 @@
 </template>
 
 <script>
-import {
-  CRbtc,
-  CToken,
-  Market,
-  Comptroller,
-} from '@/middleware';
 import { mapState } from 'vuex';
 
 export default {

@@ -99,8 +99,8 @@
 <script>
 import MyBalance from '@/components/users/MyBalance.vue';
 import BalanceChart from '@/components/users/BalanceChart.vue';
-import RiskChart from '@/components/users/RiskChart.vue';
-import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
+// import RiskChart from '@/components/users/RiskChart.vue';
+// import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
 
 export default {
   name: 'Balance',
@@ -148,8 +148,8 @@ export default {
   components: {
     MyBalance,
     BalanceChart,
-    RiskChart,
-    DebtSavingsBalance,
+    // RiskChart,
+    // DebtSavingsBalance,
   },
 };
 </script>
