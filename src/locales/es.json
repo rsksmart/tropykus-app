@@ -246,6 +246,9 @@
     "subtitle2": "Mis depósitos",
     "subtitle3": "Mis deudas",
     "subtitle4": "Mi actividad",
+    "tooltip1": "Este valor en USD es la resta de tus depositos y deudas. Entre menor sea la diferencia, el riesgo de ser liquidado es mayor.",
+    "tooltip2": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
+    "tooltip3": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
     "my-balance": {
       "title1": "Tienes depositado",
       "subtitle1": "Depositados",

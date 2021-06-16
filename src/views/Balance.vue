@@ -18,7 +18,7 @@
             <v-row class="ma-0 mt-4">
               <div class="risk-container">
                 <div class="risk-circle">
-                  <risk-chart :riskRate="riskRate" :typeChart="'balance'"/>
+                  <!-- <risk-chart :riskRate="riskRate" :typeChart="'balance'"/> -->
                 </div>
               </div>
             </v-row>
@@ -27,92 +27,6 @@
         <v-row>
           <v-row class="ma-0">
             <!-- <savings /> -->
-            <v-container>
-              <v-row class="ma-0 mb-5 pl-3">
-                <h3 class="text-left h3-sections-heading">{{ $t('market.my-deposits.title') }}</h3>
-              </v-row>
-              <template>
-                <v-row>
-                  <v-simple-table class="mt-2">
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          Crypto
-                        </th>
-                        <th class="text-left">
-                          Total deuda
-                        </th>
-                        <th class="text-center">
-                          Ganancias históricas
-                        </th>
-                        <th class="text-left">
-                        Tasa de interes anual dinámica actual
-                        </th>
-                        <th class="text-left">
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(market, idx) in marketsData" :key="`${idx}-totalMarket`">
-                        <td>
-                          <div class="d-flex align-center justify-center">
-                            <div class="d-flex justify-space-between" style="width: 160px">
-                              <img :src="market.symbolUrl" alt="market icon" />
-                              <span>{{ market.symbol }}</span>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </v-simple-table>
-                </v-row>
-              </template>
-              <template>
-                <v-row class="mx-0 pl-3 py-4">
-                  <v-card color="#013E2F" height="100" class="container
-                    d-flex align-center justify-space-between pa-8">
-                      <p class="ma-0 whiteish">No tienes deudas aún. Realiza un depósito
-                        para poder pedir un préstamo colateralizado.
-                      </p>
-                      <v-btn width="340" color="#4CB163">
-                          <span class="b1-main">{{ $t('balance.my-activity.button') }}</span>
-                      </v-btn>
-                      <!-- CUANDO YA TIENES DEPOSITOS PERO NO HAS ADQUIRIDO DEUDA -->
-                      <!-- <p class="ma-0 whiteish">No tienes deudas aún. Empieza a pedir préstamos
-                        sobrecolateralizados.
-                      </p>
-                      <v-btn width="340" color="#4CB163">
-                          <span class="b1-main">Pedir prestado</span>
-                      </v-btn> -->
-                  </v-card>
-                </v-row>
-              </template>
-              <!-- <template v-if="loadingSavings">
-                <v-row class="mx-0 mt-4">
-                  <v-col cols="4" v-for="index in 3" :key="index">
-                    <v-skeleton-loader type="image" height="158" />
-                  </v-col>
-                </v-row>
-              </template>
-              <template v-else>
-                <template v-if="savingsLoaded">
-                  <v-row class="mx-0 mt-4">
-                    <v-col cols="4" v-for="(market, idx) in savings"
-                          :key="`market-${idx}`">
-                      <debt-savings :inBorrowMenu="inBorrowMenu" :marketAddress="market"
-                                    @success="$emit('success')" />
-                    </v-col>
-                  </v-row>
-                </template>
-                <template v-else>
-                  <v-row class="mx-0 pl-3 py-4">
-                    <v-card color="#013E2F" width="100%" class="container">
-                      <p class="ma-0 whiteish">No has depositado criptos aún</p>
-                    </v-card>
-                  </v-row>
-                </template>
-              </template> -->
-            </v-container>
           </v-row>
           <v-row class="ma-0">
             <!-- DEBTS -->
@@ -121,12 +35,13 @@
                 <v-row class="ma-0 mb-5 pl-3">
                   <h3 class="text-left h3-sections-heading">{{ $t('market.my-debts.title') }}</h3>
                 </v-row>
-                <debt-savings-balance :inBorrowMenu="inBorrowMenu" :marketAddress="market"
-                          @success="forceReload" :key="key"/>
+                <!-- <debt-savings-balance :inBorrowMenu="inBorrowMenu" :marketAddress="market"
+                          @success="forceReload" :key="key"/> -->
               </v-container>
           </v-row>
         </v-row>
       </div>
+      <!-- MI ACTIVIDAD -->
       <!-- <div class="container mt-16" style="width: 1627px;">
         <v-row class="mx-0 pl-3">
           <h3 class="text-left h3-sections-heading">{{ $t('balance.subtitle4') }}</h3>

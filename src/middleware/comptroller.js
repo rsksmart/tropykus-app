@@ -76,11 +76,13 @@ export default class Comptroller {
           market.underlyingCurrentPrice(chainId),
           market.currentBalanceOfCTokenInUnderlying(accountAddress),
         ])
-          .then(([price, totalDepositInUnderlying]) => {
-            console.log(`price: ${price}`);
-            console.log(`totalDepositInUnderlying: ${totalDepositInUnderlying}`);
-            totalDeposits += totalDepositInUnderlying * price;
-            if (index === markets.length - 1) resolve(totalDeposits);
+          .then((x) => {
+          // .then(([price, totalDepositInUnderlying]) => {
+            resolve(x)
+            // console.log(`price: ${x}`);
+            // console.log(`totalDepositInUnderlying: ${totalDepositInUnderlying}`);
+            // totalDeposits += totalDepositInUnderlying * price;
+            // if (index === markets.length - 1) resolve(totalDeposits);
           })
           .catch(reject);
       });

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <template>
-      <v-row>
+      <v-row style="width: 1581px;">
         <v-simple-table class="mt-2">
           <thead>
             <tr>
@@ -53,26 +53,29 @@
                 <p class="text-right p2-reading-values">{{ info.rate }}%</p>
               </td>
               <td>
-                <v-col class="pa-0 pr-1" cols="6">
-                  <v-btn depressed :color="buttonColor" width="100%" height="25"
-                        @click="repayOrSupply(true)">
-                    <span class="b1-main">{{ supplyBorrowLabel }}</span>
-                  </v-btn>
-                </v-col>
-                <v-col class="pa-0 pl-1" cols="6">
-                  <v-btn depressed outlined color="#FFF" width="100%" height="25"
-                        @click="repayOrSupply(false)">
-                    <span class="b1-main">{{ redeemRepayLabel }}</span>
-                  </v-btn>
-                </v-col>
+                <v-row>
+                  <v-col class="pa-0 pr-1" cols="6">
+                    <v-btn depressed :color="buttonColor" width="100%" height="36"
+                          @click="repayOrSupply(true)">
+                      <span class="b1-main">{{ supplyBorrowLabel }}</span>
+                    </v-btn>
+                  </v-col>
+                  <v-col class="pa-0 pl-1" cols="6">
+                    <v-btn depressed outlined color="#FFF" width="100%" height="36"
+                          @click="repayOrSupply(false)">
+                      <span class="b1-main">{{ redeemRepayLabel }}</span>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </td>
             </tr>
           </tbody>
         </v-simple-table>
       </v-row>
     </template>
+    <!-- NO HAY DEPOSITOS -->
     <template>
-      <v-row class="mx-0 pl-3 py-4">
+      <v-row style="width: 1581px;">
         <v-card color="#013E2F" height="100" class="container
           d-flex align-center justify-space-between pa-8">
             <p class="ma-0 whiteish">No tienes depositos aún. Empieza a depositar</p>
@@ -81,6 +84,26 @@
             </v-btn>
         </v-card>
       </v-row>
+    </template>
+    <template v-if="supplyRepayDialog">
+      <component :is="supplyRepayComponent" :showModal="supplyRepayDialog"
+                 :inBorrowMenu="buttonAction" :info="{ market, ...info }" @action="menuAction"
+                 @closed="supplyRepayDialog = false"/>
+    </template>
+    <template v-if="waitingDialog">
+      <loading :showModal="waitingDialog"/>
+    </template>
+    <template v-if="successDialog">
+      <success-dialog :showModal="successDialog" :amount="amount"
+                      :underlyingSymbol="info.underlyingSymbol" :action="currentAction"
+                      @close="actionSucceed"/>
+    </template>
+    <template v-if="errorDialog">
+      <error-dialog :showModal="errorDialog" :action="currentAction"
+                    @close="errorDialog = false"/>
+    </template>
+    <template v-if="txSummaryDialog">
+      <tx-summary :showModal="txSummaryDialog" :action="currentAction"/>
     </template>
   </v-container>
 </template>

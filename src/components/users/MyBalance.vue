@@ -27,7 +27,7 @@
                 </v-row>
               </v-col>
               <v-col>
-               <v-tooltip right>
+               <v-tooltip right max-width="178">
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
                       v-bind="attrs" v-on="on">
@@ -35,6 +35,7 @@
                     </v-icon>
                   </template>
                   <span class="p5-feedback">
+                    {{ $t('balance.tooltip2') }}
                   </span>
                 </v-tooltip>
               </v-col>
@@ -70,7 +71,7 @@
                 </v-row>
               </v-col>
               <v-col>
-                 <v-tooltip right>
+                 <v-tooltip right max-width="178">
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
                       v-bind="attrs" v-on="on">
@@ -78,6 +79,7 @@
                     </v-icon>
                   </template>
                   <span class="p5-feedback">
+                    {{ $t('balance.tooltip3') }}
                   </span>
                 </v-tooltip>
               </v-col>
@@ -101,15 +103,29 @@
 </template>
 
 <script>
+import {
+  CRbtc,
+  CToken,
+  Market,
+  Comptroller,
+} from '@/middleware';
+import { mapState } from 'vuex';
+
 export default {
   name: 'MyBalance',
   data() {
     return {
       totalSuppliedUSD: null,
       totalBorrowedUSD: null,
+      comptroller: null,
+      markets: [],
     };
   },
   computed: {
+    ...mapState({
+      walletAddress: (state) => state.Session.walletAddress,
+      chainId: (state) => state.Session.chainId,
+    }),
     loadingTotalSupply() {
       return this.totalSuppliedUSD === null;
     },

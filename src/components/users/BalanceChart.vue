@@ -14,7 +14,7 @@
         </v-row>
       </v-col>
       <v-col>
-        <v-tooltip right>
+        <v-tooltip right max-width="178">
           <template v-slot:activator="{ on, attrs }">
             <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
                     v-bind="attrs" v-on="on">
@@ -22,6 +22,7 @@
             </v-icon>
           </template>
           <span class="p5-feedback">
+            {{ $t('balance.tooltip1') }}
           </span>
         </v-tooltip>
       </v-col>
@@ -108,14 +109,14 @@ export default {
   methods: {
     async getMarkets() {
       return new Promise((resolve, reject) => {
-        this.marketAddresses.forEach((marketAddress) => {
-          Market.isCRbtc(marketAddress)
+        this.marketAddresses.forEach(async (marketAddress, index) => {
+          await Market.isCRbtc(marketAddress)
             .then((isCRbtc) => {
               const market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
                 : new CToken(this.marketAddress, this.chainId);
-              return this.markets.push(market);
+              this.markets.push(market);
+              if (index === this.marketAddresses.length - 1) resolve(this.markets);
             })
-            .then(resolve)
             .catch(reject);
         });
       });
@@ -123,9 +124,8 @@ export default {
     async getData() {
       this.marketAddresses = await this.comptroller.allMarkets;
       await this.getMarkets();
-      console.log(this.markets);
       this.userCashUSD = await this.comptroller
-        .totalBalanceInUSD(this.markets, '0x9c4aAE754FF8c963966B26CE8206EF0271c614aa', this.chainId);
+        .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
     },
   },
   created() {
