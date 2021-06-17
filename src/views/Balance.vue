@@ -28,6 +28,7 @@
         <v-row>
           <v-row class="ma-0">
             <!-- <savings /> -->
+            <debt-savings-balance :inBorrowMenu="false" />
           </v-row>
           <v-row class="ma-0">
             <!-- DEBTS -->
@@ -36,8 +37,7 @@
                 <v-row class="ma-0 mb-5 pl-3">
                   <h3 class="text-left h3-sections-heading">{{ $t('market.my-debts.title') }}</h3>
                 </v-row>
-                <!-- <debt-savings-balance :inBorrowMenu="inBorrowMenu" :marketAddress="market"
-                          @success="forceReload" :key="key"/> -->
+                <debt-savings-balance :inBorrowMenu="true" />
               </v-container>
           </v-row>
         </v-row>
@@ -101,7 +101,7 @@
 import MyBalance from '@/components/users/MyBalance.vue';
 import BalanceChart from '@/components/users/BalanceChart.vue';
 // import RiskChart from '@/components/users/RiskChart.vue';
-// import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
+import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
 
 export default {
   name: 'Balance',
@@ -151,7 +151,7 @@ export default {
     MyBalance,
     BalanceChart,
     // RiskChart,
-    // DebtSavingsBalance,
+    DebtSavingsBalance,
   },
 };
 </script>
