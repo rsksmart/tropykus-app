@@ -42,7 +42,8 @@
               </div>
               <div>
                 <div class="risk-charts">
-                  <risk-chart :riskRate="riskValue" style="height:97%;width:97%;"/>
+                  <risk-chart :riskRate="riskValue" :inBalance="inBalance" :typeChart="'borrow'"
+                    style="height:97%;width:97%;"/>
                 </div>
               </div>
             </div>
@@ -235,6 +236,7 @@ export default {
   },
   data() {
     return {
+      inBalance: false,
       markets: [],
       comptroller: null,
       riskValue: 100,

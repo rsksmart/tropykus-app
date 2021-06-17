@@ -40,7 +40,8 @@
                 </v-tooltip>
               </v-col>
             </v-row>
-            <v-divider color="#BEBEBE" />
+            <!-- CUANDO SE HAGA EL NUEVO DESPLIEGUE -->
+            <!-- <v-divider color="#BEBEBE" />
             <v-row>
               <v-col>
                 <h3>0 USD</h3>
@@ -50,7 +51,7 @@
                 <h3>0 USD</h3>
                 <p>Ganancias historicas</p>
               </v-col>
-            </v-row>
+            </v-row> -->
           </v-card>
         </v-col>
         <v-col cols="6">
@@ -84,7 +85,8 @@
                 </v-tooltip>
               </v-col>
             </v-row>
-            <v-divider color="#BEBEBE" />
+            <!-- CUANDO SE HAGA EL NUEVO DESPLIEGUE -->
+            <!-- <v-divider color="#BEBEBE" />
             <v-row>
               <v-col>
                 <h3>0 USD</h3>
@@ -94,7 +96,7 @@
                 <h3>0 USD</h3>
                 <p>Intereses acumulados</p>
               </v-col>
-            </v-row>
+            </v-row> -->
           </v-card>
         </v-col>
       </v-row>
@@ -103,15 +105,22 @@
 </template>
 
 <script>
+import {
+  CRbtc,
+  CToken,
+  Market,
+  Comptroller,
+} from '@/middleware';
 import { mapState } from 'vuex';
 
 export default {
   name: 'MyBalance',
   data() {
     return {
-      totalSuppliedUSD: null,
-      totalBorrowedUSD: null,
+      totalSuppliedUSD: 0,
+      totalBorrowedUSD: 0,
       comptroller: null,
+      marketAddresses: [],
       markets: [],
     };
   },
@@ -127,11 +136,43 @@ export default {
       return this.totalBorrowedUSD === null;
     },
   },
+  methods: {
+    async getMarkets() {
+      return new Promise((resolve, reject) => {
+        let counter = 0;
+        this.marketAddresses.forEach(async (marketAddress) => {
+          await Market.isCRbtc(marketAddress)
+            .then((isCRbtc) => {
+              counter += 1;
+              if (isCRbtc) {
+                this.markets.push(new CRbtc(marketAddress, this.chainId));
+              } else {
+                this.markets.push(new CToken(marketAddress, this.chainId));
+              }
+              if (counter === this.marketAddresses.length) resolve(this.markets);
+            })
+            .catch(reject);
+        });
+      });
+    },
+    async getData() {
+      this.marketAddresses = await this.comptroller.allMarkets;
+      await this.getMarkets();
+      this.totalSuppliedUSD = await this.comptroller
+        .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);
+      this.totalBorrowedUSD = await this.comptroller
+        .totalBorrowsInUSD(this.markets, this.walletAddress, this.chainId);
+      this.totalSuppliedUSD = this.totalSuppliedUSD.toFixed(4);
+      this.totalBorrowedUSD = this.totalBorrowedUSD.toFixed(4);
+    },
+  },
   created() {
-    setTimeout(() => {
-      this.totalSuppliedUSD = 0;
-      this.totalBorrowedUSD = 0;
-    }, 1000);
+    this.comptroller = new Comptroller(this.chainId);
+    this.getData();
+    // setTimeout(() => {
+    //   this.totalSuppliedUSD = 0;
+    //   this.totalBorrowedUSD = 0;
+    // }, 1000);
   },
 };
 </script>

@@ -58,8 +58,11 @@ export default class Comptroller {
   }
 
   async totalBalanceInUSD(markets, accountAddress, chainId) {
-    return await this.totalDepositsInUSD(markets, accountAddress, chainId)
-      - await this.totalBorrowsInUSD(markets, accountAddress, chainId);
+    const deposits = await this.totalDepositsInUSD(markets, accountAddress, chainId);
+    const debts = await this.totalBorrowsInUSD(markets, accountAddress, chainId);
+    console.log('deposits', deposits);
+    console.log('debts', debts);
+    return deposits - debts;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -75,7 +78,7 @@ export default class Comptroller {
           .then(([price, totalDepositInUnderlying]) => {
             totalDeposits += totalDepositInUnderlying * price;
             counter += 1;
-            if (counter === markets.length - 1) resolve(totalDeposits);
+            if (counter === markets.length) resolve(totalDeposits);
           })
           .catch(reject);
       });
@@ -95,7 +98,7 @@ export default class Comptroller {
           .then(([price, totalBorrowInUnderlying]) => {
             totalBorrows += totalBorrowInUnderlying * price;
             counter += 1;
-            if (counter === markets.length - 1) resolve(totalBorrows);
+            if (counter === markets.length) resolve(totalBorrows);
           })
           .catch(reject);
       });

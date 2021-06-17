@@ -119,7 +119,7 @@ export default {
               } else {
                 this.markets.push(new CToken(marketAddress, this.chainId));
               }
-              if (counter === this.marketAddresses.length - 1) resolve(this.markets);
+              if (counter === this.marketAddresses.length) resolve(this.markets);
             })
             .catch(reject);
         });
@@ -130,6 +130,7 @@ export default {
       await this.getMarkets();
       this.userCashUSD = await this.comptroller
         .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
+      this.userCashUSD = this.userCashUSD.toFixed(4);
     },
   },
   created() {

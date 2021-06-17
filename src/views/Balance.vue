@@ -18,7 +18,8 @@
             <v-row class="ma-0 mt-4">
               <div class="risk-container">
                 <div class="risk-circle">
-                  <!-- <risk-chart :riskRate="riskRate" :typeChart="'balance'"/> -->
+                  <!-- <risk-chart :riskRate="riskRate" :inBalance="inBalance"
+                    :typeChart="'balance'"/> -->
                 </div>
               </div>
             </v-row>
@@ -106,6 +107,7 @@ export default {
   name: 'Balance',
   data() {
     return {
+      inBalance: true,
       tokens: [
         {
           type: 'Ahorrar',
