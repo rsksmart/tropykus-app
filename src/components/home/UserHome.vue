@@ -20,6 +20,7 @@
 // import OnMyWallet from '@/components/users/OnMyWallet.vue';
 import Savings from '@/components/users/Savings.vue';
 import Debts from '@/components/users/Debts.vue';
+import * as constants from '@/store/constants';
 import Suggestions from '@/components/users/Suggestions.vue';
 import {
   Comptroller,
@@ -27,7 +28,7 @@ import {
   CRbtc,
   CToken,
 } from '@/middleware';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'UserHome',
@@ -41,6 +42,7 @@ export default {
       marketsLoaded: false,
       debtKey: 0,
       savKey: 1,
+      markets: [],
     };
   },
   props: {
@@ -62,6 +64,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      addMarkets: constants.SESSION_ADD_MARKETS,
+    }),
     async forceDebts() {
       await this.load();
       this.debtKey += 1;
@@ -75,18 +80,22 @@ export default {
       this.debts = [];
       this.suggestions = await this.comptroller.allMarkets;
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
+      let counter = 0;
       if (this.walletAddress) {
         await this.assetsIn.forEach((marketAddress) => {
           Market.isCRbtc(marketAddress)
             .then((isCRbtc) => {
               const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
                 : new CToken(marketAddress, this.chainId);
+              counter += 1;
+              this.markets.push(market);
               return Promise.all([
                 market,
                 market.balanceOf(this.walletAddress),
               ]);
             })
             .then(([market, balanceOf]) => {
+              if (counter === this.suggestions.length) this.addMarkets(this.markets);
               if (balanceOf > 0 && this.savings.indexOf(marketAddress) === -1) {
                 this.savings.push(marketAddress);
               }

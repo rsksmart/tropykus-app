@@ -10,6 +10,7 @@ const state = {
   wallet: undefined,
   chainId: 31,
   provider: undefined,
+  markets: [],
 };
 
 if (window.ethereum) {
@@ -88,6 +89,7 @@ const actions = {
     commit(constants.SESSION_SET_PROPERTY, { account: undefined });
     commit(constants.SESSION_SET_PROPERTY, { wallet: undefined });
     commit(constants.SESSION_SET_PROPERTY, { provider: undefined });
+    commit(constants.SESSION_SET_PROPERTY, { markets: [] });
     commit(constants.SESSION_SET_PROPERTY, { chainId: 31 });
     const web3 = new ethers.providers.JsonRpcProvider(process.env.VUE_APP_RSK_NODE);
     const format = web3.formatter.formats;
@@ -95,6 +97,9 @@ const actions = {
     Object.assign(web3.formatter, { format });
     // eslint-disable-next-line no-multi-assign
     Vue.prototype.$web3 = Vue.web3 = web3;
+  },
+  [constants.SESSION_ADD_MARKETS]: async ({ commit }, markets) => {
+    commit(constants.SESSION_SET_PROPERTY, { markets });
   },
 };
 

@@ -15,6 +15,10 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   letter-spacing: normal !important;
 }
 
+.v-data-table {
+  border-radius: 10px !important;
+}
+
 .crop-card {
   border-radius: 10px 10px 0 0 !important;
   width: 240px !important;
@@ -102,6 +106,7 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   line-height: 11px !important;
   color: #FFFFFF;
   margin: 0 !important;
+  text-align: justify;
 }
 
 .p6-reading-values {
