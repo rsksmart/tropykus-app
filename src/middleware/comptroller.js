@@ -56,4 +56,52 @@ export default class Comptroller {
     return 1 - Math.min(1, 1 / await this
       .hypotheticalHealthRatio(markets, chainId, address, borrowBalanceInUSD));
   }
+
+  async totalBalanceInUSD(markets, accountAddress, chainId) {
+    const deposits = await this.totalDepositsInUSD(markets, accountAddress, chainId);
+    const debts = await this.totalBorrowsInUSD(markets, accountAddress, chainId);
+    console.log('deposits', deposits);
+    console.log('debts', debts);
+    return deposits - debts;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  totalDepositsInUSD(markets, accountAddress, chainId) {
+    return new Promise((resolve, reject) => {
+      let totalDeposits = 0;
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.currentBalanceOfCTokenInUnderlying(accountAddress),
+        ])
+          .then(([price, totalDepositInUnderlying]) => {
+            totalDeposits += totalDepositInUnderlying * price;
+            counter += 1;
+            if (counter === markets.length) resolve(totalDeposits);
+          })
+          .catch(reject);
+      });
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async totalBorrowsInUSD(markets, accountAddress, chainId) {
+    return new Promise((resolve, reject) => {
+      let totalBorrows = 0;
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.borrowBalanceCurrent(accountAddress),
+        ])
+          .then(([price, totalBorrowInUnderlying]) => {
+            totalBorrows += totalBorrowInUnderlying * price;
+            counter += 1;
+            if (counter === markets.length) resolve(totalBorrows);
+          })
+          .catch(reject);
+      });
+    });
+  }
 }
