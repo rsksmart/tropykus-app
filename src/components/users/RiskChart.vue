@@ -1,11 +1,11 @@
 <template>
     <div class="risk">
-      <div class="d-flex justify-center mt-2">
-        <v-img class="risk-img" width="50" height="50" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="125" :width="15"
-                             :value="100 - riskRate" :color="chartColor" :rotate="180" />
-      </div>
       <template v-if="!inBalance">
+        <div class="d-flex justify-center mt-2">
+          <v-img class="risk-img" width="50" height="50" :src="riskImage" />
+          <v-progress-circular class="risk-graph" :size="125" :width="15"
+                              :value="100 - riskRate" :color="chartColor" :rotate="180" />
+        </div>
         <div class="mt-5">
           <v-row class="risk-title ma-0">
             <h3>{{ riskTitle }}</h3>
@@ -13,6 +13,29 @@
           <v-row class="risk-description ma-0">
             <p class="ma-0">{{ riskDescription }}</p>
           </v-row>
+        </div>
+      </template>
+      <template v-else>
+        <div class="risk-container">
+           <div class="mt-5">
+            <v-row class="risk-title ma-0">
+              <h2>{{ riskTitle }}</h2>
+            </v-row>
+            <v-row class="risk-description ma-0">
+              <p class="ma-0">{{ riskDescription }}</p>
+            </v-row>
+            <v-divider color="#FFF" class="my-3"/>
+            <v-row class="risk-description ma-0">
+              <p class="ma-0">{{ riskDescription }}</p>
+            </v-row>
+          </div>
+          <div class="risk-circle">
+            <div class="d-flex justify-center mt-2">
+              <v-img class="risk-img" width="50" height="50" :src="riskImage" />
+              <v-progress-circular class="risk-graph" :size="125" :width="15"
+                                  :value="100 - riskRate" :color="chartColor" :rotate="180" />
+            </div>
+          </div>
         </div>
       </template>
     </div>

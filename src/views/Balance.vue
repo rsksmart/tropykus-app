@@ -5,7 +5,7 @@
         <v-row class="mx-0 pl-3">
           <h3 class="text-left h3-sections-heading">{{ $t('balance.title') }}</h3>
         </v-row>
-        <v-row class="ma-0">
+        <v-row class="ma-auto mb-16">
           <v-col cols="5" class="pa-0 mt-10">
             <v-row class="ma-0">
               <balance-chart />
@@ -16,30 +16,22 @@
               <my-balance />
             </v-row>
             <v-row class="ma-0 mt-4">
-              <div class="risk-container">
-                <div class="risk-circle">
-                  <!-- <risk-chart :riskRate="riskRate" :inBalance="inBalance"
-                    :typeChart="'balance'"/> -->
-                </div>
-              </div>
+              <risk-chart :riskRate="riskValue" :inBalance="true"
+                :typeChart="'balance'"/>
             </v-row>
           </v-col>
         </v-row>
-        <v-row>
-          <v-row class="ma-0">
-            <!-- <savings /> -->
-            <debt-savings-balance :inBorrowMenu="false" />
+        <v-row class="ma-auto mb-8">
+          <v-row class="ma-auto mb-5 pl-3">
+            <h3 class="text-left h3-sections-heading">{{ $t('market.my-deposits.title') }}</h3>
           </v-row>
-          <v-row class="ma-0">
-            <!-- DEBTS -->
-            <!-- <debts /> -->
-             <v-container>
-                <v-row class="ma-0 mb-5 pl-3">
-                  <h3 class="text-left h3-sections-heading">{{ $t('market.my-debts.title') }}</h3>
-                </v-row>
-                <debt-savings-balance :inBorrowMenu="true" />
-              </v-container>
+          <debt-savings-balance :inBorrowMenu="false" />
+        </v-row>
+        <v-row class="ma-auto">
+          <v-row class="ma-auto mb-5 pl-3">
+            <h3 class="text-left h3-sections-heading">{{ $t('market.my-debts.title') }}</h3>
           </v-row>
+          <debt-savings-balance :inBorrowMenu="true" />
         </v-row>
       </div>
       <!-- MI ACTIVIDAD -->
@@ -100,14 +92,17 @@
 <script>
 import MyBalance from '@/components/users/MyBalance.vue';
 import BalanceChart from '@/components/users/BalanceChart.vue';
-// import RiskChart from '@/components/users/RiskChart.vue';
+import RiskChart from '@/components/users/RiskChart.vue';
 import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
+import { Comptroller } from '@/middleware';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Balance',
   data() {
     return {
       inBalance: true,
+      riskValue: 100,
       tokens: [
         {
           type: 'Ahorrar',
@@ -147,11 +142,30 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState({
+      chainId: (state) => state.Session.chainId,
+      address: (state) => state.Session.walletAddress,
+      markets: (state) => state.Session.markets,
+    }),
+  },
   components: {
     MyBalance,
     BalanceChart,
-    // RiskChart,
+    RiskChart,
     DebtSavingsBalance,
+  },
+  methods: {
+    async getData() {
+      this.riskValue = await this.comptroller
+        .healthFactor(this.markets, this.chainId,
+          this.address) * 100;
+      console.log('Balance RiskValue:', this.riskValue);
+    },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.getData();
   },
 };
 </script>

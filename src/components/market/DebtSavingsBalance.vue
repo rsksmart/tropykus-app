@@ -3,19 +3,19 @@
     <template v-if="marketsLoaded">
       <v-card width="1581" color="#013E2F">
         <v-row>
-          <v-col class="text-left">
-            Crypto
-          </v-col>
-          <v-col class="text-left">
-            Total depositado
+          <v-col class="text-center">
+            <p class="p1-descriptions">Crypto</p>
           </v-col>
           <v-col class="text-center">
-            Ganancias históricas
+            <p class="p1-descriptions">Total depositado</p>
           </v-col>
-          <v-col class="text-left">
-            Tasa de ganancia anual dinámica actual
+          <v-col class="text-center">
+            <p class="p1-descriptions">Ganancias históricas</p>
           </v-col>
-          <v-col class="text-left">
+          <v-col class="text-center">
+            <p class="p1-descriptions">Tasa de ganancia anual dinámica actual</p>
+          </v-col>
+          <v-col class="text-center">
           </v-col>
         </v-row>
         <div v-for="(market, index) in markets" :key="index">

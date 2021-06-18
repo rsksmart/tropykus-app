@@ -10,23 +10,24 @@
     <template v-else>
       <v-row class="ma-0 mt-4">
         <v-col cols="6">
-          <v-card class="container" color="#013E2F" width="439" height="263" style="padding:30px;">
+          <v-card class="container d-flex align-center" color="#013E2F" width="439"
+            height="159" style="padding:30px;">
             <v-row class="ma-0">
-              <v-col class="pa-0 d-flex align-center">
+              <div class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
-                  <v-img class="mx-2" src="@/assets/icons/pig2.svg" width="64" height="64"
+                  <v-img class="mx-2" src="@/assets/icons/pig2.svg" width="89" height="72"
                          position="center center" contain/>
                 </v-row>
-              </v-col>
-              <v-col cols="6" class="pa-0">
-                <v-row class="ma-0">
+              </div>
+              <div cols="6" class="pa-0 ml-9">
+                <v-row class="ma-auto">
                   <h2 class="boldie">{{ totalSuppliedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
                   <p>Tienes depositado</p>
                 </v-row>
-              </v-col>
-              <v-col>
+              </div>
+              <div>
                <v-tooltip right max-width="178">
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
@@ -38,7 +39,7 @@
                     {{ $t('balance.tooltip2') }}
                   </span>
                 </v-tooltip>
-              </v-col>
+              </div>
             </v-row>
             <!-- CUANDO SE HAGA EL NUEVO DESPLIEGUE -->
             <!-- <v-divider color="#BEBEBE" />
@@ -55,23 +56,24 @@
           </v-card>
         </v-col>
         <v-col cols="6">
-          <v-card class="container" color="#013E2F" width="439" height="263" style="padding:30px;">
+          <v-card class="container d-flex align-center" color="#013E2F" width="439"
+            height="159" style="padding:30px;">
             <v-row class="ma-0">
-              <v-col class="pa-0 d-flex align-center">
+              <div class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
-                  <v-img class="px-2" src="@/assets/icons/pay2.svg" width="64" height="64"
+                  <v-img class="px-2" src="@/assets/icons/pay2.svg" width="89" height="72"
                          position="center center" contain/>
                 </v-row>
-              </v-col>
-              <v-col cols="6" class="pa-0">
+              </div>
+              <div cols="6" class="pa-0 ml-9">
                 <v-row class="ma-0">
                   <h2 class="boldie">{{ totalBorrowedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
                   <p>Debes pagar</p>
                 </v-row>
-              </v-col>
-              <v-col>
+              </div>
+              <div>
                  <v-tooltip right max-width="178">
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon class="align-start ml-4 mt-1" small color="#FFFFFF"
@@ -83,7 +85,7 @@
                     {{ $t('balance.tooltip3') }}
                   </span>
                 </v-tooltip>
-              </v-col>
+              </div>
             </v-row>
             <!-- CUANDO SE HAGA EL NUEVO DESPLIEGUE -->
             <!-- <v-divider color="#BEBEBE" />
@@ -162,8 +164,8 @@ export default {
         .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);
       this.totalBorrowedUSD = await this.comptroller
         .totalBorrowsInUSD(this.markets, this.walletAddress, this.chainId);
-      this.totalSuppliedUSD = this.totalSuppliedUSD.toFixed(4);
-      this.totalBorrowedUSD = this.totalBorrowedUSD.toFixed(4);
+      this.totalSuppliedUSD = this.totalSuppliedUSD.toFixed(2);
+      this.totalBorrowedUSD = this.totalBorrowedUSD.toFixed(2);
     },
   },
   created() {

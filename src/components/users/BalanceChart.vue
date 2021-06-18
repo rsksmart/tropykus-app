@@ -28,18 +28,7 @@
       </v-col>
     </v-row>
     <v-divider color="#BEBEBE"/>
-    <div class="container">
-      <v-col cols="6">
-
-      </v-col>
-      <v-col cols="6">
-        <v-row class="ma-0">
-          <h3>Depósitos</h3>
-        </v-row>
-        <v-row>
-          <h3>Deudas</h3>
-        </v-row>
-      </v-col>
+    <div class="container d-flex justify-center align-center">
       <v-row class="ma-0">
         <GChart type="PieChart" :data="chartData" :options="chartOptions"/>
       </v-row>
