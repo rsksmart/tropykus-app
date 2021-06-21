@@ -1,17 +1,17 @@
 <template>
   <div class="left-bar">
-    <v-row class="ma-0 mt-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE)" width="50"
-                 v-bind:class="{ selected: views.inBalance }"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/home.svg"/>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.balance') }}</span>
-      </v-tooltip>
-    </v-row>
+<!--    <v-row class="ma-0 mt-2 mx-2">-->
+<!--      <v-tooltip right color="#52826E">-->
+<!--        <template v-slot:activator="{ on, attrs }">-->
+<!--          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE)" width="50"-->
+<!--                 v-bind:class="{ selected: views.inBalance }"-->
+<!--                 height="64" depressed v-bind="attrs" v-on="on">-->
+<!--            <v-img contain height="43" src="@/assets/icons/home.svg"/>-->
+<!--          </v-btn>-->
+<!--        </template>-->
+<!--        <span>{{ $t('menu.sidebar.balance') }}</span>-->
+<!--      </v-tooltip>-->
+<!--    </v-row>-->
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
