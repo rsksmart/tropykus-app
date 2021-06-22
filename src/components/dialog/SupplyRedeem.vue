@@ -277,6 +277,9 @@ export default {
       account: (state) => state.Session.account,
       provider: (state) => state.Session.provider,
     }),
+    supplyRate() {
+      return this.info.rate / 100;
+    },
     actionIcon() {
       return this.inSupplyMenu ? WalletIcon : PigIcon;
     },
@@ -305,16 +308,20 @@ export default {
         .rules.marketCash() !== 'string';
     },
     possibleEarnings() {
-      return (this.amount + this.info
-        .interestBalance) * (1 + (this.info.rate / 100) * this.sliderYear);
+      return +this.amount ? ((this.amount * this.supplyRate) + (this.info
+        .supplyBalance * this.supplyRate) * this.sliderYear) : (this.info
+        .interestBalance * this.sliderYear);
     },
     possibleEarningsUSD() {
       return this.possibleEarnings * this.info.underlyingPrice;
     },
     possibleEarningsPlusDeposit() {
-      return this.possibleEarnings > this.info.interestBalance ? (+this.info
-        .supplyBalance + +this.amount + +this.possibleEarnings) * (1 + (this
-        .info.rate / 100) + this.sliderYear) : this.info.supplyBalance;
+      if (+this.amount) {
+        return this.possibleEarnings > this.info.interestBalance ? (+this.info
+          .supplyBalance + +this.amount + +this.possibleEarnings) : (this.info
+          .supplyBalance * this.sliderYear);
+      }
+      return this.info.supplyBalance + this.possibleEarnings;
     },
     possibleEarningsPlusDepositUSD() {
       return this.possibleEarningsPlusDeposit * this.info.underlyingPrice;
