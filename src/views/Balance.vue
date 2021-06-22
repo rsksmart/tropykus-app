@@ -16,7 +16,7 @@
               <my-balance />
             </v-row>
             <v-row class="ma-0 mt-4">
-              <risk-chart :riskRate="riskValue" :inBalance="true"
+              <risk-chart :riskRate="riskValue" :inBalance="inBalance"
                 :typeChart="'balance'"/>
             </v-row>
           </v-col>
@@ -142,12 +142,7 @@ export default {
       ],
     };
   },
-  props: {
-    inBorrowMenu: {
-      required: true,
-      type: Boolean,
-    },
-  },
+
   computed: {
     ...mapState({
       chainId: (state) => state.Session.chainId,

@@ -11,7 +11,7 @@
             <h3>{{ riskTitle }}</h3>
           </v-row>
           <v-row class="risk-description ma-0">
-            <p class="ma-0">{{ riskDescription }}</p>
+            <p class="ma-0">{{ riskSubtitle }}</p>
           </v-row>
         </div>
       </template>
@@ -22,7 +22,7 @@
               <h2>{{ riskTitle }}</h2>
             </v-row>
             <v-row class="risk-description ma-0">
-              <p class="ma-0">{{ riskDescription }}</p>
+              <p class="ma-0">{{ riskSubtitle}}</p>
             </v-row>
             <v-divider color="#FFF" class="my-3"/>
             <v-row class="risk-description ma-0">
@@ -158,9 +158,9 @@ export default {
     },
     chartColor() {
       if (this.riskRate === 100) return this.inBalance ? '#C84021' : 'transparent';
-      if (this.riskRate >= 0 && this.riskRate <= 40) return this.inBalance ? '#4CB163' : '#FF9153';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return this.inBalance ? '#E65D3D' : '#FF9153';
       if (this.riskRate > 40 && this.riskRate <= 60) return this.inBalance ? '#FF9153' : '#FF9153';
-      if (this.riskRate > 60 && this.riskRate <= 100) return this.inBalance ? '#E65D3D' : '#FF9153';
+      if (this.riskRate > 60 && this.riskRate <= 100) return this.inBalance ? '#4CB163' : '#FF9153';
       return 'transparent';
     },
   },
