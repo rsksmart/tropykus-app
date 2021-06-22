@@ -12,7 +12,7 @@
         <v-col cols="6">
           <v-card class="container d-flex align-center" color="#013E2F" width="439"
             height="159" style="padding:30px;">
-            <v-row class="ma-0">
+            <v-row class="ma-0 d-flex justify-space-around">
               <div class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
                   <v-img class="mx-2" src="@/assets/icons/pig2.svg" width="89" height="72"
@@ -24,7 +24,7 @@
                   <h2 class="boldie">{{ totalSuppliedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
-                  <p>Tienes depositado</p>
+                  <p>{{ $t('balance.my-balance.title1') }}</p>
                 </v-row>
               </div>
               <div>
@@ -58,7 +58,7 @@
         <v-col cols="6">
           <v-card class="container d-flex align-center" color="#013E2F" width="439"
             height="159" style="padding:30px;">
-            <v-row class="ma-0">
+            <v-row class="ma-0 d-flex justify-space-around">
               <div class="pa-0 d-flex align-center">
                 <v-row class="ma-0">
                   <v-img class="px-2" src="@/assets/icons/pay2.svg" width="89" height="72"
@@ -70,7 +70,7 @@
                   <h2 class="boldie">{{ totalBorrowedUSD }} USD</h2>
                 </v-row>
                 <v-row class="ma-0">
-                  <p>Debes pagar</p>
+                  <p>{{ $t('balance.my-balance.title2') }}</p>
                 </v-row>
               </div>
               <div>

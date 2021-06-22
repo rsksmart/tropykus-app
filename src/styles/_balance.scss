@@ -30,18 +30,19 @@
     background-color: #013E2F;
     padding: 30px;
     border-radius: 10px;
-    width: 812px;
-    height: 194px;
+    width: 770px;
+    height: 285px;
     margin-left: 24px;
+    margin-top: 12px;
     position: relative;
   }
   .risk-circle {
     position: absolute;
-    width: 239px;
-    height: 239px;
-    border-radius: 122px;
-    top: -10%;
-    right: -10%;
+    width: 319px;
+    height: 319px;
+    border-radius: 179px;
+    top: -11.5%;
+    right: -17%;
     background-color: #013E2F;
   }
   .risk{
@@ -49,7 +50,7 @@
     justify-content: center;
     .risk-img {
       position: absolute !important;
-      top: 40% !important;
+      top: 38% !important;
       display: flex;
       justify-content: center;
     }
@@ -58,8 +59,8 @@
       top: 0;
       display: flex;
       justify-content: center;
-      height: 228px !important;
-      width: 188px !important;
+      height: 293px !important;
+      width: 248px !important;
     }
   }
 

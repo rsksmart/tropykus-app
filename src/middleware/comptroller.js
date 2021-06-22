@@ -33,8 +33,12 @@ export default class Comptroller {
     const numerador = await this.getAccountLiquidity(address);
     let denominador = 0;
     markets.forEach(async (market) => {
+      console.log('Borrow en cada mercado:', await market.borrowBalanceInUSD(chainId, address));
       denominador += await market.borrowBalanceInUSD(chainId, address);
     });
+    // console.log('numerador balance: ', numerador);
+    // console.log('denominador balance: ', denominador);
+    console.log('division', numerador / denominador);
     return numerador / denominador;
   }
 
@@ -45,10 +49,13 @@ export default class Comptroller {
       denominador += await market.borrowBalanceInUSD(chainId, address);
     });
     denominador += borrowBalanceInUSD;
+    console.log('numerador borrow: ', numerador);
+    console.log('denominador borrow: ', denominador);
     return numerador / denominador;
   }
 
   async healthFactor(markets, chainId, address) {
+    console.log('health factor', 1 - Math.min(1, 1 / await this.healthRatio(markets, chainId, address)));
     return 1 - Math.min(1, 1 / await this.healthRatio(markets, chainId, address));
   }
 

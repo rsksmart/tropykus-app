@@ -142,6 +142,12 @@ export default {
       ],
     };
   },
+  props: {
+    inBorrowMenu: {
+      required: true,
+      type: Boolean,
+    },
+  },
   computed: {
     ...mapState({
       chainId: (state) => state.Session.chainId,
@@ -160,7 +166,6 @@ export default {
       this.riskValue = await this.comptroller
         .healthFactor(this.markets, this.chainId,
           this.address) * 100;
-      console.log('Balance RiskValue:', this.riskValue);
     },
   },
   created() {

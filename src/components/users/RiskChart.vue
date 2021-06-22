@@ -31,7 +31,7 @@
           </div>
           <div class="risk-circle">
             <div class="d-flex justify-center mt-2">
-              <v-img class="risk-img" width="50" height="50" :src="riskImage" />
+              <v-img class="risk-img" width="60" height="60" :src="riskImage" />
               <v-progress-circular class="risk-graph" :size="125" :width="15"
                                   :value="100 - riskRate" :color="chartColor" :rotate="180" />
             </div>
@@ -67,23 +67,32 @@ export default {
             lowRisk: this.$t('market.risk.titles.low-risk'),
             mediumRisk: this.$t('market.risk.titles.medium-risk'),
             highRisk: this.$t('market.risk.titles.high-risk'),
-            other: this.$t('market.risk.titles.other'),
+            other: this.$t('market.risk.titles.liquidated'),
           },
         },
         subtitle: {
           borrow: {
-            noRisk: this.$t('market.risk.subtitles.no-risk'),
+            noRisk: this.$t('market.risk.subtitles.low-risk'),
             lowRisk: this.$t('market.risk.subtitles.low-risk'),
             mediumRisk: this.$t('market.risk.subtitles.medium-risk'),
             highRisk: this.$t('market.risk.subtitles.high-risk'),
             other: this.$t('market.risk.subtitles.other'),
           },
           balance: {
-            noRisk: this.$t('market.risk.subtitles.no-risk'),
-            lowRisk: this.$t('market.risk.subtitles.low-risk'),
-            mediumRisk: this.$t('market.risk.subtitles.medium-risk'),
-            highRisk: this.$t('market.risk.subtitles.high-risk'),
-            other: this.$t('market.risk.subtitles.other'),
+            noRisk: this.$t('balance.chart.subtitles.no-risk'),
+            lowRisk: this.$t('balance.chart.subtitles.low-risk'),
+            mediumRisk: this.$t('balance.chart.subtitles.medium-risk'),
+            highRisk: this.$t('balance.chart.subtitles.high-risk'),
+            other: this.$t('balance.chart.subtitles.liquidated'),
+          },
+        },
+        description: {
+          balance: {
+            noRisk: this.$t('balance.chart.description.no-risk'),
+            lowRisk: this.$t('balance.chart.description.low-risk'),
+            mediumRisk: this.$t('balance.chart.description.medium-risk'),
+            highRisk: this.$t('balance.chart.description.high-risk'),
+            other: this.$t('balance.chart.description.liquidated'),
           },
         },
       },
@@ -123,7 +132,7 @@ export default {
       }
       return this.riskChart.title[this.typeChart].other;
     },
-    riskDescription() {
+    riskSubtitle() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
         return this.riskChart.subtitle[this.typeChart].lowRisk;
       }
@@ -134,6 +143,18 @@ export default {
         return this.riskChart.subtitle[this.typeChart].highRisk;
       }
       return this.riskChart.subtitle[this.typeChart].other;
+    },
+    riskDescription() {
+      if (this.riskRate > 60 && this.riskRate <= 100) {
+        return this.riskChart.description[this.typeChart].lowRisk;
+      }
+      if (this.riskRate > 40 && this.riskRate <= 60) {
+        return this.riskChart.description[this.typeChart].mediumRisk;
+      }
+      if (this.riskRate > 0 && this.riskRate <= 40) {
+        return this.riskChart.description[this.typeChart].highRisk;
+      }
+      return this.riskChart.description[this.typeChart].other;
     },
     chartColor() {
       if (this.riskRate === 100) return this.inBalance ? '#C84021' : 'transparent';

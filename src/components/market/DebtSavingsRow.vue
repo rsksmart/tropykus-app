@@ -1,10 +1,13 @@
 <template>
-  <v-row>
+  <v-row class="ma-auto d-flex align-center">
     <v-col class="d-flex justify-center">
-      <v-col class="pa-0 text-center">
-        <v-img class="mx-auto" position="center center" height="40"
-          width="40" :src="symbolImg" contain/>
-        <h2 class="h2-heading ml-2">{{ info.underlyingSymbol }}</h2>
+      <v-col class="d-flex justify-center">
+        <div class="d-flex justify-end" style="width: 40%;">
+          <img height="40" width="40" :src="symbolImg" />
+        </div>
+        <div style="width: 50%;">
+          <h2 class="h2-heading ml-2">{{ info.underlyingSymbol }}</h2>
+        </div>
       </v-col>
     </v-col>
     <v-col>
@@ -22,7 +25,9 @@
       <p class="p3-USD-values text-center">{{ tokenInterestPrice | formatPrice }} USD</p>
     </v-col>
     <v-col>
-      <p class="text-center p2-reading-values">{{ info.rate }}%</p>
+      <p class="text-center p2-reading-values" style="font-size: 24px;">
+        {{ info.rate }}%
+      </p>
     </v-col>
     <v-col>
       <v-row class="mx-auto">
@@ -112,6 +117,10 @@ export default {
       type: Object,
       required: false,
     },
+    inBorrowMenu: {
+      required: true,
+      type: Boolean,
+    },
   },
   computed: {
     ...mapState({
@@ -133,6 +142,9 @@ export default {
     },
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#4CB163';
+    },
+    rateLabel() {
+      return this.inBorrowMenu ? this.$t('market.borrow.description1') : this.$t('market.deposits.description1');
     },
     supplyBorrowLabel() {
       return this.inBorrowMenu ? this.$t('market.my-debts.button1') : this.$t('market.my-deposits.button1');

@@ -144,7 +144,8 @@
         "low-risk": "Low risk",
         "medium-risk": "Medium risk",
         "high-risk": "High risk",
-        "other": "Try another value"
+        "other": "Try another value",
+        "liquidated": "You have been liquidated"
       },
       "subtitles": {
         "low-risk": "You do not have risk to be liquidated",
@@ -221,13 +222,15 @@
       "title": "Total deposited",
       "subtitle1": "Deposited volume of the day",
       "subtitle2": "depositors",
-      "subtitle3": "Deposit volume of the day"
+      "subtitle3": "Deposit volume of the day",
+      "subtitle4": "Current dynamic annual rate of return"
     },
     "borrowed-card": {
       "title": "Total borrowed",
       "subtitle1": "Borrowed volume of the day",
       "subtitle2": "borrowers",
-      "subtitle3": "Borrow volume of the day"
+      "subtitle3": "Borrow volume of the day",
+      "subtitle4": "Current dynamic annual interest rate"
     },
     "markets-card": {
       "title1": "Market",
@@ -248,12 +251,29 @@
     "tooltip2": "This value in USD is the sum total of all the cryptos you have deposited in Tropykus.",
     "tooltip3": "This value in USD is the sum total of all the cryptos you borrowed on Tropykus.",
     "my-balance": {
+      "title": "Net balance sheet",
       "title1": "You have deposited",
       "subtitle1": "Deposited",
       "subtitle2": "Historic earnings",
       "title2": "You must pay",
       "subtitle3": "Borrowing orders",
       "subtitle4": "Accrued interest"
+    },
+    "chart": {
+      "subtitles": {
+        "no-risk": "Start to deposit and borrow",
+        "low-risk": "You can deposit and borrow",
+        "medium-risk": "You can continue to save, but be careful with the amounts you borrow.",
+        "high-risk": "You are very close to being liquidated. You can build up your savings or pay off all your debts before you lose your funds.",
+        "liquidated": "Your collateral no longer supports the debts you had and you have been liquidated."
+      },
+      "description": {
+        "no-risk": "0% of your deposits are committed in debt",
+        "low-risk": "10% of your deposits are committed to debt",
+        "medium-risk": "40% of your deposits are committed to debt",
+        "high-risk": "60% of your deposits are committed to debt",
+        "liquidated": "100% of your deposits have been liquidated"
+      }
     },
     "my-activity": {
       "title": "You have no deposits yet. Start depositing.",

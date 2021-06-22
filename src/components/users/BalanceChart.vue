@@ -10,7 +10,7 @@
           <h2 class="boldie">{{ userCashUSD }} USD</h2>
         </v-row>
         <v-row class="ma-0">
-          <p class="ma-0">Balance neto</p>
+          <p class="ma-0">{{ $t('balance.my-balance.title') }}</p>
         </v-row>
       </v-col>
       <v-col>
@@ -121,6 +121,13 @@ export default {
         .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
       this.userCashUSD = this.userCashUSD.toFixed(4);
     },
+    // updateChartData() {
+    //    this.chartData = [
+    //     ['Balance', 'Cryptos'],
+    //     ['', this.],
+    //     ['', this.],
+    //   ];
+    // },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
