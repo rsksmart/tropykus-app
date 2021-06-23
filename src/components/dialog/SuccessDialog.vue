@@ -51,13 +51,17 @@ export default {
     dialogText() {
       switch (this.action) {
         case constants.USER_ACTION_MINT:
-          return this.$t('dialog.success.title1') + this.amount + this.underlyingSymbol;
+          // eslint-disable-next-line
+          return this.$t('dialog.success.title1') + Number(this.amount).toFixed(7) + ' ' + this.underlyingSymbol;
         case constants.USER_ACTION_REDEEM:
-          return this.$t('dialog.success.title2') + this.amount + this.underlyingSymbol;
+          // eslint-disable-next-line
+          return this.$t('dialog.success.title2') + Number(this.amount).toFixed(7) + ' ' + this.underlyingSymbol;
         case constants.USER_ACTION_BORROW:
-          return this.$t('dialog.success.title3') + this.amount + this.underlyingSymbol;
+          // eslint-disable-next-line
+          return this.$t('dialog.success.title3') + Number(this.amount).toFixed(7) + ' ' + this.underlyingSymbol;
         case constants.USER_ACTION_REPAY:
-          return this.$t('dialog.success.title4') + this.amount + this.underlyingSymbol;
+          // eslint-disable-next-line
+          return this.$t('dialog.success.title4') + Number(this.amount).toFixed(7) + ' ' + this.underlyingSymbol;
         default:
           return '';
       }
