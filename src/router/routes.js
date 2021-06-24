@@ -32,6 +32,11 @@ export default [
     component: () => import(/* webpackChunkName: "Tutorials" */ '@/views/Tutorials.vue'),
   },
   {
+    path: '/internal-metrics',
+    name: 'InternalMetrics',
+    component: () => import(/* webpackChunkName: "Metrics" */ '@/views/InternalMetrics.vue'),
+  },
+  {
     path: '/tutorials/btc-to-rbtc',
     name: 'BtcToRbtc',
     component: () => import(/* webpackChunkName: "BtcToRbtc" */ '@/components/tutorials/BtcToRbtc.vue'),
