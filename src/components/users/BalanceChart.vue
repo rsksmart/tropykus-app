@@ -76,6 +76,13 @@ export default {
       chartData: [
         ['Balance', 'Cryptos'],
         ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
       ],
       chartOptions: {
         pieHole: 0.7,
@@ -147,6 +154,8 @@ export default {
       this.userCashUSD = this.userCashUSD.toFixed(4);
     },
     async updateMarketInfo() {
+      let depositsCount = 1;
+      let debtsCount = 5;
       this.markets.forEach(async (market) => {
         const obj = {};
         obj.symbol = await market.underlyingAssetSymbol();
@@ -156,16 +165,21 @@ export default {
         obj.borrow = await market.borrowBalanceCurrent(this.walletAddress)
           * await market.underlyingCurrentPrice(this.chainId);
         this.balanceInfo.push(obj);
-        this.chartData.push([obj.symbol, obj.balance]);
+        if (obj.balance > 0) {
+          this.chartData[depositsCount] = [`${this
+            .$t('balance.balance-chart.title1')} ${obj.symbol}`, obj.balance];
+          depositsCount += 1;
+        }
+        if (obj.borrow > 0) {
+          this.chartData[debtsCount] = [`${this
+            .$t('balance.balance-chart.title2')} ${obj.symbol}`, obj.borrow];
+          debtsCount += 1;
+        }
       });
     },
     updateChartData() {
-      const tmpArray = [['Balance', 'Crypto']];
-      this.balanceInfo.forEach((info) => {
-        tmpArray.push([info.symbol, info.balance])
-      });
       // this.chartData = ;
-      
+
       // [
       //   ['Balance', 'Cryptos'],
       //   ['hola', 0.43],
