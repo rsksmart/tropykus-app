@@ -1,6 +1,6 @@
 <template>
   <v-app class="app">
-    <navbar :marketAddresses="markets" />
+    <navbar :marketAddresses="marketAddresses" />
     <left-bar />
     <router-view />
     <v-dialog v-model="btcToRbtcDialog" width="350"
@@ -44,10 +44,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
-import { Comptroller } from '@/middleware';
+import {
+  Comptroller,
+  Market,
+  CRbtc,
+  CToken,
+} from '@/middleware';
+import * as constants from '@/store/constants';
 
 export default {
   name: 'App',
@@ -55,6 +61,7 @@ export default {
     return {
       btcToRbtcDialog: true,
       comptroller: null,
+      marketAddresses: [],
       markets: [],
       dontShowWelcomeModal: false,
     };
@@ -65,12 +72,25 @@ export default {
     }),
   },
   methods: {
+    ...mapActions({
+      addMarkets: constants.SESSION_ADD_MARKETS,
+    }),
     closeAndRedirect() {
       this.$router.push({ name: 'BtcToRbtc' });
       this.btcToRbtcDialog = false;
     },
     async loadMarkets() {
-      this.markets = await this.comptroller.allMarkets;
+      this.marketAddresses = await this.comptroller.allMarkets;
+      let counter = 0;
+      await this.marketAddresses.forEach(async (marketAddress) => {
+        await Market.isCRbtc(marketAddress)
+          .then((isCRbtc) => {
+            this.markets.push(isCRbtc ? new CRbtc(marketAddress, this.chainId)
+              : new CToken(marketAddress, this.chainId));
+            counter += 1;
+          });
+        if (counter === this.marketAddresses.length) this.addMarkets(this.markets);
+      });
     },
   },
   watch: {

@@ -141,6 +141,14 @@ export default class Market {
     return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
   }
 
+  async getReserves() {
+    return Number(await this.instance.callStatic.totalReserves()) / factor;
+  }
+
+  async getSubsidyFound(isRbtc = false) {
+    return isRbtc ? Number(await this.instance.callStatic.subsidyFund()) / factor : 0;
+  }
+
   async getInitialSupply(address) {
     const supplyEvents = await this.instance.queryFilter('Mint', -500000);
     let addressSupplied = 0;
