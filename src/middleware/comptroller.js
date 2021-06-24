@@ -60,8 +60,6 @@ export default class Comptroller {
   async totalBalanceInUSD(markets, accountAddress, chainId) {
     const deposits = await this.totalDepositsInUSD(markets, accountAddress, chainId);
     const debts = await this.totalBorrowsInUSD(markets, accountAddress, chainId);
-    console.log('deposits', deposits);
-    console.log('debts', debts);
     return deposits - debts;
   }
 

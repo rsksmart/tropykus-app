@@ -91,7 +91,7 @@
 <script>
 export default {
   name: 'Metric',
-  data(){
+  data() {
     return {
       data: [
         {
@@ -116,7 +116,7 @@ export default {
           name: 'Dollar on Chain',
           coinId: 'DOC',
           coin: '100.000 RBTC',
-          usd: '100.000 RBTC'
+          usd: '100.000 RBTC',
         },
         {
           id: 4,
@@ -124,10 +124,10 @@ export default {
           name: 'RSK Infraestructure Frameworks',
           coinId: 'RIF',
           coin: '100.000 RBTC',
-          usd: '100.000 RBTC'
-        }
-      ]
-    }
-  }
-}
+          usd: '100.000 RBTC',
+        },
+      ],
+    };
+  },
+};
 </script>
