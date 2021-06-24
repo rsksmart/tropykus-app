@@ -280,6 +280,10 @@
     "my-activity": {
       "title": "No tienes depositos aún. Empieza a depositar.",
       "button": "Depositar"
+    },
+    "balance-chart": {
+      "title1": "Depósitos",
+      "title2": "Deudas"
     }
   }
 }

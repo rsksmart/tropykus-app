@@ -48,56 +48,54 @@ import SurpisedFace from '@/assets/health/face-surprised.png';
 import SadFace from '@/assets/health/face-sad.png';
 
 export default {
-  watch: {
-  },
   name: 'RiskChart',
-  data() {
-    return {
-      riskChart: {
-        title: {
-          borrow: {
-            noRisk: this.$t('market.risk.titles.no-risk'),
-            lowRisk: this.$t('market.risk.titles.low-risk'),
-            mediumRisk: this.$t('market.risk.titles.medium-risk'),
-            highRisk: this.$t('market.risk.titles.high-risk'),
-            other: this.$t('market.risk.titles.other'),
-          },
-          balance: {
-            noRisk: this.$t('market.risk.titles.no-risk'),
-            lowRisk: this.$t('market.risk.titles.low-risk'),
-            mediumRisk: this.$t('market.risk.titles.medium-risk'),
-            highRisk: this.$t('market.risk.titles.high-risk'),
-            other: this.$t('market.risk.titles.liquidated'),
-          },
-        },
-        subtitle: {
-          borrow: {
-            noRisk: this.$t('market.risk.subtitles.low-risk'),
-            lowRisk: this.$t('market.risk.subtitles.low-risk'),
-            mediumRisk: this.$t('market.risk.subtitles.medium-risk'),
-            highRisk: this.$t('market.risk.subtitles.high-risk'),
-            other: this.$t('market.risk.subtitles.other'),
-          },
-          balance: {
-            noRisk: this.$t('balance.chart.subtitles.no-risk'),
-            lowRisk: this.$t('balance.chart.subtitles.low-risk'),
-            mediumRisk: this.$t('balance.chart.subtitles.medium-risk'),
-            highRisk: this.$t('balance.chart.subtitles.high-risk'),
-            other: this.$t('balance.chart.subtitles.liquidated'),
-          },
-        },
-        description: {
-          balance: {
-            noRisk: this.$t('balance.chart.description.no-risk'),
-            lowRisk: this.$t('balance.chart.description.low-risk'),
-            mediumRisk: this.$t('balance.chart.description.medium-risk'),
-            highRisk: this.$t('balance.chart.description.high-risk'),
-            other: this.$t('balance.chart.description.liquidated'),
-          },
-        },
-      },
-    };
-  },
+  // data() {
+  //   return {
+  //     riskChart: {
+  //       title: {
+  //         borrow: {
+  //           noRisk: this.$t('market.risk.titles.no-risk'),
+  //           lowRisk: this.$t('market.risk.titles.low-risk'),
+  //           mediumRisk: this.$t('market.risk.titles.medium-risk'),
+  //           highRisk: this.$t('market.risk.titles.high-risk'),
+  //           other: this.$t('market.risk.titles.other'),
+  //         },
+  //         balance: {
+  //           noRisk: this.$t('market.risk.titles.no-risk'),
+  //           lowRisk: this.$t('market.risk.titles.low-risk'),
+  //           mediumRisk: this.$t('market.risk.titles.medium-risk'),
+  //           highRisk: this.$t('market.risk.titles.high-risk'),
+  //           other: this.$t('market.risk.titles.liquidated'),
+  //         },
+  //       },
+  //       subtitle: {
+  //         borrow: {
+  //           noRisk: this.$t('market.risk.subtitles.low-risk'),
+  //           lowRisk: this.$t('market.risk.subtitles.low-risk'),
+  //           mediumRisk: this.$t('market.risk.subtitles.medium-risk'),
+  //           highRisk: this.$t('market.risk.subtitles.high-risk'),
+  //           other: this.$t('market.risk.subtitles.other'),
+  //         },
+  //         balance: {
+  //           noRisk: this.$t('balance.chart.subtitles.no-risk'),
+  //           lowRisk: this.$t('balance.chart.subtitles.low-risk'),
+  //           mediumRisk: this.$t('balance.chart.subtitles.medium-risk'),
+  //           highRisk: this.$t('balance.chart.subtitles.high-risk'),
+  //           other: this.$t('balance.chart.subtitles.liquidated'),
+  //         },
+  //       },
+  //       description: {
+  //         balance: {
+  //           noRisk: this.$t('balance.chart.description.no-risk'),
+  //           lowRisk: this.$t('balance.chart.description.low-risk'),
+  //           mediumRisk: this.$t('balance.chart.description.medium-risk'),
+  //           highRisk: this.$t('balance.chart.description.high-risk'),
+  //           other: this.$t('balance.chart.description.liquidated'),
+  //         },
+  //       },
+  //     },
+  //   };
+  // },
   props: {
     riskRate: {
       type: Number,
@@ -120,41 +118,46 @@ export default {
       return SadFace;
     },
     riskTitle() {
-      if (this.riskRate === 100) return this.riskChart.title[this.typeChart].noRisk;
+      if (this.riskRate === 100) return this.$t('market.risk.titles.no-risk');
       if (this.riskRate > 60 && this.riskRate < 100) {
-        return this.riskChart.title[this.typeChart].lowRisk;
+        return this.$t('market.risk.titles.low-risk');
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return this.riskChart.title[this.typeChart].mediumRisk;
+        return this.$t('market.risk.titles.medium-risk');
       }
       if (this.riskRate >= 0 && this.riskRate <= 40) {
-        return this.riskChart.title[this.typeChart].highRisk;
+        return this.$t('market.risk.titles.high-risk');
       }
-      return this.riskChart.title[this.typeChart].other;
+      return this.inBalance ? this.$t('market.risk.titles.liquidated')
+        : this.$t('market.risk.titles.other');
     },
     riskSubtitle() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
-        return this.riskChart.subtitle[this.typeChart].lowRisk;
+        return this.inBalance ? this.$t('balance.chart.subtitles.low-risk')
+          : this.$t('market.risk.subtitles.low-risk');
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return this.riskChart.subtitle[this.typeChart].mediumRisk;
+        return this.inBalance ? this.$t('balance.chart.subtitles.medium-risk')
+          : this.$t('market.risk.subtitles.medium-risk');
       }
       if (this.riskRate >= 0 && this.riskRate <= 40) {
-        return this.riskChart.subtitle[this.typeChart].highRisk;
+        return this.inBalance ? this.$t('balance.chart.subtitles.high-risk')
+          : this.$t('market.risk.subtitles.high-risk');
       }
-      return this.riskChart.subtitle[this.typeChart].other;
+      return this.inBalance ? this.$t('balance.chart.subtitles.liquidated')
+        : this.$t('market.risk.subtitles.other');
     },
     riskDescription() {
       if (this.riskRate > 60 && this.riskRate <= 100) {
-        return this.riskChart.description[this.typeChart].lowRisk;
+        return this.$t('balance.chart.description.low-risk');
       }
       if (this.riskRate > 40 && this.riskRate <= 60) {
-        return this.riskChart.description[this.typeChart].mediumRisk;
+        return this.$t('balance.chart.description.medium-risk');
       }
       if (this.riskRate > 0 && this.riskRate <= 40) {
-        return this.riskChart.description[this.typeChart].highRisk;
+        return this.$t('balance.chart.description.high-risk');
       }
-      return this.riskChart.description[this.typeChart].other;
+      return this.$t('balance.chart.description.liquidated');
     },
     chartColor() {
       if (this.riskRate === 100) return this.inBalance ? '#C84021' : 'transparent';

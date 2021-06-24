@@ -120,6 +120,11 @@ export default class Market {
     return (cTokenBalance * exchangeRate);
   }
 
+  // async currentBalanceOfCTokenInUSD(chainId, address) {
+  //   const price = await this.underlyingCurrentPrice(chainId);
+  //   return await this.currentBalanceOfCTokenInUnderlying(address) * price;
+  // }
+
   async borrowBalanceStored(address) {
     return Number(await this.instance.callStatic.borrowBalanceStored(address)) / factor;
   }

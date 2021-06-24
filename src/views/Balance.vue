@@ -8,7 +8,7 @@
         <v-row class="ma-auto mb-16">
           <v-col cols="5" class="pa-0 mt-10">
             <v-row class="ma-0">
-              <balance-chart />
+              <balance-chart :markets='markets' />
             </v-row>
           </v-col>
           <v-col cols="7" class="pa-0">
@@ -161,6 +161,7 @@ export default {
       this.riskValue = await this.comptroller
         .healthFactor(this.markets, this.chainId,
           this.address) * 100;
+      console.log('riskValue', this.riskValue);
     },
   },
   created() {
