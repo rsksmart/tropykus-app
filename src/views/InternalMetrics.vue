@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    Market symbol: {{ symbol }}
+    Reserves: {{ reserves }}
+    Subsidy: {{ subsidy }}
+    Users: {{ users }}
     <div class="metrics">
       <div class="container d-flex align-center flex-column">
         <div
@@ -89,6 +93,9 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+import { Comptroller } from '@/middleware';
+
 export default {
   name: 'Metric',
   data() {
@@ -127,7 +134,53 @@ export default {
           usd: '100.000 RBTC',
         },
       ],
+      comptroller: null,
+      symbol: null,
+      reserves: null,
+      subsidy: null,
+      users: null,
     };
+  },
+  computed: {
+    ...mapState({
+      markets: (state) => state.Session.markets,
+      chainId: (state) => state.Session.chainId,
+    }),
+  },
+  watch: {
+    markets() {
+      console.log(`markets watcher: ${this.markets}`);
+      if (this.markets.length > 3) this.getMarketsInfo();
+    },
+  },
+  methods: {
+    getMarketsInfo() {
+      this.markets[0].symbol
+        .then((symbol) => {
+          this.symbol = symbol;
+          console.log(`symbol: ${this.symbol}`);
+          return this.markets[0].getReserves();
+        })
+        .then((reserves) => {
+          this.reserves = reserves;
+          console.log(`reserves: ${this.reserves}`);
+          return this.markets[0].getSubsidyFound();
+        })
+        .then((subsidy) => {
+          this.subsidy = subsidy;
+          console.log(`subsidy: ${this.subsidy}`);
+          console.log(`Comptroller: ${this.comptroller.comptrollerAddress}`);
+          return this.comptroller.getTotalRegisteredAddresses();
+        })
+        .then((users) => {
+          this.users = users;
+          console.log(`users: ${this.users}`);
+        })
+        .catch(console.error);
+    },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
   },
 };
 </script>

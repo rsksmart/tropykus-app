@@ -15,6 +15,22 @@ export default class Comptroller {
     return this.instance.callStatic.getAllMarkets();
   }
 
+  // Block: 1953603
+  // BlockHash: 0x322587483502ba718dc3ac3085ec85dd1c57c2076d08dc1f3a7fee7197daed3c
+  async getTotalRegisteredAddresses() {
+    console.log('In getTotalRegisteredAddresses 0');
+    const events = await this.wsInstance
+      .queryFilter('MarketEntered', -500000);
+    console.log('In getTotalRegisteredAddresses 1');
+    const accountAddresses = [];
+    console.log(`events: ${JSON.stringify(events)}`);
+    events.forEach((marketEnter) => {
+      const { account } = marketEnter.args;
+      if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);
+    });
+    return accountAddresses.length;
+  }
+
   getAssetsIn(address) {
     return this.instance.callStatic.getAssetsIn(address);
   }
