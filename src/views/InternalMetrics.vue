@@ -24,22 +24,14 @@
                     150
                 </div>
               </v-col>
-                <v-col>
-                  <div style="width:125px" class="p1-descriptions mb-4">
-                    Numero de Usuarios Unicos
-                  </div>
-                  <div class="p2-reading-values">
-                    135
-                  </div>
-                </v-col>
-                <v-col style="width:125px">
+                <v-col style="width:125px" class="ml-9 pl-9">
                   <div class="p1-descriptions mb-1">
                     Total fondo de subsidio
                   </div>
                   <div class="p2-reading-values">
                     1,000000 BTC
                   </div>
-                  <div class="font-italic">$100.000 USD</div>
+                  <div class="font-italic white--text">$100.000 USD</div>
                 </v-col>
               </v-row>
             </v-card>
@@ -83,7 +75,7 @@
                   </div>
                 </div>
               </div>
-            </v-card>
+          </v-card>
         </div>
       </div>
   </div>
@@ -91,7 +83,7 @@
 <script>
 export default {
   name: 'Metric',
-  data(){
+  data() {
     return {
       data: [
         {
@@ -116,7 +108,7 @@ export default {
           name: 'Dollar on Chain',
           coinId: 'DOC',
           coin: '100.000 RBTC',
-          usd: '100.000 RBTC'
+          usd: '100.000 RBTC',
         },
         {
           id: 4,
@@ -124,10 +116,10 @@ export default {
           name: 'RSK Infraestructure Frameworks',
           coinId: 'RIF',
           coin: '100.000 RBTC',
-          usd: '100.000 RBTC'
-        }
-      ]
-    }
-  }
-}
+          usd: '100.000 RBTC',
+        },
+      ],
+    };
+  },
+};
 </script>
