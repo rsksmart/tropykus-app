@@ -18,7 +18,7 @@ export default class Market {
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3Ws);
-    this.gasLimit = 300000;
+    this.gasLimit = 350000;
   }
 
   static async isCRbtc(address) {
