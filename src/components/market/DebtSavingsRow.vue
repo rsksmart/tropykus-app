@@ -1,5 +1,5 @@
 <template>
-  <v-row class="ma-auto d-flex align-center">
+  <v-row v-if="info.totalBalance > 0" class="ma-auto d-flex align-center">
     <v-col class="d-flex justify-center">
       <v-col class="d-flex justify-center">
         <div class="d-flex justify-end" style="width: 40%;">

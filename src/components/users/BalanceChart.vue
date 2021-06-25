@@ -28,9 +28,11 @@
       </v-col>
     </v-row>
     <v-divider color="#BEBEBE"/>
-    <div class="container d-flex justify-center align-center">
+    <div class="container d-flex justify-center align-center" style="
+      height: 83%;">
       <v-row class="ma-0">
-        <v-col class="d-flex flex-column justify-center">
+        <v-col class="d-flex flex-column justify-center" style="
+          width: 50%;">
           <v-row>
             <h2 class="s1-popup">{{ $t('balance.balance-chart.title1') }}</h2>
             <div v-for="(item, index) in balanceInfo" :key="index">
@@ -42,7 +44,7 @@
               </div>
             </div>
           </v-row>
-          <v-row>
+          <v-row class="d-flex flex-column justify-space-around">
             <h2 class="s1-popup">{{ $t('balance.balance-chart.title2') }}</h2>
             <div v-for="(item, index) in balanceInfo" :key="index">
               <div v-if="item.borrow !== 0" class="d-flex">
@@ -54,7 +56,7 @@
             </div>
           </v-row>
         </v-col>
-        <v-col>
+        <v-col style="width: 50%;">
           <GChart type="PieChart" :data="chartData" :options="chartOptions"/>
         </v-col>
       </v-row>
@@ -100,10 +102,14 @@ export default {
         },
         pieResidueSliceColor: '#CFC2AC',
         slices: [
-          { color: '#E65D3D' },
-          { color: '#DBD332' },
+          { color: '#368348' },
           { color: '#4CB163' },
+          { color: '#6DCD83' },
+          { color: '#C4DBC8' },
+          { color: '#F66514' },
           { color: '#FF9153' },
+          { color: '#FFBD98' },
+          { color: '#F5D6C4' },
         ],
         legend: {
           position: 'none',
@@ -117,16 +123,11 @@ export default {
       tokenSuppliedPrice: null,
     };
   },
-  props: {
-    markets: {
-      type: Array,
-      required: false,
-    },
-  },
   computed: {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
       chainId: (state) => state.Session.chainId,
+      markets: (state) => state.Session.markets,
     }),
     bulletColorBalance() {
       const bulletBalance = [
@@ -156,7 +157,8 @@ export default {
     async updateMarketInfo() {
       let depositsCount = 1;
       let debtsCount = 5;
-      this.markets.forEach(async (market) => {
+      let temp = [...this.chartData];
+      for await (let market of this.markets){
         const obj = {};
         obj.symbol = await market.underlyingAssetSymbol();
         obj.balance = await market
@@ -166,60 +168,31 @@ export default {
           * await market.underlyingCurrentPrice(this.chainId);
         this.balanceInfo.push(obj);
         if (obj.balance > 0) {
-          this.chartData[depositsCount] = [`${this
+          temp[depositsCount] = [`${this
             .$t('balance.balance-chart.title1')} ${obj.symbol}`, obj.balance];
           depositsCount += 1;
         }
         if (obj.borrow > 0) {
-          this.chartData[debtsCount] = [`${this
+          temp[debtsCount] = [`${this
             .$t('balance.balance-chart.title2')} ${obj.symbol}`, obj.borrow];
           debtsCount += 1;
         }
-      });
+      }
+      this.chartData = temp;
+      console.log('FInal chart data', this.chartData);
     },
-    updateChartData() {
-      // this.chartData = ;
-
-      // [
-      //   ['Balance', 'Cryptos'],
-      //   ['hola', 0.43],
-      //   ['adios', 1890.3],
-      //   ['funciona', 1.43],
-      //   ['nomas', 30.3],
-      // ];
-      // Object.keys(this.balanceInfo).forEach((item) => {
-      //   if (item.balance !== 0 || item.borrow !== 0) {
-      //     console.log(item.balance);
-      //     this.chartData = [
-      //       ['Balance', 'Cryptos'],
-      //       [item.symbol, item.balance],
-      //       [item.symbol, item.borrow],
-      //     ];
-      //   }
-      // });
-      // Object.values(this.balanceInfo).forEach(item => {
-      //   if (item.balance !== 0 || item.borrow !== 0) {
-      //     console.log(item.balance);
-      //     this.chartData = [
-      //       ['Balance', 'Cryptos'],
-      //       [item.symbol, item.balance],
-      //       [item.symbol, item.borrow],
-      //     ];
-      //   }
-      // });
-      // for (const item of Object.values(this.balanceInfo)) {
-      //   if (item.balance !== 0 || item.borrow !== 0) {
-      //     this.chartData = [
-      //       ['Balance', 'Cryptos'],
-      //       [item.symbol, item.balance],
-      //       [item.symbol, item.borrow],
-      //     ];
-      //   }
-      // }
+  },
+  watch: {
+    chartData() {
+      this.getData();
     },
+    markets() {
+      this.getData();
+    }
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
+    console.log('balanceInfo',this.balanceInfo);
     this.getData();
     this.updateMarketInfo();
   },

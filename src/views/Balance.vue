@@ -1,5 +1,6 @@
 <template>
-  <div class="balance">
+<div class="balance">
+  <div v-if="isLoggedIn">
     <v-container class="mt-8 container">
       <div class="container" style="width: 1627px;">
         <v-row class="mx-0 pl-3">
@@ -8,7 +9,7 @@
         <v-row class="ma-auto mb-16">
           <v-col cols="5" class="pa-0 mt-10">
             <v-row class="ma-0">
-              <balance-chart :markets='markets' />
+              <balance-chart/>
             </v-row>
           </v-col>
           <v-col cols="7" class="pa-0">
@@ -17,7 +18,7 @@
             </v-row>
             <v-row class="ma-0 mt-4">
               <risk-chart :riskRate="riskValue" :inBalance="inBalance"
-                :typeChart="'balance'"/>
+                :percentageValue="percentageBalance" :typeChart="'balance'"/>
             </v-row>
           </v-col>
         </v-row>
@@ -87,6 +88,10 @@
       </div> -->
     </v-container>
   </div>
+  <template v-if="walletDialog">
+    <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
+  </template>
+</div>
 </template>
 
 <script>
@@ -95,14 +100,17 @@ import BalanceChart from '@/components/users/BalanceChart.vue';
 import RiskChart from '@/components/users/RiskChart.vue';
 import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
 import { Comptroller } from '@/middleware';
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
+import * as constants from '@/store/constants';
 
 export default {
   name: 'Balance',
   data() {
     return {
+      walletDialog: false,
       inBalance: true,
       riskValue: 100,
+      percentageBalance: 0,
       tokens: [
         {
           type: 'Ahorrar',
@@ -144,6 +152,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      isLoggedIn: constants.SESSION_IS_CONNECTED,
+    }),
     ...mapState({
       chainId: (state) => state.Session.chainId,
       address: (state) => state.Session.walletAddress,
@@ -156,16 +167,36 @@ export default {
     RiskChart,
     DebtSavingsBalance,
   },
+  watch: {
+    markets() {
+      if (this.marketAddresses.length === this.markets.length) {
+        this.getData();
+      }
+    },
+    // isLoggedIn() {
+    //   if (this.isLoggedIn) {
+    //     this.comptroller = new Comptroller(this.chainId);
+    //     this.getData();
+    //     this.getMarketAddresses();
+    //   }
+    // },
+  },
   methods: {
     async getData() {
       this.riskValue = await this.comptroller
         .healthFactor(this.markets, this.chainId,
           this.address) * 100;
-      console.log('riskValue', this.riskValue);
+      console.log('risk Value', this.riskValue);
+      this.percentageBalance = Math.round(100 - this.riskValue);
+      console.log('risk Value percentage', this.percentageBalance);
+    },
+    async getMarketAddresses() {
+      this.marketAddresses = await this.comptroller.allMarkets;
     },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
+    this.getMarketAddresses();
     this.getData();
   },
 };

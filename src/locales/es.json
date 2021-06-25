@@ -270,11 +270,11 @@
         "liquidated": "Tus garantias ya no respaldan las deudas que tenias y has sido liquidado."
       },
       "description": {
-        "no-risk": "0% de tus depósitos están comprometidos en deudas",
-        "low-risk": "10% de tus depósitos están comprometidos en deudas",
-        "medium-risk": "40% de tus depósitos están comprometidos en deudas",
-        "high-risk": "60% de tus depósitos están comprometidos en deudas",
-        "liquidated": "100% de tus depósitos han sido liquidados"
+        "no-risk": "% de tus depósitos están comprometidos en deudas",
+        "low-risk": "% de tus depósitos están comprometidos en deudas",
+        "medium-risk": "% de tus depósitos están comprometidos en deudas",
+        "high-risk": "% de tus depósitos están comprometidos en deudas",
+        "liquidated": "% de tus depósitos han sido liquidados"
       }
     },
     "my-activity": {
@@ -283,7 +283,9 @@
     },
     "balance-chart": {
       "title1": "Depósitos",
-      "title2": "Deudas"
+      "title2": "Deudas",
+      "no-deposits": "No tienes fondos depositados aún",
+      "no-debts": "No tienes deudas aún"
     }
   }
 }

@@ -268,11 +268,11 @@
         "liquidated": "Your collateral no longer supports the debts you had and you have been liquidated."
       },
       "description": {
-        "no-risk": "0% of your deposits are committed in debt",
-        "low-risk": "10% of your deposits are committed to debt",
-        "medium-risk": "40% of your deposits are committed to debt",
-        "high-risk": "60% of your deposits are committed to debt",
-        "liquidated": "100% of your deposits have been liquidated"
+        "no-risk": "% of your deposits are committed in debt",
+        "low-risk": "% of your deposits are committed to debt",
+        "medium-risk": "% of your deposits are committed to debt",
+        "high-risk": "% of your deposits are committed to debt",
+        "liquidated": "% of your deposits have been liquidated"
       }
     },
     "my-activity": {
@@ -281,7 +281,9 @@
     },
     "balance-chart": {
       "title1": "Deposits",
-      "title2": "Debts"
+      "title2": "Debts",
+      "no-deposits": "No funds deposited yet",
+      "no-debts": "No debts yet"
     }
   }
 }

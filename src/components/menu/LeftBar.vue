@@ -3,7 +3,8 @@
     <v-row class="ma-0 mt-2 mx-2">
       <v-tooltip right color="#52826E">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE)" width="50"
+          <!-- <v-btn @click="redirectBalance()" width="50" -->
+          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE); redirectBalance()" width="50"
                  v-bind:class="{ selected: views.inBalance }"
                  height="64" depressed v-bind="attrs" v-on="on">
             <v-img contain height="43" src="@/assets/icons/home.svg"/>
@@ -109,17 +110,22 @@
         <span>Telegram</span>
       </v-tooltip>
     </v-row>
+    <template v-if="walletDialog">
+      <connect-wallet :showModal="walletDialog" @closed="walletDialog = false"/>
+    </template>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import * as constants from '@/store/constants';
+import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 
 export default {
   name: 'LeftBar',
   data() {
     return {
       constants,
+      walletDialog: false,
       views: {
         inBalance: false,
         inSavings: false,
@@ -129,7 +135,13 @@ export default {
       },
     };
   },
+  components: {
+    ConnectWallet,
+  },
   computed: {
+    ...mapGetters({
+      isLoggedIn: constants.SESSION_IS_CONNECTED,
+    }),
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
     }),
@@ -158,6 +170,7 @@ export default {
         .catch(console.error);
     },
     reset() {
+      this.walletDialog = false;
       this.views.inBalance = false;
       this.views.inSavings = false;
       this.views.inDebts = false;
@@ -191,12 +204,31 @@ export default {
       this.highlightRoute(routePath);
       this.$router.push({ name: routePath });
     },
+    redirectBalance() {
+      if (this.isLoggedIn) {
+        this.$router.push({ name: constants.ROUTE_NAMES.BALANCE});
+      } else {
+        this.walletDialog = true
+        this.highlightRoute(constants.ROUTE_NAMES.BALANCE);
+        // this.$forceUpdate();
+        // this.$router.push({ name: constants.ROUTE_NAMES.BALANCE})
+      }
+    }
   },
   watch: {
     walletAddress() {
       if (this.walletAddress) return 'UserHome';
       return 'Home';
     },
+    // isLoggedIn() {
+    //   if (this.walletDialog) this.$router.push({ name: constants.ROUTE_NAMES.BALANCE});
+      
+    // }
   },
+  // created() {
+  //   if (!this.isLoggedIn) {
+  //     this.walletDialog = true;
+  //   }
+  // }
 };
 </script>

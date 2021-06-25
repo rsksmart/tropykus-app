@@ -19,8 +19,8 @@
             </v-col>
           </v-row>
           <div>
+            <v-divider color="#FFF" class="my-3"/>
             <div v-for="(market, index) in markets" :key="index">
-              <v-divider color="#FFF" class="my-3"/>
               <debt-savings-row :market="market" :inBorrowMenu="inBorrowMenu" />
             </div>
           </div>
