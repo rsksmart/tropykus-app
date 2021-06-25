@@ -32,6 +32,7 @@ export default class Comptroller {
   async healthRatio(markets, chainId, address) {
     const numerador = await this.getAccountLiquidity(address);
     let denominador = 0;
+    // eslint-disable-next-line
     for await (const market of markets) {
       denominador += await market.borrowBalanceInUSD(chainId, address);
     }
