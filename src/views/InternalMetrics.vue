@@ -1,9 +1,5 @@
 <template>
   <div class="home">
-    Market symbol: {{ symbol }}
-    Reserves: {{ reserves }}
-    Subsidy: {{ subsidy }}
-    Users: {{ users }}
     <div class="metrics">
       <div class="container d-flex align-center flex-column">
         <div
@@ -11,7 +7,7 @@
           style="width: 693px;"
           >
           <div class="metric-title h2-heading text-left align-self-start">
-            Reservas
+            {{ $t('internal-metrics.title') }}
           </div>
         </div>
         <v-card
@@ -22,20 +18,20 @@
           <v-row class="mx-5">
             <v-col class="ml-7">
                 <div style="width:125px" class="p1-descriptions mb-4">
-                    Numero de direcciones unicas
+                    {{ $t('internal-metrics.number-addresses') }}
                 </div>
                 <div class="p2-reading-values">
-                    150
+                    {{ users }}
                 </div>
               </v-col>
-                <v-col style="width:125px" class="ml-9 pl-9">
+                <v-col style="width:125px; padding-left: 95px;" class="ml-9">
                   <div class="p1-descriptions mb-1">
-                    Total fondo de subsidio
+                    {{ $t('internal-metrics.total-subsidy') }}
                   </div>
                   <div class="p2-reading-values">
-                    1,000000 BTC
+                    {{ subsidy }} BTC
                   </div>
-                  <div class="font-italic white--text">$100.000 USD</div>
+                  <div class="font-italic white--text">{{ subsidy_usd }} USD</div>
                 </v-col>
               </v-row>
             </v-card>
@@ -47,33 +43,34 @@
               <div class="market-table">
                 <div class="market-table-head">
                   <div class="title-head">
-                    Mercado
+                    {{ $t('internal-metrics.market') }}
                   </div>
-                  <div class="title-head">
-                    Total Reservas
+                  <div class="title-head" style="width: 151px">
+                    {{ $t('internal-metrics.total-reserves') }}
                   </div>
                 </div>
                 <div class="line-market"></div>
                 <div class="market-table-body">
                   <div class="market-table-content"
-                    v-for="market in data"
-                    :key="market.id"
+                    v-for="market in getMarkets"
+                    :key="market.symbol"
                     >
                     <div class="market">
                       <div class="img">
-                          <img :src="market.img">
+                        <img :src="market.img">
                       </div>
                       <div class="market-info">
-                          <div class="name">{{market.name}}</div>
-                          <div class="id">{{market.coinId}}</div>
+                        <div class="name">{{market.name}}</div>
+                        <div class="id text-uppercase">{{market.symbol}}</div>
                       </div>
                     </div>
-                      <div class="description">
+                      <div class="description" style="width: 139px">
                         <div class="coin">
-                          {{market.coin}}
+                          {{market.reserves | formatDecimals }}
+                          <span class="text-uppercase">{{market.symbol}}</span>
                         </div>
                         <div class="usd">
-                          {{market.usd}}
+                          {{ market.reserve_usd | formatPrice }} USD
                         </div>
                       </div>
                   </div>
@@ -89,48 +86,18 @@ import { mapState } from 'vuex';
 import { Comptroller } from '@/middleware';
 
 export default {
-  name: 'Metric',
+  name: 'InternalMetrics',
   data() {
     return {
-      data: [
-        {
-          id: 1,
-          img: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd',
-          name: 'RSK Bitcoin',
-          coinId: 'BTC',
-          coin: '100.000 RBTC',
-          usd: '100.000 RBTC',
-        },
-        {
-          id: 2,
-          img: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FDOC.svg?alt=media&token=9e33e1d7-8631-47a6-8b34-02503cc438ae',
-          name: 'Tether USD',
-          coinId: 'USDT',
-          coin: '100.000 RBTC',
-          usd: '100.000 RBTC',
-        },
-        {
-          id: 3,
-          img: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FrUSDT.svg?alt=media&token=3891051f-7e12-42ce-9c9a-d10aba745717',
-          name: 'Dollar on Chain',
-          coinId: 'DOC',
-          coin: '100.000 RBTC',
-          usd: '100.000 RBTC',
-        },
-        {
-          id: 4,
-          img: 'https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRIF.svg?alt=media&token=f8bb86a4-2fa5-40d1-aec6-5aa402fcb067',
-          name: 'RSK Infraestructure Frameworks',
-          coinId: 'RIF',
-          coin: '100.000 RBTC',
-          usd: '100.000 RBTC',
-        },
-      ],
+      db: this.$firebase.firestore(),
       comptroller: null,
       symbol: null,
       reserves: null,
+      subsidy_usd: null,
       subsidy: null,
       users: null,
+      symbolImg: '',
+      getMarkets: [],
     };
   },
   computed: {
@@ -146,29 +113,80 @@ export default {
     },
   },
   methods: {
-    getMarketsInfo() {
-      this.markets[0].symbol
-        .then((symbol) => {
-          this.symbol = symbol;
-          console.log(`symbol: ${this.symbol}`);
-          return this.markets[0].getReserves();
-        })
-        .then((reserves) => {
-          this.reserves = reserves;
-          console.log(`reserves: ${this.reserves}`);
-          return this.markets[0].getSubsidyFound();
-        })
-        .then((subsidy) => {
+    async getMarketsInfo() {
+      await this.markets.map(async (market) => {
+        // const subsidy = await market.getSubsidyFound();
+        try {
+          const data = {};
+          data.symbol = await market.symbol;
+          data.reserve_usd = await market.reservesInUSD(this.chainId);
+          data.name = await market.underlyingAssetName();
+          data.price = await market.underlyingCurrentPrice(this.chainId);
+          data.reserves = await market.getReserves();
+
+          const subsidy = await market.getSubsidyFound();
+
           this.subsidy = subsidy;
-          console.log(`subsidy: ${this.subsidy}`);
-          console.log(`Comptroller: ${this.comptroller.comptrollerAddress}`);
-          return this.comptroller.getTotalRegisteredAddresses();
-        })
-        .then((users) => {
-          this.users = users;
-          console.log(`users: ${this.users}`);
-        })
-        .catch(console.error);
+          this.subsidy_usd = data.price * subsidy;
+
+          data.img = await this.db
+            .collection('markets-symbols')
+            .doc(data.symbol)
+            .get()
+            .then((response) => response.data().imageURL);
+
+          this.getMarkets.push(data);
+        } catch (error) {
+          //
+          console.error(error);
+        }
+      });
+      const address = await this.comptroller.getTotalRegisteredAddresses();
+      console.log('address', address);
+
+      // for (let i = 0; i < this.markets.length; i += 1) {
+      //   // const i = 3;
+      //   const data = {};
+      //   this.markets[i].symbol
+      //     .then(async (symbol) => {
+      //       this.symbol = symbol;
+      //       data.symbol = symbol;
+      //       // console.log(`symbol: ${this.symbol}`);
+      //       data.reserve_usd = await this.markets[i].reservesInUSD(this.chainId);
+      //       data.name = await this.markets[i].underlyingAssetName() || 0;
+      //       data.price = await this.markets[i].underlyingCurrentPrice(this.chainId);
+      //       //
+      //       data.img = await this.db
+      //         .collection('markets-symbols')
+      //         .doc(symbol)
+      //         .get()
+      //         .then((response) => response.data().imageURL);
+
+      //       return this.markets[i].getReserves();
+      //     })
+      //     .then(async (reserves) => {
+      //       this.reserves = reserves;
+      //       // console.log(`reserves: ${this.reserves}`);
+      //       // data.price_usd *= reserves;
+      //       data.reserves = reserves;
+
+      //       return this.markets[i].getSubsidyFound();
+      //     })
+      //     .then((subsidy) => {
+      //       this.subsidy = subsidy;
+      //       // console.log(`subsidy: ${this.subsidy}`);
+      //       this.subsidy_usd = data.price * subsidy;
+      //       // console.log(`Comptroller: ${this.comptroller.comptrollerAddress}`);
+      //       return this.comptroller.getTotalRegisteredAddresses();
+      //     })
+      //     .then((users) => {
+      //       this.users = users;
+      //       console.log(`users: ${this.users}`);
+      //     })
+      //     .catch('error: ', console.error);
+
+      //   this.getMarkets.push(data);
+      // }
     },
   },
   created() {

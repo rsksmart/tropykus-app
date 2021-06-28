@@ -259,5 +259,12 @@
       "title": "You have no deposits yet. Start depositing.",
       "button": "Deposit"
     }
+  },
+  "internal-metrics": {
+    "title": "Reserves",
+    "number-addresses": "Number of unique addresses",
+    "total-subsidy": "Total subsidy fund",
+    "market": "Market",
+    "total-reserves": "Total Reserves"
   }
 }
