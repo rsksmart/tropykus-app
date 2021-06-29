@@ -34,9 +34,9 @@
                         {{ subsidy | formatDecimals }} BTC
                       </div>
                     </template>
-                    <span>{{ subsidy}}</span>
+                    <span>{{ subsidy }}</span>
                   </v-tooltip>
-                  <div class="font-italic white--text">{{ subsidy_usd }} USD</div>
+                  <div class="font-italic white--text">{{ subsidy_usd | formatPrice}} USD</div>
                 </v-col>
               </v-row>
             </v-card>
