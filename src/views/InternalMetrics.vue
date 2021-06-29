@@ -28,9 +28,14 @@
                   <div class="p1-descriptions mb-1">
                     {{ $t('internal-metrics.total-subsidy') }}
                   </div>
-                  <div class="p2-reading-values">
-                    {{ subsidy }} BTC
-                  </div>
+                  <v-tooltip top color="#52826E">
+                    <template v-slot:activator="{ on, attrs }">
+                      <div class="p2-reading-values" v-bind="attrs" v-on="on">
+                        {{ subsidy | formatDecimals }} BTC
+                      </div>
+                    </template>
+                    <span>{{ subsidy}}</span>
+                  </v-tooltip>
                   <div class="font-italic white--text">{{ subsidy_usd }} USD</div>
                 </v-col>
               </v-row>
