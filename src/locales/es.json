@@ -261,5 +261,12 @@
       "title": "No tienes depositos aún. Empieza a depositar.",
       "button": "Depositar"
     }
+  },
+  "internal-metrics": {
+    "title": "Reservas",
+    "number-addresses": "Numero de direcciones unicas",
+    "total-subsidy": "Total fondo de subsidio",
+    "market": "Mercado",
+    "total-reserves": "Total Reservas"
   }
 }
