@@ -18,12 +18,10 @@ export default class Comptroller {
   // Block: 1953603
   // BlockHash: 0x322587483502ba718dc3ac3085ec85dd1c57c2076d08dc1f3a7fee7197daed3c
   async getTotalRegisteredAddresses() {
-    console.log('In getTotalRegisteredAddresses 0');
     const events = await this.wsInstance
-      .queryFilter('MarketEntered', -500000);
-    console.log('In getTotalRegisteredAddresses 1');
+      .queryFilter('MarketEntered', -5000);
     const accountAddresses = [];
-    console.log(`events: ${JSON.stringify(events)}`);
+    console.log(`events length: ${events.length}`);
     events.forEach((marketEnter) => {
       const { account } = marketEnter.args;
       if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);

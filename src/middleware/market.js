@@ -152,7 +152,9 @@ export default class Market {
   }
 
   async getSubsidyFound(isRbtc = false) {
-    return isRbtc ? Number(await this.instance.callStatic.subsidyFund()) / factor : 0;
+    return isRbtc
+      ? Number(this.instance.callStatic.subsidyFund
+        ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
   }
 
   async getInitialSupply(address) {
