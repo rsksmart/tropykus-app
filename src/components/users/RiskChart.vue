@@ -73,12 +73,11 @@ export default {
       type: Boolean,
       required: true,
     },
-    percentageBalance: {
-      type: Number,
-      required: false,
-    },
   },
   computed: {
+    percentageBalance() {
+      return Math.round(100 - this.riskRate);
+    },
     riskValue() {
       return 100 - this.riskRate;
     },

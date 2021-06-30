@@ -206,29 +206,18 @@ export default {
     },
     redirectBalance() {
       if (this.isLoggedIn) {
-        this.$router.push({ name: constants.ROUTE_NAMES.BALANCE});
+        this.$router.push({ name: constants.ROUTE_NAMES.BALANCE });
       } else {
-        this.walletDialog = true
+        this.walletDialog = true;
         this.highlightRoute(constants.ROUTE_NAMES.BALANCE);
-        // this.$forceUpdate();
-        // this.$router.push({ name: constants.ROUTE_NAMES.BALANCE})
       }
-    }
+    },
   },
   watch: {
     walletAddress() {
       if (this.walletAddress) return 'UserHome';
       return 'Home';
     },
-    // isLoggedIn() {
-    //   if (this.walletDialog) this.$router.push({ name: constants.ROUTE_NAMES.BALANCE});
-      
-    // }
   },
-  // created() {
-  //   if (!this.isLoggedIn) {
-  //     this.walletDialog = true;
-  //   }
-  // }
 };
 </script>

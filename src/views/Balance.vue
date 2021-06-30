@@ -18,9 +18,8 @@
                 <my-balance />
               </v-row>
               <v-row class="ma-0 mt-4">
-                <risk-chart :riskRate="riskValue" :inBalance="inBalance"
-                  :percentageBalance="percentageBalance" :typeChart="'balance'"
-                   @success="forceReload" :key="key"/>
+                <risk-chart :riskRate.sync="riskValue" :inBalance="inBalance"
+                    :typeChart="'balance'" @success="forceReload" :key="key"/>
               </v-row>
             </v-col>
           </v-row>
@@ -104,11 +103,8 @@ import RiskChart from '@/components/users/RiskChart.vue';
 import DebtSavingsBalance from '@/components/market/DebtSavingsBalance.vue';
 import {
   Comptroller,
-  Market,
-  CRbtc,
-  CToken,
 } from '@/middleware';
-import { mapGetters, mapState, mapActions } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import * as constants from '@/store/constants';
 
 export default {
@@ -119,9 +115,6 @@ export default {
       loadingTest: false,
       inBalance: true,
       riskValue: 100,
-      marketAddresses: [],
-      markets: [],
-      percentageBalance: 0,
       key: 0,
       tokens: [
         {
@@ -170,13 +163,8 @@ export default {
     ...mapState({
       chainId: (state) => state.Session.chainId,
       address: (state) => state.Session.walletAddress,
+      markets: (state) => state.Session.markets,
     }),
-    loadingBalance() {
-      return this.riskValue === null;
-    },
-    balanceLoaded() {
-      return this.getData();
-    },
   },
   components: {
     MyBalance,
@@ -185,36 +173,19 @@ export default {
     DebtSavingsBalance,
   },
   methods: {
-    ...mapActions({
-      addMarkets: constants.SESSION_ADD_MARKETS,
-    }),
     forceReload() {
       this.key += 1;
-    },
-    async load() {
-      this.marketAddresses = await this.comptroller.allMarkets;
-      this.marketAddresses.forEach(async (marketAddress) => {
-        const isCRbtc = await Market.isCRbtc(marketAddress);
-        const market = isCRbtc ? new CRbtc(marketAddress, this.chainId)
-          : new CToken(marketAddress, this.chainId);
-        this.markets.push(market);
-        if (this.markets.length === this.marketAddresses.length) {
-          await this.addMarkets(this.markets);
-          await this.getData();
-        }
-      });
     },
     async getData() {
       this.riskValue = await this.comptroller
         .healthFactor(this.markets, this.chainId,
           this.address) * 100;
-      this.percentageBalance = Math.round(100 - this.riskValue);
-      return this.percentageBalance;
+      console.log('risk', this.riskValue);
     },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
-    this.load();
+    this.getData();
   },
 };
 </script>
