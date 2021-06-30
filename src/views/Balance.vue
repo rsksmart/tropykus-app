@@ -18,7 +18,7 @@
                 <my-balance />
               </v-row>
               <v-row class="ma-0 mt-4">
-                <risk-chart :riskRate.sync="riskValue" :inBalance="inBalance"
+                <risk-chart :riskRate="riskValue" :inBalance="inBalance"
                     :typeChart="'balance'" @success="forceReload" :key="key"/>
               </v-row>
             </v-col>
@@ -155,7 +155,6 @@ export default {
       ],
     };
   },
-
   computed: {
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
@@ -166,26 +165,27 @@ export default {
       markets: (state) => state.Session.markets,
     }),
   },
+  watch: {
+    async address() {
+      if (this.address) {
+        this.riskValue = await this.comptroller
+          .healthFactor(this.markets, this.chainId, this.address) * 100;
+      }
+    },
+  },
+  methods: {
+    forceReload() {
+      this.key += 1;
+    },
+  },
   components: {
     MyBalance,
     BalanceChart,
     RiskChart,
     DebtSavingsBalance,
   },
-  methods: {
-    forceReload() {
-      this.key += 1;
-    },
-    async getData() {
-      this.riskValue = await this.comptroller
-        .healthFactor(this.markets, this.chainId,
-          this.address) * 100;
-      console.log('risk', this.riskValue);
-    },
-  },
   created() {
     this.comptroller = new Comptroller(this.chainId);
-    this.getData();
   },
 };
 </script>
