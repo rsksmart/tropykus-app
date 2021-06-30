@@ -152,6 +152,10 @@ export default {
     redeemRepayLabel() {
       return this.inBorrowMenu ? this.$t('market.my-debts.button2') : this.$t('market.my-deposits.button2');
     },
+    // dataLoading() {
+    // },
+    // loadedData() {
+    // },
   },
   methods: {
     repayOrSupply(buttonAction) {

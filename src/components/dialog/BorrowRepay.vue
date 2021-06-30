@@ -355,7 +355,6 @@ export default {
       this.riskValue = await this.comptroller
         .hypotheticalHealthFactor(this.markets, this.chainId,
           this.address, this.borrowValueInUSD) * 100;
-      console.log('Borrow RiskValue:', this.riskValue);
     },
   },
   methods: {

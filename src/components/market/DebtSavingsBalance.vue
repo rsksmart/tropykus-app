@@ -27,13 +27,22 @@
       </v-card>
     </template>
     <template v-else>
-      <v-card color="#013E2F" height="100" class="container
-        d-flex align-center justify-space-between pa-8">
-          <p class="ma-0 whiteish">{{ $t('balance.my-activity.title') }}</p>
-          <v-btn width="340" color="#4CB163">
-              <span class="b1-main">{{ $t('balance.my-activity.button') }}</span>
-          </v-btn>
-      </v-card>
+      <template v-if="loadingMarkets">
+        <v-row class="mx-0 mt-4">
+          <v-col cols="4" v-for="index in 3" :key="index">
+            <v-skeleton-loader type="image" height="158"/>
+          </v-col>
+        </v-row>
+      </template>
+      <template v-else>
+        <v-card color="#013E2F" height="100" class="container
+          d-flex align-center justify-space-between pa-8">
+            <p class="ma-0 whiteish">{{ $t('balance.my-activity.title') }}</p>
+            <v-btn width="340" color="#4CB163">
+                <span class="b1-main">{{ $t('balance.my-activity.button') }}</span>
+            </v-btn>
+        </v-card>
+      </template>
     </template>
   </v-container>
 </template>
@@ -56,6 +65,9 @@ export default {
     }),
     marketsLoaded() {
       return this.markets.length > 0;
+    },
+    loadingMarkets() {
+      return this.markets === null;
     },
     debtSavingsTotal() {
       return this.inBorrowMenu ? this.$t('overview.borrowed-card.title') : this.$t('overview.deposited-card.title');

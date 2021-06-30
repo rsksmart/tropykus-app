@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <template v-if="loadingTotalSupply || loadingTotalBorrow">
+    <!-- <template v-if="loadingTotalSupply || loadingTotalBorrow">
       <v-row class="mx-0 mt-4">
         <v-col cols="6" v-for="index in 2" :key="index">
           <v-skeleton-loader type="image" height="106" />
         </v-col>
       </v-row>
-    </template>
-    <template v-else>
+    </template> -->
+    <template>
       <v-row class="ma-0 mt-4">
         <v-col cols="6">
           <v-card class="container d-flex align-center" color="#013E2F" width="439"
@@ -132,10 +132,10 @@ export default {
       chainId: (state) => state.Session.chainId,
     }),
     loadingTotalSupply() {
-      return this.totalSuppliedUSD === null;
+      return this.totalSuppliedUSD === 1;
     },
     loadingTotalBorrow() {
-      return this.totalBorrowedUSD === null;
+      return this.totalBorrowedUSD === 1;
     },
   },
   methods: {

@@ -124,11 +124,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      walletAddress: (state) => state.Session.walletAddress,
-      chainId: (state) => state.Session.chainId,
-      markets: (state) => state.Session.markets,
-    }),
     bulletColorBalance() {
       const bulletBalance = [
         '#368348',
@@ -147,6 +142,11 @@ export default {
       ];
       return bulletBorrow;
     },
+    ...mapState({
+      walletAddress: (state) => state.Session.walletAddress,
+      chainId: (state) => state.Session.chainId,
+      markets: (state) => state.Session.markets,
+    }),
   },
   methods: {
     async getData() {
@@ -157,8 +157,9 @@ export default {
     async updateMarketInfo() {
       let depositsCount = 1;
       let debtsCount = 5;
-      let temp = [...this.chartData];
-      for await (let market of this.markets){
+      const temp = [...this.chartData];
+      // eslint-disable-next-line
+      for await (const market of this.markets){
         const obj = {};
         obj.symbol = await market.underlyingAssetSymbol();
         obj.balance = await market
@@ -166,7 +167,6 @@ export default {
           * await market.underlyingCurrentPrice(this.chainId);
         obj.borrow = await market.borrowBalanceCurrent(this.walletAddress)
           * await market.underlyingCurrentPrice(this.chainId);
-        this.balanceInfo.push(obj);
         if (obj.balance > 0) {
           temp[depositsCount] = [`${this
             .$t('balance.balance-chart.title1')} ${obj.symbol}`, obj.balance];
@@ -177,9 +177,9 @@ export default {
             .$t('balance.balance-chart.title2')} ${obj.symbol}`, obj.borrow];
           debtsCount += 1;
         }
+        this.balanceInfo.push(obj);
       }
       this.chartData = temp;
-      console.log('FInal chart data', this.chartData);
     },
   },
   watch: {
@@ -188,11 +188,10 @@ export default {
     },
     markets() {
       this.getData();
-    }
+    },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
-    console.log('balanceInfo',this.balanceInfo);
     this.getData();
     this.updateMarketInfo();
   },

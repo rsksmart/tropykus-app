@@ -1,35 +1,44 @@
 <template>
     <div class="risk">
       <template v-if="inBalance">
-        <div class="risk-container">
-          <div style="width: 537px;">
-           <div class="mt-5">
-            <v-row class="risk-title ma-0">
-              <h2>{{ riskTitle }}</h2>
-            </v-row>
-            <v-row class="risk-description ma-0">
-              <p class="ma-0">{{ riskSubtitle}}</p>
-            </v-row>
-            <v-divider color="#FFF" class="my-3"/>
-            <v-row class="risk-description ma-0">
-              <p class="ma-0">{{ riskDescription }}</p>
-            </v-row>
+        <template v-if="loadingChart">
+          <div class="risk-container">
+            <v-skeleton-loader type="image" height="100%"/>
           </div>
-          <div class="risk-circle">
-            <div class="d-flex justify-center mt-2">
-              <v-img class="risk-img" width="60" height="60" :src="riskImage" />
-              <v-progress-circular class="risk-graph" :size="125" :width="15"
-                                  :value="100 - riskRate" :color="chartColor" :rotate="180" />
+        </template>
+        <template v-else>
+          <template v-if="chartLoaded">
+            <div class="risk-container">
+              <div style="width: 537px;">
+                <div class="mt-5">
+                  <v-row class="risk-title ma-0">
+                    <h2>{{ riskTitle }}</h2>
+                  </v-row>
+                  <v-row class="risk-description ma-0">
+                    <p class="ma-0">{{ riskSubtitle}}</p>
+                  </v-row>
+                  <v-divider color="#FFF" class="my-3"/>
+                  <v-row class="risk-description ma-0">
+                    <p class="ma-0">{{ riskDescription }}</p>
+                  </v-row>
+                </div>
+                <div class="risk-circle">
+                  <div class="d-flex justify-center mt-2">
+                    <v-img class="risk-img" width="60" height="60" :src="riskImage" />
+                    <v-progress-circular class="risk-graph" :size="125" :width="15"
+                                        :value="riskValue" :color="chartColor" :rotate="180" />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
-        </div>
+          </template>
+        </template>
       </template>
       <template v-else>
         <div class="d-flex justify-center mt-2">
           <v-img class="risk-img" width="50" height="50" :src="riskImage" />
           <v-progress-circular class="risk-graph" :size="125" :width="15"
-                              :value="100 - riskRate" :color="chartColor" :rotate="180" />
+                              :value="riskValue" :color="chartColor" :rotate="180" />
         </div>
         <div class="mt-5">
           <v-row class="risk-title ma-0">
@@ -64,12 +73,21 @@ export default {
       type: Boolean,
       required: true,
     },
-    percentageValue: {
+    percentageBalance: {
       type: Number,
-      required: true,
+      required: false,
     },
   },
   computed: {
+    riskValue() {
+      return 100 - this.riskRate;
+    },
+    loadingChart() {
+      return this.riskValue === null;
+    },
+    chartLoaded() {
+      return this.riskValue >= 0;
+    },
     riskImage() {
       if (this.riskRate > 60 && this.riskRate <= 100) return HappyFace;
       if (this.riskRate > 40 && this.riskRate <= 60) return SeriousFace;
@@ -122,21 +140,21 @@ export default {
       return this.$t('market.risk.subtitles.other');
     },
     riskDescription() {
-      if (this.inBalance){
+      if (this.inBalance) {
         if (this.riskRate === 100) {
-          return this.percentageValue + this.$t('balance.chart.description.no-risk');
+          return this.percentageBalance + this.$t('balance.chart.description.no-risk');
         }
         if (this.riskRate > 60 && this.riskRate < 100) {
-          return this.percentageValue + this.$t('balance.chart.description.low-risk');
+          return this.percentageBalance + this.$t('balance.chart.description.low-risk');
         }
         if (this.riskRate > 40 && this.riskRate <= 60) {
-          return this.percentageValue + this.$t('balance.chart.description.medium-risk');
+          return this.percentageBalance + this.$t('balance.chart.description.medium-risk');
         }
         if (this.riskRate > 0 && this.riskRate <= 40) {
-          return this.percentageValue + this.$t('balance.chart.description.high-risk');
+          return this.percentageBalance + this.$t('balance.chart.description.high-risk');
         }
-        return this.percentageValue + this.$t('balance.chart.subtitles.liquidated');
       }
+      return this.percentageBalance + this.$t('balance.chart.description.liquidated');
     },
     chartColor() {
       if (this.riskRate === 100) return this.inBalance ? '#317440' : 'transparent';
@@ -162,9 +180,6 @@ export default {
       }
       return 'transparent';
     },
-  },
-  created() {
-    console.log('percentageValue', this.percentageValue);
   },
 };
 </script>
