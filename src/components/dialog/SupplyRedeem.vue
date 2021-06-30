@@ -173,9 +173,16 @@
             <p class="p1-descriptions">{{ $t('dialog.deposit.description7') }}</p>
           </v-col>
           <v-col class="pa-0">
-            <p class="p6-reading-values">
-              {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
-            </p>
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <p class="p6-reading-values" v-bind="attrs" v-on="on">
+                  {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
+                </p>
+              </template>
+              <span class="p5-feedback">
+                {{ possibleEarnings }}
+              </span>
+            </v-tooltip>
           </v-col>
           <v-col class="pa-0">
             <p class="p3-USD-values">{{ possibleEarningsUSD | formatPrice }} USD</p>
@@ -186,9 +193,16 @@
             <p class="p1-descriptions">{{ $t('dialog.deposit.description8') }}</p>
           </v-col>
           <v-col class="pa-0">
-            <p class="p6-reading-values">
-              {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
-            </p>
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <p class="p6-reading-values" v-bind="attrs" v-on="on">
+                  {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
+                </p>
+              </template>
+              <span class="p5-feedback">
+                {{ possibleEarningsPlusDeposit }}
+              </span>
+            </v-tooltip>
           </v-col>
           <v-col class="pa-0">
             <p class="p3-USD-values">{{ possibleEarningsPlusDepositUSD | formatPrice }} USD</p>
@@ -196,20 +210,7 @@
         </v-row>
       </template>
       <template v-else>
-        <div class="custom-spacer" />
-        <!--        <v-divider color="#FFF" class="my-3"/>-->
-        <!--        <v-row class="ma-0 mb-6">-->
-        <!--          <p class="p1-descriptions">-->
-        <!--            Si no quieres que tus fondos sean enviados desde Tropykus a la>-->
-        <!--            billetera desde la <br>-->
-        <!--            que estás conectado, escribe la dirección RSK en donde quieres-->
-        <!--            retirar tus fondos.-->
-        <!--          </p>-->
-        <!--        </v-row>-->
-        <!--        <v-row class="ma-0 simple-input">-->
-        <!--          <v-text-field v-model="rskAddress" type="text" solo dense flat dark-->
-        <!--                        label="Escribe la dirección RSK (Opcional)"/>-->
-        <!--        </v-row>-->
+        <div class="custom-spacer"/>
       </template>
       <v-row class="ma-0 mt-6">
         <v-btn class="button" height="42" color="#4CB163" block
@@ -274,7 +275,11 @@ export default {
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
       account: (state) => state.Session.account,
+      provider: (state) => state.Session.provider,
     }),
+    supplyRate() {
+      return this.info.rate / 100;
+    },
     actionIcon() {
       return this.inSupplyMenu ? WalletIcon : PigIcon;
     },
@@ -303,16 +308,20 @@ export default {
         .rules.marketCash() !== 'string';
     },
     possibleEarnings() {
-      return ((this.amount * (this.info.rate / 100)) + (this.info
-        .interestBalance)) * this.sliderYear;
+      return +this.amount ? ((this.amount * this.supplyRate) + (this.info
+        .supplyBalance * this.supplyRate) * this.sliderYear) : (this.info
+        .interestBalance * this.sliderYear);
     },
     possibleEarningsUSD() {
       return this.possibleEarnings * this.info.underlyingPrice;
     },
     possibleEarningsPlusDeposit() {
-      return this.possibleEarnings > this.info.interestBalance ? (+this.info
-        .supplyBalance + +this.amount + +this.possibleEarnings) * this
-        .sliderYear : this.info.supplyBalance;
+      if (+this.amount) {
+        return this.possibleEarnings > this.info.interestBalance ? (+this.info
+          .supplyBalance + +this.amount + +this.possibleEarnings) : (this.info
+          .supplyBalance * this.sliderYear);
+      }
+      return this.info.supplyBalance + this.possibleEarnings;
     },
     possibleEarningsPlusDepositUSD() {
       return this.possibleEarningsPlusDeposit * this.info.underlyingPrice;
@@ -357,15 +366,16 @@ export default {
     },
     setMaxAmount() {
       if (this.inSupplyMenu) {
-        this.amount = this.data.underlyingBalance;
+        this.amount = this.data.underlyingBalance.toFixed(10);
       } else {
         this.amount = this.info.cash > this.data.supplyBalance
-          ? this.data.supplyBalance : this.info.cash;
+          ? this.data.supplyBalance.toFixed(10) : this.info.cash.toFixed(10);
       }
       this.setPercentageSlider();
     },
     setAmount() {
       this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
+      this.amount = this.amount.toFixed(10);
     },
     setPercentageSlider() {
       this.sliderAmountPercentage = (this.amount * 100) / this.tokenBalance;

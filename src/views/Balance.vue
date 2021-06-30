@@ -199,8 +199,8 @@ export default {
           : new CToken(marketAddress, this.chainId);
         this.markets.push(market);
         if (this.markets.length === this.marketAddresses.length) {
-          this.addMarkets(this.markets);
-          this.getData();
+          await this.addMarkets(this.markets);
+          await this.getData();
         }
       });
     },
@@ -209,6 +209,7 @@ export default {
         .healthFactor(this.markets, this.chainId,
           this.address) * 100;
       this.percentageBalance = Math.round(100 - this.riskValue);
+      return this.percentageBalance;
     },
   },
   created() {
