@@ -25,4 +25,8 @@ export default class CRbtc extends Market {
   async underlyingAssetName() {
     return `${this.internalUnderlyingAssetSymbol} Bitcoin`;
   }
+
+  async getSubsidyFound() {
+    return super.getSubsidyFound(true);
+  }
 }

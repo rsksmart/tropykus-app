@@ -65,6 +65,12 @@ export default class Market {
     return totalBorrowsInUnderlying * price;
   }
 
+  async reservesInUSD(chainId) {
+    const reserves = await this.getReserves();
+    const price = await this.underlyingCurrentPrice(chainId);
+    return price * reserves;
+  }
+
   async underlying() {
     const { underlyingAssetAddress } = await this
       .lens.callStatic.cTokenMetadata(this.marketAddress);
@@ -144,6 +150,16 @@ export default class Market {
 
   async exchangeRateStored() {
     return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
+  }
+
+  async getReserves() {
+    return Number(await this.instance.callStatic.totalReserves()) / factor;
+  }
+
+  async getSubsidyFound(isRbtc = false) {
+    return isRbtc
+      ? Number(this.instance.callStatic.subsidyFund
+        ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
   }
 
   async getInitialSupply(address) {

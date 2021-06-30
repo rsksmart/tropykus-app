@@ -285,5 +285,12 @@
       "no-deposits": "No funds deposited yet",
       "no-debts": "No debts yet"
     }
+  },
+  "internal-metrics": {
+    "title": "Reserves",
+    "number-addresses": "Number of unique addresses",
+    "total-subsidy": "Total subsidy fund",
+    "market": "Market",
+    "total-reserves": "Total Reserves"
   }
 }

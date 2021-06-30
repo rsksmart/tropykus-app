@@ -287,5 +287,12 @@
       "no-deposits": "No tienes fondos depositados aún",
       "no-debts": "No tienes deudas aún"
     }
+  },
+  "internal-metrics": {
+    "title": "Reservas",
+    "number-addresses": "Numero de direcciones unicas",
+    "total-subsidy": "Total fondo de subsidio",
+    "market": "Mercado",
+    "total-reserves": "Total Reservas"
   }
 }
