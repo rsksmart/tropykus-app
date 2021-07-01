@@ -75,7 +75,7 @@ const actions = {
     if (window.ethereum) {
       const chainId = window?.ethereum?.chainId ?? 31;
       if (window.ethereum.isLiquality) {
-        commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(Number(`0x${chainId}`), 10) });
+        commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(chainId, 16) });
         return;
       }
       if (window.ethereum.isMetaMask) {
