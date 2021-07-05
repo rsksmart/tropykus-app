@@ -1,16 +1,9 @@
 @import "~vuetify/src/styles/main.sass";
 
-@import 'site';
-@import 'home';
-@import 'card';
-@import 'tutorials';
-@import 'user-action';
-@import 'navbar';
-@import 'modalConnectWallet';
-@import 'modalConvertBtn';
-@import 'balance';
-@import 'txstatus';
+@import 'variables';
+@import 'mixins';
+@import 'class';
 @import 'leftbar';
-@import 'txsummary';
-@import 'overview';
+@import 'site';
 @import 'metrics';
+@import 'deposits'

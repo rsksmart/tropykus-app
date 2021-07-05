@@ -1,0 +1,252 @@
+
+body{
+  background-color: $secondary-color;
+}
+.container-app{
+  flex: 1;
+  width: 100%;
+}
+.navbar-vue{
+  padding-top: 54px;
+  margin-right: 42px;
+}
+.card-item{
+  background: #E1F0E8 !important;
+  box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1) !important;
+  border-radius: 30px !important;
+  margin: 17px 20px;
+  padding: 44px 53px 52px 39px !important;
+}
+
+.theme--light.v-list {
+  // background: $primary-bg !important;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.primary-color{
+  background-color: $primary-color !important;
+}
+.secondary-color{
+  background-color: $secondary-color !important;
+}
+.primary-bg{
+  background-color: $primary-bg;
+}
+.secondary-bg{
+  background-color: $secondary-bg;
+}
+//=======================
+//  input select textarea
+//=======================
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.input-box{
+  width: 590px;
+  height: 62px;
+  border-radius: 5px;
+  input{
+    // font-size: ;
+    max-height: 62px !important;
+    color: $third-color !important;
+    caret-color: $third-color !important;
+    padding: 7px 0 9px 18px !important;
+    margin-bottom: 5px !important;
+    :focus{
+        color: $third-color !important;
+    }
+  }
+}
+.v-text-field > .v-input__control > .v-input__slot:before, .v-text-field > .v-input__control > .v-input__slot:after {
+  bottom: -1px;
+  content: "";
+  left: 0;
+  position: absolute;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  width: 0% !important;
+}
+.select-box{
+  width: 186px;
+  height: 62px;
+  border-radius: 5px;
+  .selected-item{
+    height: 62px;
+
+    img{
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+.v-menu__content{
+  .select-menu-item{
+    width: 186px;
+    height: 62px;
+  }
+  img{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.theme--light.v-list {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: $secondary-color;
+}
+
+.select-img{
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 10px;
+}
+
+.invalid {
+  border: 1px solid #66433b!important;
+}
+
+//=======================
+//  Button
+//=======================
+.btn {
+  width: 295px;
+  height: 54px !important;
+  border-radius: 20px;
+}
+.btn-action{
+  width: 590px;
+  height: 47px !important;
+  border-radius: 15px;
+}
+.btn-info{
+  border: 1px solid $third-color;
+  color: $third-color;
+}
+
+.btn-primary{
+  background: $primary-color !important;
+  border: 1 solid $primary-color;
+}
+
+.btn-secondary{
+  border: 1px solid $primary-color;
+  background: transparent;
+  color: $primary-color !important;
+}
+.btn-wallet{
+  width: 294px;
+  height: 52px;
+  box-shadow: 0px 10px 15px rgba(52, 52, 52, 0.1);
+  border-radius: 10px;
+  background: $btn-wallet;
+}
+.modal-connect-wallet{
+  background: #E6F1EB !important;
+  border-radius: 30px !important;
+  width: 414px;
+  height: 543px;
+}
+.v-dialog{
+  border-radius: 30px !important;
+} 
+
+//=======================
+//  text
+//=======================
+
+.text-primary{
+  color: $primary-color;
+}
+.text-secondary{
+  color: $secondary-color;
+}
+.text-info{
+  color: $third-color;
+}
+.text-detail{
+  color: $text-detail !important;
+}
+
+//=======================
+//  mixins
+//=======================
+
+@include desktop() {
+  .btn {
+    width: 222px;
+    height: 44px !important;
+  }
+  .btn-action{
+    width: 527px;
+    height: 45px !important;
+  }
+  .navbar-vue{
+    padding-top: 41px;
+    margin-right: 36px;
+  }
+  .card-item{
+    border-radius: 20px !important;
+    margin: 17px 20px;
+    width: 209px !important;
+    height: 215px !important;
+    padding: 25px 32px 28px 32px !important;
+    img{
+      width: 31px !important;
+      height: 31px !important;
+      margin-top: 13px;
+    }
+  }
+  .input-box{
+    width: 528px;
+    height: 48px;
+    input{
+      position: relative;
+      top: -8px;
+      max-height: 48px !important;
+      padding: 3px 0 5px 18px !important;
+
+    }
+
+    button{
+      position: relative;
+      top: -8px;
+    }
+  }
+  .select-box{
+    height: 48px;
+    .selected-item{
+      height: 48px;
+      img{
+        width: 26px;
+        height: 26px;
+      }
+    }
+  }
+  .v-menu__content{
+    .select-menu-item{
+      height: 48px;
+    }
+    img{
+      width: 26px;
+      height: 26px;
+    }
+  }
+}
+
+//=======================
+//  scroll
+//=======================
+/* custom scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: $secondary-color; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.6);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

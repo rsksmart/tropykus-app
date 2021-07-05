@@ -1,118 +1,117 @@
 <template>
   <div class="left-bar">
-<!--    <v-row class="ma-0 mt-2 mx-2">-->
-<!--      <v-tooltip right color="#52826E">-->
-<!--        <template v-slot:activator="{ on, attrs }">-->
-<!--          <v-btn @click="redirect(constants.ROUTE_NAMES.BALANCE)" width="50"-->
-<!--                 v-bind:class="{ selected: views.inBalance }"-->
-<!--                 height="64" depressed v-bind="attrs" v-on="on">-->
-<!--            <v-img contain height="43" src="@/assets/icons/home.svg"/>-->
-<!--          </v-btn>-->
-<!--        </template>-->
-<!--        <span>{{ $t('menu.sidebar.balance') }}</span>-->
-<!--      </v-tooltip>-->
-<!--    </v-row>-->
-    <v-row class="ma-0 mt-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.SAVINGS)" width="50"
-                 v-bind:class="{ selected: views.inSavings }"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/pig.svg"/>
+    <v-navigation-drawer class="primary-color pl-3 left-bar-content"
+      absolute permanent
+      >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6 d-flex justify-center">
+            <v-img
+              class="mr-4 logo-tropykus"
+              width="165"
+              height="39"
+              src="@/assets/icons/tropykus.svg"
+              contain
+            />
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list class="list-left-bar" dense nav
+        >
+        <!-- <v-list-item-group
+          v-model="setGroupDrawer"
+        > -->
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/home.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.DEPOSITS}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/pig.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.deposit') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.BORROW}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/borrow.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.borrow') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.EXCHANGES}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/exchanges.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.exchanges') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.SCHOOL}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/tutorials.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.school') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.MARKETS}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/markets.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.markets') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.PROTOCOL}"
+            class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/info.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.protocol') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <v-btn block class="btn-primary d-flex justify-start pa-0" @click="changeLanguage"
+           width="50" height="48" depressed>
+            <img class="ml-4 mr-5" src="@/assets/icons/idiom.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.language') }}</div>
           </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.deposit') }}</span>
-      </v-tooltip>
-    </v-row>
-    <v-row class="mx-0 my-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.DEBTS)" width="50"
-                 v-bind:class="{ selected: views.inDebts }"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="43" src="@/assets/icons/borrow.svg"/>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.loan') }}</span>
-      </v-tooltip>
-    </v-row>
-    <v-row class="ma-0 mb-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.TUTORIALS)" width="50"
-                 v-bind:class="{ selected: views.inTutorials }" color="transparent"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="25" src="@/assets/icons/tutorials.svg"/>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.tutorial') }}</span>
-      </v-tooltip>
-    </v-row>
-    <v-row class="ma-0 mb-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="redirect(constants.ROUTE_NAMES.OVERVIEW)" width="50"
-                 v-bind:class="{ selected: views.inOverview }"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <v-img contain height="25" src="@/assets/icons/markets.svg"/>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.markets') }}</span>
-      </v-tooltip>
-    </v-row>
-    <div class="custom-spacer"/>
-    <v-row class="ma-0 mb-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn @click="changeLanguage" width="50"
-                 height="64" depressed v-bind="attrs" v-on="on">
-            <h1>{{ lang }}</h1>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.language') }}</span>
-      </v-tooltip>
-    </v-row>
-    <v-divider class="mx-2 mx-2" color="#BEBEBE"/>
-    <v-row class="ma-0 mt-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn href="https://github.com/TruStartUp/tropykus-protocol"
-                 target="_blank" rel="noopener" width="50"
-                 height="64" depressed v-bind="attrs" v-on="on">
+        </v-list-item>
+
+        <!-- </v-list-item-group> -->
+
+        </v-list>
+
+        <v-divider class="divider"></v-divider>
+
+        <div class="d-flex pl-10 price-btc">
+          <img src="https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd" />
+          <div class="ml-4">
+            <div class="b1-main white--text">RBTC</div>
+            <div class="p3-USD-values white--text">$54.000 USD</div>
+          </div>
+        </div>
+
+        <div class="mx-5 d-flex justify-space-between contact-tropykus">
             <v-img contain height="43" src="@/assets/icons/github.svg"/>
-          </v-btn>
-        </template>
-        <span>{{ $t('menu.sidebar.github') }}</span>
-      </v-tooltip>
-    </v-row>
-    <v-row class="ma-0 my-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn href="https://twitter.com/tropykus"
-                 target="_blank" rel="noopener" width="50"
-                 height="64" depressed v-bind="attrs" v-on="on">
             <v-img contain height="43" src="@/assets/icons/twitter.svg"/>
-          </v-btn>
-        </template>
-        <span>Twitter</span>
-      </v-tooltip>
-    </v-row>
-    <v-row class="ma-0 mb-2 mx-2">
-      <v-tooltip right color="#52826E">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn href="https://t.me/tropykus"
-                 target="_blank" rel="noopener" width="50"
-                 height="64" depressed v-bind="attrs" v-on="on">
             <v-img contain height="43" src="@/assets/icons/telegram.svg"/>
-          </v-btn>
-        </template>
-        <span>Telegram</span>
-      </v-tooltip>
-    </v-row>
+        </div>
+
+    </v-navigation-drawer>
+
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import * as constants from '@/store/constants';
 
 export default {
@@ -120,9 +119,11 @@ export default {
   data() {
     return {
       constants,
+      setGroupDrawer: null,
+      showDrawer: true,
       views: {
         inBalance: false,
-        inSavings: false,
+        inDeposit: false,
         inDebts: false,
         inTutorials: false,
         inOverview: false,
@@ -137,7 +138,13 @@ export default {
       return this.$i18n.locale === 'en' ? 'ES' : 'EN';
     },
   },
+  created() {
+    console.log(this.drawer);
+  },
   methods: {
+    ...mapActions({
+      setDrawer: constants.SESSION_DRAWER,
+    }),
     changeLanguage() {
       if (this.$i18n.locale === 'es') {
         this.$i18n.locale = 'en';
@@ -159,7 +166,7 @@ export default {
     },
     reset() {
       this.views.inBalance = false;
-      this.views.inSavings = false;
+      this.views.inDeposit = false;
       this.views.inDebts = false;
       this.views.inTutorials = false;
       this.views.inOverview = false;
@@ -169,8 +176,8 @@ export default {
         case constants.ROUTE_NAMES.BALANCE:
           this.views.inBalance = true;
           break;
-        case constants.ROUTE_NAMES.SAVINGS:
-          this.views.inSavings = true;
+        case constants.ROUTE_NAMES.DEPOSITS:
+          this.views.inDeposits = true;
           break;
         case constants.ROUTE_NAMES.DEBTS:
           this.views.inDebts = true;
@@ -182,11 +189,12 @@ export default {
           this.views.inOverview = true;
           break;
         default:
-          this.views.inSavings = true;
+          this.views.inDeposits = true;
           break;
       }
     },
     redirect(routePath) {
+      console.log('page', routePath);
       this.reset();
       this.highlightRoute(routePath);
       this.$router.push({ name: routePath });
@@ -196,6 +204,16 @@ export default {
     walletAddress() {
       if (this.walletAddress) return 'UserHome';
       return 'Home';
+    },
+    setGroupDrawer() {
+      if (window.innerWidth <= 768) {
+        this.setDrawer(false);
+        console.log(window.innerWidth, 'hey');
+        this.showDrawer = false;
+      } else {
+        this.showDrawer = true;
+        this.setDrawer(true);
+      }
     },
   },
 };

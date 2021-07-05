@@ -1,5 +1,5 @@
 <template>
-  <!-- <v-dialog v-model="dialog" width="600" overlay-color="#000" overlay-opacity="0.8"> -->
+  <v-dialog v-model="dialog" width="600" overlay-color="#000" overlay-opacity="0.8">
     <v-card class="user-action" v-click-outside="onClickOutside">
       <v-row class="button ma-0 d-flex justify-center justify-space-around">
         <v-btn
@@ -219,7 +219,7 @@
         </v-btn>
       </v-row>
     </v-card>
-  <!-- </v-dialog> -->
+  </v-dialog>
 </template>
 
 <script>

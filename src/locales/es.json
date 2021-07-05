@@ -158,13 +158,15 @@
   },
   "menu": {
     "sidebar": {
-      "balance": "Mi Balance",
-      "deposit": "Depositos",
-      "loan": "Pedir prestado",
-      "tutorial": "Tutoriales",
+      "balance": "Balance General",
+      "deposit": "Depósitos",
+      "borrow": "Préstamos",
+      "exchanges": "Intercambios",
+      "school": "Escuela Tropykus",
       "markets": "Mercados",
-      "language": "Idioma",
-      "github": "Repositorio"
+      "protocol": "Sobre el protocolo",
+      "language": "Ingles",
+      "github": "Repository"
     },
     "navbar": {
       "connect": "Conectar billetera",

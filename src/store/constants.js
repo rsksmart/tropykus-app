@@ -12,10 +12,13 @@ export const CRBTC_SYMBOL = 'cRBTC';
 
 export const ROUTE_NAMES = {
   BALANCE: 'Balance',
-  SAVINGS: 'Supply',
-  DEBTS: 'Borrow',
-  TUTORIALS: 'Tutorials',
-  OVERVIEW: 'Overview',
+  DEPOSITS: 'Deposits',
+  DEPOSIT: 'Deposit',
+  BORROW: 'Borrow',
+  EXCHANGES: 'Exchanges',
+  SCHOOL: 'School',
+  MARKETS: 'Markets',
+  PROTOCOL: 'protocol',
 };
 
 // actions
@@ -30,3 +33,5 @@ export const SESSION_SET_PROPERTY = 'SESSION_SET_PROPERTY';
 // getters
 export const SESSION_GET_WALLET_NAME = 'SESSION_GET_WALLET_NAME';
 export const SESSION_IS_CONNECTED = 'SESSION_IS_CONNECTED';
+
+export const SESSION_DRAWER = 'SESSION_DRAWER';

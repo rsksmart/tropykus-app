@@ -1,9 +1,13 @@
 <template>
-  <v-app class="app">
-    <navbar :marketAddresses="marketAddresses" />
-    <left-bar />
-    <router-view />
-    <v-dialog v-model="btcToRbtcDialog" width="350"
+  <v-app class="app secondary-color">
+    <div class="d-flex">
+      <left-bar :drawer="drawer"/>
+      <div class="container-app">
+        <navbar :marketAddresses="marketAddresses" />
+        <router-view />
+      </div>
+    </div>
+    <!-- <v-dialog v-model="btcToRbtcDialog" width="350"
               overlay-opacity="0.8" overlay-color="#000">
       <v-card class="modal-convert-btn container" color="#013E2F">
         <v-row class="mx-0 pt-5 mb-3 d-flex justify-center">
@@ -39,13 +43,14 @@
             :label="$t('app.popup.description2')" class="mt-0" />
         </v-row>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-app>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
+// import LeftBar from '@/components/menu/LeftBar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
 import {
   Comptroller,
@@ -59,6 +64,7 @@ export default {
   name: 'App',
   data() {
     return {
+      drawer: false,
       btcToRbtcDialog: true,
       comptroller: null,
       marketAddresses: [],

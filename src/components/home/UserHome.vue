@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <template v-if="inBorrowMenu">
       <debts :inBorrowMenu="inBorrowMenu"
              :debts="debtsList" :key="debtKey" />
@@ -14,6 +14,7 @@
                    :suggestions="suggestions" />
     </template>
   </div>
+
 </template>
 
 <script>

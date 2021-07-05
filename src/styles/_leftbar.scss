@@ -1,28 +1,117 @@
 .left-bar {
-  position: absolute;
-  top: 112px;
-  background-color: #023f30;
-  width: 80px;
-  height: 713px;
-  border-radius: 0 10px 10px 0;
+  width:254px !important;
+  height: 1098px !important;
+  z-index: 200;
+  .logo-tropykus{
+    margin-top: 40px;
+  }
+  .left-bar-content{
+    width:254px !important;
+    height: 1098px !important;
+    border-radius: 0px 30px 30px 0px;
+    
+  }
+  .list-left-bar{
+    margin-top: 60px;
+  }
+  .left-list-item{
+    width: 195px !important;
+    height: 48px !important;
+    margin-bottom: 8px;
+    a{
+      text-decoration: none;
+      width: 195px;
+      height: 48px;
 
-  .custom-spacer {
-    height: 50px;
+      &.router-link-exact-active{
+        background: #45AA5C;
+      }
+    }
+
+    // .router-link-active{
+    //   a{
+    //     width: 187px;
+    //     height: 48px;
+    //   }
+    // }
+  }
+  .divider {
+    background-color: #fff; 
+    width: 187px; 
+    margin: 61px auto 24px auto;
+  }
+  .price-btc{
+    margin-bottom: 64px;
+  }
+  .btn-description{
+    min-width: 120px;
+  }
+  .contact-tropykus{
+    margin-top: 24px;
   }
 
-  .v-btn {
-    background-color: transparent !important;
-    &:focus, &:visited, &:active, &:hover, &.selected {
-      background-color: rgba(163, 197, 171, 0.5) !important;
+  @include desktop() {
+    width: 234px !important;
+    height: 100vh !important;
+    .left-bar-content{
+      width: 234px !important;
+      height: 100vh !important;
+      position: fixed;
+    }
+    .divider{
+      margin: 10px auto 24px auto;
+    }
+    .btn-description{
+      min-width: 110px;
+    }
+    .v-image{
+      width: 28px !important;
+      height: 28px !important;
+    }
+    .logo-tropykus{
+      width: 122px !important;
+      height: 29px !important;
+      margin-top: 20px !important;
+    }
+    .list-left-bar{
+      margin-top: 15px;
+    }
+    .left-list-item{
+      margin-bottom: 0px !important;
+      button{ 
+        height: 46px !important;
+      }
+    }
+    .price-btc{
+      margin-bottom: 10px;
+      img{
+        width: 37px;
+        height: 37px;
+      }
+    }
+    .contact-tropykus{
+      margin-top: 18px;
+      .v-image{
+        width: 37px !important;
+        height: 37px !important;
+      }
     }
   }
-
-  h1 {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 25px;
-    line-height: 30px;
-    color: #FFF;
+  @include tablet(){
+    // .left-bar-content{
+    //   // display: none;
+    //   // position: fixed;
+    // }
   }
-
+  /* custom scroll bar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $primary-color; 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.4);
+  }
 }

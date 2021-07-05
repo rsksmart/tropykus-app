@@ -1,10 +1,20 @@
 import Supply from '@/views/Supply.vue';
 
 export default [
+  // {
+  //   path: '/',
+  //   name: 'Supply',
+  //   component: Supply,
+  // },
   {
-    path: '/',
-    name: 'Supply',
-    component: Supply,
+    path: '/deposits',
+    name: 'Deposits',
+    component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Deposits.vue'),
+  },
+  {
+    path: '/deposits/:id',
+    name: 'Deposit',
+    component: () => import(/* webpackChunkName: "Borrow" */ '@/components/deposits/Deposit.vue'),
   },
   {
     path: '/es',

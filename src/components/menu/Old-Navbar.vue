@@ -1,28 +1,47 @@
 <template>
-  <div class="d-flex justify-end navbar-vue">
-    <!-- <v-app-bar-nav-icon app class="ml-10" @click="setDrawer(true)"></v-app-bar-nav-icon> -->
-    <!-- <v-app-bar-nav-icon class="ml-10" @click="setDrawer(false)"></v-app-bar-nav-icon> -->
-
+  <v-app-bar color="transparent" flat height="70" absolute
+             v-bind:class="{ 'tutorial-navbar': isTutorial }" class="navbar">
+    <router-link :to="{ name: 'Supply' }">
+      <v-img height="48" width="372" position="left center" src="@/assets/tropykus.svg" contain/>
+    </router-link>
+    <v-spacer/>
+    <div v-for="market in markets" :key="market.symbol">
+      <v-card width="160" color="transparent" flat>
+        <v-row>
+          <v-col class="pa-0 pr-2 d-flex align-center" cols="auto">
+            <v-img alt="market icon" :src="market.img" height="48" width="48" contain/>
+          </v-col>
+          <v-col class="pa-0 pt-2">
+            <v-row class="ma-0 d-flex justify-start">
+              <p class="text-left font-weight-bold">{{ market.symbol }}</p>
+            </v-row>
+            <v-row class="ma-0 d-flex justify-start">
+              <p class="text-left font-italic">$ {{ market.price }} USD</p>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
+    <v-spacer/>
     <template v-if="isWalletConnected">
-      <v-card flat class="secondary-color">
+      <v-card flat :color="networkColor" class="mt-3">
         <v-row class="ma-0">
-          <v-col cols="auto" class="pa-0">
+          <v-col cols="auto" class="pa-2">
             <v-img alt="market icon" src="@/assets/avatar.svg" height="48" width="48" contain/>
           </v-col>
-          <v-col class="pa-0 pt-2 mr-7 ml-4">
+          <v-col class="pa-0 pt-3">
             <v-row class="ma-0">
-              <div class="b2-secondary text-detail">{{ accountCutOff }}</div>
+              <p class="text-left">{{ accountCutOff }}</p>
             </v-row>
             <v-row class="ma-0">
-              <div class="b2-secondary text-detail">{{ network }}</div>
+              <p class="text-left">{{ network }}</p>
             </v-row>
           </v-col>
-          <v-col class="pa-0">
+          <v-col class="pa-2">
             <template v-if="chainId === 31">
-              <v-btn text class="btn btn-info" @click="disconnectAccount">
-                <span class="b1-main text-detail">
-                  {{ buttonLabel }}
-                </span>
+              <v-btn @click="disconnectAccount" height="45" color="#FFF"
+                     outlined width="200">
+                {{ buttonLabel }}
               </v-btn>
             </template>
             <template v-else>
@@ -43,10 +62,8 @@
       </v-card>
     </template>
     <template v-else>
-      <v-btn text @click="showDialogConnectWallet" class="btn btn-info">
-        <span class="b1-main">
-          {{ buttonLabel }}
-        </span>
+      <v-btn @click="showDialogConnectWallet" class="wallet-button" width="200">
+        {{ buttonLabel }}
       </v-btn>
     </template>
     <template v-if="showModalConnectWallet">
@@ -55,8 +72,9 @@
         @closed="outsideConnectWallet"
       />
     </template>
-  </div>
+  </v-app-bar>
 </template>
+
 <script>
 import { mapActions, mapState } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
@@ -64,9 +82,7 @@ import { Market, CRbtc, CToken } from '@/middleware';
 import * as constants from '@/store/constants';
 
 export default {
-  components: {
-    ConnectWallet,
-  },
+  name: 'Navbar',
   data() {
     return {
       db: this.$firebase.firestore(),
@@ -74,11 +90,10 @@ export default {
       markets: [],
     };
   },
-  watch: {
-    marketAddresses() {
-      this.marketAddresses.forEach(async (marketAddress) => {
-        await this.loadMarketInfo(marketAddress);
-      });
+  props: {
+    marketAddresses: {
+      type: Array,
+      required: true,
     },
   },
   computed: {
@@ -102,9 +117,9 @@ export default {
       if (this.chainId === 30) return 'Mainnet';
       return '';
     },
-    // networkColor() {
-    //   return this.chainId === 31 ? '#074335' : '#E55E3C';
-    // },
+    networkColor() {
+      return this.chainId === 31 ? '#074335' : '#E55E3C';
+    },
     isWalletConnected() {
       return !!this.walletAddress;
     },
@@ -114,7 +129,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      setDrawer: constants.SESSION_DRAWER,
       disconnectWallet: constants.SESSION_DISCONNECT_WALLET,
     }),
     outsideConnectWallet() {
@@ -146,6 +160,16 @@ export default {
           this.markets.push(data);
         });
     },
+  },
+  watch: {
+    marketAddresses() {
+      this.marketAddresses.forEach(async (marketAddress) => {
+        await this.loadMarketInfo(marketAddress);
+      });
+    },
+  },
+  components: {
+    ConnectWallet,
   },
 };
 </script>

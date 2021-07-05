@@ -11,6 +11,7 @@ const state = {
   chainId: 31,
   provider: undefined,
   markets: [],
+  drawer: true,
 };
 
 if (window.ethereum) {
@@ -101,6 +102,11 @@ const actions = {
   [constants.SESSION_ADD_MARKETS]: async ({ commit }, markets) => {
     commit(constants.SESSION_SET_PROPERTY, { markets });
   },
+
+  [constants.SESSION_DRAWER]: ({ commit }, data) => {
+    commit(constants.SESSION_DRAWER, data);
+  },
+
 };
 
 const mutations = {
@@ -108,6 +114,11 @@ const mutations = {
   [constants.SESSION_SET_PROPERTY]: (state, data) => {
     const [[property, value]] = Object.entries(data);
     state[property] = value;
+  },
+
+  // eslint-disable-next-line no-shadow
+  [constants.SESSION_DRAWER]: (state, payload) => {
+    state.drawer = payload;
   },
 };
 

@@ -1,0 +1,78 @@
+.deposit-borrow-view{
+  width: 100% !important;
+  flex: 1 !important;
+}
+.borrow-deposit-view{
+  width: 100%;
+  flex: 1;
+  .h2-heading {
+    margin-top: 68px;
+  }
+  .h3-sections-heading{
+    margin: 100px 0 17px 138px;
+  }
+  .actions-bottons{
+    margin-top: 28px;
+  }
+  @include desktop() {
+    .h2-heading {
+      margin-top: 46px;
+    }
+    .h3-sections-heading{
+      margin: 70px 0 17px 111px;
+    }
+    .actions-bottons{
+      margin-top: 5px;
+    }
+  }
+}
+
+.deposit-borrow-view{
+  .text-info{
+    width: 687px;
+  }
+}
+
+.deposit{
+  .h2-heading {
+    margin: 71px 0 54px 235px;
+  }
+  .text-deposit{
+    margin-left: 369px;
+    display: inline-block;
+    padding-bottom: 6px;
+    border-bottom: 1px solid $text-detail;
+  }
+  .divider{
+    width: 911px;
+    margin: 86px auto 71px auto;
+  }
+  .deposit-slider{
+    width: 588px;
+  }
+  @include desktop() {
+    .h2-heading {
+      margin: 40px 0 44px 133px;
+    } 
+    .text-deposit{
+      margin-left: 148px;
+    }
+    .divider{
+      width: 847px;
+      margin: 49px auto 51px auto;
+    }
+    .h2-heading {
+      margin: 46px 0 44px 115px;
+    }
+    .text-deposit{
+      margin-left: 148px;
+    }
+    .deposit-card{
+      width: 821px !important;
+    }
+    .deposit-slider{
+      width: 528px;
+    }
+  }
+
+}

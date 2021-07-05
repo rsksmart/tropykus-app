@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 div, p, h1, h2, h3, h4, h5, h6, body, button {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: $primary-font;
   font-style: normal;
 }
 
@@ -19,75 +18,45 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   border-radius: 10px !important;
 }
 
-.crop-card {
-  border-radius: 10px 10px 0 0 !important;
-  width: 240px !important;
-  height: 42px !important;
-  background-color: #013E2F !important;
-  display: flex;
-  align-items: center;
-  h1 {
-    font-weight: bold !important;
-    font-size: 15px !important;
-    line-height: 18px !important;
-    color: #fff !important;
-  }
-}
-
 .float-right {
   position: absolute;
   right: 10px;
   top: 10px
 }
 
-.boldie {
-  font-weight: bold !important;
+.h1-title {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 55px;
 }
-
-.italique {
-  font-style: italic !important;
-}
-
-.whiteish {
-  color: #fff !important;
-}
-
-.redish {
-  color: #fff !important;
-}
-
 .h2-heading {
   font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
-  line-height: 32px;
-  color: #FFFFFF;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 34px;
 }
 
 .h3-sections-heading {
   font-style: normal;
-  font-weight: 500;
+  font-weight: normal;
   font-size: 24px;
-  line-height: 28px;
-  color: #FFFFFF;
+  line-height: 25px;
 }
 
 .p1-descriptions {
   font-style: normal;
   font-weight: 300;
-  font-size: 12px;
-  line-height: 13px;
-  color: #FFFFFF;
-  margin: 0 !important;
+  font-size: 14px;
+  line-height: 15px;
 }
 
 .p2-reading-values {
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
-  line-height: 28px;
-  color: #FFFFFF;
-  margin: 0 !important;
+  font-size: 28px;
+  line-height: 32px;
 }
 
 .p3-USD-values{
@@ -95,8 +64,6 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
-  color: #FFFFFF;
-  margin: 0 !important;
 }
 
 .p5-feedback {
@@ -119,11 +86,11 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 }
 
 .b1-main {
+  font-family: Ubuntu;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 18px;
-  color: #FFFFFF;
+  font-size: 20px;
+  line-height: 22px;
 }
 
 .b2-secondary {
@@ -131,8 +98,36 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: #FFF !important;
   &.disabled {
     color: #89B7A4 !important;
+  }
+}
+
+//=======================
+//  mixins
+//=======================
+
+@include desktop() {
+  .h2-heading {
+    font-size: 30px;
+  }
+  .p1-descriptions {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .b1-main {
+    font-size: 15px;
+  }
+  .h3-sections-heading {
+    font-size: 20px;
+  }
+  .h1-title {
+    font-size: 35px;
+  }
+  .b2-secondary {
+    font-size: 11px;
+  }
+  .p3-USD-values{
+    font-size: 11px !important;
   }
 }

@@ -158,10 +158,12 @@
     "sidebar": {
       "balance": "My Balance",
       "deposit": "Deposits",
-      "loan": "Borrow",
-      "tutorial": "Tutorials",
-      "language": "Language",
+      "borrow": "Borrow",
+      "exchanges": "Exchanges",
+      "school": "Tropykus School",
       "markets": "Markets",
+      "protocol": "About Protocol",
+      "language": "Spanish",
       "github": "Repository"
     },
     "navbar": {
