@@ -2,6 +2,7 @@
   <v-dialog v-model="dialog" width="414" overlay-opacity="0.6" overlay-color="#000"
   >
     <v-card class="modal-connect-wallet pt-9" v-click-outside="closeDialog">
+      <v-icon class="btn-close-dialog" @click="closeDialog">mdi-close</v-icon>
       <v-row class="mb-8 ma-0 d-flex justify-center mt-10">
         <h1 class="h3-sections-heading text-detail">{{ $t('dialog.wallet.title1') }}</h1>
       </v-row>

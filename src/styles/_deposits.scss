@@ -1,10 +1,10 @@
-.deposit-borrow-view{
-  width: 100% !important;
-  flex: 1 !important;
-}
 .borrow-deposit-view{
   width: 100%;
   flex: 1;
+  .text-description{
+    width: 687px;
+    text-align: center;
+  }
   .h2-heading {
     margin-top: 68px;
   }
@@ -27,12 +27,6 @@
   }
 }
 
-.deposit-borrow-view{
-  .text-info{
-    width: 687px;
-  }
-}
-
 .deposit{
   .h2-heading {
     margin: 71px 0 54px 235px;
@@ -49,6 +43,10 @@
   }
   .deposit-slider{
     width: 588px;
+    height: 30px;
+  }
+  .anual-rate{
+    width: 135px;
   }
   @include desktop() {
     .h2-heading {

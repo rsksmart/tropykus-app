@@ -1,0 +1,77 @@
+
+.btn-close-dialog{
+  position: absolute !important;
+  right: 45px;
+  top: 45px;
+  color: $third-color;
+  width: 11px;
+  height: 11px;
+  cursor: pointer;
+}
+
+.modal-connect-wallet{
+  background: $secondary-color !important;
+  border-radius: 30px !important;
+  width: 414px;
+  height: 543px;
+}
+
+.dialog-empty{
+  background: $secondary-color !important;
+  border-radius: 30px !important;
+  width: 414px;
+  height: 445px;
+  padding: 62px;
+  .h3-sections-heading{
+    width: 203px;
+  }
+  .p1-descriptions{
+    width: 287px;
+    margin: 60px 0 40px 10px;
+  }
+}
+
+.dialog-change-btc{
+  background: $secondary-color !important;
+  border-radius: 30px !important;
+  width: 414px;
+  height: 586px;
+  padding: 87px 63px 60px 60px;
+  .h3-sections-heading{
+    margin-bottom: 30px;
+  }
+  .subtitle-1{
+    width: 291px;
+    height: 62px;
+  }
+  .divider{
+    width: 290px;
+    margin: 40px auto 33px auto;
+  }
+}
+
+.dialog-loading{
+  width: 681px;
+  height: 500px;
+  background-image: url('../assets/dialog/background.svg');
+  background-size: cover;
+  border-radius: 10px !important;
+
+  .text-description{
+    width: 292px;
+    text-align: center;
+  }
+  .btn-close-dialog{
+    top: 25px;
+    right: 30px;
+    width: 11px;
+    height: 11px;
+  }
+}
+
+@include desktop(){
+  .dialog-loading{
+    width: 414px;
+    height: 490px;
+  }
+}

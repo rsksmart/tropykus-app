@@ -16,6 +16,10 @@ body{
   border-radius: 30px !important;
   margin: 17px 20px;
   padding: 44px 53px 52px 39px !important;
+  img{
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .theme--light.v-list {
@@ -57,6 +61,11 @@ input[type=number]::-webkit-inner-spin-button {
     }
   }
 }
+input[type=number]::-webkit-input-placeholder { color: $third-color !important; } 
+input[type=number]:-moz-placeholder { /* Firefox 18- */ color: $third-color ; } 
+input[type=number]::-moz-placeholder { /* Firefox 19+ */ color: $third-color ; } 
+input[type=number]:-ms-input-placeholder { color: $third-color ; }
+
 .v-text-field > .v-input__control > .v-input__slot:before, .v-text-field > .v-input__control > .v-input__slot:after {
   bottom: -1px;
   content: "";
@@ -71,13 +80,24 @@ input[type=number]::-webkit-inner-spin-button {
   border-radius: 5px;
   .selected-item{
     height: 62px;
-
     img{
       width: 30px;
       height: 30px;
     }
   }
+  .selected-item{
+    position: relative;
+    .select-icon{
+      position: absolute;
+      right: 16px;
+      top: 25px;
+      width: 21px;
+      height: 11px;
+      color: $primary-color;
+    }
+  }
 }
+//select box
 .v-menu__content{
   .select-menu-item{
     width: 186px;
@@ -134,20 +154,11 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .btn-wallet{
   width: 294px;
-  height: 52px;
+  height: 52px !important;
   box-shadow: 0px 10px 15px rgba(52, 52, 52, 0.1);
   border-radius: 10px;
   background: $btn-wallet;
 }
-.modal-connect-wallet{
-  background: #E6F1EB !important;
-  border-radius: 30px !important;
-  width: 414px;
-  height: 543px;
-}
-.v-dialog{
-  border-radius: 30px !important;
-} 
 
 //=======================
 //  text
@@ -188,11 +199,14 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 17px 20px;
     width: 209px !important;
     height: 215px !important;
-    padding: 25px 32px 28px 32px !important;
+    padding: 22px 32px 27px 32px !important;
     img{
       width: 31px !important;
       height: 31px !important;
       margin-top: 13px;
+    }
+    .text-rate{
+      font-size: 30px !important;
     }
   }
   .input-box{
@@ -205,7 +219,6 @@ input[type=number]::-webkit-inner-spin-button {
       padding: 3px 0 5px 18px !important;
 
     }
-
     button{
       position: relative;
       top: -8px;
@@ -214,10 +227,18 @@ input[type=number]::-webkit-inner-spin-button {
   .select-box{
     height: 48px;
     .selected-item{
+      position: relative;
       height: 48px;
       img{
         width: 26px;
         height: 26px;
+      }
+      .select-icon{
+        right: 18px;
+        top: 20px;
+        width: 21px;
+        height: 11px;
+        color: $primary-color;
       }
     }
   }

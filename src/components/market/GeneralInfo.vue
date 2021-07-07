@@ -4,11 +4,11 @@
     class="card-item d-flex flex-column justify-space-between"
     >
     <div class="d-flex justify-space-between mt-1">
-      <div class="h1-title text-info">{{info.underlyingSymbol}}</div>
+      <div class="h1-title text-info text-uppercase">{{info.underlyingSymbol}}</div>
       <img :src="symbolImg">
     </div>
     <div class="d-flex flex-column justify-space-between">
-      <div class="h1-title text-info">
+      <div class="h1-title text-info text-rate">
         {{info.rate}}%
       </div>
       <div class="p1-descriptions text-info" style="width: 137px">
@@ -294,13 +294,11 @@ export default {
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
-    console.log('market adress', this.marketAddress);
     this.isCRbtc()
       .then((isCRbtc) => {
         this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
           : new CToken(this.marketAddress, this.chainId);
         this.updateMarketInfo();
-        console.log('market aqui ', this.market);
       })
       .catch(console.error);
   },

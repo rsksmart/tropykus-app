@@ -1,11 +1,11 @@
 <template>
-  <div class="secondary-color borrow-deposit-view" style="flex: 1;">
+  <div class="secondary-color borrow-deposit-view">
     <div class="d-flex flex-column align-center">
       <h2 class="h2-heading mb-7 text-primary">
-        Deposita tus RBTC y gana el 4% anual
+        {{ $t('deposits.title') }}
       </h2>
       <p class="p1-descriptions text-info">
-        Saca rendimiento de tus bitcoins convirtiendolos en RBTC o deposita ahora.
+        {{ $t('deposits.description') }}
       </p>
     </div>
     <div class="d-flex justify-center actions-bottons">
@@ -14,7 +14,7 @@
         text
       >
         <span class="b1-main">
-          Convertir BTC a RBTC
+          {{ $t('deposits.btn1') }}
         </span>
       </v-btn>
       <v-btn
@@ -22,18 +22,16 @@
         text
       >
         <span class="b1-main white--text">
-          Comprar BTC
+          {{ $t('deposits.btn2') }}
         </span>
       </v-btn>
     </div>
 
     <v-row>
       <p class="h3-sections-heading text-info">
-        Deposita tus criptos y obten ganancias
+        {{ $t('deposits.subtitle') }}
       </p>
     </v-row>
-
-    <!-- <component :is="currentComponent" :inBorrowMenu="inBorrowMenu" :key="key" /> -->
 
     <landing :inBorrowMenu="inBorrowMenu" :key="key"/>
 

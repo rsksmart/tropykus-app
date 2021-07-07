@@ -154,23 +154,6 @@
       }
     }
   },
-  "menu": {
-    "sidebar": {
-      "balance": "My Balance",
-      "deposit": "Deposits",
-      "borrow": "Borrow",
-      "exchanges": "Exchanges",
-      "school": "Tropykus School",
-      "markets": "Markets",
-      "protocol": "About Protocol",
-      "language": "Spanish",
-      "github": "Repository"
-    },
-    "navbar": {
-      "connect": "Connect wallet",
-      "disconnect": "Disconnect wallet"
-    }
-  },
   "tutorials": {
     "title": "Tutorials",
     "title1": "Convert",
@@ -262,11 +245,61 @@
       "button": "Deposit"
     }
   },
+  "menu": {
+    "sidebar": {
+      "balance": "My Balance",
+      "deposit": "Deposits",
+      "borrow": "Borrow",
+      "exchanges": "Exchanges",
+      "school": "Tropykus School",
+      "markets": "Markets",
+      "protocol": "About Protocol",
+      "language": "Spanish",
+      "github": "Repository"
+    },
+    "navbar": {
+      "connect": "Connect wallet",
+      "disconnect": "Disconnect wallet"
+    }
+  },
   "internal-metrics": {
     "title": "Reserves",
     "number-addresses": "Number of unique addresses",
     "total-subsidy": "Total subsidy fund",
     "market": "Market",
     "total-reserves": "Total Reserves"
+  },
+  "borrow": {
+    "title": "You can borrow and multiply your earnings",
+    "description": "If you don't have deposits, make a deposit in any of our markets. If you want to borrow, but do not know how much you will have to pay, use our interest payment simulator.",
+    "subtitle": "Cryptos that you can borrow",
+    "btn1": "Simulate interest payment",
+    "btn2": "Deposit"
+  },
+  "deposits": {
+    "title": "You can borrow and multiply your earnings",
+    "description": "Get the most out of your bitcoins by converting them into RBTC or buy RBTC",
+    "subtitle": "Deposit your crypto and get profit",
+    "btn1": "Convert BTC to RBTC",
+    "btn2": "Buy RBTC"
+  },
+  "deposit": {
+    "title": "Deposit your crypto and get profit",
+    "subtitle": "Deposit",
+    "description1": "Select the crypto to deposit",
+    "description2": "Write the amount you are going to deposit",
+    "description3": "You have in your wallet",
+    "description4": "Current dynamic annual profit rate",
+    "btn1": "Connect wallet",
+    "btn2": "Deposit",
+    "calculator": {
+      "title": "Calculate profit",
+      "description1": "Total earnings",
+      "description2": "Write the amount you are going to deposit",
+      "description3": "Total winnings + deposit",
+      "description4": "Choose the period of time of the deposit"
+    },
+    "description5": "Do you want to have a better chance of winning using your funds?",
+    "description6": "Take a look at strategies"
   }
 }

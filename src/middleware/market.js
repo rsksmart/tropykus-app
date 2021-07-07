@@ -130,6 +130,7 @@ export default class Market {
     return Number(await this.instance.callStatic.borrowBalanceStored(address)) / factor;
   }
 
+  // ======borrow
   async borrowBalanceCurrent(address) {
     return Number(await this.instance.callStatic.borrowBalanceCurrent(address)) / factor;
   }
@@ -229,6 +230,7 @@ export default class Market {
     return Number(await this.instance.callStatic.getCash()) / factor;
   }
 
+  // == balance
   async balanceOfUnderlyingInWallet(account) {
     const address = await account.getAddress();
     const underlyingAssetSymbol = await this.underlying();

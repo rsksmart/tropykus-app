@@ -12,6 +12,11 @@ export default [
     component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Deposits.vue'),
   },
   {
+    path: '/showdialog',
+    name: 'ShowDialog',
+    component: () => import(/* webpackChunkName: "Borrow" */ '@/views/ShowDialog.vue'),
+  },
+  {
     path: '/deposits/:id',
     name: 'Deposit',
     component: () => import(/* webpackChunkName: "Borrow" */ '@/components/deposits/Deposit.vue'),

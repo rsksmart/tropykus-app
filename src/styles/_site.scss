@@ -102,6 +102,13 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
     color: #89B7A4 !important;
   }
 }
+.s1-pop-ups{
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+}
 
 //=======================
 //  mixins
@@ -129,5 +136,9 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   }
   .p3-USD-values{
     font-size: 11px !important;
+  }
+  .s1-pop-ups{
+    font-size: 16px;
+    line-height: 16px;
   }
 }
