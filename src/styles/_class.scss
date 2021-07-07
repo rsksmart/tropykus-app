@@ -60,6 +60,10 @@ input[type=number]::-webkit-inner-spin-button {
         color: $third-color !important;
     }
   }
+  .v-text-field__details{
+    position: relative;
+    top: -15px;
+  }
 }
 input[type=number]::-webkit-input-placeholder { color: $third-color !important; } 
 input[type=number]:-moz-placeholder { /* Firefox 18- */ color: $third-color ; } 

@@ -50,9 +50,13 @@
   }
 }
 
+.d-loading{
+  width: 500px !important;
+  height: 600px !important;
+}
 .dialog-loading{
-  width: 681px;
-  height: 500px;
+  width: 500px !important;
+  height: 600px !important;
   background-image: url('../assets/dialog/background.svg');
   background-size: cover;
   border-radius: 10px !important;
@@ -61,17 +65,46 @@
     width: 292px;
     text-align: center;
   }
+  .text-deposit{
+    width: 150px;
+    text-align: center;
+    margin: 25px 0 50px 0;
+  }
   .btn-close-dialog{
     top: 25px;
     right: 30px;
     width: 11px;
     height: 11px;
   }
+  .progress-loading{
+    width: 150px !important;
+    height: 150px !important;
+    font-size: 100px;
+  }
 }
 
 @include desktop(){
-  .dialog-loading{
-    width: 414px;
-    height: 490px;
+  .d-loading{
+    width: 414px !important;
+    height: 490px !important;
   }
+  .dialog-loading{
+    width: 414px !important;
+    height: 490px !important;
+    .text-description{
+      width: 200px;
+      text-align: center;
+    }
+    .text-deposit{
+      width: 150px;
+      text-align: center;
+      margin: 25px 0 50px 0;
+    }
+    .progress-loading{
+      width: 100px !important;
+      height: 100px !important;
+      font-size: 100px;
+    }
+  }
+  
 }
