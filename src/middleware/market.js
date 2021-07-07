@@ -18,7 +18,7 @@ export default class Market {
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3Ws);
-    this.gasLimit = 300000;
+    this.gasLimit = 350000;
   }
 
   static async isCRbtc(address) {
@@ -153,7 +153,9 @@ export default class Market {
   }
 
   async getSubsidyFound(isRbtc = false) {
-    return isRbtc ? Number(await this.instance.callStatic.subsidyFund()) / factor : 0;
+    return isRbtc
+      ? Number(this.instance.callStatic.subsidyFund
+        ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
   }
 
   async getInitialSupply(address) {

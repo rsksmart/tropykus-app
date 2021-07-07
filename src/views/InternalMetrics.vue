@@ -12,7 +12,7 @@
         </div>
         <v-card
           class="d-flex justify-center align-center"
-          style="width: 693px; height: 169px; border-radius: 10px;"
+          width="693" height="169"
           color="#013E2F"
           >
           <v-row class="mx-5">
@@ -28,10 +28,15 @@
                   <div class="p1-descriptions mb-1">
                     {{ $t('internal-metrics.total-subsidy') }}
                   </div>
-                  <div class="p2-reading-values">
-                    {{ subsidy }} BTC
-                  </div>
-                  <div class="font-italic white--text">{{ subsidy_usd }} USD</div>
+                  <v-tooltip top color="#52826E">
+                    <template v-slot:activator="{ on, attrs }">
+                      <div class="p2-reading-values" v-bind="attrs" v-on="on">
+                        {{ subsidy | formatDecimals }} BTC
+                      </div>
+                    </template>
+                    <span>{{ subsidy }}</span>
+                  </v-tooltip>
+                  <div class="font-italic white--text">{{ subsidy_usd | formatPrice}} USD</div>
                 </v-col>
               </v-row>
             </v-card>
@@ -84,6 +89,7 @@
 <script>
 import { mapState } from 'vuex';
 import { Comptroller } from '@/middleware';
+import * as constants from '@/store/constants';
 
 export default {
   name: 'InternalMetrics',
@@ -93,8 +99,8 @@ export default {
       comptroller: null,
       symbol: null,
       reserves: null,
-      subsidy_usd: null,
-      subsidy: null,
+      subsidy_usd: 0,
+      subsidy: 0,
       users: null,
       symbolImg: '',
       getMarkets: [],
@@ -108,26 +114,25 @@ export default {
   },
   watch: {
     markets() {
-      console.log(`markets watcher: ${this.markets}`);
       if (this.markets.length > 3) this.getMarketsInfo();
     },
   },
   methods: {
     async getMarketsInfo() {
       await this.markets.map(async (market) => {
-        // const subsidy = await market.getSubsidyFound();
         try {
           const data = {};
-          data.symbol = await market.symbol;
+          data.symbol = await market.underlyingAssetSymbol();
           data.reserve_usd = await market.reservesInUSD(this.chainId);
           data.name = await market.underlyingAssetName();
           data.price = await market.underlyingCurrentPrice(this.chainId);
           data.reserves = await market.getReserves();
 
-          const subsidy = await market.getSubsidyFound();
-
-          this.subsidy = subsidy;
-          this.subsidy_usd = data.price * subsidy;
+          if (constants.RBTC_SYMBOL === data.symbol) {
+            const subsidy = await market.getSubsidyFound();
+            this.subsidy = subsidy;
+            this.subsidy_usd = data.price * subsidy;
+          }
 
           data.img = await this.db
             .collection('markets-symbols')
@@ -137,56 +142,11 @@ export default {
 
           this.getMarkets.push(data);
         } catch (error) {
-          //
           console.error(error);
         }
       });
       const address = await this.comptroller.getTotalRegisteredAddresses();
-      console.log('address', address);
-
-      // for (let i = 0; i < this.markets.length; i += 1) {
-      //   // const i = 3;
-      //   const data = {};
-      //   this.markets[i].symbol
-      //     .then(async (symbol) => {
-      //       this.symbol = symbol;
-      //       data.symbol = symbol;
-      //       // console.log(`symbol: ${this.symbol}`);
-      //       data.reserve_usd = await this.markets[i].reservesInUSD(this.chainId);
-      //       data.name = await this.markets[i].underlyingAssetName() || 0;
-      //       data.price = await this.markets[i].underlyingCurrentPrice(this.chainId);
-      //       //
-      //       data.img = await this.db
-      //         .collection('markets-symbols')
-      //         .doc(symbol)
-      //         .get()
-      //         .then((response) => response.data().imageURL);
-
-      //       return this.markets[i].getReserves();
-      //     })
-      //     .then(async (reserves) => {
-      //       this.reserves = reserves;
-      //       // console.log(`reserves: ${this.reserves}`);
-      //       // data.price_usd *= reserves;
-      //       data.reserves = reserves;
-
-      //       return this.markets[i].getSubsidyFound();
-      //     })
-      //     .then((subsidy) => {
-      //       this.subsidy = subsidy;
-      //       // console.log(`subsidy: ${this.subsidy}`);
-      //       this.subsidy_usd = data.price * subsidy;
-      //       // console.log(`Comptroller: ${this.comptroller.comptrollerAddress}`);
-      //       return this.comptroller.getTotalRegisteredAddresses();
-      //     })
-      //     .then((users) => {
-      //       this.users = users;
-      //       console.log(`users: ${this.users}`);
-      //     })
-      //     .catch('error: ', console.error);
-
-      //   this.getMarkets.push(data);
-      // }
+      console.log(`address : ${address}`);
     },
   },
   created() {
