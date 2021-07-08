@@ -308,8 +308,8 @@ export default {
       return this.data.underlyingBalance;
     },
     possibleEarnings() {
-      return +this.amountEarning ? ((this.amountEarning * this.supplyRate) + (this.info
-        .supplyBalance * this.supplyRate) * this.sliderYear) : (this.info
+      return +this.amountEarning ? (((this.amountEarning * this.supplyRate) + (this.info
+        .supplyBalance * this.supplyRate)) * this.sliderYear) : (this.info
         .interestBalance * this.sliderYear);
     },
     possibleEarningsUSD() {
@@ -385,6 +385,7 @@ export default {
           const data = {};
           data.symbol = await market.symbol;
           data.underlyingSymbol = await market.underlyingAssetSymbol();
+          data.marketAddress = market.marketAddress;
           data.img = await this.db
             .collection('markets-symbols')
             .doc(data.symbol)
