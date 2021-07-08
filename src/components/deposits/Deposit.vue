@@ -15,8 +15,8 @@
                 <template v-slot:activator="{ on, attrs }">
                   <div class="selected-item d-flex align-center"
                     v-bind="attrs" v-on="on">
-                    <img class="ml-6 mr-3" :src="select.img" />
-                    <span class="h3-sections-heading text-uppercase">
+                    <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
+                    <span v-if="select.underlyingSymbol" class="h3-sections-heading text-uppercase">
                       {{ select.underlyingSymbol }}
                     </span>
                     <v-icon class="select-icon" large color="text-primary">
@@ -54,11 +54,11 @@
                     dense full-width single-line flat height="62"
                     v-model="amount"
                     :rules="[rules.leverage, rules.minBalance]"
-                    :placeholder="'0 ' + select.underlyingSymbol"
+                    :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
                   />
                 </v-col>
                 <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
-                  <v-btn height="40" text>
+                  <v-btn @click="setMaxAmount" height="40" text>
                     <span class="text-primary">MÁX</span>
                   </v-btn>
                 </v-col>
@@ -102,8 +102,23 @@
 
           <v-row>
             <v-col md="4">
-              <div class="p1-descriptions text-info mb-1">
-                {{ $t('deposit.description4')}}
+              <div class="p1-descriptions text-info mb-1 d-flex">
+                <div class="text-rate">
+                  {{ $t('deposit.description4')}}
+                </div>
+                <div class="tooltip-info ml-7 mt-1">
+                  <v-tooltip right content-class="primary-color">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-img v-bind="attrs" v-on="on" width="12" height="12"
+                            src="@/assets/icons/info.svg" contain/>
+                    </template>
+                    <span class="p5-feedback">
+                      {{ $t('dialog.deposit.tooltip1') }} <br>
+                      {{ $t('dialog.deposit.tooltip2') }} <br>
+                      {{ $t('dialog.deposit.tooltip3') }}
+                    </span>
+                  </v-tooltip>
+                </div>
               </div>
               <div class="p2-reading-values text-info">
                 {{ info.rate }} %
@@ -112,8 +127,8 @@
 
             <v-col md="8">
               <v-btn text class="btn-action"
-                :disabled="(amount === null || amount === '') ? true : false"
-                :class="amount ? 'primary-color' : 'secondary-bg'"
+                :disabled="(amount > 0) ? false : true"
+                :class="(amount > 0) ? 'primary-color' : 'secondary-bg'"
                  @click="menuAction"
               >
                 <span class="b1-main white--text">
@@ -138,8 +153,19 @@
 
           <v-row class="mb-9">
             <v-col md="4">
-              <div class="p1-descriptions text-info mb-1">
+              <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
                 {{ $t('deposit.calculator.description1')}}
+                <div class="tooltip-info mr-16">
+                  <v-tooltip right content-class="primary-color" max-width="170">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-img v-bind="attrs" v-on="on" width="12" height="12"
+                            src="@/assets/icons/info.svg" contain/>
+                    </template>
+                    <span class="p5-feedback">
+                      {{ $t('deposit.tooltip2') }}
+                    </span>
+                  </v-tooltip>
+                </div>
               </div>
               <div class="p2-reading-values text-info">
                  {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
@@ -157,15 +183,12 @@
                 <v-col class="pa-0">
                   <v-text-field type="number" dark class="h1-title text-info pa-0"
                     dense full-width single-line flat height="62"
+                    :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
                     v-model="amountEarning"
                   />
                 </v-col>
               </v-row>
             </v-col>
-          </v-row>
-          <v-row>
-            <!-- {{returnYear}} -->
-            {{sliderYear}}
           </v-row>
 
           <v-row class="mb-10">
@@ -197,10 +220,12 @@
               />
               <v-row class="ma-0">
                 <v-col class="pa-0 d-flex justify-start">
-                  <span class="p1-descriptions">1 year</span>
+                  <span class="p1-descriptions">1 {{ $t('deposit.calculator.time1')}}</span>
                 </v-col>
                 <v-col class="pa-0 d-flex justify-end mr-3">
-                  <span class="p1-descriptions">5 year</span>
+                  <span class="p1-descriptions">
+                    5 {{ $t('deposit.calculator.time2')}}
+                  </span>
                 </v-col>
               </v-row>
             </v-col>
@@ -329,7 +354,6 @@ export default {
     supplyRate() {
       return this.info.rate / 100;
     },
-    // returnYear
   },
   watch: {
     markets() {
@@ -340,6 +364,9 @@ export default {
     },
     async account() {
       this.refresh();
+    },
+    amount() {
+      this.amountEarning = this.amount;
     },
   },
   methods: {
@@ -354,19 +381,19 @@ export default {
       await this.market.supply(this.account, this.amount)
         .then(() => {
           this.infoLoading.wallet = false;
-          this.market.wsInstance.on('Mint', (from) => {
+          this.market.wsInstance.on('Mint', (from, actualMintAmount) => {
             if (from === this.walletAddress) {
               if (!this.isLoading) {
                 this.isLoading = true;
               }
               this.getMarket();
               this.infoLoading.loading = false;
-              this.infoLoading.amount = this.amount;
+              this.infoLoading.amount = actualMintAmount;
               this.infoLoading.symbol = this.select.symbol;
             }
           });
         })
-        .catch(this.showError);
+        .catch(() => console.log('cancel'));
 
       this.market.wsInstance.on('Failure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
@@ -463,6 +490,15 @@ export default {
     setAmount() {
       this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
       this.amount = this.amount.toFixed(10);
+    },
+    setMaxAmount() {
+      if (this.account) {
+        this.amount = this.data.underlyingBalance;
+        this.setPercentageSlider();
+      }
+    },
+    setPercentageSlider() {
+      this.sliderAmountPercentage = (this.amount * 100) / this.tokenBalance;
     },
     reset() {
       this.sliderAmountPercentage = 0;

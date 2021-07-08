@@ -77,7 +77,10 @@
       "tooltip3": "acumulados hasta la fecha de pago."
     },
     "loading": {
-      "title1": "Confirmando la transacción en la red"
+      "description1": "Esperando la confirmación de la transacción en tu billetera",
+      "description2": "Esperando la confirmación de la red",
+      "description3": "Has depositado",
+      "btn": "Continuar"
     },
     "error": {
       "description1": "No se pudo completar el depósito. Intenta más tarde",
@@ -299,9 +302,13 @@
       "description1": "Total ganancias",
       "description2": "Escribe la cantidad que vas a depositar",
       "description3": "Total  ganancias + depósito",
-      "description4": "Elige el periodo de tiempo del depósito"
+      "description4": "Elige el periodo de tiempo del depósito",
+      "time1": "año",
+      "time2": "años"
     },
     "description5": "¿Quieres tener más posibilidades de ganar usando tus fondos?",
-    "description6": "Échale un vistazo a estratégias"
+    "description6": "Échale un vistazo a estratégias",
+    "tooltip1": "La tasa de interés varía cuando otros usuarios realizan transacciones en el protocolo.",
+    "tooltip2": "Esta calculadora solo simula las ganancias que se podrían obtener en cierto periodo de tiempo. Las cifras mostradas varian segùn la tasa anual de ganancia dinámica y los precios de las criptomonedas, por lo tanto no es una garantia de las gananicas futuras."
   }
 }

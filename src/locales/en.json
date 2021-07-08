@@ -75,7 +75,10 @@
       "tooltip3": "acumulados hasta la fecha de pago."
     },
     "loading": {
-      "title1": "Confirming the transaction on the network"
+      "description1": "Waiting for the confirmation of the transaction in your wallet",
+      "description2": "Waiting for confirmation from the network",
+      "description3": "You have deposited",
+      "btn": "Continue"
     },
     "error": {
       "description1": "The deposit could not be completed. Please try again later.",
@@ -297,9 +300,13 @@
       "description1": "Total earnings",
       "description2": "Write the amount you are going to deposit",
       "description3": "Total winnings + deposit",
-      "description4": "Choose the period of time of the deposit"
+      "description4": "Choose the period of time of the deposit",
+      "time1": "year",
+      "time2": "years"
     },
     "description5": "Do you want to have a better chance of winning using your funds?",
-    "description6": "Take a look at strategies"
+    "description6": "Take a look at strategies",
+    "tooltip1": "The interest rate varies when other users carry out transactions in the protocol.",
+    "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits."
   }
 }

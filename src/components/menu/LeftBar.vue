@@ -73,7 +73,7 @@
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
           <router-link :to="{name: constants.ROUTE_NAMES.PROTOCOL}"
             class="d-flex align-center">
-            <img class="ml-4 mr-5" src="@/assets/icons/info.svg"/>
+            <img class="ml-4 mr-5" src="@/assets/icons/protocol.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.protocol') }}</div>
           </router-link>
         </v-list-item>

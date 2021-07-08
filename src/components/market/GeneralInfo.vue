@@ -5,7 +5,7 @@
     >
     <div class="d-flex justify-space-between mt-1">
       <div class="h1-title text-info text-uppercase">{{info.underlyingSymbol}}</div>
-      <img :src="symbolImg">
+      <img v-if="symbolImg" :src="symbolImg">
     </div>
     <div class="d-flex flex-column justify-space-between">
       <div class="h1-title text-info text-rate">
@@ -120,11 +120,10 @@ export default {
   },
   methods: {
     redirect(routePath) {
-      // const data = 'params: info';
-      console.log(routePath);
-      const to = { name: routePath, params: { id: this.marketAddress } };
-
-      this.$router.push(to);
+      if (this.$route.name === 'Deposits') {
+        const to = { name: routePath, params: { id: this.marketAddress } };
+        this.$router.push(to);
+      }
     },
     getSymbolImg() {
       this.db

@@ -2,7 +2,7 @@
   <v-app class="app secondary-color">
     <div class="d-flex">
       <left-bar :drawer="drawer"/>
-      <div class="container-app">
+      <div class="container-app secondary-color">
         <navbar :marketAddresses="marketAddresses" />
         <router-view />
       </div>

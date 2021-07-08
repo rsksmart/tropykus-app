@@ -4,16 +4,16 @@
       <!-- <v-row class="ma-0 mb-5 pl-3"> -->
         <!-- <h3 class="text-left h3-sections-heading">{{ $t('market.title') }}</h3> -->
       <!-- </v-row> -->
-    <div>
+    <div class="d-flex justify-center mt-1">
       <template v-if="marketsLoaded">
-        <v-row class=" d-flex justify-center flex-wrap">
+        <div class=" d-flex flex-wrap mx-auto">
           <!-- <template cols="4" > -->
             <general-info
               v-for="(market, idx) in markets" :key="`market-${idx}`"
               :inBorrowMenu="inBorrowMenu" :marketAddress="market"
             />
           <!-- </template> -->
-        </v-row>
+        </div>
       </template>
       <template v-else>
         <v-row class="mx-0 mt-4">

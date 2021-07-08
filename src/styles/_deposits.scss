@@ -45,9 +45,14 @@
     width: 588px;
     height: 30px;
   }
-  .anual-rate{
+  .text-rate{
     width: 135px;
   }
+  .tooltip-info{
+    width: 12px;
+    height: 12px;
+  }
+
   @include desktop() {
     .h2-heading {
       margin: 40px 0 44px 133px;
