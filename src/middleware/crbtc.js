@@ -33,4 +33,8 @@ export default class CRbtc extends Market {
   async currentBalanceOfCTokenInUnderlying(address) {
     return super.currentBalanceOfCTokenInUnderlying(address, true);
   }
+
+  async getEarnings(address) {
+    return super.getEarnings(address, true);
+  }
 }

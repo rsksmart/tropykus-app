@@ -123,7 +123,7 @@ export default class Market {
   async currentBalanceOfCTokenInUnderlying(address, isCRbtc = false) {
     if (isCRbtc) {
       const supplysnapshot = await this.instance.getSupplierSnapshotStored(address);
-      return supplysnapshot[5];
+      return Number(supplysnapshot[1]) / factor;
     }
     const cTokenBalance = await this.balanceOf(address);
     const exchangeRate = await this.exchangeRateStored();
@@ -214,8 +214,8 @@ export default class Market {
     return borrowBalanceCurrent * (borrowAPY / 100);
   }
 
-  async getEarnings(address) {
-    const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address);
+  async getEarnings(address, isRbtc = false) {
+    const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address, isRbtc);
     const supplyAPY = await this.supplyRateAPY();
     return updatedSupply * (supplyAPY / 100);
   }
