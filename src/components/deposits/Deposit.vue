@@ -378,7 +378,7 @@ export default {
               }
               this.getMarket();
               this.infoLoading.loading = false;
-              this.infoLoading.amount = actualMintAmount;
+              this.infoLoading.amount = actualMintAmount / 1e18;
               this.infoLoading.symbol = this.select.symbol;
             }
           });
