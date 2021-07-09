@@ -4,254 +4,244 @@
       <div class="h3-sections-heading text-deposit text-detail mb-9 ">
         {{ $t('deposit.subtitle')}}
       </div>
-      <div class="d-flex justify-center">
-        <v-card width="888" height="869" elevation="0"
-          class="deposit-card secondary-color mb-16">
-          <v-row class="mb-6">
-            <v-col md="4">
-            <div class="p1-descriptions mb-3">{{ $t('deposit.description1')}}</div>
-            <div class="primary-bg select-box">
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <div class="selected-item d-flex align-center"
-                    v-bind="attrs" v-on="on">
-                    <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
-                    <span v-if="select.underlyingSymbol" class="h3-sections-heading text-uppercase">
-                      {{ select.underlyingSymbol }}
+      <div class="d-flex justify-space-between mb-12">
+        <div>
+          <div class="p1-descriptions mb-3">{{ $t('deposit.description1')}}</div>
+          <div class="primary-bg select-box">
+            <v-menu>
+              <template v-slot:activator="{ on, attrs }">
+                <div class="selected-item d-flex align-center"
+                  v-bind="attrs" v-on="on">
+                  <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
+                  <span v-if="select.underlyingSymbol"
+                    class="h3-sections-heading text-uppercase">
+                    {{ select.underlyingSymbol }}
+                  </span>
+                  <v-icon class="select-icon" large color="text-primary">
+                    mdi-chevron-down
+                  </v-icon>
+                </div>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(market, index) in getMarkets"
+                  :key="index"
+                  class="select-menu-item"
+                  @click="updateRoute(market)"
+                >
+                  <div class="d-flex">
+                    <img :src="market.img" class="ml-2 mr-3"/>
+                    <span class="h3-sections-heading text-uppercase">
+                      {{ market.underlyingSymbol }}
                     </span>
-                    <v-icon class="select-icon" large color="text-primary">
-                      mdi-chevron-down
-                    </v-icon>
                   </div>
-                </template>
-                <v-list>
-                  <v-list-item
-                    v-for="(market, index) in getMarkets"
-                    :key="index"
-                    class="select-menu-item"
-                    @click="updateRoute(market)"
-                  >
-                    <div class="d-flex">
-                      <img :src="market.img" class="ml-2 mr-3"/>
-                      <span class="h3-sections-heading text-uppercase">
-                        {{ market.underlyingSymbol }}
-                      </span>
-                    </div>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-
-            </div>
-            </v-col>
-            <v-col md="8">
-              <div class="p1-descriptions mb-3 text-info">
-                {{ $t('deposit.description2')}}
-              </div>
-              <v-row class="ma-0 input-box primary-bg"
-              >
-                <v-col class="pa-0">
-                  <v-text-field type="number" dark class="h1-title text-info pa-0"
-                    dense full-width single-line flat height="62"
-                    v-model="amount"
-                    :rules="[rules.leverage, rules.minBalance]"
-                    :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-                  />
-                </v-col>
-                <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
-                  <v-btn @click="setMaxAmount" height="40" text>
-                    <span class="text-primary">MÁX</span>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-
-          <v-row class="mb-9">
-            <v-col md="4">
-              <div class="p1-descriptions text-info mb-1">{{ $t('deposit.description3')}}</div>
-              <div class="p2-reading-values text-info">
-                {{tokenBalance | formatDecimals(select.underlyingSymbol) }}
-                {{select.underlyingSymbol}}
-              </div>
-              <div class="p3-USD-values text-info">
-                {{tokenBalanceUsd | formatPrice}}
-              </div>
-            </v-col>
-
-            <v-col md="8">
-              <v-slider
-                class="mt-3 deposit-slider"
-                min="0"
-                max="100"
-                color="#4CB163"
-                track-color=" #4CB163"
-                tick-size="10"
-                thumb-label
-                v-model="sliderAmountPercentage" @click="setAmount"
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
+        </div>
+        <div>
+          <div class="p1-descriptions mb-3 text-info">
+            {{ $t('deposit.description2')}}
+          </div>
+          <v-row class="ma-0 input-box primary-bg"
+          >
+            <v-col class="pa-0">
+              <v-text-field type="number" dark class="h1-title text-info pa-0"
+                dense full-width single-line flat height="62"
+                v-model="amount"
+                :rules="[rules.leverage, rules.minBalance]"
+                :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
               />
-              <v-row class="ma-0">
-                <v-col class="pa-0 d-flex justify-start">
-                  <span class="p1-descriptions">1%</span>
-                </v-col>
-                <v-col class="pa-0 d-flex justify-end mr-3">
-                  <span class="p1-descriptions">100%</span>
-                </v-col>
-              </v-row>
             </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col md="4">
-              <div class="p1-descriptions text-info mb-1 d-flex">
-                <div class="text-rate">
-                  {{ $t('deposit.description4')}}
-                </div>
-                <div class="tooltip-info ml-7 mt-1">
-                  <v-tooltip right content-class="primary-color">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                            src="@/assets/icons/info.svg" contain/>
-                    </template>
-                    <span class="p5-feedback">
-                      {{ $t('dialog.deposit.tooltip1') }} <br>
-                      {{ $t('dialog.deposit.tooltip2') }} <br>
-                      {{ $t('dialog.deposit.tooltip3') }}
-                    </span>
-                  </v-tooltip>
-                </div>
-              </div>
-              <div class="p2-reading-values text-info">
-                {{ info.rate }} %
-              </div>
-            </v-col>
-
-            <v-col md="8">
-              <v-btn text class="btn-action"
-                :disabled="(amount > 0) ? false : true"
-                :class="(amount > 0) ? 'primary-color' : 'secondary-bg'"
-                 @click="menuAction"
-              >
-                <span class="b1-main white--text">
-
-                  {{
-                    account ? $t('deposit.btn2') : $t('deposit.btn1')
-                  }}
-                </span>
+            <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
+              <v-btn @click="setMaxAmount" height="40" text>
+                <span class="text-primary">MÁX</span>
               </v-btn>
             </v-col>
           </v-row>
-
-          <v-divider class="divider"></v-divider>
-
-          <v-row>
-            <v-col md="4">
-              <h3 class="h3-sections-heading text-detail">
-                {{ $t('deposit.calculator.title')}}
-              </h3>
-            </v-col>
-          </v-row>
-
-          <v-row class="mb-9">
-            <v-col md="4">
-              <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
-                {{ $t('deposit.calculator.description1')}}
-                <div class="tooltip-info mr-16">
-                  <v-tooltip right content-class="primary-color" max-width="170">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                            src="@/assets/icons/info.svg" contain/>
-                    </template>
-                    <span class="p5-feedback">
-                      {{ $t('deposit.tooltip2') }}
-                    </span>
-                  </v-tooltip>
-                </div>
-              </div>
-              <div class="p2-reading-values text-info">
-                 {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
-              </div>
-              <div class="p3-USD-values text-info">
-                {{ possibleEarningsUSD | formatPrice }} USD
-              </div>
-            </v-col>
-
-            <v-col md="8">
-              <div class="p1-descriptions mb-3 text-info">
-                {{ $t('deposit.calculator.description2')}}
-              </div>
-              <v-row class="ma-0 input-box primary-bg">
-                <v-col class="pa-0">
-                  <v-text-field type="number" dark class="h1-title text-info pa-0"
-                    dense full-width single-line flat height="62"
-                    :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-                    v-model="amountEarning"
-                  />
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-
-          <v-row class="mb-10">
-            <v-col md="4">
-              <div class="p1-descriptions text-info mb-1">
-                {{ $t('deposit.calculator.description3')}}
-              </div>
-              <div class="p2-reading-values text-info">
-                {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
-              </div>
-              <div class="p3-USD-values text-info">
-                {{ possibleEarningsPlusDepositUSD | formatPrice }} USD
-              </div>
-            </v-col>
-
-            <v-col md="8">
-              <div class="p1-descriptions text-info">
-                {{ $t('deposit.calculator.description4')}}
-              </div>
-              <v-slider
-                class="mt-3 deposit-slider"
-                min="1"
-                max="5"
-                color="#4CB163"
-                track-color=" #4CB163"
-                tick-size="10"
-                thumb-label
-                v-model="sliderYear"
-              />
-              <v-row class="ma-0">
-                <v-col class="pa-0 d-flex justify-start">
-                  <span class="p1-descriptions">1 {{ $t('deposit.calculator.time1')}}</span>
-                </v-col>
-                <v-col class="pa-0 d-flex justify-end mr-3">
-                  <span class="p1-descriptions">
-                    5 {{ $t('deposit.calculator.time2')}}
-                  </span>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-
-          <v-row class="d-flex justify-center mt-16">
-            <div class="p1-descriptions text-info mr-6">
-              {{ $t('deposit.description5')}}
-            </div>
-            <div class="p1-descriptions text-info">{{ $t('deposit.description6')}}</div>
-          </v-row>
-
-        </v-card>
-
-        <template v-if="showModalConnectWallet">
-          <connect-wallet
-            :showModal="showModalConnectWallet"
-            @closed="outsideConnectWallet"
-          />
-        </template>
-
-        <template v-if="isLoading">
-          <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog">
-          </loading>
-        </template>
+        </div>
       </div>
+
+      <div class="d-flex justify-space-between mb-12">
+        <div>
+          <div class="p1-descriptions text-info mb-1">{{ $t('deposit.description3')}}</div>
+          <div class="p2-reading-values text-uppercase text-info">
+            {{tokenBalance | formatDecimals(select.underlyingSymbol) }}
+            {{select.underlyingSymbol}}
+          </div>
+          <div class="p3-USD-values text-info">
+            {{tokenBalanceUsd | formatPrice}}
+          </div>
+        </div>
+
+        <div>
+          <v-slider
+            class="mt-3 deposit-slider"
+            min="0"
+            max="100"
+            color="#4CB163"
+            track-color=" #4CB163"
+            tick-size="10"
+            thumb-label
+            v-model="sliderAmountPercentage" @click="setAmount"
+          />
+          <div class="ma-0">
+            <v-col class="pa-0 d-flex justify-space-between">
+              <span class="p1-descriptions">0%</span>
+              <span class="p1-descriptions">100%</span>
+            </v-col>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-space-between">
+        <div>
+          <div class="p1-descriptions text-info mb-1 d-flex">
+            <div class="text-rate">
+              {{ $t('deposit.description4')}}
+            </div>
+            <div class="tooltip-info ml-7 mt-1">
+              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-img v-bind="attrs" v-on="on" width="12" height="12"
+                        src="@/assets/icons/info.svg" contain/>
+                </template>
+                <span class="p5-feedback text-info">
+                  {{ $t('deposit.tooltip1') }}
+                </span>
+              </v-tooltip>
+            </div>
+          </div>
+          <div class="p2-reading-values text-info">
+            {{ info.rate }} %
+          </div>
+        </div>
+
+        <div class="d-flex align-end">
+          <v-btn text class="btn-action"
+            :disabled="(amount > 0) ? false : true"
+            :class="(amount > 0) ? 'primary-color' : 'secondary-bg'"
+              @click="menuAction"
+          >
+            <span class="white--text">
+
+              {{
+                account ? $t('deposit.btn2') : $t('deposit.btn1')
+              }}
+            </span>
+          </v-btn>
+        </div>
+      </div>
+
+      <v-divider class="divider"></v-divider>
+
+      <v-row class="mb-5">
+        <v-col md="4">
+          <h3 class="h3-sections-heading text-detail">
+            {{ $t('deposit.calculator.title')}}
+          </h3>
+        </v-col>
+      </v-row>
+
+      <div class="d-flex justify-space-between mb-10">
+        <div>
+          <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
+            {{ $t('deposit.calculator.description1')}}
+            <div class="tooltip-info ">
+              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="200">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-img v-bind="attrs" v-on="on" width="12" height="12"
+                        src="@/assets/icons/info.svg" contain/>
+                </template>
+                <span class="p5-feedback text-info">
+                  {{ $t('deposit.tooltip2') }}
+                </span>
+              </v-tooltip>
+            </div>
+          </div>
+          <div class="p2-reading-values box-number text-uppercase text-info">
+              {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
+          </div>
+          <div class="p3-USD-values box-number text-info">
+            {{ possibleEarningsUSD | formatPrice }} USD
+          </div>
+        </div>
+
+        <div>
+          <div class="p1-descriptions mb-3 text-info">
+            {{ $t('deposit.calculator.description2')}}
+          </div>
+          <v-row class="ma-0 pa-0y input-box primary-bg">
+            <v-col class="pa-0 ma-0">
+              <v-text-field type="number" dark class="h1-title text-info pa-0"
+                dense full-width single-line flat height="62"
+                :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
+                v-model="amountEarning"
+              />
+            </v-col>
+          </v-row>
+        </div>
+      </div>
+
+      <div class="d-flex justify-space-between mb-10">
+        <div>
+          <div class="p1-descriptions text-info mb-1">
+            {{ $t('deposit.calculator.description3')}}
+          </div>
+          <div class="p2-reading-values box-number text-info">
+            {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
+          </div>
+          <div class="p3-USD-values box-number text-info">
+            {{ possibleEarningsPlusDepositUSD | formatPrice }} USD
+          </div>
+        </div>
+
+        <div>
+          <div class="p1-descriptions text-info">
+            {{ $t('deposit.calculator.description4')}}
+          </div>
+          <v-slider
+            class="mt-3 deposit-slider"
+            min="1"
+            max="5"
+            color="#4CB163"
+            track-color=" #4CB163"
+            tick-size="10"
+            thumb-label
+            v-model="sliderYear"
+          />
+          <div>
+            <v-col class="pa-0 d-flex justify-space-between">
+              <span class="p1-descriptions">
+                1 {{ $t('deposit.calculator.time1')}}
+              </span>
+              <span class="p1-descriptions">
+                5 {{ $t('deposit.calculator.time2')}}
+              </span>
+            </v-col>
+          </div>
+        </div>
+      </div>
+
+      <!-- <v-row class="d-flex justify-center mt-16">
+        <div class="p1-descriptions text-info mr-6">
+          {{ $t('deposit.description5')}}
+        </div>
+        <div class="p1-descriptions text-info">{{ $t('deposit.description6')}}</div>
+      </v-row> -->
+
+      <template v-if="showModalConnectWallet">
+        <connect-wallet
+          :showModal="showModalConnectWallet"
+          @closed="outsideConnectWallet"
+        />
+      </template>
+
+      <template v-if="isLoading">
+        <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog">
+        </loading>
+      </template>
     </div>
 </template>
 <script>
@@ -304,12 +294,12 @@ export default {
         underlyingBalance: null,
         liquidity: null,
         interestBalance: null,
-        supplyBalance: null,
+        supplyBalance: 0,
         borrowBalance: null,
       },
       data: {
         underlyingBalance: null,
-        supplyBalance: null,
+        supplyBalance: 0,
         price: null,
       },
       rules: {
@@ -439,6 +429,7 @@ export default {
           .balanceOfUnderlyingInWallet(this.account);
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
+        this.info.supplyBalance = this.info.supplyBalance ? this.info.supplyBalance : 0;
         this.info.borrowBalance = await this.market
           .borrowBalanceCurrent(this.walletAddress);
         this.info.interestBalance = await this.market.getEarnings(this.walletAddress);
@@ -452,6 +443,8 @@ export default {
       }
       this.data.supplyBalance = await this.market
         .currentBalanceOfCTokenInUnderlying(this.walletAddress);
+      this.data.supplyBalance = this.data.supplyBalance ? this.data.supplyBalance : 0;
+      console.log('supply', this.data.supplyBalance);
     },
     isCRbtc() {
       return Market.isCRbtc(this.marketAddress);

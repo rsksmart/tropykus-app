@@ -6,6 +6,12 @@
     }
 }
 
+@mixin laptop {
+    @media only screen and (max-width: #{$laptop}){
+        @content;
+    }
+}
+
 @mixin tablet {
     @media only screen and (max-width: #{$tablet}){
         @content;

@@ -10,24 +10,24 @@
     </div>
     <div class="d-flex justify-center actions-bottons">
       <v-btn
-        class="btn btn-secondary mr-9"
+        class="btn mr-9"
         text
       >
-        <span class="b1-main">
+        <span class="b1-main text-primary">
           {{ $t('borrow.btn1') }}
         </span>
       </v-btn>
       <v-btn
-        class="btn btn-primary"
+        class="btn btn-secondary"
         text
       >
-        <span class="b1-main white--text">
+        <span class="b1-main">
           {{ $t('borrow.btn2') }}
         </span>
       </v-btn>
     </div>
 
-    <v-row>
+    <v-row class="ma-0">
       <p class="h3-sections-heading text-info">
           {{ $t('borrow.subtitle') }}
       </p>

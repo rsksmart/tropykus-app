@@ -5,13 +5,9 @@
       >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6 d-flex justify-center">
-            <v-img
-              class="mr-4 logo-tropykus"
-              width="165"
-              height="39"
+          <v-list-item-title>
+            <img class="mr-4 logo-tropykus"
               src="@/assets/icons/tropykus.svg"
-              contain
             />
           </v-list-item-title>
         </v-list-item-content>
@@ -23,24 +19,24 @@
           v-model="setGroupDrawer"
         > -->
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
-          <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
-            class="d-flex align-center">
-            <img class="ml-4 mr-5" src="@/assets/icons/home.svg"/>
-            <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
-          </router-link>
-        </v-list-item>
-
-        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
           <router-link :to="{name: constants.ROUTE_NAMES.DEPOSITS}"
-            class="d-flex align-center">
-            <img class="ml-4 mr-5" src="@/assets/icons/pig.svg"/>
+            class="d-flex align-center active">
+            <img class="ml-4 mr-5" src="@/assets/icons/home.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.deposit') }}</div>
           </router-link>
         </v-list-item>
 
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
-          <router-link :to="{name: constants.ROUTE_NAMES.BORROW}"
+          <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
             class="d-flex align-center">
+            <img class="ml-4 mr-5" src="@/assets/icons/dollar.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.BORROW}"
+            class="d-flex align-center active">
             <img class="ml-4 mr-5" src="@/assets/icons/borrow.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.borrow') }}</div>
           </router-link>
@@ -92,15 +88,14 @@
 
         <v-divider class="divider"></v-divider>
 
-        <div class="d-flex pl-10 price-btc">
+        <div class="d-flex pl-6 price-btc">
           <img src="https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd" />
-          <div class="ml-4">
-            <div class="b1-main white--text">RBTC</div>
-            <div class="p3-USD-values white--text">$54.000 USD</div>
+          <div class="ml-4 d-flex">
+            <div class="p3-USD-values white--text align-self-center">$54.000 USD</div>
           </div>
         </div>
 
-        <div class="mx-5 d-flex justify-space-between contact-tropykus">
+        <div class="d-flex justify-space-between contact-tropykus">
             <v-img contain height="43" src="@/assets/icons/github.svg"/>
             <v-img contain height="43" src="@/assets/icons/twitter.svg"/>
             <v-img contain height="43" src="@/assets/icons/telegram.svg"/>

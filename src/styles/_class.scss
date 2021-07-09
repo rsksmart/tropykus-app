@@ -10,17 +10,28 @@ body{
   padding-top: 54px;
   margin-right: 42px;
 }
+.box-shadow-tooltip{
+  box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1) !important;
+}
 .card-item{
   background: #E1F0E8 !important;
   box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1) !important;
-  border-radius: 30px !important;
-  margin: 17px 20px;
-  padding: 44px 53px 52px 39px !important;
+  border-radius: 20px !important;
+  margin: 17px 12px;
+  padding: 31px 33px 28px 32px !important;
   img{
-    width: 50px;
-    height: 50px;
+    width: 31px;
+    height: 31px;
+    margin-top: 13px;
   }
 }
+
+// .card-item:nth-child(1){
+//   margin-left: 0;
+// }
+// .card-item:nth-child(4){
+//   margin-right: 0;
+// }
 
 .theme--light.v-list {
   // background: $primary-bg !important;
@@ -50,7 +61,6 @@ input[type=number]::-webkit-inner-spin-button {
   height: 62px;
   border-radius: 5px;
   input{
-    // font-size: ;
     max-height: 62px !important;
     color: $third-color !important;
     caret-color: $third-color !important;
@@ -65,10 +75,10 @@ input[type=number]::-webkit-inner-spin-button {
     top: -15px;
   }
 }
-input[type=number]::-webkit-input-placeholder { color: $third-color !important; } 
-input[type=number]:-moz-placeholder { /* Firefox 18- */ color: $third-color ; } 
-input[type=number]::-moz-placeholder { /* Firefox 19+ */ color: $third-color ; } 
-input[type=number]:-ms-input-placeholder { color: $third-color ; }
+input[type=number]::-webkit-input-placeholder { color: #63A47B !important; } 
+input[type=number]:-moz-placeholder { /* Firefox 18- */ color: #63A47B ; } 
+input[type=number]::-moz-placeholder { /* Firefox 19+ */ color: #63A47B ; } 
+input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 
 .v-text-field > .v-input__control > .v-input__slot:before, .v-text-field > .v-input__control > .v-input__slot:after {
   bottom: -1px;
@@ -132,8 +142,8 @@ input[type=number]:-ms-input-placeholder { color: $third-color ; }
 //  Button
 //=======================
 .btn {
-  width: 295px;
-  height: 54px !important;
+  width: 237px;
+  height: 43px !important;
   border-radius: 20px;
 }
 .btn-action{
@@ -141,6 +151,7 @@ input[type=number]:-ms-input-placeholder { color: $third-color ; }
   height: 47px !important;
   border-radius: 15px;
 }
+
 .btn-info{
   border: 1px solid $third-color;
   color: $third-color;
@@ -175,7 +186,7 @@ input[type=number]:-ms-input-placeholder { color: $third-color ; }
   color: $secondary-color;
 }
 .text-info{
-  color: $third-color;
+  color: $third-color !important;
 }
 .text-detail{
   color: $text-detail !important;
@@ -187,34 +198,19 @@ input[type=number]:-ms-input-placeholder { color: $third-color ; }
 
 @include desktop() {
   .btn {
-    width: 222px;
-    height: 44px !important;
+    width: 195px;
+    height: 28px !important;
   }
   .btn-action{
-    width: 527px;
+    width: 467px;
     height: 45px !important;
   }
   .navbar-vue{
-    padding-top: 41px;
-    margin-right: 36px;
-  }
-  .card-item{
-    border-radius: 20px !important;
-    margin: 17px 20px;
-    width: 209px !important;
-    height: 215px !important;
-    padding: 22px 32px 27px 32px !important;
-    img{
-      width: 31px !important;
-      height: 31px !important;
-      margin-top: 13px;
-    }
-    .text-rate{
-      font-size: 30px !important;
-    }
+    padding-top: 15px;
+    margin-right: 29px;
   }
   .input-box{
-    width: 528px;
+    width: 467px;
     height: 48px;
     input{
       position: relative;
@@ -253,6 +249,74 @@ input[type=number]:-ms-input-placeholder { color: $third-color ; }
     img{
       width: 26px;
       height: 26px;
+    }
+  }
+  .card-item{
+    padding: 25px 20px 28px 24px !important;
+    img{
+      margin-top: 2px;
+    }
+  }
+}
+
+@include tablet(){
+  .card-item{
+    width: 180px !important;
+    height: 187px !important;
+    padding: 25px 24px 28px 24px !important;
+    img{
+      width: 25px;
+      height: 25px;
+      margin-top: 5px;
+    }
+  }
+  .btn-action{
+    width: 340px;
+    height: 36px !important;
+  }
+
+  .select-box{
+    width: 155px;
+    height: 43px;
+    .selected-item{
+      height: 43px;
+      img{
+        width: 22px;
+        height: 22px;
+      }
+      .select-icon{
+        right: 15px;
+        top: 17px;
+        width: 13px;
+        height: 7px;
+      }
+    }
+  }
+
+  .v-menu__content{
+    width: 155px !important;
+    .select-menu-item{
+      height: 48px;
+    }
+    img{
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  .input-box{
+    width: 335px;
+    height: 45px;
+    input{
+      position: relative;
+      top: -8px;
+      max-height: 48px !important;
+      padding: 3px 0 5px 18px !important;
+
+    }
+    button{
+      position: relative;
+      top: -8px;
     }
   }
 }

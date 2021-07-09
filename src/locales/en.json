@@ -251,12 +251,12 @@
   "menu": {
     "sidebar": {
       "balance": "My Balance",
-      "deposit": "Deposits",
+      "deposit": "Home",
       "borrow": "Borrow",
       "exchanges": "Exchanges",
       "school": "Tropykus School",
       "markets": "Markets",
-      "protocol": "About Protocol",
+      "protocol": "About Tropykus",
       "language": "Spanish",
       "github": "Repository"
     },

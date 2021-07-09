@@ -7,7 +7,7 @@ export default [
   //   component: Supply,
   // },
   {
-    path: '/deposits',
+    path: '/',
     name: 'Deposits',
     component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Deposits.vue'),
   },

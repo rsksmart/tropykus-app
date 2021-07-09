@@ -7,9 +7,9 @@
       <v-card flat class="secondary-color">
         <v-row class="ma-0">
           <v-col cols="auto" class="pa-0">
-            <v-img alt="market icon" src="@/assets/avatar.svg" height="48" width="48" contain/>
+            <v-img alt="market icon" src="@/assets/avatar.svg" height="35" width="35" contain/>
           </v-col>
-          <v-col class="pa-0 pt-2 mr-7 ml-4">
+          <v-col class="pa-0 mr-7 ml-4">
             <v-row class="ma-0">
               <div class="b2-secondary text-detail">{{ accountCutOff }}</div>
             </v-row>
@@ -43,8 +43,8 @@
       </v-card>
     </template>
     <template v-else>
-      <v-btn text @click="showDialogConnectWallet" class="btn btn-info">
-        <span class="b1-main">
+      <v-btn text @click="showDialogConnectWallet" class="btn btn-primary">
+        <span class="b1-main white--text">
           {{ buttonLabel }}
         </span>
       </v-btn>

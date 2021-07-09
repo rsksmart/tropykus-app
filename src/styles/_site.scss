@@ -32,8 +32,15 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   font-family: Ubuntu;
   font-style: normal;
   font-weight: 500;
-  font-size: 48px;
+  font-size: 35px;
   line-height: 55px;
+}
+.h1-subtitle{
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 15px;
 }
 .h2-heading {
   font-style: normal;
@@ -45,15 +52,15 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 .h3-sections-heading {
   font-style: normal;
   font-weight: normal;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 .p1-descriptions {
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
-  line-height: 15px;
+  font-size: 11px;
+  line-height: 12px;
 }
 
 .p2-reading-values {
@@ -73,9 +80,8 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 .p5-feedback {
   font-style: normal;
   font-weight: normal;
-  font-size: 10px !important;
+  font-size: 12px !important;
   line-height: 11px !important;
-  color: #FFFFFF;
   margin: 0 !important;
   text-align: justify;
 }
@@ -93,7 +99,7 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
   font-family: Ubuntu;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 22px;
 }
 
@@ -126,17 +132,23 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
     font-size: 12px;
     line-height: 15px;
   }
+  .p2-reading-values{
+    font-size: 22px;
+    line-height: 28px;
+  }
   .b1-main {
-    font-size: 15px;
+    font-size: 11px;
+    line-height: 13px;
   }
   .h3-sections-heading {
     font-size: 20px;
   }
   .h1-title {
     font-size: 35px;
+    line-height: 35px;
   }
   .b2-secondary {
-    font-size: 11px;
+    font-size: 14px;
   }
   .p3-USD-values{
     font-size: 11px !important;
@@ -145,4 +157,27 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
     font-size: 16px;
     line-height: 16px;
   }
+}
+
+@include tablet(){
+  .h1-title{
+    font-size: 28px;
+    line-height: 35px;
+  }
+  .h1-subtitle{
+    font-size: 28px;
+  }
+  .p1-descriptions {
+    font-size: 11px;
+    line-height: 12px;
+  }
+  .h2-heading{
+    font-size: 22px;
+    line-height: 20px;
+  }
+  .h3-sections-heading{
+    font-size: 15px;
+    line-height: 17px;
+  }
+  
 }

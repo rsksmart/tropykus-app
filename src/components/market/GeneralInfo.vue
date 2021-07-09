@@ -1,17 +1,17 @@
 <template>
-  <v-card width="320" height="330"
+  <v-card width="209" height="215"
     @click="redirect(constants.ROUTE_NAMES.DEPOSIT, info.underlyingSymbol)"
     class="card-item d-flex flex-column justify-space-between"
     >
-    <div class="d-flex justify-space-between mt-1">
+    <div class="d-flex justify-space-between">
       <div class="h1-title text-info text-uppercase">{{info.underlyingSymbol}}</div>
       <img v-if="symbolImg" :src="symbolImg">
     </div>
     <div class="d-flex flex-column justify-space-between">
-      <div class="h1-title text-info text-rate">
+      <div class="h1-subtitle text-info">
         {{info.rate}}%
       </div>
-      <div class="p1-descriptions text-info" style="width: 137px">
+      <div class="p1-descriptions text-info mt-4" style="width: 119px">
         {{ $t('market.general.description1') }}
         {{ rateLabel }}
         {{ $t('market.general.description2') }}
