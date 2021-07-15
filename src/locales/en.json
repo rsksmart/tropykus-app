@@ -261,8 +261,11 @@
       "github": "Repository"
     },
     "navbar": {
+      "network": "Wrong network",
       "connect": "Connect wallet",
-      "disconnect": "Disconnect wallet"
+      "disconnect": "Disconnect wallet",
+      "warning1": "Make sure you have your wallet",
+      "warning2": "connected to the RSK network."
     }
   },
   "internal-metrics": {

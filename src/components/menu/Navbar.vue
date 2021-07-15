@@ -1,20 +1,22 @@
 <template>
   <div class="d-flex justify-end navbar-vue">
-    <!-- <v-app-bar-nav-icon app class="ml-10" @click="setDrawer(true)"></v-app-bar-nav-icon> -->
-    <!-- <v-app-bar-nav-icon class="ml-10" @click="setDrawer(false)"></v-app-bar-nav-icon> -->
-
     <template v-if="isWalletConnected">
-      <v-card flat class="secondary-color">
-        <v-row class="ma-0">
+      <v-card flat class="secondary-color rounded-card"
+              v-bind:class="[chainId === 31 ? 'secondary-color' : 'warning-color']">
+        <v-row class="ma-2">
           <v-col cols="auto" class="pa-0">
             <v-img alt="market icon" src="@/assets/avatar.svg" height="35" width="35" contain/>
           </v-col>
           <v-col class="pa-0 mr-7 ml-4">
             <v-row class="ma-0">
-              <div class="b2-secondary text-detail">{{ accountCutOff }}</div>
+              <div class="b2-secondary text-detail">
+                {{ accountCutOff }}
+              </div>
             </v-row>
             <v-row class="ma-0">
-              <div class="b2-secondary text-detail">{{ network }}</div>
+              <div class="b2-secondary text-detail">
+                {{ chainId === 31 ? network : $t('menu.navbar.network') }}
+              </div>
             </v-row>
           </v-col>
           <v-col class="pa-0">
@@ -26,16 +28,18 @@
               </v-btn>
             </template>
             <template v-else>
-              <v-tooltip bottom color="#52826E">
+              <v-tooltip bottom color="#cad8d0">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn @click="disconnectAccount" height="45" color="#FFF"
+                  <v-btn @click="disconnectAccount" color="#196635" rounded
                          outlined width="200" v-bind="attrs" v-on="on">
-                    Red incorrecta
+                    <span class="b2-secondary text-detail">
+                      {{ $t('menu.navbar.disconnect') }}
+                    </span>
                   </v-btn>
                 </template>
-                <span>
-                Asegurate de tener tu billetera<br>conectada a la red RSK.
-              </span>
+                <span class="p1-descriptions text-info">
+                  {{ $t('menu.navbar.warning1') }} <br> {{ $t('menu.navbar.warning2') }}
+                </span>
               </v-tooltip>
             </template>
           </v-col>
@@ -102,9 +106,9 @@ export default {
       if (this.chainId === 30) return 'Mainnet';
       return '';
     },
-    // networkColor() {
-    //   return this.chainId === 31 ? '#074335' : '#E55E3C';
-    // },
+    networkColor() {
+      return this.chainId === 31 ? 'transparent' : '#FCDE73';
+    },
     isWalletConnected() {
       return !!this.walletAddress;
     },
