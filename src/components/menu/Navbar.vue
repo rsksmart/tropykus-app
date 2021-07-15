@@ -4,10 +4,10 @@
       <v-card flat class="secondary-color rounded-card"
               v-bind:class="[chainId === 31 ? 'secondary-color' : 'warning-color']">
         <v-row class="ma-2">
-          <v-col cols="auto" class="pa-0">
-            <v-img alt="market icon" src="@/assets/avatar.svg" height="35" width="35" contain/>
+          <v-col cols="auto" class="pa-0 d-flex justify-center align-center">
+            <v-img alt="market icon" :src="avatarImage" :height="35" :width="35" contain/>
           </v-col>
-          <v-col class="pa-0 mr-7 ml-4">
+          <v-col class="pa-0 mr-7 ml-2">
             <v-row class="ma-0">
               <div class="b2-secondary text-detail">
                 {{ accountCutOff }}
@@ -28,7 +28,7 @@
               </v-btn>
             </template>
             <template v-else>
-              <v-tooltip bottom color="#cad8d0">
+              <v-tooltip bottom color="#CFE7DA">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn @click="disconnectAccount" color="#196635" rounded
                          outlined width="200" v-bind="attrs" v-on="on">
@@ -65,6 +65,8 @@
 import { mapActions, mapState } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import { Market, CRbtc, CToken } from '@/middleware';
+import Avatar from '@/assets/avatar.svg';
+import Error from '@/assets/icons/error.svg';
 import * as constants from '@/store/constants';
 
 export default {
@@ -92,6 +94,12 @@ export default {
       routePath: (state) => state.route.path,
       chainId: (state) => state.Session.chainId,
     }),
+    avatarSize() {
+      return this.chainId === 31 ? 35 : 20;
+    },
+    avatarImage() {
+      return this.chainId === 31 ? Avatar : Error;
+    },
     buttonLabel() {
       if (this.chainId === 31 && typeof this
         .walletAddress === 'string') return this.$t('menu.navbar.disconnect');
