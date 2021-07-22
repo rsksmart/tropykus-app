@@ -168,8 +168,7 @@
         <div>
             <v-slider
               class="slider-box"
-              :class="[sliderValue >= 40 && sliderValue <= 60 ? 'vs40'
-                : (sliderValue > 60 && sliderValue <= 100) ? 'vs60' : '']"
+              :class="sliderStyle"
               min="0"
               max="100"
               track-color="#C8DEDD"
@@ -243,6 +242,7 @@ export default {
     return {
       isProgress: true,
       tabMenu: true,
+      sliderStyle: '',
       constants,
       comptroller: null,
       isLoading: false,
@@ -481,8 +481,7 @@ export default {
     },
     handleBalance() {
       if (!this.account) return;
-
-      this.chartColor();
+      if (this.tabMenu) this.chartColor();
       const balance = (this.sliderValue * this.tokenBalance) / 100;
       this.amount = balance;
       const tempData = [...this.chartData];
@@ -504,10 +503,20 @@ export default {
     },
     chartColor() {
       const tempData = [...this.chartData];
-      if (this.sliderValue >= 0 && this.sliderValue <= 40) tempData[2][2] = '#47B25F';
-      if (this.sliderValue > 40 && this.sliderValue <= 60) tempData[2][2] = '#BCBE34';
-      if (this.sliderValue > 60 && this.sliderValue <= 100) tempData[2][2] = '#F7C61A';
+      if (this.sliderValue >= 0 && this.sliderValue <= 40) {
+        tempData[2][2] = '#47B25F';
+        this.sliderStyle = '';
+      }
+      if (this.sliderValue > 40 && this.sliderValue <= 60) {
+        tempData[2][2] = '#BCBE34';
+        this.sliderStyle = 'vs40';
+      }
+      if (this.sliderValue > 60 && this.sliderValue <= 100) {
+        tempData[2][2] = '#F7C61A';
+        this.sliderStyle = 'vs60';
+      }
       if (this.sliderValue === 100) tempData[2][2] = '#F7C61A';
+
       this.chartData = tempData;
     },
     async totalDepositsInUSD() {
@@ -544,6 +553,7 @@ export default {
       tempData[2][2] = '#47B25F';
       this.chartData = tempData;
       this.riskValue = 100;
+      this.sliderStyle = '';
     },
     closeDialog() {
       if (this.infoLoading.loading === false) {
