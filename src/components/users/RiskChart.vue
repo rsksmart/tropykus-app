@@ -3,7 +3,7 @@
       <div class="d-flex justify-center">
         <img class="risk-img" :src="riskImage" />
         <v-progress-circular class="risk-graph" :size="125" :width="12"
-          :value="100 - riskRate" :color="chartColor" :rotate="180" />
+          :value="100 - riskRate" :color="chartColor" :rotate="270" />
       </div>
       <template v-if="!inBalance">
         <div class="mt-5">

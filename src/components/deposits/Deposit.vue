@@ -413,6 +413,7 @@ export default {
       this.isLoading = true;
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
+      this.infoLoading.symbol = this.select.underlyingSymbol;
       if (this.tabMenu) {
         // colocar los mercados en assetsIn
         const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
@@ -431,7 +432,6 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = true;
                 this.infoLoading.amount = actualMintAmount / 1e18;
-                this.infoLoading.symbol = this.select.symbol;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -451,7 +451,6 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = false;
                 this.infoLoading.amount = actualMintAmount / 1e18;
-                this.infoLoading.symbol = this.select.symbol;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);

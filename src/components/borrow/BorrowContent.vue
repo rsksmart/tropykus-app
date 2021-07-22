@@ -399,6 +399,7 @@ export default {
       this.isLoading = true;
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
+      this.infoLoading.symbol = this.select.underlyingSymbol;
       if (this.tabMenu) {
         await this.market.borrow(this.account, this.amount)
           .then(() => {
@@ -411,7 +412,6 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = true;
                 this.infoLoading.amount = amount / 1e18;
-                this.infoLoading.symbol = this.select.symbol;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -433,7 +433,6 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = false;
                 this.infoLoading.amount = amount;
-                this.infoLoading.symbol = this.select.symbol;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -503,15 +502,15 @@ export default {
     },
     chartColor() {
       const tempData = [...this.chartData];
-      if (this.sliderValue >= 0 && this.sliderValue <= 40) {
+      if (this.sliderValue >= 0 && this.sliderValue < 40) {
         tempData[2][2] = '#47B25F';
         this.sliderStyle = '';
       }
-      if (this.sliderValue > 40 && this.sliderValue <= 60) {
+      if (this.sliderValue >= 40 && this.sliderValue < 60) {
         tempData[2][2] = '#BCBE34';
         this.sliderStyle = 'vs40';
       }
-      if (this.sliderValue > 60 && this.sliderValue <= 100) {
+      if (this.sliderValue >= 60 && this.sliderValue <= 100) {
         tempData[2][2] = '#F7C61A';
         this.sliderStyle = 'vs60';
       }

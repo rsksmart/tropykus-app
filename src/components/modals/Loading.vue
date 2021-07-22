@@ -24,7 +24,7 @@
               : $t('dialog.loading.description4')
             }} <br />
             {{data.amount | formatDecimals(data.symbol) }}
-            {{data.symbol}}
+            <span class="text-uppercase">{{data.symbol}}</span>
           </div>
           <v-btn @click="closeDialog" class="btn btn-primary">
             <span class="b1-main white--text">
@@ -54,7 +54,7 @@
               : $t('dialog.loading.description6')
             }} <br />
             {{data.amount | formatDecimals(data.symbol) }}
-            {{data.symbol}}
+            <span class="text-uppercase">{{data.symbol}}</span>
           </div>
           <v-btn @click="closeDialog" class="btn btn-primary">
             <span class="b1-main white--text">
