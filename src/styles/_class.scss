@@ -25,7 +25,9 @@ body{
     margin-top: 13px;
   }
 }
-
+.tab{
+  cursor: pointer;
+}
 // .card-item:nth-child(1){
 //   margin-left: 0;
 // }
@@ -56,38 +58,31 @@ body{
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
 }
-.input-box{
-  width: 590px;
-  height: 62px;
-  border-radius: 5px;
-  input{
-    max-height: 62px !important;
-    color: $third-color !important;
-    caret-color: $third-color !important;
-    padding: 7px 0 9px 18px !important;
-    margin-bottom: 5px !important;
-    :focus{
-        color: $third-color !important;
-    }
-  }
-  .v-text-field__details{
-    position: relative;
-    top: -15px;
-  }
-}
 input[type=number]::-webkit-input-placeholder { color: #63A47B !important; } 
 input[type=number]:-moz-placeholder { /* Firefox 18- */ color: #63A47B ; } 
 input[type=number]::-moz-placeholder { /* Firefox 19+ */ color: #63A47B ; } 
 input[type=number]:-ms-input-placeholder { color: #63A47B ; }
-
-.v-text-field > .v-input__control > .v-input__slot:before, .v-text-field > .v-input__control > .v-input__slot:after {
-  bottom: -1px;
-  content: "";
-  left: 0;
-  position: absolute;
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  width: 0% !important;
+.input-box{
+  box-sizing: border-box;
+  height: 48px;
+  width: 467px;
+  border-radius: 5px;
+  // .v-input__slot{
+    // height: 45px;
+  // }
+  .v-messages__message{
+    margin-top: 8px;
+    color: $third-color !important;
+  }
+  button{
+    position: relative;
+    top: 4px;
+  }
+  &.alert{
+    border: 2px solid #F7C61A;
+  }
 }
+
 .select-box{
   width: 186px;
   height: 62px;
@@ -116,6 +111,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   .select-menu-item{
     width: 186px;
     height: 62px;
+  }
+  .active{
+    background-color: #CDE9DA;
   }
   img{
     width: 30px;
@@ -180,16 +178,19 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 //=======================
 
 .text-primary{
-  color: $primary-color;
+  color: $primary-color !important;
 }
 .text-secondary{
-  color: $secondary-color;
+  color: $secondary-color !important;
 }
 .text-info{
   color: $third-color !important;
 }
 .text-detail{
   color: $text-detail !important;
+}
+.text-inactive{
+  color: #ABD1B4 !important;
 }
 
 //=======================
@@ -208,21 +209,6 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   .navbar-vue{
     padding-top: 15px;
     margin-right: 29px;
-  }
-  .input-box{
-    width: 467px;
-    height: 48px;
-    input{
-      position: relative;
-      top: -8px;
-      max-height: 48px !important;
-      padding: 3px 0 5px 18px !important;
-
-    }
-    button{
-      position: relative;
-      top: -8px;
-    }
   }
   .select-box{
     height: 48px;
@@ -271,7 +257,7 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
     }
   }
   .btn-action{
-    width: 340px;
+    width: 335px;
     height: 36px !important;
   }
 
@@ -303,20 +289,16 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
       height: 26px;
     }
   }
-
   .input-box{
     width: 335px;
     height: 45px;
-    input{
-      position: relative;
-      top: -8px;
-      max-height: 48px !important;
-      padding: 3px 0 5px 18px !important;
-
-    }
+    border-radius: 5px;
+    // .v-input__slot{
+    //   height: 45px;
+    // }
     button{
       position: relative;
-      top: -8px;
+      top: 2px;
     }
   }
 }

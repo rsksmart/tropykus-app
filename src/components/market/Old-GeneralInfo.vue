@@ -319,6 +319,7 @@ export default {
         this.info.interestBalance = this.inBorrowMenu
           ? await this.market.getDebtInterest(this.walletAddress)
           : await this.market.getEarnings(this.walletAddress);
+        // maximo que puedo pedir prestado
         this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);

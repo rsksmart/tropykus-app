@@ -2,6 +2,7 @@
   <div class="left-bar">
     <v-navigation-drawer class="primary-color pl-3 left-bar-content"
       absolute permanent
+      mobile-breakpoint="960"
       >
       <v-list-item>
         <v-list-item-content>
@@ -35,7 +36,7 @@
         </v-list-item>
 
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
-          <router-link :to="{name: constants.ROUTE_NAMES.BORROW}"
+          <router-link :to="{name: constants.ROUTE_NAMES.BORROWS}"
             class="d-flex align-center active">
             <img class="ml-4 mr-5" src="@/assets/icons/borrow.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.borrow') }}</div>
@@ -106,7 +107,6 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
 import * as constants from '@/store/constants';
 
 export default {
@@ -126,20 +126,11 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      walletAddress: (state) => state.Session.walletAddress,
-    }),
-    lang() {
-      return this.$i18n.locale === 'en' ? 'ES' : 'EN';
-    },
   },
   created() {
     console.log(this.drawer);
   },
   methods: {
-    ...mapActions({
-      setDrawer: constants.SESSION_DRAWER,
-    }),
     changeLanguage() {
       if (this.$i18n.locale === 'es') {
         this.$i18n.locale = 'en';
@@ -159,51 +150,11 @@ export default {
         })
         .catch(console.error);
     },
-    reset() {
-      this.views.inBalance = false;
-      this.views.inDeposit = false;
-      this.views.inDebts = false;
-      this.views.inTutorials = false;
-      this.views.inOverview = false;
-    },
-    highlightRoute(routePath) {
-      switch (routePath) {
-        case constants.ROUTE_NAMES.BALANCE:
-          this.views.inBalance = true;
-          break;
-        case constants.ROUTE_NAMES.DEPOSITS:
-          this.views.inDeposits = true;
-          break;
-        case constants.ROUTE_NAMES.DEBTS:
-          this.views.inDebts = true;
-          break;
-        case constants.ROUTE_NAMES.TUTORIALS:
-          this.views.inTutorials = true;
-          break;
-        case constants.ROUTE_NAMES.OVERVIEW:
-          this.views.inOverview = true;
-          break;
-        default:
-          this.views.inDeposits = true;
-          break;
-      }
-    },
-    redirect(routePath) {
-      console.log('page', routePath);
-      this.reset();
-      this.highlightRoute(routePath);
-      this.$router.push({ name: routePath });
-    },
   },
   watch: {
-    walletAddress() {
-      if (this.walletAddress) return 'UserHome';
-      return 'Home';
-    },
     setGroupDrawer() {
       if (window.innerWidth <= 768) {
         this.setDrawer(false);
-        console.log(window.innerWidth, 'hey');
         this.showDrawer = false;
       } else {
         this.showDrawer = true;

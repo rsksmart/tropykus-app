@@ -18,7 +18,7 @@ export default class Market {
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3Ws);
-    this.gasLimit = 350000;
+    this.gasLimit = 400000;
   }
 
   static async isCRbtc(address) {
@@ -296,8 +296,8 @@ export default class Market {
 
   async repay(account, amountIntended) {
     const accountSigner = signer(account);
-    const exchangeRate = 1; // await this.exchangeRateCurrent();
-    const value = await ethers.utils.parseEther(`${amountIntended / exchangeRate}`);
+    const value = amountIntended === -1 ? '115792089237316195423570985008687907853269984665640564039457584007913129639935'
+      : await ethers.utils.parseEther(`${amountIntended}`);
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,

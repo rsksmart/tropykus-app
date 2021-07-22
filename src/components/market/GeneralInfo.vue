@@ -13,7 +13,7 @@
       </div>
       <div class="p1-descriptions text-info mt-4" style="width: 119px">
         {{ $t('market.general.description1') }}
-        {{ rateLabel }}
+        {{ $t('market.borrow.description1') }}
         {{ $t('market.general.description2') }}
         {{ $t('market.general.description3') }}
       </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import * as constants from '@/store/constants';
 import {
   CToken,
@@ -32,13 +32,6 @@ import {
   Market,
   Comptroller,
 } from '@/middleware';
-// import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
-// import SupplyRedeem from '@/components/dialog/SupplyRedeem.vue';
-// import Loading from '@/components/dialog/Loading.vue';
-// import BorrowRepay from '@/components/dialog/BorrowRepay.vue';
-// import TxSummary from '@/components/dialog/TxSummary.vue';
-// import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
-// import ErrorDialog from '@/components/dialog/ErrorDialog.vue';
 
 export default {
   name: 'GeneralInfo',
@@ -61,24 +54,12 @@ export default {
         supplyBalance: null,
         borrowBalance: null,
       },
-      walletDialog: false,
-      supplyBorrowDialog: false,
-      waitingDialog: false,
-      successDialog: false,
-      errorDialog: false,
-      txSummaryDialog: false,
       market: null,
-      amount: null,
       comptroller: null,
-      currentAction: null,
       allMarkets: [],
     };
   },
   props: {
-    inBorrowMenu: {
-      required: true,
-      type: Boolean,
-    },
     marketAddress: {
       required: true,
       type: String,
@@ -90,38 +71,15 @@ export default {
       chainId: (state) => state.Session.chainId,
       account: (state) => state.Session.account,
     }),
-    ...mapGetters({
-      isLoggedIn: constants.SESSION_IS_CONNECTED,
-    }),
-    marketBalanceLabel() {
-      return this.inBorrowMenu ? this.$t('market.borrow.subtitle1') : this.$t('market.deposits.subtitle1');
-    },
-    marketBalance() {
-      return this.inBorrowMenu ? this.info.totalBorrows : this.info.cash;
-    },
-    marketBalanceInUSD() {
-      return this.marketBalance * this.info.underlyingPrice;
-    },
-    supplyBorrowComponent() {
-      return this.inBorrowMenu ? 'BorrowRepay' : 'SupplyRedeem';
-    },
-    buttonColor() {
-      return this.inBorrowMenu ? '#FF9153' : '#4CB163';
-    },
-    buttonName() {
-      return this.inBorrowMenu ? this.$t('market.borrow.button1') : this.$t('market.deposits.button1');
-    },
-    marketOnExplorer() {
-      return `${this.baseExplorerURL}/${this.marketAddress}`;
-    },
-    rateLabel() {
-      return this.inBorrowMenu ? this.$t('market.borrow.description1') : this.$t('market.deposits.description1');
-    },
   },
   methods: {
     redirect(routePath) {
       if (this.$route.name === 'Deposits') {
         const to = { name: routePath, params: { id: this.marketAddress } };
+        this.$router.push(to);
+      }
+      if (this.$route.name === 'Borrows') {
+        const to = { name: constants.ROUTE_NAMES.BORROW, params: { id: this.marketAddress } };
         this.$router.push(to);
       }
     },
@@ -135,117 +93,6 @@ export default {
         })
         .catch(console.error);
     },
-    supplyOrBorrow() {
-      if (this.isLoggedIn) {
-        this.supplyBorrowDialog = true;
-      } else {
-        this.walletDialog = true;
-      }
-    },
-    reset() {
-      this.walletDialog = false;
-      this.supplyBorrowDialog = false;
-      this.waitingDialog = false;
-      this.successDialog = false;
-      this.errorDialog = false;
-      this.txSummaryDialog = false;
-    },
-    showWaiting() {
-      this.reset();
-      this.waitingDialog = true;
-    },
-    showError() {
-      this.reset();
-      this.errorDialog = true;
-    },
-    showSuccess() {
-      this.reset();
-      this.successDialog = true;
-    },
-    async menuAction({ amountIntended, action }) {
-      this.amount = amountIntended;
-      this.currentAction = action;
-      this.reset();
-      const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
-      switch (action) {
-        case constants.USER_ACTION_MINT:
-          this.allMarkets = await this.comptroller.allMarkets;
-          if (assetsIn.indexOf(this.marketAddress) === -1) {
-            await this.comptroller.enterMarkets(this.account, this.allMarkets);
-          }
-          // this.txSummaryDialog = true; // TODO
-          this.showWaiting();
-          await this.market.supply(this.account, this.amount)
-            .then(() => {
-              this.market.wsInstance.on('Mint', (from) => {
-                if (from === this.walletAddress) {
-                  this.showSuccess();
-                  this.updateMarketInfo();
-                }
-              });
-            })
-            .catch(this.showError);
-          break;
-        case constants.USER_ACTION_BORROW:
-          // this.txSummaryDialog = true; // TODO
-          this.showWaiting();
-          await this.market.borrow(this.account, this.amount)
-            .then(() => {
-              this.market.wsInstance.on('Borrow', (from) => {
-                if (from === this.walletAddress) {
-                  this.showSuccess();
-                  this.updateMarketInfo();
-                }
-              });
-            })
-            .catch(this.showError);
-          break;
-        case constants.USER_ACTION_REDEEM:
-          // this.txSummaryDialog = true; // TODO
-          this.showWaiting();
-          this.market.redeem(this.account, this.amount)
-            .then(() => {
-              this.market.wsInstance.on('Redeem', (from) => {
-                if (from === this.walletAddress) {
-                  this.showSuccess();
-                  this.updateMarketInfo();
-                }
-              });
-            })
-            .catch(this.showError);
-          break;
-        case constants.USER_ACTION_REPAY:
-          this.showWaiting();
-          this.market.repay(this.account, this.amount)
-            .then(() => {
-              this.market.wsInstance.on('RepayBorrow', (from) => {
-                if (from === this.walletAddress) {
-                  this.showSuccess();
-                  this.updateMarketInfo();
-                }
-              });
-            })
-            .catch((e) => {
-              console.log(e);
-              this.showError();
-            });
-          break;
-        default:
-          break;
-      }
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
-        console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
-        const { error, detail, info } = event.args;
-        console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
-        if (this.walletAddress === from) {
-          this.showError();
-        }
-      });
-    },
-    actionSucceed() {
-      this.successDialog = false;
-      this.$emit('success');
-    },
     async updateMarketInfo() {
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
       this.info.cash = await this.market.getCash();
@@ -253,7 +100,7 @@ export default {
       this.info.rate = this.inBorrowMenu
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
-      this.info.rate = this.info.rate.toFixed(3);
+      this.info.rate = this.info.rate.toFixed(2);
       this.info.totalBorrows = await this.market.totalBorrowsInUnderlying();
       this.getSymbolImg();
       if (this.chainId) {
@@ -281,15 +128,6 @@ export default {
     isCRbtc() {
       return Market.isCRbtc(this.marketAddress);
     },
-  },
-  components: {
-    // ConnectWallet,
-    // SupplyRedeem,
-    // BorrowRepay,
-    // Loading,
-    // TxSummary,
-    // SuccessDialog,
-    // ErrorDialog,
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);

@@ -78,6 +78,9 @@
       "description1": "Waiting for the confirmation of the transaction in your wallet",
       "description2": "Waiting for confirmation from the network",
       "description3": "You have deposited",
+      "description4": "You have withdrawn",
+      "description5": "You have borrowed",
+      "description6": "You have paid",
       "btn": "Continue"
     },
     "error": {
@@ -257,7 +260,7 @@
       "school": "Tropykus School",
       "markets": "Markets",
       "protocol": "About Tropykus",
-      "language": "Spanish",
+      "language": "English",
       "github": "Repository"
     },
     "navbar": {
@@ -272,12 +275,35 @@
     "market": "Market",
     "total-reserves": "Total Reserves"
   },
-  "borrow": {
+  "borrows": {
     "title": "You can borrow and multiply your earnings",
     "description": "If you don't have deposits, make a deposit in any of our markets. If you want to borrow, but do not know how much you will have to pay, use our interest payment simulator.",
     "subtitle": "Cryptos that you can borrow",
     "btn1": "Simulate interest payment",
     "btn2": "Deposit"
+  },
+  "borrow": {
+    "title": "Borrow and multiply your earnings",
+    "tab1": "Borrow",
+    "tab2": "Pay",
+    "description1": "Select the crypto to borrow",
+    "description2": "You can borrow",
+    "description3": "Current dynamic annual interest rate",
+    "description4": "Write the amount you are going to borrow",
+    "description5": "By default, all your deposits are used as collateral to make a loan in any market.",
+    "description6": "Settlement risk",
+    "btn1": "Connect wallet",
+    "btn2": "Borrow",
+    "tooltip1": "This value is your maximum loan capacity with respect to your collateral.",
+    "tooltip2": "The interest rate varies when other users transact on the protocol."
+  },
+  "pay": {
+    "description1": "Select the crypto to pay",
+    "description2": "Write the amount you are going to pay",
+    "description3": "You borrowed",
+    "description4": "Approximate accrued interest",
+    "btn1": "Connect wallet",
+    "btn2": "Pay"
   },
   "deposits": {
     "title": "You can borrow and multiply your earnings",
@@ -308,5 +334,13 @@
     "description6": "Take a look at strategies",
     "tooltip1": "The interest rate varies when other users carry out transactions in the protocol.",
     "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits."
+  },
+  "withdraw": {
+    "title": "Withdraw",
+    "description1": "Select the crypto to withdraw",
+    "description2": "Write the amount you are going to withdraw",
+    "description3": "You have deposited",
+    "btn1": "Connect wallet",
+    "btn2": "Withdraw"
   }
 }

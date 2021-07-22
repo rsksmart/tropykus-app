@@ -14,6 +14,7 @@ export const ROUTE_NAMES = {
   BALANCE: 'Balance',
   DEPOSITS: 'Deposits',
   DEPOSIT: 'Deposit',
+  BORROWS: 'Borrows',
   BORROW: 'Borrow',
   EXCHANGES: 'Exchanges',
   SCHOOL: 'School',
@@ -35,3 +36,14 @@ export const SESSION_GET_WALLET_NAME = 'SESSION_GET_WALLET_NAME';
 export const SESSION_IS_CONNECTED = 'SESSION_IS_CONNECTED';
 
 export const SESSION_DRAWER = 'SESSION_DRAWER';
+
+// ===============
+// Market
+// ===============
+
+export const MARKET_GET_MARKETSINFO = 'MARKET_GET_MARKETSINFO';
+export const MARKET_GET_MARKET = 'MARKET_GET_MARKET';
+export const MARKET_UPDATE_MARKET = 'MARKET_UPDATE_MARKET';
+export const MARKET_UPDATE_SELECT = 'MARKET_UPDATE_SELECT';
+export const MARKET_ISPROGRESS = 'MARKET_ISPROGRESS';
+// export default MARKET_GET_MARKETSINFO = 'MARKET_GET_MARKETSINFO';

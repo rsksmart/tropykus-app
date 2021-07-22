@@ -28,8 +28,13 @@ export default [
   },
   {
     path: '/borrow',
-    name: 'Borrow',
+    name: 'Borrows',
     component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Borrow.vue'),
+  },
+  {
+    path: '/borrow/:id',
+    name: 'Borrow',
+    component: () => import(/* webpackChunkName: "Borrow" */ '@/components/borrow/BorrowContent.vue'),
   },
   {
     path: '/balance',

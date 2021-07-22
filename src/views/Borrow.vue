@@ -2,10 +2,10 @@
   <div class="secondary-color borrow-deposit-view">
     <div class="d-flex flex-column align-center">
       <h2 class="h2-heading mb-7 text-primary">
-        {{ $t('borrow.title') }}
+        {{ $t('borrows.title') }}
       </h2>
       <p class="p1-descriptions text-info text-description">
-        {{ $t('borrow.description') }}
+        {{ $t('borrows.description') }}
       </p>
     </div>
     <div class="d-flex justify-center actions-bottons">
@@ -14,7 +14,7 @@
         text
       >
         <span class="b1-main text-primary">
-          {{ $t('borrow.btn1') }}
+          {{ $t('borrows.btn1') }}
         </span>
       </v-btn>
       <v-btn
@@ -22,14 +22,14 @@
         text
       >
         <span class="b1-main">
-          {{ $t('borrow.btn2') }}
+          {{ $t('borrows.btn2') }}
         </span>
       </v-btn>
     </div>
 
     <v-row class="ma-0">
       <p class="h3-sections-heading text-info">
-          {{ $t('borrow.subtitle') }}
+          {{ $t('borrows.subtitle') }}
       </p>
     </v-row>
 

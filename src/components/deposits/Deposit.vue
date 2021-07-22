@@ -1,12 +1,24 @@
 <template>
     <div class="deposit">
-      <h2 class="h2-heading text-primary">{{ $t('deposit.title')}}</h2>
-      <div class="h3-sections-heading text-deposit text-detail mb-9 ">
-        {{ $t('deposit.subtitle')}}
+      <h2 class="h2-heading text-detail">{{ $t('deposit.title')}}</h2>
+      <div class="d-flex">
+        <div text @click="tabMenu = true" class="mr-10">
+          <span class="h3-sections-heading pb-1 tab"
+          :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
+          >Deposit</span>
+        </div>
+        <div v-if="info.supplyBalance" text @click="tabMenu = false">
+          <span class="h3-sections-heading pb-1 tab"
+          :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
+          >{{ $t('dialog.supply-redeem.title2') }}</span>
+        </div>
       </div>
-      <div class="d-flex justify-space-between mb-12">
+
+      <div class="d-flex justify-space-between mb-12 mt-9">
         <div>
-          <div class="p1-descriptions mb-3">{{ $t('deposit.description1')}}</div>
+          <div class="p1-descriptions mb-3">
+            {{ tabMenu ? $t('deposit.description1') : $t('withdraw.description1') }}
+          </div>
           <div class="primary-bg select-box">
             <v-menu>
               <template v-slot:activator="{ on, attrs }">
@@ -24,9 +36,8 @@
               </template>
               <v-list>
                 <v-list-item
-                  v-for="(market, index) in getMarkets"
-                  :key="index"
-                  class="select-menu-item"
+                  v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
+                  :class="market.underlyingSymbol === select.underlyingSymbol ? 'active' : ''"
                   @click="updateRoute(market)"
                 >
                   <div class="d-flex">
@@ -42,46 +53,53 @@
         </div>
         <div>
           <div class="p1-descriptions mb-3 text-info">
-            {{ $t('deposit.description2')}}
+            {{ tabMenu ? $t('deposit.description2') : $t('withdraw.description2') }}
           </div>
-          <v-row class="ma-0 input-box primary-bg"
+          <div class="input-box primary-bg"
+            :class="!activeButton && amount > 0 ? 'alert' : ''"
           >
-            <v-col class="pa-0">
-              <v-text-field type="number" dark class="h1-title text-info pa-0"
-                dense full-width single-line flat height="62"
+            <div class="d-flex">
+              <v-text-field
+                type="number"
                 v-model="amount"
                 :rules="[rules.leverage, rules.minBalance]"
+                class="h1-title text-info pa-0 ma-0"
+                background-color="#CFE7DA"
+                color="#47B25F"
                 :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-              />
-            </v-col>
-            <v-col cols="auto" class="pa-0 d-flex justify-end pt-3">
+                filled
+                rounded
+                dense
+              ></v-text-field>
               <v-btn @click="setMaxAmount" height="40" text>
                 <span class="text-primary">MÁX</span>
               </v-btn>
-            </v-col>
-          </v-row>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="d-flex justify-space-between mb-12">
         <div>
-          <div class="p1-descriptions text-info mb-1">{{ $t('deposit.description3')}}</div>
+          <div class="p1-descriptions text-info mb-1">
+            {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description3') }}
+            </div>
           <div class="p2-reading-values text-uppercase text-info">
-            {{tokenBalance | formatDecimals(select.underlyingSymbol) }}
+            {{ !tokenBalance ? 0 : tokenBalance | formatDecimals(select.underlyingSymbol) }}
             {{select.underlyingSymbol}}
           </div>
           <div class="p3-USD-values text-info">
-            {{tokenBalanceUsd | formatPrice}}
+            {{ !tokenBalanceUsd ? 0 : tokenBalanceUsd | formatPrice}}
           </div>
         </div>
 
         <div>
           <v-slider
-            class="mt-3 deposit-slider"
+            class="mt-3 slider-box"
             min="0"
             max="100"
             color="#4CB163"
-            track-color=" #4CB163"
+            track-color="#C8DEDD"
             tick-size="10"
             thumb-label
             v-model="sliderAmountPercentage" @click="setAmount"
@@ -95,8 +113,8 @@
         </div>
       </div>
 
-      <div class="d-flex justify-space-between">
-        <div>
+      <div class="d-flex" :class="tabMenu ? 'justify-space-between' : 'justify-end'"  >
+        <div v-if="tabMenu">
           <div class="p1-descriptions text-info mb-1 d-flex">
             <div class="text-rate">
               {{ $t('deposit.description4')}}
@@ -118,118 +136,124 @@
           </div>
         </div>
 
-        <div class="d-flex align-end">
+        <div class="d-flex se-end">
           <v-btn text class="btn-action"
-            :disabled="(amount > 0) ? false : true"
-            :class="(amount > 0) ? 'primary-color' : 'secondary-bg'"
-              @click="menuAction"
+            :disabled="!activeButton"
+            :class="activeButton ? 'primary-color' : 'secondary-bg'"
+            @click="menuAction"
           >
             <span class="white--text">
-
-              {{
-                account ? $t('deposit.btn2') : $t('deposit.btn1')
+              {{ tabMenu
+                  ? account ? $t('deposit.btn2') : $t('deposit.btn1')
+                  : account ? $t('withdraw.btn2') : $t('withdraw.btn1')
               }}
             </span>
           </v-btn>
         </div>
       </div>
+      <template v-if="tabMenu">
 
-      <v-divider class="divider"></v-divider>
+        <v-divider class="divider"></v-divider>
 
-      <v-row class="mb-5">
-        <v-col md="4">
-          <h3 class="h3-sections-heading text-detail">
-            {{ $t('deposit.calculator.title')}}
-          </h3>
-        </v-col>
-      </v-row>
+        <v-row class="mb-5">
+          <v-col md="4">
+            <h3 class="h3-sections-heading text-detail">
+              {{ $t('deposit.calculator.title')}}
+            </h3>
+          </v-col>
+        </v-row>
 
-      <div class="d-flex justify-space-between mb-10">
-        <div>
-          <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
-            {{ $t('deposit.calculator.description1')}}
-            <div class="tooltip-info ">
-              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="200">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                        src="@/assets/icons/info.svg" contain/>
-                </template>
-                <span class="p5-feedback text-info">
-                  {{ $t('deposit.tooltip2') }}
-                </span>
-              </v-tooltip>
+        <div class="d-flex justify-space-between mb-10">
+          <div>
+            <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
+              {{ $t('deposit.calculator.description1')}}
+              <div class="tooltip-info ">
+                <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="200">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-img v-bind="attrs" v-on="on" width="12" height="12"
+                          src="@/assets/icons/info.svg" contain/>
+                  </template>
+                  <span class="p5-feedback text-info">
+                    {{ $t('deposit.tooltip2') }}
+                  </span>
+                </v-tooltip>
+              </div>
+            </div>
+            <div class="p2-reading-values box-number text-uppercase text-info">
+                {{ !possibleEarnings ? 0 : possibleEarnings | formatDecimals }}
+                {{ info.underlyingSymbol }}
+            </div>
+            <div class="p3-USD-values box-number text-info">
+              {{ !possibleEarningsUSD ? 0 : possibleEarningsUSD | formatPrice }} USD
             </div>
           </div>
-          <div class="p2-reading-values box-number text-uppercase text-info">
-              {{ possibleEarnings | formatDecimals }} {{ info.underlyingSymbol }}
-          </div>
-          <div class="p3-USD-values box-number text-info">
-            {{ possibleEarningsUSD | formatPrice }} USD
-          </div>
-        </div>
 
-        <div>
-          <div class="p1-descriptions mb-3 text-info">
-            {{ $t('deposit.calculator.description2')}}
-          </div>
-          <v-row class="ma-0 pa-0y input-box primary-bg">
-            <v-col class="pa-0 ma-0">
-              <v-text-field type="number" dark class="h1-title text-info pa-0"
-                dense full-width single-line flat height="62"
-                :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-                v-model="amountEarning"
-              />
-            </v-col>
-          </v-row>
-        </div>
-      </div>
-
-      <div class="d-flex justify-space-between mb-10">
-        <div>
-          <div class="p1-descriptions text-info mb-1">
-            {{ $t('deposit.calculator.description3')}}
-          </div>
-          <div class="p2-reading-values box-number text-info">
-            {{ possibleEarningsPlusDeposit | formatDecimals }} {{ info.underlyingSymbol }}
-          </div>
-          <div class="p3-USD-values box-number text-info">
-            {{ possibleEarningsPlusDepositUSD | formatPrice }} USD
-          </div>
-        </div>
-
-        <div>
-          <div class="p1-descriptions text-info">
-            {{ $t('deposit.calculator.description4')}}
-          </div>
-          <v-slider
-            class="mt-3 deposit-slider"
-            min="1"
-            max="5"
-            color="#4CB163"
-            track-color=" #4CB163"
-            tick-size="10"
-            thumb-label
-            v-model="sliderYear"
-          />
           <div>
-            <v-col class="pa-0 d-flex justify-space-between">
-              <span class="p1-descriptions">
-                1 {{ $t('deposit.calculator.time1')}}
-              </span>
-              <span class="p1-descriptions">
-                5 {{ $t('deposit.calculator.time2')}}
-              </span>
-            </v-col>
+            <div class="p1-descriptions mb-3 text-info">
+              {{ $t('deposit.calculator.description2')}}
+            </div>
+            <div class="input-box primary-bg">
+              <div class="d-flex">
+                <v-text-field
+                  type="number"
+                  v-model="amountEarning"
+                  class="h1-title text-info pa-0 ma-0"
+                  background-color="#CFE7DA"
+                  color="#47B25F"
+                  :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
+                  filled
+                  rounded
+                  dense
+                ></v-text-field>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- <v-row class="d-flex justify-center mt-16">
-        <div class="p1-descriptions text-info mr-6">
-          {{ $t('deposit.description5')}}
+        <div class="d-flex justify-space-between mb-10">
+          <div>
+            <div class="p1-descriptions text-info mb-1">
+              {{ $t('deposit.calculator.description3')}}
+            </div>
+            <div class="p2-reading-values box-number text-info">
+              {{ !possibleEarningsPlusDeposit ? 0 : possibleEarningsPlusDeposit | formatDecimals }}
+              {{ info.underlyingSymbol }}
+            </div>
+            <div class="p3-USD-values box-number text-info">
+              {{ possibleEarningsPlusDepositUSD
+                ? 0
+                : possibleEarningsPlusDepositUSD | formatPrice
+              }} USD
+            </div>
+          </div>
+
+          <div>
+            <div class="p1-descriptions text-info">
+              {{ $t('deposit.calculator.description4')}}
+            </div>
+            <v-slider
+              class="mt-3 slider-box"
+              min="1"
+              max="5"
+              color="#4CB163"
+              track-color="#C8DEDD"
+              tick-size="10"
+              thumb-label
+              v-model="sliderYear"
+            />
+            <div>
+              <v-col class="pa-0 d-flex justify-space-between">
+                <span class="p1-descriptions">
+                  1 {{ $t('deposit.calculator.time1')}}
+                </span>
+                <span class="p1-descriptions">
+                  5 {{ $t('deposit.calculator.time2')}}
+                </span>
+              </v-col>
+            </div>
+          </div>
         </div>
-        <div class="p1-descriptions text-info">{{ $t('deposit.description6')}}</div>
-      </v-row> -->
+      </template>
 
       <template v-if="showModalConnectWallet">
         <connect-wallet
@@ -239,20 +263,16 @@
       </template>
 
       <template v-if="isLoading">
-        <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog">
-        </loading>
+        <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog" />
       </template>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
 import * as constants from '@/store/constants';
 import {
-  CToken,
-  CRbtc,
-  Market,
   Comptroller,
 } from '@/middleware';
 
@@ -264,48 +284,37 @@ export default {
   },
   data() {
     return {
+      tabMenu: true,
+      comptroller: null,
       constants,
-      db: this.$firebase.firestore(),
-      comptroller: undefined,
       getMarkets: [],
       market: null,
       isLoading: false,
       infoLoading: {
+        type: 'deposit',
         amount: '',
         symbol: '',
         wallet: true,
         loading: true,
+        deposit: true,
         success: null,
       },
-      select: {
-        symbol: '',
-        img: '',
-      },
+      select: {},
       showModalConnectWallet: false,
       sliderAmountPercentage: 0,
       sliderYear: 0,
       amount: null,
       amountEarning: null,
-      marketAddress: null,
-      info: {
-        underlyingSymbol: null,
-        rate: null,
-        underlyingPrice: null,
-        underlyingBalance: null,
-        liquidity: null,
-        interestBalance: null,
-        supplyBalance: 0,
-        borrowBalance: null,
-      },
-      data: {
-        underlyingBalance: null,
-        supplyBalance: 0,
-        price: null,
-      },
+      info: {},
       rules: {
-        leverage: () => (this.account ? this.info.borrowBalance <= 0 : true) || this.$t('dialog.supply-redeem.rule1'),
-        minBalance: () => (this.account ? Number(this.amount) <= Number(this
-          .data.underlyingBalance) : true) || this.$t('dialog.supply-redeem.rule2'),
+        leverage: () => ((this.tabMenu && this.account && this.amount)
+          ? this.info.borrowBalance <= 0 : true) || this.$t('dialog.supply-redeem.rule1'),
+        minBalance: () => ((this.tabMenu && this.account && this.amount)
+          ? Number(this.amount) <= Number(this.info.underlyingBalance) : true)
+          || this.$t('dialog.supply-redeem.rule2'),
+        supplyBalance: () => ((!this.tabMenu && this.account && this.amount)
+          ? Number(this.amount) <= Number(this.info.supplyBalance) : true)
+          || this.$t('dialog.supply-redeem.rule3'),
       },
     };
   },
@@ -315,12 +324,23 @@ export default {
       markets: (state) => state.Session.markets,
       walletAddress: (state) => state.Session.walletAddress,
       account: (state) => state.Session.account,
+      marketsStore: (state) => state.Market.getMarkets,
+      infoStore: (state) => state.Market.info,
+      selectStore: (state) => state.Market.select,
+      marketStore: (state) => state.Market.market,
     }),
+    activeButtonn() {
+      return this.tabMenu
+        ? (this.amount <= this.info.underlyingBalance && this.amount > 0)
+        : (this.amount <= this.info.supplyBalance && this.amount > 0);
+    },
     tokenBalanceUsd() {
-      return this.data.underlyingBalance * this.data.price;
+      return this.tabMenu
+        ? this.info.underlyingBalance * this.info.price
+        : this.info.supplyBalance * this.info.price;
     },
     tokenBalance() {
-      return this.data.underlyingBalance;
+      return this.tabMenu ? this.info.underlyingBalance : this.info.supplyBalance;
     },
     possibleEarnings() {
       return +this.amountEarning ? (((this.amountEarning * this.supplyRate) + (this.info
@@ -344,22 +364,47 @@ export default {
     supplyRate() {
       return this.info.rate / 100;
     },
+    activeButton() {
+      return this.amount > 0 && typeof this
+        .rules.minBalance() !== 'string' && typeof this
+        .rules.leverage() !== 'string' && typeof this
+        .rules.supplyBalance() !== 'string';
+    },
   },
   watch: {
+    tabMenu() {
+      this.reset();
+    },
     markets() {
-      if (this.markets.length > 3) this.getMarketsInfo();
+      if (this.markets.length > 3) this.getMarketsStore(this.markets);
+    },
+    marketsStore() {
+      this.getMarkets = this.marketsStore;
+    },
+    infoStore() {
+      this.info = this.infoStore;
+      if (this.info.supplyBalance === 0) this.tabMenu = true;
+    },
+    selectStore() {
+      this.select = this.selectStore;
     },
     $route() {
       this.getMarket();
     },
-    async account() {
-      this.refresh();
+    marketStore() {
+      this.market = this.marketStore;
+    },
+    account() {
+      this.updateMarket();
     },
     amount() {
       this.amountEarning = this.amount;
     },
   },
   methods: {
+    ...mapActions({
+      getMarketsStore: constants.MARKET_GET_MARKETSINFO,
+    }),
     async menuAction() {
       if (!this.account) {
         this.showModalConnectWallet = true;
@@ -368,22 +413,53 @@ export default {
       this.isLoading = true;
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
-      await this.market.supply(this.account, this.amount)
-        .then(() => {
-          this.infoLoading.wallet = false;
-          this.market.wsInstance.on('Mint', (from, actualMintAmount) => {
-            if (from === this.walletAddress) {
-              if (!this.isLoading) {
-                this.isLoading = true;
+      if (this.tabMenu) {
+        // colocar los mercados en assetsIn
+        const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
+        const allMarkets = await this.comptroller.allMarkets;
+        if (assetsIn.indexOf(this.marketAddress) === -1) {
+          await this.comptroller.enterMarkets(this.account, allMarkets);
+        }
+        await this.market.supply(this.account, this.amount)
+          .then(() => {
+            this.infoLoading.wallet = false;
+            this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
+              if (from === this.walletAddress) {
+                if (!this.isLoading) {
+                  this.isLoading = true;
+                }
+                this.infoLoading.loading = false;
+                this.infoLoading.deposit = true;
+                this.infoLoading.amount = actualMintAmount / 1e18;
+                this.infoLoading.symbol = this.select.symbol;
+                setTimeout(() => {
+                  this.getMarket();
+                }, 1000);
               }
-              this.getMarket();
-              this.infoLoading.loading = false;
-              this.infoLoading.amount = actualMintAmount / 1e18;
-              this.infoLoading.symbol = this.select.symbol;
-            }
-          });
-        })
-        .catch(() => console.log('cancel'));
+            });
+          })
+          .catch(console.error);
+      } else {
+        this.market.redeem(this.account, this.amount)
+          .then(() => {
+            this.infoLoading.wallet = false;
+            this.market.wsInstance.on('Redeem', async (from, actualMintAmount) => {
+              if (from === this.walletAddress) {
+                if (!this.isLoading) {
+                  this.isLoading = true;
+                }
+                this.infoLoading.loading = false;
+                this.infoLoading.deposit = false;
+                this.infoLoading.amount = actualMintAmount / 1e18;
+                this.infoLoading.symbol = this.select.symbol;
+                setTimeout(() => {
+                  this.getMarket();
+                }, 1000);
+              }
+            });
+          })
+          .catch(console.error);
+      }
 
       this.market.wsInstance.on('Failure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
@@ -395,98 +471,45 @@ export default {
         }
       });
     },
-    async getMarketsInfo() {
-      this.getMarkets = [];
-      await this.markets.map(async (market) => {
-        try {
-          const data = {};
-          data.symbol = await market.symbol;
-          data.underlyingSymbol = await market.underlyingAssetSymbol();
-          data.marketAddress = market.marketAddress;
-          data.img = await this.db
-            .collection('markets-symbols')
-            .doc(data.symbol)
-            .get()
-            .then((response) => response.data().imageURL);
-
-          this.getMarkets.push(data);
-        } catch (error) {
-          //
-          console.error(error);
-        }
-      });
-    },
-    async updateMarketInfo() {
-      this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.info.rate = await this.market.supplyRateAPY();
-      this.info.rate = this.info.rate.toFixed(3);
-      // this.getSymbolImg();
-      if (this.chainId) {
-        this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
-      }
-      if (this.walletAddress) {
-        this.info.underlyingBalance = await this.market
-          .balanceOfUnderlyingInWallet(this.account);
-        this.info.supplyBalance = await this.market
-          .currentBalanceOfCTokenInUnderlying(this.walletAddress);
-        this.info.supplyBalance = this.info.supplyBalance ? this.info.supplyBalance : 0;
-        this.info.borrowBalance = await this.market
-          .borrowBalanceCurrent(this.walletAddress);
-        this.info.interestBalance = await this.market.getEarnings(this.walletAddress);
-      }
-    },
-    async refresh() {
-      if (this.account) {
-        this.data.underlyingBalance = await this.market
-          .balanceOfUnderlyingInWallet(this.account);
-        this.data.price = await this.market.underlyingCurrentPrice(this.chainId);
-      }
-      this.data.supplyBalance = await this.market
-        .currentBalanceOfCTokenInUnderlying(this.walletAddress);
-      this.data.supplyBalance = this.data.supplyBalance ? this.data.supplyBalance : 0;
-      console.log('supply', this.data.supplyBalance);
-    },
-    isCRbtc() {
-      return Market.isCRbtc(this.marketAddress);
-    },
-    async updateSelect() {
-      this.select.symbol = await this.market.symbol;
-      this.select.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.select.img = await this.db
-        .collection('markets-symbols')
-        .doc(this.select.symbol)
-        .get()
-        .then((response) => response.data().imageURL);
-    },
     updateRoute(market) {
       if (this.$route.params.id !== market.marketAddress) {
         const to = { name: this.$route.name, params: { id: market.marketAddress } };
         this.$router.push(to);
       }
     },
-    async getMarket() {
-      this.marketAddress = this.$route.params.id;
-      this.isCRbtc()
-        .then((isCRbtc) => {
-          this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
-            : new CToken(this.marketAddress, this.chainId);
-          this.updateMarketInfo();
-          this.updateSelect();
-          this.refresh();
-          this.reset();
-        })
-        .catch(console.error);
+    updateMarket() {
+      this.$store.dispatch({
+        type: constants.MARKET_UPDATE_MARKET,
+        marketAddress: this.$route.params.id,
+        walletAddress: this.walletAddress,
+        account: this.account,
+      });
+    },
+    getMarket() {
+      const data = {
+        marketAddress: this.$route.params.id,
+        walletAddress: this.walletAddress,
+        account: this.account,
+      };
+
+      this.$store.dispatch({
+        type: constants.MARKET_GET_MARKET,
+        ...data,
+      });
+      this.reset();
     },
     outsideConnectWallet() {
       this.showModalConnectWallet = false;
     },
     setAmount() {
       this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
-      this.amount = this.amount.toFixed(10);
+      if (this.account) {
+        this.amount = this.amount.toFixed(10);
+      }
     },
     setMaxAmount() {
       if (this.account) {
-        this.amount = this.data.underlyingBalance;
+        this.amount = this.tabMenu ? this.info.underlyingBalance : this.info.supplyBalance;
         this.setPercentageSlider();
       }
     },
@@ -498,13 +521,16 @@ export default {
       this.amount = null;
     },
     closeDialog() {
+      if (this.infoLoading.loading === false) {
+        this.getMarket();
+      }
       this.isLoading = false;
     },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.getMarket();
-    this.getMarketsInfo();
+    this.getMarketsStore(this.markets);
   },
 };
 </script>

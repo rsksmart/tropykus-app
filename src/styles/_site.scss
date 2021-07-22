@@ -50,10 +50,11 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 }
 
 .h3-sections-heading {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 25px;
+  font-family: Ubuntu !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 20px !important;
+  line-height: 25px !important;
 }
 
 .p1-descriptions {
@@ -87,12 +88,11 @@ div, p, h1, h2, h3, h4, h5, h6, body, button {
 }
 
 .p6-reading-values {
+  font-family: Ubuntu;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
   line-height: 16px;
-  color: #FFFFFF;
-  margin: 0 !important;
 }
 
 .b1-main {

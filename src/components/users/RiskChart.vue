@@ -1,18 +1,14 @@
 <template>
     <div class="risk">
-      <div class="d-flex justify-center mt-2">
-        <v-img class="risk-img" width="50" height="50" :src="riskImage" />
-        <v-progress-circular class="risk-graph" :size="125" :width="15"
-                             :value="100 - riskRate" :color="chartColor" :rotate="180" />
+      <div class="d-flex justify-center">
+        <img class="risk-img" :src="riskImage" />
+        <v-progress-circular class="risk-graph" :size="125" :width="12"
+          :value="100 - riskRate" :color="chartColor" :rotate="180" />
       </div>
       <template v-if="!inBalance">
         <div class="mt-5">
-          <v-row class="risk-title ma-0">
-            <h3>{{ riskTitle }}</h3>
-          </v-row>
-          <v-row class="risk-description ma-0">
-            <p class="ma-0">{{ riskDescription }}</p>
-          </v-row>
+          <h3 class="p6-reading-values text-info text-uppercase">{{ riskTitle }}</h3>
+          <p class="p1-descriptions ma-0">{{ riskDescription }}</p>
         </div>
       </template>
     </div>
@@ -113,10 +109,10 @@ export default {
       return this.riskChart.subtitle[this.typeChart].other;
     },
     chartColor() {
-      if (this.riskRate === 100) return this.inBalance ? '#C84021' : 'transparent';
-      if (this.riskRate >= 0 && this.riskRate <= 40) return this.inBalance ? '#4CB163' : '#FF9153';
-      if (this.riskRate > 40 && this.riskRate <= 60) return this.inBalance ? '#FF9153' : '#FF9153';
-      if (this.riskRate > 60 && this.riskRate <= 100) return this.inBalance ? '#E65D3D' : '#FF9153';
+      if (this.riskRate === 100) return this.inBalance ? '#EEAF0E' : 'transparent';
+      if (this.riskRate >= 0 && this.riskRate <= 40) return this.inBalance ? '#F7C61A' : '#F7C61A';
+      if (this.riskRate > 40 && this.riskRate <= 60) return this.inBalance ? '#BCBE34' : '#BCBE34';
+      if (this.riskRate > 60 && this.riskRate <= 100) return this.inBalance ? '#47B25F' : '#47B25F';
       return 'transparent';
     },
   },
