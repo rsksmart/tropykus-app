@@ -51,7 +51,9 @@
       "rule1": "You do not have enough collateral",
       "rule2": "This market is underfunded",
       "rule3": "You do not have sufficient funds",
-      "rule4": "You do not owe as much"
+      "rule4": "You do not owe as much",
+      "rule5": "You have no debt in this market",
+      "rule6": "You have not deposited in this market"
     },
     "borrow": {
       "description1": "You can borrow",

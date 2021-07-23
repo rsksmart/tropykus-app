@@ -85,7 +85,6 @@ const actions = {
       // maximo que puedo pedir prestado
       // info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
     } else {
-      console.log('sin address');
       commit(constants.MARKET_RESET_MARKET);
     }
 

@@ -62,7 +62,8 @@
               <v-text-field
                 type="number"
                 v-model="amount"
-                :rules="[rules.leverage, rules.minBalance]"
+                :rules="[rules.leverage, rules.minBalance,
+                rules.withoutBalance, rules.supplyBalance]"
                 class="h1-title text-info pa-0 ma-0"
                 background-color="#CFE7DA"
                 color="#47B25F"
@@ -315,6 +316,9 @@ export default {
         supplyBalance: () => ((!this.tabMenu && this.account && this.amount)
           ? Number(this.amount) <= Number(this.info.supplyBalance) : true)
           || this.$t('dialog.supply-redeem.rule3'),
+        withoutBalance: () => ((!this.tabMenu && this.info.supplyBalance === 0)
+          ? this.info.supplyBalance !== 0 : true)
+          || this.$t('dialog.supply-redeem.rule3'),
       },
     };
   },
@@ -367,6 +371,7 @@ export default {
     activeButton() {
       return this.amount > 0 && typeof this
         .rules.minBalance() !== 'string' && typeof this
+        .rules.withoutBalance() !== 'string' && typeof this
         .rules.leverage() !== 'string' && typeof this
         .rules.supplyBalance() !== 'string';
     },
@@ -383,7 +388,6 @@ export default {
     },
     infoStore() {
       this.info = this.infoStore;
-      // if (this.info.supplyBalance === 0) this.tabMenu = true;
     },
     selectStore() {
       this.select = this.selectStore;
@@ -395,6 +399,7 @@ export default {
       this.market = this.marketStore;
     },
     account() {
+      if (!this.account) this.tabMenu = true;
       this.updateMarket();
     },
     amount() {
@@ -425,7 +430,7 @@ export default {
           .then(() => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
-              if (from === this.walletAddress) {
+              if (from === this.walletAddress && Number(this.amount) === actualMintAmount / 1e18) {
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }

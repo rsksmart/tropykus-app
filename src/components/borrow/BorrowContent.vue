@@ -303,15 +303,15 @@ export default {
         liquidity: () => ((this.tabMenu && this.account && this.amount)
           ? Number(this.amountAsUnderlyingPrice) <= Number(this.liquidity) : true)
           || this.$t('dialog.borrow-repay.rule1'),
-        minBalance: () => ((!this.tabMenu && this.info.borrowBalance && this.amount)
+        minBalance: () => ((!this.tabMenu && this.info.borrowBalance > 0 && this.amount)
           ? Number(this.amount) <= Number(this.info.underlyingBalance) : true)
           || this.$t('dialog.borrow-repay.rule3'),
-        borrowBalance: () => ((!this.tabMenu && this.account && this.amount)
+        borrowBalance: () => ((!this.tabMenu && this.info.borrowBalance > 0 && this.amount)
           ? Number(this.amount) <= Number(this.info.borrowBalance) : true)
           || this.$t('dialog.borrow-repay.rule4'),
-        payBorrow: () => ((!this.tabMenu && this.amount > 0)
+        payBorrow: () => ((!this.tabMenu && this.amount > 0 && this.info.borrowBalance === 0)
           ? this.info.borrowBalance !== 0 : true)
-          || 'No tienes deudas en este mercado',
+          || this.$t('dialog.borrow-repay.rule5'),
       },
     };
   },
@@ -373,7 +373,6 @@ export default {
     },
     infoStore() {
       this.info = this.infoStore;
-      // if (this.info.borrowBalance === 0) this.tabMenu = true;
     },
     selectStore() {
       this.select = this.selectStore;
@@ -387,6 +386,7 @@ export default {
       this.market = this.marketStore;
     },
     account() {
+      if (!this.account) this.tabMenu = true;
       this.updateMarket();
       this.totalDepositsInUSD();
     },
@@ -440,7 +440,7 @@ export default {
                 }
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = false;
-                this.infoLoading.amount = amount;
+                this.infoLoading.amount = amount / 1e18;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -531,19 +531,15 @@ export default {
       console.log(this.walletAddress);
       if (this.walletAddress) {
         const tempData = [...this.chartData];
-        console.log('before comptroller');
         const collateral = await this.comptroller
           .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);
-        console.log('collateral', collateral);
         tempData[1][1] = (collateral);
         this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
-        console.log('liquidity', this.liquidity);
         this.chartData = tempData;
 
         // we get the interest to pay
         this.interestBorrow = await this.market.getDebtInterest(this.walletAddress);
       } else {
-        console.log('no addres borrow');
         this.interestBorrow = 0;
         this.liquidity = 0;
       }
