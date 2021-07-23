@@ -266,8 +266,11 @@
       "github": "Repository"
     },
     "navbar": {
+      "network": "Red incorrecta",
       "connect": "Conectar billetera",
-      "disconnect": "Desconectar billetera"
+      "disconnect": "Desconectar billetera",
+      "warning1": "Asegurate de tener tu billetera",
+      "warning2": "conectada a la red RSK."
     }
   },
   "internal-metrics": {

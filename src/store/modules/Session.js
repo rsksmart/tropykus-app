@@ -31,6 +31,8 @@ const actions = {
       if (wallet === constants.WALLET_LIQUALITY && window.ethereum.isLiquality) {
         provider = window.rsk;
         await window.ethereum.request({ method: 'eth_requestAccounts' });
+      } else if (wallet === constants.WALLET_NIFTY && window.ethereum.isNiftyWallet) {
+        window.ethereum.request({ method: 'eth_requestAccounts' });
       } else if (wallet === constants.WALLET_METAMASK && window.ethereum.isMetaMask) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
@@ -76,6 +78,10 @@ const actions = {
     if (window.ethereum) {
       const chainId = window?.ethereum?.chainId ?? 31;
       if (window.ethereum.isLiquality) {
+        commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(chainId, 16) });
+        return;
+      }
+      if (window.ethereum.isNiftyWallet) {
         commit(constants.SESSION_SET_PROPERTY, { chainId: parseInt(chainId, 16) });
         return;
       }

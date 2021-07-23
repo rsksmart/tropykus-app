@@ -41,8 +41,14 @@ export default {
       return this.markets.length > 0;
     },
   },
+  watch: {
+    chainId() {
+      this.load();
+    },
+  },
   methods: {
     async load() {
+      this.comptroller = new Comptroller(this.chainId);
       this.markets = await this.comptroller.allMarkets;
     },
   },
@@ -50,7 +56,6 @@ export default {
     GeneralInfo,
   },
   created() {
-    this.comptroller = new Comptroller(this.chainId);
     this.load();
   },
   updated() {
