@@ -6,22 +6,24 @@ import {
   Market,
 } from '@/middleware';
 
+const initState = {
+  underlyingSymbol: null,
+  rate: null,
+  underlyingPrice: 0,
+  underlyingBalance: null,
+  liquidity: null,
+  interestBalance: 0,
+  supplyBalance: 0,
+  borrowBalance: 0,
+  price: 0,
+};
+
 const state = {
   getMarkets: [],
   chainId: 31,
   market: null,
   isProgress: true,
-  info: {
-    underlyingSymbol: null,
-    rate: null,
-    underlyingPrice: 0,
-    underlyingBalance: null,
-    liquidity: null,
-    interestBalance: 0,
-    supplyBalance: 0,
-    borrowBalance: 0,
-    price: 0,
-  },
+  info: initState,
   select: {
     symbol: '',
     img: '',
@@ -82,6 +84,9 @@ const actions = {
       info.interestBalance = await market.getEarnings(walletAddress);
       // maximo que puedo pedir prestado
       // info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+    } else {
+      console.log('sin address');
+      commit(constants.MARKET_RESET_MARKET);
     }
 
     commit(constants.MARKET_UPDATE_MARKET, info);
@@ -144,6 +149,11 @@ const mutations = {
   // eslint-disable-next-line no-shadow
   [constants.MARKET_UPDATE_SELECT]: (state, payload) => {
     state.select = { ...state.select, ...payload };
+  },
+
+  // eslint-disable-next-line no-shadow
+  [constants.MARKET_RESET_MARKET]: (state) => {
+    state.info = initState;
   },
 };
 

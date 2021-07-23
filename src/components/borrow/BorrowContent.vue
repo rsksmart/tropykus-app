@@ -7,7 +7,7 @@
         :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
         >{{ $t('borrow.tab1') }}</span>
       </div>
-      <div v-if="info.borrowBalance" text @click="tabMenu = false">
+      <div v-if="account" text @click="tabMenu = false">
         <span class="h3-sections-heading pb-1 tab"
         :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
         >{{ $t('borrow.tab2') }}</span>
@@ -150,7 +150,8 @@
             <v-text-field
               type="number"
               v-model="amount"
-              :rules="[rules.liquidity, rules.minBalance, rules.borrowBalance]"
+              :rules="[rules.liquidity, rules.minBalance,
+              rules.borrowBalance, rules.payBorrow]"
               class="h1-title text-info pa-0 ma-0"
               background-color="#CFE7DA"
               color="#47B25F"
@@ -299,12 +300,18 @@ export default {
         },
       },
       rules: {
-        liquidity: () => ((this.tabMenu && this.account) ? Number(this.amountAsUnderlyingPrice)
-          <= Number(this.liquidity) : true) || this.$t('dialog.borrow-repay.rule1'),
-        minBalance: () => ((!this.tabMenu && this.account) ? Number(this.amount) <= Number(this
-          .info.underlyingBalance) : true) || this.$t('dialog.borrow-repay.rule3'),
-        borrowBalance: () => ((!this.tabMenu && this.account) ? Number(this.amount) <= Number(this
-          .info.borrowBalance) : true) || this.$t('dialog.borrow-repay.rule4'),
+        liquidity: () => ((this.tabMenu && this.account && this.amount)
+          ? Number(this.amountAsUnderlyingPrice) <= Number(this.liquidity) : true)
+          || this.$t('dialog.borrow-repay.rule1'),
+        minBalance: () => ((!this.tabMenu && this.info.borrowBalance && this.amount)
+          ? Number(this.amount) <= Number(this.info.underlyingBalance) : true)
+          || this.$t('dialog.borrow-repay.rule3'),
+        borrowBalance: () => ((!this.tabMenu && this.account && this.amount)
+          ? Number(this.amount) <= Number(this.info.borrowBalance) : true)
+          || this.$t('dialog.borrow-repay.rule4'),
+        payBorrow: () => ((!this.tabMenu && this.amount > 0)
+          ? this.info.borrowBalance !== 0 : true)
+          || 'No tienes deudas en este mercado',
       },
     };
   },
@@ -345,6 +352,7 @@ export default {
       return this.amount > 0 && typeof this
         .rules.liquidity() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
+        .rules.payBorrow() !== 'string' && typeof this
         .rules.borrowBalance() !== 'string';
     },
   },
@@ -365,7 +373,7 @@ export default {
     },
     infoStore() {
       this.info = this.infoStore;
-      if (this.info.borrowBalance === 0) this.tabMenu = true;
+      // if (this.info.borrowBalance === 0) this.tabMenu = true;
     },
     selectStore() {
       this.select = this.selectStore;
@@ -462,6 +470,7 @@ export default {
         walletAddress: this.walletAddress,
         account: this.account,
       });
+      this.reset();
     },
     getMarket() {
       // this.isProgress = true;
@@ -519,16 +528,24 @@ export default {
       this.chartData = tempData;
     },
     async totalDepositsInUSD() {
+      console.log(this.walletAddress);
       if (this.walletAddress) {
         const tempData = [...this.chartData];
+        console.log('before comptroller');
         const collateral = await this.comptroller
           .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);
+        console.log('collateral', collateral);
         tempData[1][1] = (collateral);
         this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+        console.log('liquidity', this.liquidity);
         this.chartData = tempData;
 
         // we get the interest to pay
         this.interestBorrow = await this.market.getDebtInterest(this.walletAddress);
+      } else {
+        console.log('no addres borrow');
+        this.interestBorrow = 0;
+        this.liquidity = 0;
       }
     },
     setMaxAmount() {

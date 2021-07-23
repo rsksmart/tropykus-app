@@ -7,7 +7,7 @@
           :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
           >Deposit</span>
         </div>
-        <div v-if="info.supplyBalance" text @click="tabMenu = false">
+        <div v-if="account" text @click="tabMenu = false">
           <span class="h3-sections-heading pb-1 tab"
           :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
           >{{ $t('dialog.supply-redeem.title2') }}</span>
@@ -383,7 +383,7 @@ export default {
     },
     infoStore() {
       this.info = this.infoStore;
-      if (this.info.supplyBalance === 0) this.tabMenu = true;
+      // if (this.info.supplyBalance === 0) this.tabMenu = true;
     },
     selectStore() {
       this.select = this.selectStore;
