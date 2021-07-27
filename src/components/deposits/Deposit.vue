@@ -62,7 +62,7 @@
               <v-text-field
                 type="number"
                 v-model="amount"
-                :rules="[rules.leverage, rules.minBalance,
+                :rules="[rules.leverage, rules.minBalance, rules.collateral,
                 rules.withoutBalance, rules.supplyBalance]"
                 class="h1-title text-info pa-0 ma-0"
                 background-color="#CFE7DA"
@@ -221,7 +221,7 @@
               {{ info.underlyingSymbol }}
             </div>
             <div class="p3-USD-values box-number text-info">
-              {{ possibleEarningsPlusDepositUSD
+              {{ !possibleEarningsPlusDepositUSD
                 ? 0
                 : possibleEarningsPlusDepositUSD | formatPrice
               }} USD
@@ -307,18 +307,22 @@ export default {
       amount: null,
       amountEarning: null,
       info: {},
+      liquidity: 0,
       rules: {
         leverage: () => ((this.tabMenu && this.account && this.amount)
           ? this.info.borrowBalance <= 0 : true) || this.$t('dialog.supply-redeem.rule1'),
         minBalance: () => ((this.tabMenu && this.account && this.amount)
           ? Number(this.amount) <= Number(this.info.underlyingBalance) : true)
           || this.$t('dialog.supply-redeem.rule2'),
-        supplyBalance: () => ((!this.tabMenu && this.account && this.amount)
+        supplyBalance: () => ((!this.tabMenu && this.info.supplyBalance > 0 && this.amount)
           ? Number(this.amount) <= Number(this.info.supplyBalance) : true)
           || this.$t('dialog.supply-redeem.rule3'),
-        withoutBalance: () => ((!this.tabMenu && this.info.supplyBalance === 0)
+        withoutBalance: () => ((!this.tabMenu && this.info.supplyBalance === 0 && this.amount > 0)
           ? this.info.supplyBalance !== 0 : true)
-          || this.$t('dialog.supply-redeem.rule3'),
+          || this.$t('dialog.supply-redeem.rule4'),
+        collateral: () => ((!this.tabMenu && this.amount > 0)
+          ? this.amount <= this.withdraw : true)
+          || this.$t('dialog.supply-redeem.rule5'),
       },
     };
   },
@@ -346,6 +350,10 @@ export default {
     tokenBalance() {
       return this.tabMenu ? this.info.underlyingBalance : this.info.supplyBalance;
     },
+    withdraw() {
+      return (this.liquidity / this.info.underlyingPrice) > this.info.supplyBalance
+        ? this.info.supplyBalance : (this.liquidity / this.info.underlyingPrice);
+    },
     possibleEarnings() {
       return +this.amountEarning ? (((this.amountEarning * this.supplyRate) + (this.info
         .supplyBalance * this.supplyRate)) * this.sliderYear) : (this.info
@@ -372,6 +380,7 @@ export default {
       return this.amount > 0 && typeof this
         .rules.minBalance() !== 'string' && typeof this
         .rules.withoutBalance() !== 'string' && typeof this
+        .rules.collateral() !== 'string' && typeof this
         .rules.leverage() !== 'string' && typeof this
         .rules.supplyBalance() !== 'string';
     },
@@ -488,6 +497,7 @@ export default {
         walletAddress: this.walletAddress,
         account: this.account,
       });
+      this.getLiquidity();
     },
     getMarket() {
       const data = {
@@ -500,6 +510,7 @@ export default {
         type: constants.MARKET_GET_MARKET,
         ...data,
       });
+      this.getLiquidity();
       this.reset();
     },
     outsideConnectWallet() {
@@ -523,6 +534,13 @@ export default {
     reset() {
       this.sliderAmountPercentage = 0;
       this.amount = null;
+    },
+    async getLiquidity() {
+      if (this.account) {
+        this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+      } else {
+        this.liquidity = 0;
+      }
     },
     closeDialog() {
       if (this.infoLoading.loading === false) {

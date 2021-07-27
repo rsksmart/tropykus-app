@@ -23,7 +23,8 @@
       "rule1": "No puedes depositar en este mercado, tienes una deuda activa. Paga tu deuda e intenta más tarde.",
       "rule2": "No tienes fondos suficientes",
       "rule3": "No tienes suficiente depositado",
-      "rule4": "Este mercado no tiene fondos suficientes"
+      "rule4": "Este mercado no tiene fondos suficientes",
+      "rule5": "No puedes retirar este monto, ya que tu deposito es colateral de una deuda"
     },
     "deposit": {
       "description1": "Tienes en tu billetera:",
