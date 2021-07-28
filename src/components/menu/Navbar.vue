@@ -133,6 +133,7 @@ export default {
     }),
     outsideConnectWallet() {
       this.showModalConnectWallet = false;
+      this.$router.push({ name: constants.ROUTE_NAMES.BALANCE });
     },
     showDialogConnectWallet() {
       if (!this.isWalletConnected) this.showModalConnectWallet = true;

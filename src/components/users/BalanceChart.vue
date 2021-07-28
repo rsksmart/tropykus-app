@@ -10,7 +10,7 @@
           <h2 class="boldie">{{ userCashUSD }} USD</h2>
         </v-row>
         <v-row class="ma-0">
-          <p class="ma-0">Balance neto</p>
+          <p class="ma-0">{{ $t('balance.my-balance.title') }}</p>
         </v-row>
       </v-col>
       <v-col>
@@ -28,20 +28,37 @@
       </v-col>
     </v-row>
     <v-divider color="#BEBEBE"/>
-    <div class="container">
-      <v-col cols="6">
-
-      </v-col>
-      <v-col cols="6">
-        <v-row class="ma-0">
-          <h3>Depósitos</h3>
-        </v-row>
-        <v-row>
-          <h3>Deudas</h3>
-        </v-row>
-      </v-col>
+    <div class="container d-flex justify-center align-center" style="
+      height: 83%;">
       <v-row class="ma-0">
-        <GChart type="PieChart" :data="chartData" :options="chartOptions"/>
+        <v-col class="d-flex flex-column justify-center" style="
+          width: 50%;">
+          <v-row>
+            <h2 class="s1-popup">{{ $t('balance.balance-chart.title1') }}</h2>
+            <div v-for="(item, index) in balanceInfo" :key="index">
+              <div v-if="item.balance !== 0" class="d-flex">
+                <div class="bullet-point mr-4 mb-2"
+                  :style="{ backgroundColor: bulletColorBalance[index] }" />
+                <p class="p1-descriptions">{{ item.symbol }}  |</p>
+                <p class="p1-descriptions ml-2">{{ item.balance}}</p>
+              </div>
+            </div>
+          </v-row>
+          <v-row class="d-flex flex-column justify-space-around">
+            <h2 class="s1-popup">{{ $t('balance.balance-chart.title2') }}</h2>
+            <div v-for="(item, index) in balanceInfo" :key="index">
+              <div v-if="item.borrow !== 0" class="d-flex">
+                <div class="bullet-point mr-4 mb-2"
+                  :style="{ backgroundColor: bulletColorBorrow[index] }" />
+                <p class="p1-descriptions">{{ item.symbol }}  |</p>
+                <p class="p1-descriptions ml-2">{{ item.borrow }}</p>
+              </div>
+            </div>
+          </v-row>
+        </v-col>
+        <v-col style="width: 50%;">
+          <GChart type="PieChart" :data="chartData" :options="chartOptions"/>
+        </v-col>
       </v-row>
     </div>
   </v-card>
@@ -49,9 +66,6 @@
 
 <script>
 import {
-  CRbtc,
-  CToken,
-  Market,
   Comptroller,
 } from '@/middleware';
 import { mapState } from 'vuex';
@@ -63,10 +77,14 @@ export default {
       userCashUSD: 0,
       chartData: [
         ['Balance', 'Cryptos'],
-        [`RBTC | ${0.097}`, 0.097869],
-        [`BPRO | ${0.097869}`, 0.0978698],
-        [`DOC | ${0.0978698}`, 0.0978698],
-        [`BTCx | ${0.978698}`, 0.978698],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
+        ['', 0],
       ],
       chartOptions: {
         pieHole: 0.7,
@@ -84,58 +102,98 @@ export default {
         },
         pieResidueSliceColor: '#CFC2AC',
         slices: [
-          { color: '#E65D3D' },
-          { color: '#DBD332' },
+          { color: '#368348' },
           { color: '#4CB163' },
+          { color: '#6DCD83' },
+          { color: '#C4DBC8' },
+          { color: '#F66514' },
           { color: '#FF9153' },
+          { color: '#FFBD98' },
+          { color: '#F5D6C4' },
         ],
         legend: {
-          position: 'left',
-          alignment: 'center',
-          textStyle: { color: '#FFF' },
+          position: 'none',
+          // alignment: 'center',
+          // textStyle: { color: '#FFF' },
         },
       },
       comptroller: null,
-      marketAddresses: [],
-      markets: [],
+      balanceInfo: [],
+      tokenBorrowPrice: null,
+      tokenSuppliedPrice: null,
     };
   },
   computed: {
+    bulletColorBalance() {
+      const bulletBalance = [
+        '#368348',
+        '#4CB163',
+        '#6DCD83',
+        '#C4DBC8',
+      ];
+      return bulletBalance;
+    },
+    bulletColorBorrow() {
+      const bulletBorrow = [
+        '#F66514',
+        '#FF9153',
+        '#FFBD98',
+        '#F5D6C4',
+      ];
+      return bulletBorrow;
+    },
     ...mapState({
       walletAddress: (state) => state.Session.walletAddress,
       chainId: (state) => state.Session.chainId,
+      markets: (state) => state.Session.markets,
     }),
   },
   methods: {
-    async getMarkets() {
-      return new Promise((resolve, reject) => {
-        let counter = 0;
-        this.marketAddresses.forEach(async (marketAddress) => {
-          await Market.isCRbtc(marketAddress)
-            .then((isCRbtc) => {
-              counter += 1;
-              if (isCRbtc) {
-                this.markets.push(new CRbtc(marketAddress, this.chainId));
-              } else {
-                this.markets.push(new CToken(marketAddress, this.chainId));
-              }
-              if (counter === this.marketAddresses.length) resolve(this.markets);
-            })
-            .catch(reject);
-        });
-      });
-    },
     async getData() {
-      this.marketAddresses = await this.comptroller.allMarkets;
-      await this.getMarkets();
       this.userCashUSD = await this.comptroller
         .totalBalanceInUSD(this.markets, this.walletAddress, this.chainId);
       this.userCashUSD = this.userCashUSD.toFixed(4);
+    },
+    async updateMarketInfo() {
+      let depositsCount = 1;
+      let debtsCount = 5;
+      const temp = [...this.chartData];
+      // eslint-disable-next-line
+      for await (const market of this.markets){
+        const obj = {};
+        obj.symbol = await market.underlyingAssetSymbol();
+        obj.balance = await market
+          .currentBalanceOfCTokenInUnderlying(this.walletAddress)
+          * await market.underlyingCurrentPrice(this.chainId);
+        obj.borrow = await market.borrowBalanceCurrent(this.walletAddress)
+          * await market.underlyingCurrentPrice(this.chainId);
+        if (obj.balance > 0) {
+          temp[depositsCount] = [`${this
+            .$t('balance.balance-chart.title1')} ${obj.symbol}`, obj.balance];
+          depositsCount += 1;
+        }
+        if (obj.borrow > 0) {
+          temp[debtsCount] = [`${this
+            .$t('balance.balance-chart.title2')} ${obj.symbol}`, obj.borrow];
+          debtsCount += 1;
+        }
+        this.balanceInfo.push(obj);
+      }
+      this.chartData = temp;
+    },
+  },
+  watch: {
+    chartData() {
+      this.getData();
+    },
+    markets() {
+      this.getData();
     },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.getData();
+    this.updateMarketInfo();
   },
 };
 </script>

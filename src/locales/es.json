@@ -146,7 +146,8 @@
         "low-risk": "Riesgo bajo",
         "medium-risk": "Riesgo medio",
         "high-risk": "Riesgo alto",
-        "other": "Escribe otro valor"
+        "other": "Escribe otro valor",
+        "liquidated": "Has sido liquidado"
       },
       "subtitles": {
         "low-risk": "No tienes riesgo de ser liquidado",
@@ -223,13 +224,15 @@
       "title": "Total depositado",
       "subtitle1": "Volumen depositado del día",
       "subtitle2": "depositantes",
-      "subtitle3": "Volumen depositado del día"
+      "subtitle3": "Volumen depositado del día",
+      "subtitle4": "Tasa de ganancia anual dinámica actual"
     },
     "borrowed-card": {
       "title": "Total prestado",
       "subtitle1": "Volumen prestado del día",
       "subtitle2": "prestatarios",
-      "subtitle3": "Volumen prestado del día"
+      "subtitle3": "Volumen prestado del día",
+      "subtitle4": "Tasa de interés anual dinámica actual"
     },
     "markets-card": {
       "title1": "Mercado",
@@ -250,6 +253,7 @@
     "tooltip2": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
     "tooltip3": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
     "my-balance": {
+      "title": "Balance neto",
       "title1": "Tienes depositado",
       "subtitle1": "Depositados",
       "subtitle2": "Ganancias históricas",
@@ -257,9 +261,31 @@
       "subtitle3": "Pedidos en préstamo",
       "subtitle4": "Intereses acumulados"
     },
+    "chart": {
+      "subtitles": {
+        "no-risk": "Comienza a depositar y pedir prestado",
+        "low-risk": "Puedes depositar y pedir prestado",
+        "medium-risk": "Puedes seguir ahorrando, pero ten cuidado con los montos que pides prestados",
+        "high-risk": "Estás muy cerca de ser liquidado. Puedes aumentar tus ahorros o pagar todas tus deudas antes de que pierdas tus fondos.",
+        "liquidated": "Tus garantias ya no respaldan las deudas que tenias y has sido liquidado."
+      },
+      "description": {
+        "no-risk": "% de tus depósitos están comprometidos en deudas",
+        "low-risk": "% de tus depósitos están comprometidos en deudas",
+        "medium-risk": "% de tus depósitos están comprometidos en deudas",
+        "high-risk": "% de tus depósitos están comprometidos en deudas",
+        "liquidated": "% de tus depósitos han sido liquidados"
+      }
+    },
     "my-activity": {
       "title": "No tienes depositos aún. Empieza a depositar.",
       "button": "Depositar"
+    },
+    "balance-chart": {
+      "title1": "Depósitos",
+      "title2": "Deudas",
+      "no-deposits": "No tienes fondos depositados aún",
+      "no-debts": "No tienes deudas aún"
     }
   },
   "internal-metrics": {

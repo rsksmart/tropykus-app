@@ -1,32 +1,36 @@
 <template>
-  <v-row>
-    <v-col>
-      <v-col cols="auto" class="pa-0 pr-2 d-flex align-center">
-        <v-img position="left center" height="40" width="40" :src="symbolImg" contain/>
-      </v-col>
-      <v-col class="pa-0 d-flex align-center">
-        <h2 class="h2-heading">{{ info.underlyingSymbol }}</h2>
+  <v-row v-if="info.totalBalance > 0" class="ma-auto d-flex align-center">
+    <v-col class="d-flex justify-center">
+      <v-col class="d-flex justify-center">
+        <div class="d-flex justify-end" style="width: 40%;">
+          <img height="40" width="40" :src="symbolImg" />
+        </div>
+        <div style="width: 50%;">
+          <h2 class="h2-heading ml-2">{{ info.underlyingSymbol }}</h2>
+        </div>
       </v-col>
     </v-col>
     <v-col>
-      <p class="p2-reading-values">
+      <p class="text-center p2-reading-values">
         {{ info.totalBalance | formatDecimals(info
           .underlyingSymbol) }} {{ info.underlyingSymbol }}
       </p>
-      <p class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
+      <p class=" text-center p3-USD-values">{{ tokenPrice | formatPrice }} USD</p>
     </v-col>
     <v-col>
-      <p class="p2-reading-values">
+      <p class="text-center p2-reading-values">
         {{ info.interestBalance | formatDecimals(info
           .underlyingSymbol) }} {{ info.underlyingSymbol }}
       </p>
-      <p class="p3-USD-values">{{ tokenInterestPrice | formatPrice }} USD</p>
+      <p class="p3-USD-values text-center">{{ tokenInterestPrice | formatPrice }} USD</p>
     </v-col>
     <v-col>
-      <p class="text-right p2-reading-values">{{ info.rate }}%</p>
+      <p class="text-center p2-reading-values" style="font-size: 24px;">
+        {{ info.rate }}%
+      </p>
     </v-col>
     <v-col>
-      <v-row>
+      <v-row class="mx-auto">
         <v-col class="pa-0 pr-1" cols="6">
           <v-btn depressed :color="buttonColor" width="100%" height="36"
                  @click="repayOrSupply(true)">
@@ -113,6 +117,10 @@ export default {
       type: Object,
       required: false,
     },
+    inBorrowMenu: {
+      required: true,
+      type: Boolean,
+    },
   },
   computed: {
     ...mapState({
@@ -135,12 +143,19 @@ export default {
     buttonColor() {
       return this.inBorrowMenu ? '#FF9153' : '#4CB163';
     },
+    rateLabel() {
+      return this.inBorrowMenu ? this.$t('market.borrow.description1') : this.$t('market.deposits.description1');
+    },
     supplyBorrowLabel() {
       return this.inBorrowMenu ? this.$t('market.my-debts.button1') : this.$t('market.my-deposits.button1');
     },
     redeemRepayLabel() {
       return this.inBorrowMenu ? this.$t('market.my-debts.button2') : this.$t('market.my-deposits.button2');
     },
+    // dataLoading() {
+    // },
+    // loadedData() {
+    // },
   },
   methods: {
     repayOrSupply(buttonAction) {
