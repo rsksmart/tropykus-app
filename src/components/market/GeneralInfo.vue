@@ -116,7 +116,7 @@ export default {
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
         this.info.borrowBalance = await this.market
-          .borrowBalanceCurrent(this.walletAddress);
+          .borrowBalanceStored(this.walletAddress);
         this.info.interestBalance = this.inBorrowMenu
           ? await this.market.getDebtInterest(this.walletAddress)
           : await this.market.getEarnings(this.walletAddress);

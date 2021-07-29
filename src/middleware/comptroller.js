@@ -105,7 +105,7 @@ export default class Comptroller {
       markets.forEach(async (market) => {
         await Promise.all([
           market.underlyingCurrentPrice(chainId),
-          market.borrowBalanceCurrent(accountAddress),
+          market.borrowBalanceStored(accountAddress),
         ])
           .then(([price, totalBorrowInUnderlying]) => {
             totalBorrows += totalBorrowInUnderlying * price;

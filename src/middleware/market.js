@@ -146,7 +146,7 @@ export default class Market {
   async getSubsidyFound(isRbtc = false) {
     return isRbtc
       ? Number(this.instance.callStatic.subsidyFund
-      ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
+        ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
   }
 
   async getInitialSupply(address) {
@@ -194,9 +194,9 @@ export default class Market {
   }
 
   async getDebtInterest(address) {
-    const borrowBalanceCurrent = await this.borrowBalanceStored(address);
+    const borrowBalanceStored = await this.borrowBalanceStored(address);
     const borrowAPY = await this.borrowRateAPY();
-    return borrowBalanceCurrent * (borrowAPY / 100);
+    return borrowBalanceStored * (borrowAPY / 100);
   }
 
   async getEarnings(address) {

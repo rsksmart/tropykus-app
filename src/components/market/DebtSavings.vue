@@ -353,7 +353,7 @@ export default {
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
         this.info.borrowBalance = await this.market
-          .borrowBalanceCurrent(this.walletAddress);
+          .borrowBalanceStored(this.walletAddress);
         this.info.totalBalance = this.inBorrowMenu
           ? this.info.borrowBalance
           : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);

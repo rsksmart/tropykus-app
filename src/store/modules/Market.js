@@ -79,7 +79,7 @@ const actions = {
       // console.log('supply store', info.supplyBalance);
       info.supplyBalance = info.supplyBalance ? info.supplyBalance : 0;
       info.borrowBalance = await market
-        .borrowBalanceCurrent(walletAddress);
+        .borrowBalanceStored(walletAddress);
       // console.log('borrow store', info.borrowBalance);
       info.interestBalance = await market.getEarnings(walletAddress);
       // maximo que puedo pedir prestado
