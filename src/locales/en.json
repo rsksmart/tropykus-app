@@ -23,7 +23,8 @@
       "rule1": "You cannot deposit in this market, you have an active debt. Pay your debt and try again later.",
       "rule2": "You do not have enough funds",
       "rule3": "You do not have enough deposited",
-      "rule4": "This market is underfunded"
+      "rule4": "This market is underfunded",
+      "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt"
     },
     "deposit": {
       "description1": "You have in your wallet:",
@@ -77,8 +78,8 @@
       "tooltip3": "acumulados hasta la fecha de pago."
     },
     "loading": {
-      "description1": "Waiting for the confirmation of the transaction in your wallet",
-      "description2": "Waiting for confirmation from the network",
+      "description1": "waiting for transaction confirmation in your wallet",
+      "description2": "waiting for network confirmation",
       "description3": "You have deposited",
       "description4": "You have withdrawn",
       "description5": "You have borrowed",
@@ -311,7 +312,7 @@
     "btn2": "Pay"
   },
   "deposits": {
-    "title": "You can borrow and multiply your earnings",
+    "title": "Deposit your RBTC and earn 4% per year",
     "description": "Get the most out of your bitcoins by converting them into RBTC or buy RBTC",
     "subtitle": "Deposit your crypto and get profit",
     "btn1": "Convert BTC to RBTC",
@@ -330,7 +331,7 @@
       "title": "Calculate profit",
       "description1": "Total earnings",
       "description2": "Write the amount you are going to deposit",
-      "description3": "Total winnings + deposit",
+      "description3": "Total earnings + deposit",
       "description4": "Choose the period of time of the deposit",
       "time1": "year",
       "time2": "years"

@@ -13,7 +13,7 @@
       </div>
       <div class="p1-descriptions text-info mt-4" style="width: 119px">
         {{ $t('market.general.description1') }}
-        {{ $t('market.borrow.description1') }}
+        {{ rateLabel }}
         {{ $t('market.general.description2') }}
         {{ $t('market.general.description3') }}
       </div>
@@ -70,6 +70,9 @@ export default {
       walletAddress: (state) => state.Session.walletAddress,
       chainId: (state) => state.Session.chainId,
       account: (state) => state.Session.account,
+      rateLabel() {
+        return this.$route.name === 'Deposits' ? this.$t('market.deposits.description1') : this.$t('market.borrow.description1');
+      },
     }),
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-center mt-1">
       <template v-if="marketsLoaded">
-        <div class=" d-flex flex-wrap mx-auto">
+        <div class=" d-flex flex-wrap mx-auto flex-row-reverse">
           <!-- <template cols="4" > -->
             <general-info
               v-for="(market, idx) in markets" :key="`market-${idx}`"
