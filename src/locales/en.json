@@ -78,8 +78,8 @@
       "tooltip3": "acumulados hasta la fecha de pago."
     },
     "loading": {
-      "description1": "Waiting for the confirmation of the transaction in your wallet",
-      "description2": "Waiting for confirmation from the network",
+      "description1": "waiting for transaction confirmation in your wallet",
+      "description2": "waiting for network confirmation",
       "description3": "You have deposited",
       "description4": "You have withdrawn",
       "description5": "You have borrowed",
