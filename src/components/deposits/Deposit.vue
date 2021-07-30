@@ -465,8 +465,8 @@ export default {
           .catch(console.error);
       }
 
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
-        console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
+      this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
+        console.info(`TokenFailure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
         if (this.walletAddress === from) {
