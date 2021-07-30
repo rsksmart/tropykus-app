@@ -70,16 +70,13 @@ const actions = {
       info.underlyingPrice = await market.underlyingCurrentPrice(state.chainId);
     }
     if (walletAddress) {
-      info.underlyingBalance = await market
-        .balanceOfUnderlyingInWallet(account);
+      info.underlyingBalance = await market.balanceOfUnderlyingInWallet(account);
       // console.log('underlying store', info.underlyingBalance);
       info.price = await market.underlyingCurrentPrice(state.chainId);
-      info.supplyBalance = await market
-        .currentBalanceOfCTokenInUnderlying(walletAddress);
+      info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(walletAddress);
       // console.log('supply store', info.supplyBalance);
       info.supplyBalance = info.supplyBalance ? info.supplyBalance : 0;
-      info.borrowBalance = await market
-        .borrowBalanceCurrent(walletAddress);
+      info.borrowBalance = await market.borrowBalanceCurrent(walletAddress);
       // console.log('borrow store', info.borrowBalance);
       info.interestBalance = await market.getEarnings(walletAddress);
       // maximo que puedo pedir prestado

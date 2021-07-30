@@ -1,0 +1,221 @@
+$bg-balance: #E6F1EB;
+
+.balance{
+  flex: 1;
+  max-width: 784px;
+  margin: 40px auto 40px auto;
+  color: $text-value !important;
+
+  .h2-heading{
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .balance-style{
+    box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1);
+    border-radius: 10px;
+    background: $bg-balance;
+  }
+
+  .container-balance{
+    margin-top: 31px;
+    display: grid;
+    grid-template-columns: 224px 287px 224px;
+    grid-template-rows: 287px repeat(2);
+    justify-content: space-between;
+    .p6-reading-values{
+      font-size: 16px !important;
+    }
+    .p2-reading-values{
+      line-height: 15px !important;
+    }
+    .balance-risk{
+      width: 224px;
+      height: 305px;
+      grid-column: 1 / 2;
+      grid-row: 1 / 4;
+      padding: 24px;
+      .risk {
+        width: 108px !important;
+        height: 109px !important;
+        margin: 0 auto;
+        img{
+          top: 27%;
+        }
+      }
+      .risk-description{
+        text-align: center;
+        .v-divider{
+          margin-top: 19px;
+        }
+        .p1-descriptions:nth-last-child(2){
+          margin-top: 17px;
+        }
+        .p1-descriptions:nth-last-child(1){
+          margin-top: 17px;
+        }
+      }
+    }
+    .balance-deposit{
+      width: 287px;
+      height: 140px;
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+      padding: 29px 20px 24px 18px;
+      position: relative;
+      .tooltip-info{
+        position: absolute;
+        top: 15px;
+        right: 20px;
+      }
+    }
+    .balance-borrow{
+      width: 287px;
+      height: 140px;
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+      padding: 29px 20px 24px 18px;
+      position: relative;
+      .tooltip-info{
+        position: absolute;
+        top: 15px;
+        right: 20px;
+      }
+    }
+    .balance-cripto{
+      width: 224px;
+      height: 305px;
+      grid-column: 3 / 4;
+      grid-row: 1 / 4;
+
+      .risk {
+        margin: 32px 0 15px 0;
+        img{
+          top: 28%;
+        }
+      }
+      .criptos{
+        text-align: center;
+      }
+      .criptos-detail{
+        margin: 18px 45px 40px 35px;
+        .v-progress-circular{
+          margin-top: 1px;
+        }
+      }
+    }
+  }
+  .balance-history{
+    margin-top: 21px;
+    .b1-main{
+      font-size: 15px !important;
+      line-height: 22px !important;
+    }
+    .results{
+      .activity{
+        border-bottom: 1px solid #BEBEBE;
+        padding-bottom: 20px;
+
+        div {
+          width: 121px;
+        }
+        .actions{
+          width: 167px;
+        }
+      }
+      button{
+        font-size: 11px !important;
+        line-height: 13px !important;
+        height: 25px;
+      }
+      .btn1{
+        width: 82px;
+        border: 1px solid $primary-color;
+        border-radius: 5px;
+      }
+      .btn2{
+        width: 78px;
+      }
+      img{
+        width: 20px;
+        height: 20px;
+        margin: 2px 10px 0 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1175px){
+    max-width: 609px;
+    .p1-descriptions{
+      font-size: 11px;
+      line-height: 12px;
+    }
+
+    .container-balance{
+      grid-template-columns: 294px 294px;
+      grid-template-rows: 170px 160px;
+      justify-content: space-between;
+      .balance-risk{
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        display: flex;
+        height: 150px;
+        width: 294px;
+        .risk {
+          width: 93px !important;
+          height: 93px !important;
+          // margin: 0 auto;
+          img{
+            top: 32%;
+          }
+        }
+        .risk-description{
+          text-align: left;
+          margin-left: 17px;
+          .v-divider{
+            margin-top: 11px;
+          }
+          .p1-descriptions:nth-last-child(2){
+            margin-top: 13px;
+          }
+          .p1-descriptions:nth-last-child(1){
+            margin-top: 3px;
+          }
+        }
+      }
+      .balance-cripto{
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        display: flex;
+        height: 150px;
+        width: 294px;
+        padding: 24px;
+        .risk {
+          width: 93px !important;
+          height: 93px !important;
+          // margin: 0 auto;
+          margin: 0;
+          img{
+            top: 32%;
+          }
+        }
+        .criptos{
+          flex: 1;
+        }
+        .criptos-detail{
+          margin: 7px 15px 25px 18px;
+        }
+      }
+      .balance-deposit{
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        width: 294px;
+      }
+      .balance-borrow{
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        width: 294px;
+      }
+    }
+  }
+}

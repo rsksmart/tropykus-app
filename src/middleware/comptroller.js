@@ -98,6 +98,26 @@ export default class Comptroller {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  totalDepositsInteresInUSD(markets, accountAddress, chainId) {
+    return new Promise((resolve, reject) => {
+      let totalDepositsInteres = 0;
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.getEarnings(accountAddress),
+        ])
+          .then(([price, totalDepositInteres]) => {
+            totalDepositsInteres += totalDepositInteres * price;
+            counter += 1;
+            if (counter === markets.length) resolve(totalDepositsInteres);
+          })
+          .catch(reject);
+      });
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async totalBorrowsInUSD(markets, accountAddress, chainId) {
     return new Promise((resolve, reject) => {
       let totalBorrows = 0;

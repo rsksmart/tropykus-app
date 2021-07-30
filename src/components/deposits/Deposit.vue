@@ -337,11 +337,6 @@ export default {
       selectStore: (state) => state.Market.select,
       marketStore: (state) => state.Market.market,
     }),
-    activeButtonn() {
-      return this.tabMenu
-        ? (this.amount <= this.info.underlyingBalance && this.amount > 0)
-        : (this.amount <= this.info.supplyBalance && this.amount > 0);
-    },
     tokenBalanceUsd() {
       return this.tabMenu
         ? this.info.underlyingBalance * this.info.price

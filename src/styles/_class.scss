@@ -40,6 +40,9 @@ body{
   color: rgba(0, 0, 0, 0.87);
 }
 
+.v-tooltip__content {
+  opacity: 1 !important;
+}
 .primary-color{
   background-color: $primary-color !important;
 }
@@ -194,6 +197,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 }
 .text-inactive{
   color: #ABD1B4 !important;
+}
+.text-value{
+  color: $text-value !important;
 }
 
 //=======================

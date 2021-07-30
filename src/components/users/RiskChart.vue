@@ -109,11 +109,11 @@ export default {
       return this.riskChart.subtitle[this.typeChart].other;
     },
     chartColor() {
-      if (this.riskRate === 100) return this.inBalance ? '#EEAF0E' : 'transparent';
+      if (this.riskRate === 100) return this.inBalance ? '#EEAF0E' : '#ABD1B4';
       if (this.riskRate >= 0 && this.riskRate <= 40) return this.inBalance ? '#F7C61A' : '#F7C61A';
       if (this.riskRate > 40 && this.riskRate <= 60) return this.inBalance ? '#BCBE34' : '#BCBE34';
       if (this.riskRate > 60 && this.riskRate <= 100) return this.inBalance ? '#47B25F' : '#47B25F';
-      return 'transparent';
+      return '#ABD1B4';
     },
   },
 };
