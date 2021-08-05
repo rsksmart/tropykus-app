@@ -1,11 +1,11 @@
 <template>
   <div class="balance-history">
     <div class="d-flex mb-10">
-      <div @click="tabMenu = 'activity'" class="mr-10">
+      <!-- <div @click="tabMenu = 'activity'" class="mr-10">
         <span class="b1-main pb-1 tab"
         :class="tabMenu === 'activity' ? 'text-detail text-active' : 'text-inactive'"
         >{{$t('balance.my-activity.activity')}}</span>
-      </div>
+      </div> -->
       <div v-if="account" @click="tabMenu = 'deposit'" class="mr-10">
         <span class="b1-main pb-1 tab"
         :class="tabMenu === 'deposit' ? 'text-detail text-active' : 'text-inactive'"
@@ -27,151 +27,147 @@
           text class="btn btn-primary"
           ><span class="white--text">Transferir BTC a mi billetera</span></v-btn>
       </div> -->
-
       <div v-if="validate_MM_NT" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
-          No tienes fondos  aún. Compra RBTC y empieza a depositar en Tropykus.
+          {{$t('balance.my-activity.validations.description1')}}
+          // validate_MM_NT
         </div>
         <v-btn @click="openTutorial"
           text class="btn btn-secondary"
-          ><span>Comprar RBTC</span></v-btn>
+          ><span>{{$t('balance.my-activity.validations.btn1')}}</span></v-btn>
       </div>
 
-      <div v-if="addDeposit" class="d-flex justify-center flex-column align-center">
+      <div v-if="addDepositAll" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
-          No tienes depositos aún. Empieza a depositar.
+          {{$t('balance.my-activity.validations.description2')}}
         </div>
-        <v-btn @click="openTutorial"
+        <v-btn @click="redirect(constants.ROUTE_NAMES.DEPOSITS)"
           text class="btn btn-primary"
-          ><span class="white--text">Depositar</span></v-btn>
+          ><span class="white--text">{{$t('balance.my-activity.validations.btn2')}}</span>
+        </v-btn>
       </div>
 
       <div v-if="validate_LQ" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
-          No tienes fondos  aún. Convierte tus BTC o Compra RBTC y empieza a depositar en Tropykus.
+          {{$t('balance.my-activity.validations.description3')}}
+          // validate_LQ
         </div>
         <div class="d-flex">
           <v-btn @click="openTutorial" text class="btn btn-secondary mr-6">
-            <span>Convertir BTC a RBTC</span>
+            <span>{{$t('balance.my-activity.validations.btn3')}}</span>
           </v-btn>
           <v-btn @click="openTutorial" text class="btn btn-primary">
-            <span class="white--text">Comprar BTC</span>
+            <span class="white--text">{{$t('balance.my-activity.validations.btn4')}}</span>
           </v-btn>
         </div>
       </div>
 
-      <template v-if="account">
-        <!-- <template v-if="!amountRbtc && !totalDeposits && !totalBorrows">
-          <div class="d-flex justify-center flex-column align-center">
-          <div class="p1-descriptions mb-5">
-            Para poder depositar y pedir prestado, debes convertir tus BTC a RBTC.
-          </div>
-          <v-btn @click="openTutorial"
-            text class="btn btn-secondary"
-            > <span>Convierte tus BTC a RBTC</span></v-btn>
+      <div v-if="borrowAll" class="d-flex justify-center flex-column align-center">
+        <div class="p1-descriptions mb-5">
+          {{$t('balance.my-activity.validations.description4')}}
+          // borrowAll
         </div>
-        </template> -->
-      </template>
+        <v-btn @click="redirect(constants.ROUTE_NAMES.BORROWS)" text class="btn btn-primary">
+          <span class="white--text">{{$t('balance.my-activity.validations.btn5')}}</span>
+        </v-btn>
+      </div>
 
       <template v-for="(market, i) in getMarkets" >
-      <!-- Depositos -->
-      <div class="d-flex justify-space-between activity mt-8" :key="i"
-        v-if="market.supplyBalance > 0 && tabMenu === 'deposit'">
-        <div class="d-flex">
-          <img :src="market.img">
-          <div class="h2-heading">
-            <span class="text-uppercase">{{market.symbol}}</span>
+        <!-- Depositos -->
+        <div class="d-flex justify-space-between activity mt-8" :key="i"
+          v-if="market.supplyBalance > 0 && tabMenu === 'deposit'">
+          <div class="d-flex">
+            <img :src="market.img">
+            <div class="h2-heading">
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.deposit.description1')}} <br />
+            <div class="p6-reading-values">
+              {{market.supplyBalance | formatDecimals(market.symbol)}}
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+            <div class="p3-USD-value">
+              {{market.blanceUsd | formatPrice(market.symbol)}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.deposit.description2')}} <br />
+            <div class="p6-reading-values">
+              {{market.interestBalance | formatDecimals(market.symbol)}}
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+            <div class="p3-USD-value">
+              {{market.interesUsd | formatPrice}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.deposit.description3')}}
+            <br />
+            <div class="p6-reading-values">
+              {{market.rateSupply}}%
+            </div>
+          </div>
+          <div class="mt-2 actions">
+            <v-btn text class="btn1 mr-1"
+              @click="redirect(constants.ROUTE_NAMES.DEPOSIT, market.marketAddress)">
+              <span class="text-primary">{{$t('balance.table.deposit.btn1')}}</span>
+            </v-btn>
+            <v-btn text class="btn2"
+              @click="redirect(constants.ROUTE_NAMES.DEPOSIT, market.marketAddress, false)">
+              <span class="text-primary">{{$t('balance.table.deposit.btn2')}}</span>
+            </v-btn>
           </div>
         </div>
-        <div class="p7-graphics">
-          Total depositado <br />
-          <div class="p6-reading-values">
-            {{market.supplyBalance | formatDecimals(market.symbol)}}
-            <span class="text-uppercase">{{market.symbol}}</span>
-          </div>
-          <div class="p3-USD-value">
-            {{market.blanceUsd | formatPrice}}
-          </div>
-        </div>
-        <div class="p7-graphics">
-          Ganancias acumuladas <br />
-          <div class="p6-reading-values">
-            {{market.interestBalance | formatDecimals(market.symbol)}}
-            <span class="text-uppercase">{{market.symbol}}</span>
-          </div>
-          <div class="p3-USD-value">
-            {{market.interesUsd | formatPrice}}
-          </div>
-        </div>
-        <div class="p7-graphics">
-          Tasa de ganancia anual <br /> actual
-          <br />
-          <div class="p6-reading-values">
-            {{market.rateSupply}}%
-          </div>
-        </div>
-        <div class="mt-2 actions">
-          <v-btn text class="btn1 mr-1"
-            @click="redirect(constants.ROUTE_NAMES.DEPOSIT, market.marketAddress)">
-            <span class="text-primary">Depositar</span>
-          </v-btn>
-          <v-btn text class="btn2">
-            <span class="text-primary"
-              @click="redirect(constants.ROUTE_NAMES.DEPOSIT, market.marketAddress, false)"
-            >Retirar</span>
-          </v-btn>
-        </div>
-      </div>
 
-      <!-- Deudas -->
-      <div class="d-flex justify-space-between activity mt-8" :key="i"
-      v-if="market.borrowBalance > 0 && tabMenu === 'debts'"
-      >
-        <div class="d-flex">
-          <img :src="market.img">
-          <div class="h2-heading">
-            <span class="text-uppercase">{{market.symbol}}</span>
+        <!-- Deudas -->
+        <div class="d-flex justify-space-between activity mt-8" :key="i"
+        v-if="market.borrowBalance > 0 && tabMenu === 'debts'"
+        >
+          <div class="d-flex">
+            <img :src="market.img">
+            <div class="h2-heading">
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.debts.description1')}}<br />
+            <div class="p6-reading-values">
+              {{market.borrowBalance | formatDecimals(market.symbol)}}
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+            <div class="p3-USD-value">
+              {{market.borrowUsd | formatPrice}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.debts.description2')}}<br />
+            <div class="p6-reading-values">
+              {{market.interestBorrow | formatDecimals(market.symbol)}}
+              <span class="text-uppercase">{{market.symbol}}</span>
+            </div>
+            <div class="p3-USD-value">
+              {{market.interestBorrowUsd | formatPrice}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.debts.description3')}}<br />
+            <div class="p6-reading-values">
+              {{market.rateBorrow}}%
+            </div>
+          </div>
+          <div v-if="tabMenu === 'debts'" class="mt-2 actions">
+            <v-btn text class="btn1 mr-1"
+              @click="redirect(constants.ROUTE_NAMES.BORROW, market.marketAddress)">
+              <span class="text-primary">{{$t('balance.table.debts.btn1')}}</span>
+            </v-btn>
+            <v-btn text class="btn2"
+              @click="redirect(constants.ROUTE_NAMES.BORROW, market.marketAddress, false)">
+              <span class="text-primary">{{$t('balance.table.debts.btn2')}}</span>
+            </v-btn>
           </div>
         </div>
-        <div class="p7-graphics">
-          Pediste Prestado <br />
-          <div class="p6-reading-values">
-            {{market.borrowBalance | formatDecimals(market.symbol)}}
-            <span class="text-uppercase">{{market.symbol}}</span>
-          </div>
-          <div class="p3-USD-value">
-            {{market.borrowUsd | formatPrice}}
-          </div>
-        </div>
-        <div class="p7-graphics">
-          Intereses acumulados <br />
-          <div class="p6-reading-values">
-            {{market.interestBorrow | formatDecimals(market.symbol)}}
-            <span class="text-uppercase">{{market.symbol}}</span>
-          </div>
-          <div class="p3-USD-value">
-            {{market.interestBorrowUsd | formatPrice}}
-          </div>
-        </div>
-        <div class="p7-graphics">
-          Tasa de interés anual <br /> dinámica actual
-          <br />
-          <div class="p6-reading-values">
-            {{market.rateBorrow}}%
-          </div>
-        </div>
-        <div v-if="tabMenu === 'debts'" class="mt-2 actions">
-          <v-btn text class="btn1 mr-1"
-            @click="redirect(constants.ROUTE_NAMES.BORROW, market.marketAddress)">
-            <span class="text-primary">Pedir Prestado</span>
-          </v-btn>
-          <v-btn text class="btn2">
-            <span class="text-primary"
-              @click="redirect(constants.ROUTE_NAMES.BORROW, market.marketAddress, false)"
-            >Pagar</span>
-          </v-btn>
-        </div>
-      </div>
       </template>
 
     </div>
@@ -218,7 +214,7 @@ export default {
   data() {
     return {
       constants,
-      tabMenu: 'activity',
+      tabMenu: 'deposit',
       getMarkets: [],
       rbtc: '0xE47b7c669F96B1E0Bf537bB27fF5C6264fe0d380',
       tutorial: false,
@@ -255,25 +251,32 @@ export default {
     validate_LQ() {
       return this.wallet === this.LQ && !this.amountRbtc && !Number(this.totalDeposits);
     },
-    addDeposit() {
+    addDepositAll() {
       return this.amountRbtc && !Number(this.totalDeposits);
+    },
+    borrowAll() {
+      return !Number(this.totalBorrows) && Number(this.totalDeposits) && this.amountRbtc
+        && this.tabMenu === 'debts';
     },
   },
   watch: {
     dataMarkets() {
       this.getMarkets = this.dataMarkets;
     },
-    account() {
-      this.isRbtc();
-    },
   },
   methods: {
-    redirect(routePath, marketAddress, menu = 'true') {
-      const to = { name: routePath, params: { id: marketAddress, menu } };
-      this.$router.push(to);
+    redirect(routePath, marketAddress = '', menu = 'true') {
+      if (marketAddress === '') {
+        const to = { name: routePath };
+        this.$router.push(to);
+      } else {
+        const to = { name: routePath, params: { id: marketAddress, menu } };
+        this.$router.push(to);
+      }
     },
     async isRbtc() {
-      if (!this.account) return;
+      // if (!this.account) return;
+      this.getMarkets = this.dataMarkets;
       const market = new CRbtc(this.rbtc, this.chainId);
       this.amountRbtc = await market.balanceOfUnderlyingInWallet(this.account);
     },
@@ -289,6 +292,7 @@ export default {
     },
   },
   created() {
+    this.isRbtc();
   },
 };
 </script>

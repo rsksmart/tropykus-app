@@ -6,7 +6,7 @@
         <v-icon class="btn-close-dialog" @click="closeDialog">mdi-close</v-icon>
           <div class="content-transfer">
             <div class="h2-heading mb-4">
-              Transfiere tus fondos desde
+              {{$t('dialog.transfer-funds.title')}}
             </div>
 
             <div class="transfer-img">
@@ -23,41 +23,37 @@
               <div class="d-flex">
                 <img src="@/assets/dialog/1.svg" />
                 <div class="ml-3">
-                  Inicia sesión en la plataforma donde tienes tus fondos.
+                  {{$t('dialog.transfer-funds.number1')}}
                 </div>
               </div>
               <div class="d-flex">
                 <img src="@/assets/dialog/2.svg" />
                 <div class="ml-3">
-                  Busca la criptomoneda que quieres transferir.
+                  {{$t('dialog.transfer-funds.number2')}}
                 </div>
               </div>
               <div class="d-flex align-start">
                 <img src="@/assets/dialog/3.svg" />
                 <div class="ml-3">
-                  Selecciona la opción de “retirar”.
+                  {{$t('dialog.transfer-funds.number3')}}
                 </div>
               </div>
               <div class="d-flex align-start">
                 <img src="@/assets/dialog/4.svg" />
                 <div class="ml-3">
-                  A continuación, debes copiar tu dirección de la billetera
-                  (Liquality, Metamask ó Defiant )
-                  y colocarla en el campo de la plataforma que indica la dirección de recepción.
+                  {{$t('dialog.transfer-funds.number4')}}
                 </div>
               </div>
               <div class="d-flex align-start">
                 <img src="@/assets/dialog/5.svg" />
                 <div class="ml-3">
-                  Escribe el monto que quieres transferir a tu billetera y selecciona la red RSK.
-                  Si no aparece la red especificada deberás seleccionar la que diga “ERC20”.
-                  Ten mucha precaución, pues si seleccionas la red incorrecta perderás tus fondos.
+                  {{$t('dialog.transfer-funds.number5')}}
                 </div>
               </div>
               <div class="d-flex align-start">
                 <img src="@/assets/dialog/6.svg" />
                 <div class="ml-3">
-                  Revisa que hayan sido enviados correctamente tus fondos a tu billetera.
+                  {{$t('dialog.transfer-funds.number6')}}
                 </div>
               </div>
             </div>

@@ -7,7 +7,11 @@
       <debts-balance :infoBorrows="infoBorrows" />
       <chart-balance :chartInfo="chartData"/>
     </div>
-    <history-balance :dataMarkets="dataMarkets"
+    <v-row class="d-flex justify-center mt-15" v-if="isLoading">
+      <v-progress-circular class="mt-5" :size="80" :width="6" indeterminate
+        color="#47B25F"></v-progress-circular>
+    </v-row>
+    <history-balance v-else :dataMarkets="dataMarkets"
       :infoDeposits="infoDeposits"
       :infoBorrows="infoBorrows"
     />
@@ -40,6 +44,8 @@ export default {
     return {
       constants,
       db: this.$firebase.firestore(),
+      counter: 0,
+      isLoading: true,
       riskValue: 100,
       comptroller: null,
       marketAddresses: [],
@@ -77,7 +83,6 @@ export default {
       } else {
         this.redirect();
       }
-      console.log('pass', this.walletAddress);
       this.getData();
       this.getMarketsInfo();
     },
@@ -104,7 +109,7 @@ export default {
     async getData() {
       this.marketAddresses = await this.comptroller.allMarkets;
       if (this.walletAddress) {
-        // await this.getMarkets();
+        await this.getMarkets();
 
         // Supply
         this.infoDeposits = await this.comptroller
@@ -151,11 +156,12 @@ export default {
           info.borrowUsd = info.borrowBalance * info.price;
           info.interestBorrowUsd = info.interestBorrow * info.price;
 
+          // chart balance
           const dataBorrow = ['', 0, ''];
           const dataSupply = ['', 0, ''];
           if (info.borrowBalance > 0) {
             dataBorrow[0] = info.symbol.toUpperCase();
-            dataBorrow[1] = info.borrowBalance;
+            dataBorrow[1] = info.borrowBalance * info.price;
             dataBorrow[2] = 'borrow';
             this.borrowData[i] = dataBorrow;
           } else {
@@ -163,7 +169,7 @@ export default {
           }
           if (info.supplyBalance > 0) {
             dataSupply[0] = info.symbol.toUpperCase();
-            dataSupply[1] = info.supplyBalance;
+            dataSupply[1] = info.supplyBalance * info.price;
             dataSupply[2] = 'deposit';
             this.supplyData[i] = dataSupply;
           } else {
@@ -173,6 +179,8 @@ export default {
 
           data.push(info);
           this.dataMarkets = data;
+          this.counter += 1;
+          if (this.counter === this.markets.length) this.isLoading = false;
         } catch (error) {
           console.error(error);
         }
@@ -180,7 +188,6 @@ export default {
     },
     redirect() {
       if (!this.walletAddress) {
-        console.log('balance');
         const to = { name: constants.ROUTE_NAMES.DEPOSITS };
         this.$router.push(to);
       }
@@ -191,12 +198,6 @@ export default {
     this.redirect();
     this.getData();
     this.getMarketsInfo();
-  },
-  beforeMount() {
-    console.log('antes mounted');
-  },
-  beforeCreate() {
-    console.log('antes create');
   },
 };
 </script>

@@ -93,11 +93,12 @@
       "description4": "Payment could not be completed. Please try again later."
     },
     "transfer-funds": {
+      "title": "Transfer your funds from",
       "number1": "Log in to the platform where you have your funds.",
       "number2": "Search for the cryptocurrency you want to transfer.",
-      "number3": "Select the “withdraw“ option",
-      "number4": "Then, you must copy your wallet address and place it in the field of the platform that indicates the receiving address.",
-      "number5": "Enter the amount you want to transfer.",
+      "number3": "Select the “withdraw“ option.",
+      "number4": "Then, you must copy your wallet address (Liquality, Metamask or Defiant) and place it in the field of the platform that indicates the receiving address.",
+      "number5": "Write the amount you want to transfer to your wallet and select the RSK network. If the specified network does not appear, you must select the one that says “ERC20”. Be very careful, because if you select the wrong network you will lose your funds.",
       "number6": "Check that your funds have been correctly sent to your wallet."
     },
     "tx-summary": {
@@ -349,7 +350,18 @@
     "my-activity": {
       "activity": "My activity",
       "deposits": "My deposits",
-      "debts": "My debts"
+      "debts": "My debts",
+      "validations": {
+        "description1": "You have no funds yet. Buy RBTC and start depositing with Tropykus.",
+        "btn1": "Buy RBTC",
+        "description2": "You have no deposits yet. Start depositing.",
+        "btn2": "Deposit",
+        "description3": "You have no funds yet. Convert your BTC or Buy RBTC and start depositing with Tropykus.",
+        "btn3": "Convert BTC to RBTC",
+        "btn4": "Buy BTC",
+        "description4": "You haven't borrowed. Go and borrow now.",
+        "btn5": "Borrow"
+      }
     },
     "risk": {
       "titles": {
@@ -371,6 +383,22 @@
       "description": {
         "risk": "of your deposits are committed in debts",
         "liquidated": "of your deposits have been liquidated"
+      }
+    },
+    "table": {
+      "deposit": {
+        "description1": "Total deposited",
+        "description2": "Accumulated earnings",
+        "description3": "Current annual profit \nrate",
+        "btn1": "Deposit",
+        "btn2": "Withdraw"
+      },
+      "debts": {
+        "description1": "You borrowed",
+        "description2": "Accrued interest",
+        "description3": "Current annual interest \nrate",
+        "btn1": "Borrow",
+        "btn2": "Pay"
       }
     }
   }

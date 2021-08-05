@@ -511,18 +511,15 @@ export default {
       this.chartData = tempData;
     },
     async totalDepositsInUSD() {
-      console.log(this.walletAddress);
       if (this.walletAddress) {
         const tempData = [...this.chartData];
 
         // collateral
-        console.log('init collateral');
         const collateral = await this.comptroller
           .totalDepositsByInteresesInUSD(this.markets, this.walletAddress, this.chainId);
-        console.log('collateral', collateral);
 
         tempData[1][1] = collateral.totalDepositsByIntereses;
-        // this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+        this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
         this.chartData = tempData;
 
         // we get the interest to pay

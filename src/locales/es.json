@@ -95,11 +95,12 @@
       "description4": "No se pudo completar el pago. Intenta más tarde."
     },
     "transfer-funds": {
+      "title": "Transfiere tus fondos desde",
       "number1": "Inicia sesión en la plataforma donde tienes tus fondos.",
       "number2": "Busca la criptomoneda que quieres transferir.",
-      "number3": "Selecciona la opción de “retirar”",
-      "number4": "A continuación, debes copiar tu dirección de la billetera y colocarla en el campo de la plataforma que indica la dirección de recepción",
-      "number5": "Escribe el monto que quieres transferir.",
+      "number3": "Selecciona la opción de “retirar”.",
+      "number4": "A continuación, debes copiar tu dirección de la billetera (Liquality, Metamask ó Defiant ) y colocarla en el campo de la plataforma que indica la dirección de recepción.",
+      "number5": "Escribe el monto que quieres transferir a tu billetera y selecciona la red RSK. Si no aparece la red especificada deberás seleccionar la que diga “ERC20”. Ten mucha precaución, pues si seleccionas la red incorrecta perderás tus fondos.",
       "number6": "Revisa que hayan sido enviados correctamente tus fondos a tu billetera."
     },
     "tx-summary": {
@@ -263,7 +264,7 @@
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",
-    "description": "Si no tienes depositos, realiza un depósito en cualquiera de nuestros mercados. Si quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés.",
+    "description": "Si no tienes depositos, realiza un depósito en cualquiera de nuestros mercados.\nSi quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés",
     "subtitle": "Criptos que puedes pedir prestadas",
     "btn1": "Simular pago de interés",
     "btn2": "Depositar"
@@ -352,7 +353,18 @@
     "my-activity": {
       "activity": "Mi actividad",
       "deposits": "Mis Depositos",
-      "debts": "Mis Deudas"
+      "debts": "Mis Deudas",
+      "validations": {
+        "description1": "No tienes fondos  aún. Compra RBTC y empieza a depositar en Tropykus.",
+        "btn1": "Comprar RBTC",
+        "description2": "No tienes depositos aún. Empieza a depositar.",
+        "btn2": "Depositar",
+        "description3": "No tienes fondos  aún. Convierte tus BTC o Compra RBTC y empieza a depositar en Tropykus.",
+        "btn3": "Convertir BTC a RBTC",
+        "btn4": "Comprar BTC",
+        "description4": "No has pedido prestado. ve y pide prestado ahora.",
+        "btn5": "Pedir prestado"
+      }
     },
     "risk": {
       "titles": {
@@ -374,6 +386,22 @@
       "description": {
         "risk": "de tus depósitos están comprometidos en deudas",
         "liquidated": "de tus depósitos han sido liquidados"
+      }
+    },
+    "table": {
+      "deposit": {
+        "description1": "Total depositado",
+        "description2": "Ganancias acumuladas",
+        "description3": "Tasa de ganancia anual \nactual",
+        "btn1": "Depositar",
+        "btn2": "Retirar"
+      },
+      "debts": {
+        "description1": "Pediste Prestado",
+        "description2": "Intereses acumulados",
+        "description3": "Tasa de interés anual\nactual",
+        "btn1": "Pedir prestado",
+        "btn2": "Pagar"
       }
     }
   }
