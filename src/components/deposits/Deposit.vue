@@ -71,6 +71,7 @@
                 filled
                 rounded
                 dense
+                @input="handleAmount"
               ></v-text-field>
               <v-btn @click="setMaxAmount" height="40" text>
                 <span class="text-primary">MÁX</span>
@@ -523,6 +524,10 @@ export default {
         this.setPercentageSlider();
       }
     },
+    handleAmount() {
+      const value = (this.amount / this.tokenBalance) * 100;
+      this.sliderAmountPercentage = value.toFixed(0);
+    },
     setPercentageSlider() {
       this.sliderAmountPercentage = (this.amount * 100) / this.tokenBalance;
     },
@@ -543,9 +548,17 @@ export default {
       }
       this.isLoading = false;
     },
+    ofBalance() {
+      console.log('of balance', this.$route.params);
+      const { menu } = this.$route.params;
+      if (menu === false) {
+        this.tabMenu = menu;
+      }
+    },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
+    this.ofBalance();
     this.getMarket();
     this.getMarketsStore(this.markets);
   },

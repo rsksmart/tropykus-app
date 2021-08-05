@@ -237,7 +237,7 @@
   "menu": {
     "sidebar": {
       "balance": "Balance General",
-      "deposit": "Inicio",
+      "deposit": "Depositos",
       "borrow": "Préstamos",
       "exchanges": "Intercambios",
       "school": "Escuela Tropykus",
@@ -331,25 +331,28 @@
     "btn2": "Retirar"
   },
   "balance": {
-    "title": "Balance sheet",
-    "subtitle1": "My wallet",
-    "subtitle2": "My deposits",
-    "subtitle3": "My debts",
-    "subtitle4": "My activity",
-    "tooltip1": "This value in USD is the subtraction of your deposits and debts. The smaller the difference, the greater the risk of being liquidated.",
-    "tooltip2": "This value in USD is the sum total of all the cryptos you have deposited in Tropykus.",
-    "tooltip3": "This value in USD is the sum total of all the cryptos you borrowed on Tropykus.",
-    "my-balance": {
-      "title1": "You have deposited",
-      "subtitle1": "Deposited",
-      "subtitle2": "Historic earnings",
-      "title2": "You must pay",
-      "subtitle3": "Borrowing orders",
-      "subtitle4": "Accrued interest"
+    "title": "Balance General",
+    "tooltip1": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
+    "tooltip2": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
+    "deposit": {
+      "description1": "Tienes depositado",
+      "description2": "Depositados",
+      "description3": "Ganancias acumuladas"
+    },
+    "debts": {
+      "description1": "Debes pagar",
+      "description2": "Pedidos en préstamo",
+      "description3": "Intereses a pagar"
+    },
+    "criptos": {
+      "title": "Mis criptos",
+      "description1": "Depósitos",
+      "description2": "Deudas"
     },
     "my-activity": {
-      "title": "You have no deposits yet. Start depositing.",
-      "button": "Deposit"
+      "activity": "Mi actividad",
+      "deposits": "Mis Depositos",
+      "debts": "Mis Deudas"
     },
     "risk": {
       "titles": {

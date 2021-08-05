@@ -10,28 +10,27 @@
                   src="@/assets/icons/info2.svg" contain/>
           </template>
           <span class="p5-feedback text-info">
-            Este valor en USD es la suma total de todas las cryptos que
-            tienes depositadas en Tropykus.
+            {{$t('balance.tooltip1')}}
           </span>
         </v-tooltip>
       </div>
       <div class="ml-5 p2-reading-values">
-        50.026 USD <br />
-        <span class="p1-descriptions">Tienes depositado</span>
+        {{totalDepositsByIntereses}} USD <br />
+        <span class="p1-descriptions">{{$t('balance.deposit.description1')}}</span>
       </div>
     </div>
     <v-divider class="mt-4 mb-2"></v-divider>
     <div class="d-flex justify-space-between">
       <div class="p6-reading-values">
-        50.000 USD <br />
+        {{totalDeposits}} USD<br />
         <span class="p1-descriptions">
-          Depositados
+          {{$t('balance.deposit.description2')}}
         </span>
       </div>
       <div class="p6-reading-values">
-        26 USD <br />
+        {{totalIntereses}} USD <br />
         <span class="p1-descriptions">
-          Ganancias históricas
+          {{$t('balance.deposit.description3')}}
         </span>
       </div>
     </div>
@@ -40,17 +39,30 @@
 <script>
 export default {
   name: 'DepositsBalance',
+  props: {
+    infoDeposits: {
+      type: Object,
+      require: true,
+    },
+  },
   data() {
     return {
     };
   },
   computed: {
-  },
-  watch: {
-  },
-  methods: {
-  },
-  created() {
+    totalDeposits() {
+      return Object.entries(this.infoDeposits).length > 0
+        ? this.infoDeposits.totalDeposits.toFixed(2) : 0;
+    },
+    totalDepositsByIntereses() {
+      return Object.entries(this.infoDeposits).length > 0
+        ? this.infoDeposits.totalDepositsByIntereses.toFixed(2) : 0;
+    },
+    totalIntereses() {
+      return Object.entries(this.infoDeposits).length > 0
+        ? (this.infoDeposits.totalDepositsByIntereses - this.infoDeposits.totalDeposits).toFixed(2)
+        : 0;
+    },
   },
 };
 </script>

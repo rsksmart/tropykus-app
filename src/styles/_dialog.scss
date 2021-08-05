@@ -82,6 +82,69 @@
     font-size: 100px;
   }
 }
+.d-tutorial{
+  max-width: 700px !important;
+  height: 500px !important;
+
+}
+.dialog-tutorial{
+  max-width: 700px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  iframe{
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    align-self: center;
+    border-radius: 10px;
+  }
+  .btn-close-dialog{
+    top: 25px;
+    right: 25px;
+  }
+}
+
+.d-transfer{
+  width: 537px !important;
+  height: 609 !important;
+}
+.dialog-transfer{
+  width: 537px;
+  height: 609px;
+  .transfer-img{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    img{
+      margin: 13px 20px;
+    }
+  }
+  .content-transfer{
+    width: 419px;
+    padding-top: 58px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .divider{
+    border: 1px solid #51C1AF;
+    margin: 18px 0 50px 0;
+  }
+  .transfer-description{
+    text-align: left;
+    .d-flex{
+      margin-bottom: 25px;
+    }
+  }
+  .h2-heading {
+    font-size: 18px;
+    line-height: 20px;
+    color: #196635 !important;
+  }
+  &.p1-descriptions{
+    line-height: 12px;
+  }
+}
 
 @include desktop(){
   .d-loading{

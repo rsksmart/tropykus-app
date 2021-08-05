@@ -87,14 +87,24 @@ $bg-balance: #E6F1EB;
       height: 305px;
       grid-column: 3 / 4;
       grid-row: 1 / 4;
+      padding-top: 24px;
 
-      .risk {
-        margin: 32px 0 15px 0;
+      .chart{
+        position: relative;
         img{
-          top: 28%;
+          position: absolute;
+          top: 32%;
+          left: 39%;
         }
       }
+
+      .cripto-chart{
+        width: 108px;
+        height: 109px;
+        margin: 0 auto;
+      }
       .criptos{
+        margin-top: 5px;
         text-align: center;
       }
       .criptos-detail{
@@ -106,7 +116,7 @@ $bg-balance: #E6F1EB;
     }
   }
   .balance-history{
-    margin-top: 21px;
+    margin-top: 53px;
     .b1-main{
       font-size: 15px !important;
       line-height: 22px !important;

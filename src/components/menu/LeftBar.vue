@@ -29,7 +29,7 @@
 
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
           <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
-            class="d-flex align-center">
+            class="d-flex align-center active">
             <img class="ml-4 mr-5" src="@/assets/icons/dollar.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
           </router-link>
@@ -104,28 +104,39 @@
 
     </v-navigation-drawer>
 
+    <template v-if="showModalConnectWallet">
+      <connect-wallet
+        :showModal="showModalConnectWallet"
+        @closed="closeConnectWallet"
+      />
+    </template>
+
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import * as constants from '@/store/constants';
+import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 
 export default {
   name: 'LeftBar',
+  components: {
+    ConnectWallet,
+  },
   data() {
     return {
       constants,
       setGroupDrawer: null,
       showDrawer: true,
-      views: {
-        inBalance: false,
-        inDeposit: false,
-        inDebts: false,
-        inTutorials: false,
-        inOverview: false,
-      },
+      showModalConnectWallet: false,
+      next: false,
     };
   },
   computed: {
+    ...mapState({
+      account: (state) => state.Session.account,
+      showDialogConnect: (state) => state.Session.showDialogConnect,
+    }),
   },
   created() {
     console.log(this.drawer);
@@ -140,18 +151,25 @@ export default {
         this.lang = 'EN';
       }
     },
-    getSymbolImg() {
-      this.db
-        .collection('markets-symbols')
-        .doc(this.info.symbol)
-        .get()
-        .then((response) => {
-          this.symbolImg = response.data().imageURL;
-        })
-        .catch(console.error);
+    redirectBalance() {
+      const to = { name: constants.ROUTE_NAMES.BALANCE };
+      this.$router.push(to);
+      this.next = false;
+    },
+    openConnectWallet() {
+      this.showModalConnectWallet = true;
+    },
+    closeConnectWallet() {
+      this.showModalConnectWallet = false;
+      this.$store.dispatch(constants.SESSION_SHOW_DIALOG_CONNECT, false);
     },
   },
   watch: {
+    account() {
+      if (this.next && this.account) {
+        this.redirectBalance();
+      }
+    },
     setGroupDrawer() {
       if (window.innerWidth <= 768) {
         this.setDrawer(false);
@@ -159,6 +177,12 @@ export default {
       } else {
         this.showDrawer = true;
         this.setDrawer(true);
+      }
+    },
+    showDialogConnect() {
+      if (this.showDialogConnect && !this.account) {
+        this.next = true;
+        this.openConnectWallet();
       }
     },
   },

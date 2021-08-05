@@ -40,23 +40,13 @@ export default {
       constants,
       db: this.$firebase.firestore(),
       symbolImg: null,
-      baseExplorerURL: 'https://explorer.testnet.rsk.co/address',
       info: {
         underlyingSymbol: null,
-        cash: null,
         rate: null,
-        totalBorrows: null,
-        totalBalance: null,
-        underlyingPrice: null,
-        underlyingBalance: null,
-        liquidity: null,
-        interestBalance: null,
-        supplyBalance: null,
-        borrowBalance: null,
+        symbol: null,
       },
       market: null,
       comptroller: null,
-      allMarkets: [],
     };
   },
   props: {
@@ -98,35 +88,12 @@ export default {
     },
     async updateMarketInfo() {
       this.info.underlyingSymbol = await this.market.underlyingAssetSymbol();
-      this.info.cash = await this.market.getCash();
       this.info.symbol = await this.market.symbol;
-      this.info.rate = this.inBorrowMenu
+      this.info.rate = this.$route.name === 'Borrows'
         ? await this.market.borrowRateAPY()
         : await this.market.supplyRateAPY();
       this.info.rate = this.info.rate.toFixed(2);
-      this.info.totalBorrows = await this.market.totalBorrowsInUnderlying();
       this.getSymbolImg();
-      if (this.chainId) {
-        this.info.underlyingPrice = await this.market.underlyingCurrentPrice(this.chainId);
-      }
-      if (this.walletAddress) {
-        this.info.underlyingBalance = await this.market
-          .balanceOfUnderlyingInWallet(this.account);
-        this.info.interestBalance = this.inBorrowMenu
-          ? await this.market.getDebtInterest(this.walletAddress)
-          : await this.market.getEarnings(this.walletAddress);
-        this.info.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
-        this.info.supplyBalance = await this.market
-          .currentBalanceOfCTokenInUnderlying(this.walletAddress);
-        this.info.borrowBalance = await this.market
-          .borrowBalanceCurrent(this.walletAddress);
-        this.info.interestBalance = this.inBorrowMenu
-          ? await this.market.getDebtInterest(this.walletAddress)
-          : await this.market.getEarnings(this.walletAddress);
-        this.info.totalBalance = this.inBorrowMenu
-          ? this.info.borrowBalance
-          : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
-      }
     },
     isCRbtc() {
       return Market.isCRbtc(this.marketAddress);

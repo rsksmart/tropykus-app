@@ -3,16 +3,19 @@
     <h2 class="h2-heading text-detail">Balance General</h2>
     <div class="container-balance">
       <risk-balance :riskRate="riskValue" />
-      <deposits-balance />
-      <debts-balance />
-      <chart-balance />
+      <deposits-balance :infoDeposits="infoDeposits" />
+      <debts-balance :infoBorrows="infoBorrows" />
+      <chart-balance :chartInfo="chartData"/>
     </div>
-    <history-balance />
+    <history-balance :dataMarkets="dataMarkets"
+      :infoDeposits="infoDeposits"
+      :infoBorrows="infoBorrows"
+    />
   </div>
 </template>
-
 <script>
 import { mapState } from 'vuex';
+import * as constants from '@/store/constants';
 import RiskBalance from '@/components/balance/RiskBalance.vue';
 import ChartBalance from '@/components/balance/ChartBalance.vue';
 import DepositsBalance from '@/components/balance/DepositsBalance.vue';
@@ -35,12 +38,28 @@ export default {
   },
   data() {
     return {
+      constants,
+      db: this.$firebase.firestore(),
       riskValue: 100,
-      totalSuppliedUSD: 0,
-      totalBorrowedUSD: 0,
       comptroller: null,
       marketAddresses: [],
       myMarkets: [],
+      infoDeposits: {},
+      infoBorrows: {},
+      dataMarkets: [],
+      chartData: [],
+      borrowData: [
+        ['', 0, ''],
+        ['', 0, ''],
+        ['', 0, ''],
+        ['', 0, ''],
+      ],
+      supplyData: [
+        ['', 0, ''],
+        ['', 0, ''],
+        ['', 0, ''],
+        ['', 0, ''],
+      ],
     };
   },
   computed: {
@@ -55,8 +74,12 @@ export default {
       if (this.walletAddress) {
         this.riskValue = await this.comptroller
           .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
+      } else {
+        this.redirect();
       }
+      console.log('pass', this.walletAddress);
       this.getData();
+      this.getMarketsInfo();
     },
   },
   methods: {
@@ -81,24 +104,99 @@ export default {
     async getData() {
       this.marketAddresses = await this.comptroller.allMarkets;
       if (this.walletAddress) {
-        await this.getMarkets();
-        this.totalSuppliedUSD = await this.comptroller
-          .totalDepositsInUSD(this.myMarkets, this.walletAddress, this.chainId);
-        this.totalBorrowedUSD = await this.comptroller
-          .totalBorrowsInUSD(this.myMarkets, this.walletAddress, this.chainId);
-        const i = await this.comptroller
-          .totalDepositsInteresInUSD(this.myMarkets, this.walletAddress, this.chainId);
-        console.log('total intereses', i);
-        this.totalSuppliedUSD = this.totalSuppliedUSD.toFixed(2);
-        this.totalBorrowedUSD = this.totalBorrowedUSD.toFixed(2);
+        // await this.getMarkets();
+
+        // Supply
+        this.infoDeposits = await this.comptroller
+          .totalDepositsByInteresesInUSD(this.myMarkets, this.walletAddress, this.chainId);
+
+        // Borrow
+        this.infoBorrows = await this.comptroller
+          .totalBorrowsByInteresesInUSD(this.myMarkets, this.walletAddress, this.chainId);
       } else {
         this.myMarkets = [];
+      }
+    },
+    async getMarketsInfo() {
+      if (!this.walletAddress) return;
+      const data = [];
+      this.chartData = [];
+      await this.markets.map(async (market, i) => {
+        try {
+          const info = {};
+          // General
+          info.rateSupply = await market.supplyRateAPY();
+          info.rateBorrow = await market.borrowRateAPY();
+          info.rateSupply = info.rateSupply.toFixed(2);
+          info.rateBorrow = info.rateBorrow.toFixed(2);
+
+          info.marketAddress = market.marketAddress;
+          info.symbol = await market.underlyingAssetSymbol();
+          info.price = await market.underlyingCurrentPrice(this.chainId);
+          info.img = await this.db
+            .collection('markets-symbols')
+            .doc(info.symbol)
+            .get()
+            .then((response) => response.data().imageURL);
+
+          // Supply
+          info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
+          info.interestBalance = await market.getEarnings(this.walletAddress);
+          info.blanceUsd = info.supplyBalance * info.price;
+          info.interesUsd = info.interestBalance * info.price;
+
+          // Borrow
+          info.borrowBalance = await market.borrowBalanceCurrent(this.walletAddress);
+          info.interestBorrow = await market.getDebtInterest(this.walletAddress);
+          info.borrowUsd = info.borrowBalance * info.price;
+          info.interestBorrowUsd = info.interestBorrow * info.price;
+
+          const dataBorrow = ['', 0, ''];
+          const dataSupply = ['', 0, ''];
+          if (info.borrowBalance > 0) {
+            dataBorrow[0] = info.symbol.toUpperCase();
+            dataBorrow[1] = info.borrowBalance;
+            dataBorrow[2] = 'borrow';
+            this.borrowData[i] = dataBorrow;
+          } else {
+            this.borrowData[i] = dataBorrow;
+          }
+          if (info.supplyBalance > 0) {
+            dataSupply[0] = info.symbol.toUpperCase();
+            dataSupply[1] = info.supplyBalance;
+            dataSupply[2] = 'deposit';
+            this.supplyData[i] = dataSupply;
+          } else {
+            this.supplyData[i] = dataSupply;
+          }
+          this.chartData = [...this.supplyData, ...this.borrowData];
+
+          data.push(info);
+          this.dataMarkets = data;
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    },
+    redirect() {
+      if (!this.walletAddress) {
+        console.log('balance');
+        const to = { name: constants.ROUTE_NAMES.DEPOSITS };
+        this.$router.push(to);
       }
     },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
+    this.redirect();
     this.getData();
+    this.getMarketsInfo();
+  },
+  beforeMount() {
+    console.log('antes mounted');
+  },
+  beforeCreate() {
+    console.log('antes create');
   },
 };
 </script>

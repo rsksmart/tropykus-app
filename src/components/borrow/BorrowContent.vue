@@ -13,23 +13,6 @@
         >{{ $t('borrow.tab2') }}</span>
       </div>
     </div>
-    <!-- <div v-if="isProgress" class="text-center my-10">
-      <v-progress-circular
-        :size="100"
-        width="6"
-        color="#47B25F"
-        indeterminate
-      ></v-progress-circular>
-      <v-overlay
-      style="z-index:300;"
-      >
-        <v-progress-circular
-        :size="100"
-        width="6"
-        indeterminate
-      ></v-progress-circular>
-      </v-overlay>
-    </div> -->
 
     <div class="content-borrow mt-9" :class="!tabMenu ? 'content-pay': ''">
       <div class="content-menu">
@@ -531,10 +514,15 @@ export default {
       console.log(this.walletAddress);
       if (this.walletAddress) {
         const tempData = [...this.chartData];
+
+        // collateral
+        console.log('init collateral');
         const collateral = await this.comptroller
-          .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);
-        tempData[1][1] = (collateral);
-        this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+          .totalDepositsByInteresesInUSD(this.markets, this.walletAddress, this.chainId);
+        console.log('collateral', collateral);
+
+        tempData[1][1] = collateral.totalDepositsByIntereses;
+        // this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
         this.chartData = tempData;
 
         // we get the interest to pay
@@ -573,8 +561,15 @@ export default {
       }
       this.isLoading = false;
     },
+    ofBalance() {
+      const { menu } = this.$route.params;
+      if (menu === false) {
+        this.tabMenu = menu;
+      }
+    },
   },
   created() {
+    this.ofBalance();
     this.comptroller = new Comptroller(this.chainId);
     this.getMarket();
     this.getMarketsStore(this.markets);

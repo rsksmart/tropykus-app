@@ -10,30 +10,55 @@
                   src="@/assets/icons/info2.svg" contain/>
           </template>
           <span class="p5-feedback text-info">
-            Este valor en USD es la suma total de todas
-            las cryptos que pediste prestadas en Tropykus.
+            {{$t('balance.tooltip2')}}
           </span>
         </v-tooltip>
       </div>
       <div class="ml-5 p2-reading-values">
-        0 USD <br />
-        <span class="p1-descriptions">Debes pagar</span>
+        {{totalBorrowsByIntereses}} USD <br />
+        <span class="p1-descriptions">{{$t('balance.debts.description1')}}</span>
       </div>
     </div>
     <v-divider class="mt-4 mb-2"></v-divider>
     <div class="d-flex justify-space-between">
       <div class="p6-reading-values">
-        50.000 USD <br />
+        {{totalBorrows}} USD <br />
         <span class="p1-descriptions">
-          Pedidos en préstamo
+          {{$t('balance.debts.description2')}}
         </span>
       </div>
       <div class="p6-reading-values">
-        0 USD <br />
+        {{totalIntereses}} USD <br />
         <span class="p1-descriptions">
-          Intereses acumulados
+          {{$t('balance.debts.description3')}}
         </span>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  name: 'DebtsBalance',
+  props: {
+    infoBorrows: {
+      type: Object,
+      require: true,
+    },
+  },
+  computed: {
+    totalBorrows() {
+      return Object.entries(this.infoBorrows).length > 0
+        ? this.infoBorrows.totalBorrows.toFixed(2) : 0;
+    },
+    totalBorrowsByIntereses() {
+      return Object.entries(this.infoBorrows).length > 0
+        ? this.infoBorrows.totalBorrowsByIntereses.toFixed(2) : 0;
+    },
+    totalIntereses() {
+      return Object.entries(this.infoBorrows).length > 0
+        ? (this.infoBorrows.totalBorrowsByIntereses - this.infoBorrows.totalBorrows).toFixed(2)
+        : 0;
+    },
+  },
+};
+</script>
