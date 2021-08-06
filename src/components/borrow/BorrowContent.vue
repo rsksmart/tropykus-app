@@ -67,8 +67,8 @@
             <v-tooltip v-if="tabMenu" top
               content-class="secondary-color box-shadow-tooltip" max-width="180">
               <template v-slot:activator="{ on, attrs }">
-                <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                      src="@/assets/icons/info.svg" contain/>
+                <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
               </template>
               <span class="p5-feedback text-info">
                 {{ $t('borrow.tooltip1') }}
@@ -95,8 +95,8 @@
             <v-tooltip v-if="tabMenu" top
               content-class="secondary-color box-shadow-tooltip" max-width="180">
               <template v-slot:activator="{ on, attrs }">
-                <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                      src="@/assets/icons/info.svg" contain/>
+                <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
               </template>
               <span class="p5-feedback text-info">
                 {{ $t('borrow.tooltip2') }}

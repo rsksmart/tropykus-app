@@ -238,7 +238,7 @@
   "menu": {
     "sidebar": {
       "balance": "Balance General",
-      "deposit": "Depositos",
+      "deposit": "Depósitos",
       "borrow": "Préstamos",
       "exchanges": "Intercambios",
       "school": "Escuela Tropykus",
@@ -264,7 +264,7 @@
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",
-    "description": "Si no tienes depositos, realiza un depósito en cualquiera de nuestros mercados.\nSi quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés",
+    "description": "Si no tienes depósitos, realiza un depósito en cualquiera de nuestros mercados.\nSi quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés",
     "subtitle": "Criptos que puedes pedir prestadas",
     "btn1": "Simular pago de interés",
     "btn2": "Depositar"
@@ -296,7 +296,7 @@
   "deposits": {
     "title": "Deposita tus RBTC y gana el 4% anual",
     "description": "Saca rendimiento de tus bitcoins convirtiendolos en RBTC o compra RBTC",
-    "subtitle": "Cryptos that you can borrow",
+    "subtitle": "Deposita tus criptos y obten ganancias",
     "btn1": "Convertir BTC a RBTC",
     "btn2": "Comprar RBTC"
   },
@@ -327,7 +327,7 @@
     "title": "Retirar",
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
-    "description3": "Tienes depositado",
+    "description3": "Tienes depositado + ganancinas",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
   },
@@ -352,12 +352,12 @@
     },
     "my-activity": {
       "activity": "Mi actividad",
-      "deposits": "Mis Depositos",
+      "deposits": "Mis Depósitos",
       "debts": "Mis Deudas",
       "validations": {
         "description1": "No tienes fondos  aún. Compra RBTC y empieza a depositar en Tropykus.",
         "btn1": "Comprar RBTC",
-        "description2": "No tienes depositos aún. Empieza a depositar.",
+        "description2": "No tienes depósitos aún. Empieza a depositar.",
         "btn2": "Depositar",
         "description3": "No tienes fondos  aún. Convierte tus BTC o Compra RBTC y empieza a depositar en Tropykus.",
         "btn3": "Convertir BTC a RBTC",
@@ -392,14 +392,14 @@
       "deposit": {
         "description1": "Total depositado",
         "description2": "Ganancias acumuladas",
-        "description3": "Tasa de ganancia anual \nactual",
+        "description3": "Tasa de ganancia \nanual actual",
         "btn1": "Depositar",
         "btn2": "Retirar"
       },
       "debts": {
         "description1": "Pediste Prestado",
         "description2": "Intereses acumulados",
-        "description3": "Tasa de interés anual\nactual",
+        "description3": "Tasa de interés \nanual actual",
         "btn1": "Pedir prestado",
         "btn2": "Pagar"
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="balance-history">
-    <div class="d-flex mb-10">
+    <div class="d-flex mb-2">
       <!-- <div @click="tabMenu = 'activity'" class="mr-10">
         <span class="b1-main pb-1 tab"
         :class="tabMenu === 'activity' ? 'text-detail text-active' : 'text-inactive'"
@@ -102,7 +102,7 @@
               {{market.interesUsd | formatPrice}}
             </div>
           </div>
-          <div class="p7-graphics">
+          <div class="p7-graphics interes">
             {{$t('balance.table.deposit.description3')}}
             <br />
             <div class="p6-reading-values">
@@ -151,13 +151,13 @@
               {{market.interestBorrowUsd | formatPrice}}
             </div>
           </div>
-          <div class="p7-graphics">
+          <div class="p7-graphics interes">
             {{$t('balance.table.debts.description3')}}<br />
             <div class="p6-reading-values">
               {{market.rateBorrow}}%
             </div>
           </div>
-          <div v-if="tabMenu === 'debts'" class="mt-2 actions">
+          <div class="mt-2 actions">
             <v-btn text class="btn1 mr-1"
               @click="redirect(constants.ROUTE_NAMES.BORROW, market.marketAddress)">
               <span class="text-primary">{{$t('balance.table.debts.btn1')}}</span>

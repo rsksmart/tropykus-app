@@ -324,7 +324,7 @@
     "title": "Withdraw",
     "description1": "Select the crypto to withdraw",
     "description2": "Write the amount you are going to withdraw",
-    "description3": "You have deposited",
+    "description3": "You have deposited + earnings",
     "btn1": "Connect wallet",
     "btn2": "Withdraw"
   },

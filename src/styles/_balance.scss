@@ -7,7 +7,7 @@ $bg-balance: #E6F1EB;
   color: $text-value !important;
 
   .h2-heading{
-    font-size: 18px;
+    font-size: 24px;
     line-height: 24px;
   }
 
@@ -34,11 +34,12 @@ $bg-balance: #E6F1EB;
       height: 305px;
       grid-column: 1 / 2;
       grid-row: 1 / 4;
-      padding: 24px;
+      padding: 0 24px 0 24px;
       .risk {
         width: 108px !important;
         height: 109px !important;
         margin: 0 auto;
+        margin-top: 24px;
         img{
           top: 27%;
         }
@@ -87,24 +88,25 @@ $bg-balance: #E6F1EB;
       height: 305px;
       grid-column: 3 / 4;
       grid-row: 1 / 4;
-      padding-top: 24px;
+      // padding-top: 24px;
 
       .chart{
         position: relative;
         img{
           position: absolute;
-          top: 32%;
-          left: 39%;
+          top: 41%;
+          left: 41%;
         }
       }
 
       .cripto-chart{
-        width: 108px;
-        height: 109px;
+        width: 115px;
+        height: 115px;
         margin: 0 auto;
+        margin-top: 20px;
       }
       .criptos{
-        margin-top: 5px;
+        margin-top: 13px;
         text-align: center;
       }
       .criptos-detail{
@@ -121,16 +123,36 @@ $bg-balance: #E6F1EB;
       font-size: 15px !important;
       line-height: 22px !important;
     }
+    .results::-webkit-scrollbar:horizontal {
+      height: 5px;
+      -webkit-appearance: none;
+    }
+    .results::-webkit-scrollbar-button:horizontal {
+      display: none;
+      -webkit-appearance: none;
+    }
+    .results::-webkit-scrollbar-track {
+      background: $secondary-color; 
+    }
     .results{
+      max-width: 784px;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      .h2-heading{
+        font-size: 18px;
+      }
       .activity{
         border-bottom: 1px solid #BEBEBE;
         padding-bottom: 20px;
-
+        width: 770px;
         div {
           width: 121px;
         }
+        .interes{
+          width: 92px;
+        }
         .actions{
-          width: 167px;
+          width: 170px;
         }
       }
       button{
@@ -139,7 +161,7 @@ $bg-balance: #E6F1EB;
         height: 25px;
       }
       .btn1{
-        width: 82px;
+        width: 87px;
         border: 1px solid $primary-color;
         border-radius: 5px;
       }
@@ -150,6 +172,13 @@ $bg-balance: #E6F1EB;
         width: 20px;
         height: 20px;
         margin: 2px 10px 0 0;
+      }
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: white; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(136, 136, 136, 0.4);
       }
     }
   }
@@ -182,11 +211,14 @@ $bg-balance: #E6F1EB;
         .risk-description{
           text-align: left;
           margin-left: 17px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           .v-divider{
             margin-top: 11px;
           }
           .p1-descriptions:nth-last-child(2){
-            margin-top: 13px;
+            margin-top: 7px;
           }
           .p1-descriptions:nth-last-child(1){
             margin-top: 3px;
@@ -200,20 +232,25 @@ $bg-balance: #E6F1EB;
         height: 150px;
         width: 294px;
         padding: 24px;
-        .risk {
-          width: 93px !important;
-          height: 93px !important;
-          // margin: 0 auto;
-          margin: 0;
+        .chart {
           img{
-            top: 32%;
+            top: 33%;
+            left: 33%;
           }
         }
+        .cripto-chart{
+          width: 100px;
+          height: 100px;
+          margin-top: 0;
+        }
         .criptos{
+          text-align: unset;
           flex: 1;
+          margin: 0px 0 0 18px;
+
         }
         .criptos-detail{
-          margin: 7px 15px 25px 18px;
+          margin: 7px 15px 25px 0px;
         }
       }
       .balance-deposit{
@@ -226,6 +263,9 @@ $bg-balance: #E6F1EB;
         grid-row: 2 / 3;
         width: 294px;
       }
+    }
+    .balance-history{
+      max-width: 609px;
     }
   }
 }

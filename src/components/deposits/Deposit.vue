@@ -124,8 +124,10 @@
             <div class="tooltip-info ml-7 mt-1">
               <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                        src="@/assets/icons/info.svg" contain/>
+                  <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
+                  <!-- <img v-bind="attrs" v-on="on" src="@/assets/icons/info2.svg"/> -->
+
                 </template>
                 <span class="p5-feedback text-info">
                   {{ $t('deposit.tooltip1') }}
@@ -172,8 +174,8 @@
               <div class="tooltip-info ">
                 <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="200">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-img v-bind="attrs" v-on="on" width="12" height="12"
-                          src="@/assets/icons/info.svg" contain/>
+                    <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
                   </template>
                   <span class="p5-feedback text-info">
                     {{ $t('deposit.tooltip2') }}
@@ -549,7 +551,6 @@ export default {
       this.isLoading = false;
     },
     ofBalance() {
-      console.log('of balance', this.$route.params);
       const { menu } = this.$route.params;
       if (menu === false) {
         this.tabMenu = menu;

@@ -6,8 +6,7 @@
         <v-tooltip bottom
           content-class="secondary-color box-shadow-tooltip" max-width="180">
           <template v-slot:activator="{ on, attrs }">
-            <v-img v-bind="attrs" v-on="on"
-                  src="@/assets/icons/info2.svg" contain/>
+            <v-img v-bind="attrs" v-on="on" src="@/assets/icons/info2.svg" contain/>
           </template>
           <span class="p5-feedback text-info">
             {{$t('balance.tooltip1')}}

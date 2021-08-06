@@ -1,6 +1,6 @@
 <template>
   <div class="balance">
-    <h2 class="h2-heading text-detail">Balance General</h2>
+    <h2 class="h2-heading text-detail">{{$t('balance.title')}}</h2>
     <div class="container-balance">
       <risk-balance :riskRate="riskValue" />
       <deposits-balance :infoDeposits="infoDeposits" />
@@ -76,15 +76,10 @@ export default {
     }),
   },
   watch: {
-    async walletAddress() {
-      if (this.walletAddress) {
-        this.riskValue = await this.comptroller
-          .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
-      } else {
+    walletAddress() {
+      if (!this.walletAddress) {
         this.redirect();
       }
-      this.getData();
-      this.getMarketsInfo();
     },
   },
   methods: {
@@ -110,6 +105,10 @@ export default {
       this.marketAddresses = await this.comptroller.allMarkets;
       if (this.walletAddress) {
         await this.getMarkets();
+
+        // risk value
+        this.riskValue = await this.comptroller
+          .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
 
         // Supply
         this.infoDeposits = await this.comptroller

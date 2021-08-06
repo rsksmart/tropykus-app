@@ -6,7 +6,7 @@
         <v-progress-circular class="risk-graph" :size="125" :width="12" -->
           <!-- :value="0" color="transparent" :rotate="270" /> -->
       <!-- </div> -->
-      <GChart class="cripto-chart" type="PieChart"
+      <GChart class="cripto-chart" type="PieChart" style="width: 108px; height: 108px;"
         :data="chartData" :options="chartOptions"/>
     </div>
     <div class="criptos">
@@ -114,12 +114,10 @@ export default {
         // [`Otras | ${0.097869}`, 3, '#ABD1B4'],
       ],
       chartOptions: {
-        pieHole: 0.78,
+        pieHole: 0.79,
         chartArea: {
-          top: 1,
-          left: 1,
-          width: '90%',
-          height: '100%',
+          width: '100%',
+          height: '93%',
         },
         backgroundColor: 'transparent',
         pieSliceBorderColor: 'transparent',
@@ -127,7 +125,7 @@ export default {
         // pieSliceText: 'label',
         // pieResidueSliceColor: '#CFC2AC',
         slices: [
-          { color: '#D2E4D8' },
+          { color: '#ABD1B4' },
         ],
         legend: {
           position: 'none',
