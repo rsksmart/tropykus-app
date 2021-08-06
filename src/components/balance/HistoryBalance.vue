@@ -30,7 +30,6 @@
       <div v-if="validate_MM_NT" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description1')}}
-          // validate_MM_NT
         </div>
         <v-btn @click="openTutorial"
           text class="btn btn-secondary"
@@ -50,7 +49,6 @@
       <div v-if="validate_LQ" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description3')}}
-          // validate_LQ
         </div>
         <div class="d-flex">
           <v-btn @click="openTutorial" text class="btn btn-secondary mr-6">
@@ -65,7 +63,6 @@
       <div v-if="borrowAll" class="d-flex justify-center flex-column align-center">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description4')}}
-          // borrowAll
         </div>
         <v-btn @click="redirect(constants.ROUTE_NAMES.BORROWS)" text class="btn btn-primary">
           <span class="white--text">{{$t('balance.my-activity.validations.btn5')}}</span>
