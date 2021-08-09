@@ -45,7 +45,7 @@ export default class Market {
 
   async totalSupplyInUnderlying() {
     const totalSupply = Number(await this.instance.callStatic.totalSupply()) / 1e18;
-    const exchangeRate = await this.exchangeRateCurrent();
+    const exchangeRate = await this.exchangeRateStored();
     return totalSupply * exchangeRate;
   }
 
@@ -141,7 +141,7 @@ export default class Market {
 
   async borrowBalanceInUSD(chainId, address) {
     const price = await this.underlyingCurrentPrice(chainId);
-    return await this.borrowBalanceCurrent(address) * price;
+    return await this.borrowBalanceStored(address) * price;
   }
 
   async exchangeRateCurrent() {
@@ -209,9 +209,9 @@ export default class Market {
   }
 
   async getDebtInterest(address) {
-    const borrowBalanceCurrent = await this.borrowBalanceCurrent(address);
+    const borrowBalanceStored = await this.borrowBalanceStored(address);
     const borrowAPY = await this.borrowRateAPY();
-    return borrowBalanceCurrent * (borrowAPY / 100);
+    return borrowBalanceStored * (borrowAPY / 100);
   }
 
   async getEarnings(address, isRbtc = false) {
@@ -228,7 +228,7 @@ export default class Market {
 
   async eventsInterest(address) {
     const initial = await this.getInitialBorrow(address);
-    const total = await this.borrowBalanceCurrent(address);
+    const total = await this.borrowBalanceStored(address);
     return total - initial;
   }
 
@@ -289,7 +289,7 @@ export default class Market {
 
   async redeem(account, amountIntended) {
     const accountSigner = signer(account);
-    const exchangeRate = await this.exchangeRateCurrent();
+    const exchangeRate = await this.exchangeRateStored();
     const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
     return this.instance.connect(accountSigner).redeem(amount, { gasLimit: this.gasLimit });
   }
