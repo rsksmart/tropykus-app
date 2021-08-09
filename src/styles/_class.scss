@@ -28,18 +28,15 @@ body{
 .tab{
   cursor: pointer;
 }
-// .card-item:nth-child(1){
-//   margin-left: 0;
-// }
-// .card-item:nth-child(4){
-//   margin-right: 0;
-// }
 
 .theme--light.v-list {
   // background: $primary-bg !important;
   color: rgba(0, 0, 0, 0.87);
 }
 
+.v-tooltip__content {
+  opacity: 1 !important;
+}
 .primary-color{
   background-color: $primary-color !important;
 }
@@ -194,6 +191,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 }
 .text-inactive{
   color: #ABD1B4 !important;
+}
+.text-value{
+  color: $text-value !important;
 }
 
 //=======================

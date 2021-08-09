@@ -12,6 +12,7 @@ const state = {
   provider: undefined,
   markets: [],
   drawer: true,
+  showDialogConnect: false,
 };
 
 if (window.ethereum) {
@@ -56,6 +57,12 @@ const actions = {
           rpc: { 31: process.env.VUE_APP_RSK_NODE },
         });
         await provider.enable();
+        // console.log('name of wallet', provider.connector._peerMeta.name);
+        // const wallet = provider.connector._peerMeta.name;
+        // console.log(wallet, 'name')
+        // if(wallet === 'MetaMask'){
+        //   commit(constants.SESSION_SET_WALLET, constants.WALLET_METAMASK);
+        // }
       } else {
         return;
       }
@@ -63,6 +70,7 @@ const actions = {
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
       const account = await Vue.web3.getSigner();
       const walletAddress = await account.getAddress();
+      // console.log('wallet', account, walletAddress);
       commit(constants.SESSION_SET_PROPERTY, { provider });
       commit(constants.SESSION_SET_PROPERTY, { account });
       commit(constants.SESSION_SET_PROPERTY, { walletAddress });
@@ -113,6 +121,10 @@ const actions = {
     commit(constants.SESSION_DRAWER, data);
   },
 
+  [constants.SESSION_SHOW_DIALOG_CONNECT]: ({ commit }, data) => {
+    commit(constants.SESSION_SHOW_DIALOG_CONNECT, data);
+  },
+
 };
 
 const mutations = {
@@ -126,11 +138,22 @@ const mutations = {
   [constants.SESSION_DRAWER]: (state, payload) => {
     state.drawer = payload;
   },
+
+  // eslint-disable-next-line no-shadow
+  [constants.SESSION_SET_WALLET]: (state, payload) => {
+    state.wallet = payload;
+  },
+
+  // eslint-disable-next-line no-shadow
+  [constants.SESSION_SHOW_DIALOG_CONNECT]: (state, payload) => {
+    state.showDialogConnect = payload;
+  },
 };
 
 const getters = {
   // eslint-disable-next-line no-shadow
   [constants.SESSION_GET_WALLET_NAME]: (state) => {
+    // console.log('connet', state.wallet);
     switch (state.wallet) {
       case constants.WALLET_LIQUALITY:
         return 'Liquality';

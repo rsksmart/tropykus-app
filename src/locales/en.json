@@ -93,11 +93,12 @@
       "description4": "Payment could not be completed. Please try again later."
     },
     "transfer-funds": {
+      "title": "Transfer your funds from",
       "number1": "Log in to the platform where you have your funds.",
       "number2": "Search for the cryptocurrency you want to transfer.",
-      "number3": "Select the “withdraw“ option",
-      "number4": "Then, you must copy your wallet address and place it in the field of the platform that indicates the receiving address.",
-      "number5": "Enter the amount you want to transfer.",
+      "number3": "Select the “withdraw“ option.",
+      "number4": "Then, you must copy your wallet address (Liquality, Metamask or Defiant) and place it in the field of the platform that indicates the receiving address.",
+      "number5": "Write the amount you want to transfer to your wallet and select the RSK network. If the specified network does not appear, you must select the one that says “ERC20”. Be very careful, because if you select the wrong network you will lose your funds.",
       "number6": "Check that your funds have been correctly sent to your wallet."
     },
     "tx-summary": {
@@ -232,32 +233,10 @@
       "title5": "Current dynamic annual interest rate"
     }
   },
-  "balance": {
-    "title": "Balance sheet",
-    "subtitle1": "My wallet",
-    "subtitle2": "My deposits",
-    "subtitle3": "My debts",
-    "subtitle4": "My activity",
-    "tooltip1": "This value in USD is the subtraction of your deposits and debts. The smaller the difference, the greater the risk of being liquidated.",
-    "tooltip2": "This value in USD is the sum total of all the cryptos you have deposited in Tropykus.",
-    "tooltip3": "This value in USD is the sum total of all the cryptos you borrowed on Tropykus.",
-    "my-balance": {
-      "title1": "You have deposited",
-      "subtitle1": "Deposited",
-      "subtitle2": "Historic earnings",
-      "title2": "You must pay",
-      "subtitle3": "Borrowing orders",
-      "subtitle4": "Accrued interest"
-    },
-    "my-activity": {
-      "title": "You have no deposits yet. Start depositing.",
-      "button": "Deposit"
-    }
-  },
   "menu": {
     "sidebar": {
       "balance": "My Balance",
-      "deposit": "Home",
+      "deposit": "Deposit",
       "borrow": "Borrow",
       "exchanges": "Exchanges",
       "school": "Tropykus School",
@@ -345,8 +324,82 @@
     "title": "Withdraw",
     "description1": "Select the crypto to withdraw",
     "description2": "Write the amount you are going to withdraw",
-    "description3": "You have deposited",
+    "description3": "You have deposited + earnings",
     "btn1": "Connect wallet",
     "btn2": "Withdraw"
+  },
+  "balance": {
+    "title": "Balance Sheet",
+    "tooltip1": "This value in USD is the total sum of all the cryptos that you have deposited in Tropykus.",
+    "tooltip2": "This value in USD is the total sum of all the cryptos that you borrowed from Tropykus.",
+    "deposit": {
+      "description1": "You have deposited",
+      "description2": "Deposited",
+      "description3": "Accumulated earnings"
+    },
+    "debts": {
+      "description1": "You must pay",
+      "description2": "Loan orders",
+      "description3": "Interest to pay"
+    },
+    "criptos": {
+      "title": "My cryptos",
+      "description1": "Deposits",
+      "description2": "Debts"
+    },
+    "my-activity": {
+      "activity": "My activity",
+      "deposits": "My deposits",
+      "debts": "My debts",
+      "validations": {
+        "description1": "You have no funds yet. Buy RBTC and start depositing with Tropykus.",
+        "btn1": "Buy RBTC",
+        "description2": "You have no deposits yet. Start depositing.",
+        "btn2": "Deposit",
+        "description3": "You have no funds yet. Convert your BTC or Buy RBTC and start depositing with Tropykus.",
+        "btn3": "Convert BTC to RBTC",
+        "btn4": "Buy BTC",
+        "description4": "You haven't borrowed. Go and borrow now.",
+        "btn5": "Borrow"
+      }
+    },
+    "risk": {
+      "titles": {
+        "no-risk": "Out of risk",
+        "low-risk": "Low risk",
+        "medium-risk": "Medium risk",
+        "high-risk": "High risk",
+        "liquidated": "You've been liquidated",
+        "other": "Try another value"
+      },
+      "subtitles": {
+        "no-risk": "Start depositing and borrowing.",
+        "low-risk": "You can deposit and borrow.",
+        "medium-risk": "You can continue depositing, but be careful with the amounts you borrow.",
+        "high-risk": "You are very close to being liquidated. You can increase your deposits or pay all your debts before you lose your funds.",
+        "liquidated": "Your guarantees no longer support the debts you had and have been liquidated.",
+        "other": "Risk cannot be calculated"
+      },
+      "description": {
+        "risk": "of your deposits are committed in debts",
+        "liquidated": "of your deposits have been liquidated"
+      }
+    },
+    "table": {
+      "deposit": {
+        "description1": "Total deposited",
+        "description2": "Accumulated earnings",
+        "description3": "Current annual profit \nrate",
+        "btn1": "Deposit",
+        "btn2": "Withdraw"
+      },
+      "debts": {
+        "description1": "You borrowed",
+        "description2": "Accrued interest",
+        "description3": "Current annual interest \nrate",
+        "btn1": "Borrow",
+        "btn2": "Pay"
+      }
+    }
   }
 }

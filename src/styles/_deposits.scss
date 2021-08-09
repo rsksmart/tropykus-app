@@ -4,7 +4,7 @@
   max-width: 940px;
   margin: 0 auto;
   .text-description{
-    width: 687px;
+    width: 550px;
     text-align: center;
   }
   .h2-heading {
@@ -91,10 +91,10 @@
   .text-rate{
     width: 135px;
   }
-  .tooltip-info{
-    width: 12px;
-    height: 12px;
-  }
+  // .tooltip-info{
+  //   width: 12px;
+  //   height: 12px;
+  // }
   .box-number{
     max-width: 221px;
     word-wrap: break-word;
@@ -149,7 +149,7 @@
 
   }
   .v-progress-circular__underlay {
-    stroke: rgba(163, 197, 171, 0.3) !important;
+    stroke: #ABD1B4 !important;
     z-index: 1;
   }
 }

@@ -95,11 +95,12 @@
       "description4": "No se pudo completar el pago. Intenta más tarde."
     },
     "transfer-funds": {
+      "title": "Transfiere tus fondos desde",
       "number1": "Inicia sesión en la plataforma donde tienes tus fondos.",
       "number2": "Busca la criptomoneda que quieres transferir.",
-      "number3": "Selecciona la opción de “retirar”",
-      "number4": "A continuación, debes copiar tu dirección de la billetera y colocarla en el campo de la plataforma que indica la dirección de recepción",
-      "number5": "Escribe el monto que quieres transferir.",
+      "number3": "Selecciona la opción de “retirar”.",
+      "number4": "A continuación, debes copiar tu dirección de la billetera (Liquality, Metamask ó Defiant ) y colocarla en el campo de la plataforma que indica la dirección de recepción.",
+      "number5": "Escribe el monto que quieres transferir a tu billetera y selecciona la red RSK. Si no aparece la red especificada deberás seleccionar la que diga “ERC20”. Ten mucha precaución, pues si seleccionas la red incorrecta perderás tus fondos.",
       "number6": "Revisa que hayan sido enviados correctamente tus fondos a tu billetera."
     },
     "tx-summary": {
@@ -234,32 +235,10 @@
       "title5": "Tasa de interés anual \rdinámica actual"
     }
   },
-  "balance": {
-    "title": "Balance general",
-    "subtitle1": "Mi billetera",
-    "subtitle2": "Mis depósitos",
-    "subtitle3": "Mis deudas",
-    "subtitle4": "Mi actividad",
-    "tooltip1": "Este valor en USD es la resta de tus depositos y deudas. Entre menor sea la diferencia, el riesgo de ser liquidado es mayor.",
-    "tooltip2": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
-    "tooltip3": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
-    "my-balance": {
-      "title1": "Tienes depositado",
-      "subtitle1": "Depositados",
-      "subtitle2": "Ganancias históricas",
-      "title2": "Debes pagar",
-      "subtitle3": "Pedidos en préstamo",
-      "subtitle4": "Intereses acumulados"
-    },
-    "my-activity": {
-      "title": "No tienes depositos aún. Empieza a depositar.",
-      "button": "Depositar"
-    }
-  },
   "menu": {
     "sidebar": {
       "balance": "Balance General",
-      "deposit": "Inicio",
+      "deposit": "Depósitos",
       "borrow": "Préstamos",
       "exchanges": "Intercambios",
       "school": "Escuela Tropykus",
@@ -285,7 +264,7 @@
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",
-    "description": "Si no tienes depositos, realiza un depósito en cualquiera de nuestros mercados. Si quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés.",
+    "description": "Si no tienes depósitos, realiza un depósito en cualquiera de nuestros mercados.\nSi quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés",
     "subtitle": "Criptos que puedes pedir prestadas",
     "btn1": "Simular pago de interés",
     "btn2": "Depositar"
@@ -317,7 +296,7 @@
   "deposits": {
     "title": "Deposita tus RBTC y gana el 4% anual",
     "description": "Saca rendimiento de tus bitcoins convirtiendolos en RBTC o compra RBTC",
-    "subtitle": "Cryptos that you can borrow",
+    "subtitle": "Deposita tus criptos y obten ganancias",
     "btn1": "Convertir BTC a RBTC",
     "btn2": "Comprar RBTC"
   },
@@ -348,8 +327,82 @@
     "title": "Retirar",
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
-    "description3": "Tienes depositado",
+    "description3": "Tienes depositado + ganancinas",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
+  },
+  "balance": {
+    "title": "Balance General",
+    "tooltip1": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
+    "tooltip2": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
+    "deposit": {
+      "description1": "Tienes depositado",
+      "description2": "Depositados",
+      "description3": "Ganancias acumuladas"
+    },
+    "debts": {
+      "description1": "Debes pagar",
+      "description2": "Pedidos en préstamo",
+      "description3": "Intereses a pagar"
+    },
+    "criptos": {
+      "title": "Mis criptos",
+      "description1": "Depósitos",
+      "description2": "Deudas"
+    },
+    "my-activity": {
+      "activity": "Mi actividad",
+      "deposits": "Mis Depósitos",
+      "debts": "Mis Deudas",
+      "validations": {
+        "description1": "No tienes fondos  aún. Compra RBTC y empieza a depositar en Tropykus.",
+        "btn1": "Comprar RBTC",
+        "description2": "No tienes depósitos aún. Empieza a depositar.",
+        "btn2": "Depositar",
+        "description3": "No tienes fondos  aún. Convierte tus BTC o Compra RBTC y empieza a depositar en Tropykus.",
+        "btn3": "Convertir BTC a RBTC",
+        "btn4": "Comprar BTC",
+        "description4": "No has pedido prestado. ve y pide prestado ahora.",
+        "btn5": "Pedir prestado"
+      }
+    },
+    "risk": {
+      "titles": {
+        "no-risk": "Sin Riesgo",
+        "low-risk": "Riesgo bajo",
+        "medium-risk": "Riesgo Medio",
+        "high-risk": "Riesgo alto",
+        "liquidated": "Has sido liquidado",
+        "other": "Interntar con otro valor"
+      },
+      "subtitles": {
+        "no-risk": "Comienza a depositar y pedir prestado",
+        "low-risk": "Puedes depositar y pedir prestado",
+        "medium-risk": "Puedes seguir depositando, pero ten cuidado con los montos que pides prestados.",
+        "high-risk": "Estás muy cerca de ser liquidado. Puedes aumentar tus depósitos o pagar todas tus deudas antes de que pierdas tus fondos.",
+        "liquidated": "Tus garantias ya no respaldan las deudas que tenias y has sido liquidado.",
+        "other": "Risk cannot be calculated"
+      },
+      "description": {
+        "risk": "de tus depósitos están comprometidos en deudas",
+        "liquidated": "de tus depósitos han sido liquidados"
+      }
+    },
+    "table": {
+      "deposit": {
+        "description1": "Total depositado",
+        "description2": "Ganancias acumuladas",
+        "description3": "Tasa de ganancia \nanual actual",
+        "btn1": "Depositar",
+        "btn2": "Retirar"
+      },
+      "debts": {
+        "description1": "Pediste Prestado",
+        "description2": "Intereses acumulados",
+        "description3": "Tasa de interés \nanual actual",
+        "btn1": "Pedir prestado",
+        "btn2": "Pagar"
+      }
+    }
   }
 }

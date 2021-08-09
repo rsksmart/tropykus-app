@@ -9,18 +9,12 @@
       </p>
     </div>
     <div class="d-flex justify-center actions-bottons">
-      <v-btn
-        class="btn mr-9"
-        text
-      >
+      <v-btn class="btn mr-9" text>
         <span class="b1-main text-primary">
           {{ $t('borrows.btn1') }}
         </span>
       </v-btn>
-      <v-btn
-        class="btn btn-secondary"
-        text
-      >
+      <v-btn class="btn btn-secondary" text @click="redirect(constants.ROUTE_NAMES.DEPOSITS)">
         <span class="b1-main">
           {{ $t('borrows.btn2') }}
         </span>
@@ -39,30 +33,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import Landing from '@/components/home/Landing.vue';
-// import UserHome from '@/components/home/UserHome.vue';
 import * as constants from '@/store/constants';
 
 export default {
   name: 'Borrow',
   data() {
     return {
+      constants,
       inBorrowMenu: true,
       key: 0,
     };
   },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: constants.SESSION_IS_CONNECTED,
-    }),
-    // currentComponent() {
-    //   return this.isLoggedIn ? 'UserHome' : 'Landing';
-    // },
-  },
   components: {
     Landing,
-    // UserHome
+  },
+  methods: {
+    redirect(path) {
+      const to = { name: path };
+      this.$router.push(to);
+    },
   },
   created() {
     if (window.ethereum) {

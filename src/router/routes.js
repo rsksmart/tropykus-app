@@ -1,25 +1,25 @@
 import Supply from '@/views/Supply.vue';
 
 export default [
-  // {
-  //   path: '/',
-  //   name: 'Supply',
-  //   component: Supply,
-  // },
+  {
+    path: '*',
+    name: 'Deposits',
+    component: () => import(/* webpackChunkName: "*" */ '@/views/Deposits.vue'),
+  },
   {
     path: '/',
     name: 'Deposits',
-    component: () => import(/* webpackChunkName: "Borrow" */ '@/views/Deposits.vue'),
+    component: () => import(/* webpackChunkName: "Deposits" */ '@/views/Deposits.vue'),
   },
   {
     path: '/showdialog',
     name: 'ShowDialog',
-    component: () => import(/* webpackChunkName: "Borrow" */ '@/views/ShowDialog.vue'),
+    component: () => import(/* webpackChunkName: "ShowDialog" */ '@/views/ShowDialog.vue'),
   },
   {
     path: '/deposits/:id',
     name: 'Deposit',
-    component: () => import(/* webpackChunkName: "Borrow" */ '@/components/deposits/Deposit.vue'),
+    component: () => import(/* webpackChunkName: "Deposit/:id" */ '@/components/deposits/Deposit.vue'),
   },
   {
     path: '/es',
@@ -39,6 +39,7 @@ export default [
   {
     path: '/balance',
     name: 'Balance',
+    meta: { requiredWallet: true },
     component: () => import(/* webpackChunkName: "Balance" */ '@/views/Balance.vue'),
   },
   {
@@ -76,4 +77,5 @@ export default [
     name: 'LednToLiquality',
     component: () => import(/* webpackChunkName: "LednToLiquality" */ '@/components/tutorials/LednToLiquality.vue'),
   },
+
 ];

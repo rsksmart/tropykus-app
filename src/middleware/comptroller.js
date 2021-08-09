@@ -44,12 +44,11 @@ export default class Comptroller {
   }
 
   async healthRatio(markets, chainId, address) {
-    const numerador = await this.getAccountLiquidity(address);
-    let denominador = 0;
-    markets.forEach(async (market) => {
-      denominador += await market.borrowBalanceInUSD(chainId, address);
-    });
-    return numerador / denominador;
+    const numerator = await this.getAccountLiquidity(address);
+    const borrows = await Promise.all(await markets
+      .map((market) => market.borrowBalanceInUSD(chainId, address)));
+    const denominator = borrows.reduce((x, y) => x + y);
+    return numerator / denominator;
   }
 
   async hypotheticalHealthRatio(markets, chainId, address, borrowBalanceInUSD) {
@@ -78,19 +77,22 @@ export default class Comptroller {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  totalDepositsInUSD(markets, accountAddress, chainId) {
+  totalDepositsByInteresesInUSD(markets, accountAddress, chainId) {
     return new Promise((resolve, reject) => {
+      let totalDepositsByIntereses = 0;
       let totalDeposits = 0;
       let counter = 0;
       markets.forEach(async (market) => {
         await Promise.all([
           market.underlyingCurrentPrice(chainId),
           market.currentBalanceOfCTokenInUnderlying(accountAddress),
+          market.getEarnings(accountAddress),
         ])
-          .then(([price, totalDepositInUnderlying]) => {
-            totalDeposits += totalDepositInUnderlying * price;
+          .then(([price, totalDepositInUnderlying, interestBalance]) => {
+            totalDepositsByIntereses += totalDepositInUnderlying * price;
+            totalDeposits += (totalDepositInUnderlying - interestBalance) * price;
             counter += 1;
-            if (counter === markets.length) resolve(totalDeposits);
+            if (counter === markets.length) resolve({ totalDepositsByIntereses, totalDeposits });
           })
           .catch(reject);
       });
@@ -98,19 +100,22 @@ export default class Comptroller {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async totalBorrowsInUSD(markets, accountAddress, chainId) {
+  async totalBorrowsByInteresesInUSD(markets, accountAddress, chainId) {
     return new Promise((resolve, reject) => {
+      let totalBorrowsByIntereses = 0;
       let totalBorrows = 0;
       let counter = 0;
       markets.forEach(async (market) => {
         await Promise.all([
           market.underlyingCurrentPrice(chainId),
           market.borrowBalanceCurrent(accountAddress),
+          market.getDebtInterest(accountAddress),
         ])
-          .then(([price, totalBorrowInUnderlying]) => {
-            totalBorrows += totalBorrowInUnderlying * price;
+          .then(([price, totalBorrowInUnderlying, interestBorrow]) => {
+            totalBorrowsByIntereses += totalBorrowInUnderlying * price;
+            totalBorrows += (totalBorrowInUnderlying - interestBorrow) * price;
             counter += 1;
-            if (counter === markets.length) resolve(totalBorrows);
+            if (counter === markets.length) resolve({ totalBorrowsByIntereses, totalBorrows });
           })
           .catch(reject);
       });
