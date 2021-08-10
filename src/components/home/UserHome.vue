@@ -79,7 +79,7 @@ export default {
     async load() {
       this.savings = [];
       this.debts = [];
-      this.suggestions = await this.comptroller.allMarkets;
+      this.suggestions = await this.comptroller.allMarkets();
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       let counter = 0;
       if (this.walletAddress) {
@@ -100,10 +100,10 @@ export default {
               if (balanceOf > 0 && this.savings.indexOf(marketAddress) === -1) {
                 this.savings.push(marketAddress);
               }
-              return market.borrowBalanceCurrent(this.walletAddress);
+              return market.borrowBalanceStored(this.walletAddress);
             })
-            .then((borrowBalanceCurrent) => {
-              if (borrowBalanceCurrent > 0 && this.debts.indexOf(marketAddress) === -1) {
+            .then((borrowBalanceStored) => {
+              if (borrowBalanceStored > 0 && this.debts.indexOf(marketAddress) === -1) {
                 this.debts.push(marketAddress);
               }
             });

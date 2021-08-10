@@ -401,7 +401,7 @@ export default {
       this.chartData = tempData;
     },
     async getMarkets() {
-      const marketsAddresses = await this.comptroller.allMarkets;
+      const marketsAddresses = await this.comptroller.allMarkets();
       marketsAddresses.forEach(async (marketAddress) => {
         const isCRbtc = await Market.isCRbtc(marketAddress);
         if (isCRbtc) {

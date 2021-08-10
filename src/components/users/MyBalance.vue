@@ -156,7 +156,7 @@ export default {
       });
     },
     async getData() {
-      this.marketAddresses = await this.comptroller.allMarkets;
+      this.marketAddresses = await this.comptroller.allMarkets();
       await this.getMarkets();
       this.totalSuppliedUSD = await this.comptroller
         .totalDepositsInUSD(this.markets, this.walletAddress, this.chainId);

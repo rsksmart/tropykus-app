@@ -86,7 +86,9 @@ export default {
       this.btcToRbtcDialog = false;
     },
     async loadMarkets() {
-      this.marketAddresses = await this.comptroller.allMarkets;
+      console.log('In App');
+      this.marketAddresses = await this.comptroller.allMarkets();
+      console.log('App.vue', this.marketAddresses);
       let counter = 0;
       await this.marketAddresses.forEach(async (marketAddress) => {
         await Market.isCRbtc(marketAddress)

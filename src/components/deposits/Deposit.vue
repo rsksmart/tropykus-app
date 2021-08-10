@@ -374,7 +374,7 @@ export default {
       if (this.tabMenu) {
         // colocar los mercados en assetsIn
         const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
-        const allMarkets = await this.comptroller.allMarkets;
+        const allMarkets = await this.comptroller.allMarkets();
         if (assetsIn.indexOf(this.marketAddress) === -1) {
           await this.comptroller.enterMarkets(this.account, allMarkets);
         }

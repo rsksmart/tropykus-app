@@ -9,7 +9,8 @@ export const USER_ACTION_REDEEM = 'USER_ACTION_REDEEM';
 export const USER_ACTION_REPAY = 'USER_ACTION_REPAY';
 
 export const RBTC_SYMBOL = 'tRBTC';
-export const CRBTC_SYMBOL = 'cRBTC';
+export const CRBTC_SYMBOL = 'kRBTC';
+export const CSAT_SYMBOL = 'kSAT';
 
 export const ROUTE_NAMES = {
   BALANCE: 'Balance',

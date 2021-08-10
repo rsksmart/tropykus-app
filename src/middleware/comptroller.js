@@ -7,12 +7,18 @@ import signer from './utils';
 export default class Comptroller {
   constructor(chainId) {
     this.comptrollerAddress = addresses[chainId].comptroller;
+    this.kSatAddress = addresses[chainId].kSAT;
     this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3Ws);
   }
 
-  get allMarkets() {
-    return this.instance.callStatic.getAllMarkets();
+  async allMarkets() {
+    const markets = await this.instance.callStatic.getAllMarkets();
+    const marketsCopy = [];
+    markets.forEach((marketAddress) => {
+      if (marketAddress !== this.kSatAddress) marketsCopy.push(marketAddress);
+    });
+    return marketsCopy;
   }
 
   // Block: 1953603
@@ -108,7 +114,7 @@ export default class Comptroller {
       markets.forEach(async (market) => {
         await Promise.all([
           market.underlyingCurrentPrice(chainId),
-          market.borrowBalanceCurrent(accountAddress),
+          market.borrowBalanceStored(accountAddress),
           market.getDebtInterest(accountAddress),
         ])
           .then(([price, totalBorrowInUnderlying, interestBorrow]) => {
