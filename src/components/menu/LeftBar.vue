@@ -28,18 +28,18 @@
         </v-list-item>
 
         <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
-          <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
-            class="d-flex align-center active">
-            <img class="ml-4 mr-5" src="@/assets/icons/dollar.svg"/>
-            <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
-          </router-link>
-        </v-list-item>
-
-        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
           <router-link :to="{name: constants.ROUTE_NAMES.BORROWS}"
             class="d-flex align-center active">
             <img class="ml-4 mr-5" src="@/assets/icons/borrow.svg"/>
             <div class="white--text b2-secondary">{{ $t('menu.sidebar.borrow') }}</div>
+          </router-link>
+        </v-list-item>
+
+        <v-list-item class="left-list-item pa-0 ml-1" @click="() => null">
+          <router-link :to="{name: constants.ROUTE_NAMES.BALANCE}"
+            class="d-flex align-center active">
+            <img class="ml-4 mr-5" src="@/assets/icons/dollar.svg"/>
+            <div class="white--text b2-secondary">{{ $t('menu.sidebar.balance') }}</div>
           </router-link>
         </v-list-item>
 

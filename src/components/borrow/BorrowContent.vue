@@ -19,37 +19,7 @@
         <div class="p1-descriptions mb-3">
           {{ tabMenu ? $t('borrow.description1') : $t('pay.description1')}}
         </div>
-        <div class="primary-bg select-box">
-          <v-menu>
-            <template v-slot:activator="{ on, attrs }">
-              <div class="selected-item d-flex align-center"
-                v-bind="attrs" v-on="on">
-                <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
-                <span v-if="select.underlyingSymbol"
-                  class="h3-sections-heading text-uppercase">
-                  {{ select.underlyingSymbol }}
-                </span>
-                <v-icon class="select-icon" large color="text-primary">
-                  mdi-chevron-down
-                </v-icon>
-              </div>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
-                :class="market.underlyingSymbol === select.underlyingSymbol ? 'active' : ''"
-                @click="updateRoute(market)"
-              >
-                <div class="d-flex">
-                  <img :src="market.img" class="ml-2 mr-3"/>
-                  <span class="h3-sections-heading text-uppercase">
-                    {{ market.underlyingSymbol }}
-                  </span>
-                </div>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
+        <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
       </div>
       <div class="content-amunt mb-10">
         <div class="d-flex amout">
@@ -208,6 +178,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
+import Dropdown from '@/components/general/Dropdown.vue';
 import * as constants from '@/store/constants';
 import RiskChart from '@/components/users/RiskChart.vue';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
@@ -221,6 +192,7 @@ export default {
     RiskChart,
     ConnectWallet,
     Loading,
+    Dropdown,
   },
   data() {
     return {

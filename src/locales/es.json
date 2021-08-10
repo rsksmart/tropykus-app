@@ -307,6 +307,7 @@
     "description2": "Escribe la cantidad que vas a depositar",
     "description3": "Tienes en tu billetera",
     "description4": "Tasa de ganancia anual dinámica actual",
+    "micro": "Elige tu tasa de ganancia dinámica anual",
     "btn1": "Conectar billetera",
     "btn2": "Depositar",
     "calculator": {

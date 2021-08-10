@@ -1,87 +1,58 @@
 <template>
-    <div class="deposit">
-      <h2 class="h2-heading text-detail">{{ $t('deposit.title')}}</h2>
-      <div class="d-flex">
-        <div text @click="tabMenu = true" class="mr-10">
-          <span class="h3-sections-heading pb-1 tab"
-          :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
-          >Deposit</span>
-        </div>
-        <div v-if="account" text @click="tabMenu = false">
-          <span class="h3-sections-heading pb-1 tab"
-          :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
-          >{{ $t('dialog.supply-redeem.title2') }}</span>
-        </div>
+  <div class="deposit">
+    <h2 class="h2-heading text-detail">{{ $t('deposit.title')}}</h2>
+    <div class="d-flex">
+      <div text @click="tabMenu = true" class="mr-10">
+        <span class="h3-sections-heading pb-1 tab"
+        :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
+        >Deposit</span>
       </div>
+      <div v-if="account" text @click="tabMenu = false">
+        <span class="h3-sections-heading pb-1 tab"
+        :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
+        >{{ $t('dialog.supply-redeem.title2') }}</span>
+      </div>
+    </div>
 
-      <div class="d-flex justify-space-between mb-12 mt-9">
-        <div>
-          <div class="p1-descriptions mb-3">
-            {{ tabMenu ? $t('deposit.description1') : $t('withdraw.description1') }}
-          </div>
-          <div class="primary-bg select-box">
-            <v-menu>
-              <template v-slot:activator="{ on, attrs }">
-                <div class="selected-item d-flex align-center"
-                  v-bind="attrs" v-on="on">
-                  <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
-                  <span v-if="select.underlyingSymbol"
-                    class="h3-sections-heading text-uppercase">
-                    {{ select.underlyingSymbol }}
-                  </span>
-                  <v-icon class="select-icon" large color="text-primary">
-                    mdi-chevron-down
-                  </v-icon>
-                </div>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
-                  :class="market.underlyingSymbol === select.underlyingSymbol ? 'active' : ''"
-                  @click="updateRoute(market)"
-                >
-                  <div class="d-flex">
-                    <img :src="market.img" class="ml-2 mr-3"/>
-                    <span class="h3-sections-heading text-uppercase">
-                      {{ market.underlyingSymbol }}
-                    </span>
-                  </div>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
+    <div class="content-deposit mt-9"
+      :class="select.underlyingSymbol === 'tRBTC' ? 'micro' : ''"
+    >
+      <div class="content-menu">
+        <div class="p1-descriptions mb-3">
+          {{ tabMenu ? $t('deposit.description1') : $t('withdraw.description1') }}
         </div>
-        <div>
-          <div class="p1-descriptions mb-3 text-info">
-            {{ tabMenu ? $t('deposit.description2') : $t('withdraw.description2') }}
-          </div>
-          <div class="input-box primary-bg"
-            :class="!activeButton && amount > 0 ? 'alert' : ''"
-          >
-            <div class="d-flex">
-              <v-text-field
-                type="number"
-                v-model="amount"
-                :rules="[rules.leverage, rules.minBalance, rules.collateral,
-                rules.withoutBalance, rules.supplyBalance]"
-                class="h1-title text-info pa-0 ma-0"
-                background-color="#CFE7DA"
-                color="#47B25F"
-                :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-                filled
-                rounded
-                dense
-                @input="handleAmount"
-              ></v-text-field>
-              <v-btn @click="setMaxAmount" height="40" text>
-                <span class="text-primary">MÁX</span>
-              </v-btn>
+        <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
+      </div>
+      <div class="content-micro">
+        <div class="p1-descriptions mb-3 text-info">
+          {{ $t('deposit.micro') }}
+        </div>
+        <div class="d-flex justify-space-between micro-savings">
+          <v-btn class="btn-micro"
+          :class="micro === 'micro' ? 'active' : 'inactive'"
+          @click="micro = 'micro'">
+            <div class="p4-values-filled mr-3">4%</div>
+            <div class="h3-sections-heading mt-2 mr-1">
+              Microahorro <br />
+              <div class="p1-descriptions">
+                Hasta 0.1 rBTC
+              </div>
             </div>
-          </div>
+          </v-btn>
+          <v-btn class="btn-micro standar"
+            :class="micro === 'standar' ? 'active' : 'inactive'"
+            @click="micro = 'standar'">
+            <div class="p4-values-filled mr-2">0.9%</div>
+            <div class="h3-sections-heading mt-2 mr-1">
+              Estándar<br />
+              <div class="p1-descriptions">
+                Sin límite de depósito
+              </div>
+            </div>
+          </v-btn>
         </div>
       </div>
-
-      <div class="d-flex justify-space-between mb-12">
+      <div class="content-info">
         <div>
           <div class="p1-descriptions text-info mb-1">
             {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description3') }}
@@ -94,8 +65,56 @@
             {{ !tokenBalanceUsd ? 0 : tokenBalanceUsd | formatPrice}}
           </div>
         </div>
-
-        <div>
+        <div class="content-rate">
+          <div class="p1-descriptions text-info mb-1 d-flex">
+            <div class="text-rate">
+              {{ $t('deposit.description4')}}
+            </div>
+            <div class="tooltip-info ml-7 mt-1">
+              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
+                </template>
+                <span class="p5-feedback text-info">
+                  {{ $t('deposit.tooltip1') }}
+                </span>
+              </v-tooltip>
+            </div>
+          </div>
+          <div class="p2-reading-values text-info">
+            {{ info.rate }} %
+          </div>
+        </div>
+      </div>
+      <div class="content-action">
+        <div class="p1-descriptions mb-3 text-info">
+          {{ tabMenu ? $t('deposit.description2') : $t('withdraw.description2') }}
+        </div>
+        <div class="input-box primary-bg"
+          :class="!activeButton && amount > 0 ? 'alert' : ''"
+        >
+        <div class="d-flex">
+          <v-text-field
+            type="number"
+            v-model="amount"
+            :rules="[rules.leverage, rules.minBalance, rules.collateral,
+            rules.withoutBalance, rules.supplyBalance]"
+            class="h1-title text-info pa-0 ma-0"
+            background-color="#CFE7DA"
+            color="#47B25F"
+            :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
+            filled
+            rounded
+            dense
+            @input="handleAmount"
+          ></v-text-field>
+          <v-btn @click="setMaxAmount" height="40" text>
+            <span class="text-primary">MÁX</span>
+          </v-btn>
+        </div>
+        </div>
+        <div class="mt-15">
           <v-slider
             class="mt-3 slider-box"
             min="0"
@@ -113,34 +132,7 @@
             </v-col>
           </div>
         </div>
-      </div>
-
-      <div class="d-flex" :class="tabMenu ? 'justify-space-between' : 'justify-end'"  >
-        <div v-if="tabMenu">
-          <div class="p1-descriptions text-info mb-1 d-flex">
-            <div class="text-rate">
-              {{ $t('deposit.description4')}}
-            </div>
-            <div class="tooltip-info ml-7 mt-1">
-              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-img v-bind="attrs" v-on="on" width="15" height="15"
-                        src="@/assets/icons/info2.svg" contain/>
-                  <!-- <img v-bind="attrs" v-on="on" src="@/assets/icons/info2.svg"/> -->
-
-                </template>
-                <span class="p5-feedback text-info">
-                  {{ $t('deposit.tooltip1') }}
-                </span>
-              </v-tooltip>
-            </div>
-          </div>
-          <div class="p2-reading-values text-info">
-            {{ info.rate }} %
-          </div>
-        </div>
-
-        <div class="d-flex se-end">
+        <div class="d-flex mt-14">
           <v-btn text class="btn-action"
             :disabled="!activeButton"
             :class="activeButton ? 'primary-color' : 'secondary-bg'"
@@ -155,126 +147,77 @@
           </v-btn>
         </div>
       </div>
-      <template v-if="tabMenu">
-
-        <v-divider class="divider"></v-divider>
-
-        <v-row class="mb-5">
-          <v-col md="4">
-            <h3 class="h3-sections-heading text-detail">
-              {{ $t('deposit.calculator.title')}}
-            </h3>
-          </v-col>
-        </v-row>
-
-        <div class="d-flex justify-space-between mb-10">
-          <div>
-            <div class="p1-descriptions text-info mb-1 d-flex justify-space-between">
-              {{ $t('deposit.calculator.description1')}}
-              <div class="tooltip-info ">
-                <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="200">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-img v-bind="attrs" v-on="on" width="15" height="15"
-                        src="@/assets/icons/info2.svg" contain/>
-                  </template>
-                  <span class="p5-feedback text-info">
-                    {{ $t('deposit.tooltip2') }}
-                  </span>
-                </v-tooltip>
-              </div>
-            </div>
-            <div class="p2-reading-values box-number text-uppercase text-info">
-                {{ !possibleEarnings ? 0 : possibleEarnings | formatDecimals }}
-                {{ info.underlyingSymbol }}
-            </div>
-            <div class="p3-USD-values box-number text-info">
-              {{ !possibleEarningsUSD ? 0 : possibleEarningsUSD | formatPrice }} USD
-            </div>
-          </div>
-
-          <div>
-            <div class="p1-descriptions mb-3 text-info">
-              {{ $t('deposit.calculator.description2')}}
-            </div>
-            <div class="input-box primary-bg">
-              <div class="d-flex">
-                <v-text-field
-                  type="number"
-                  v-model="amountEarning"
-                  class="h1-title text-info pa-0 ma-0"
-                  background-color="#CFE7DA"
-                  color="#47B25F"
-                  :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-                  filled
-                  rounded
-                  dense
-                ></v-text-field>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="d-flex justify-space-between mb-10">
-          <div>
-            <div class="p1-descriptions text-info mb-1">
-              {{ $t('deposit.calculator.description3')}}
-            </div>
-            <div class="p2-reading-values box-number text-info">
-              {{ !possibleEarningsPlusDeposit ? 0 : possibleEarningsPlusDeposit | formatDecimals }}
-              {{ info.underlyingSymbol }}
-            </div>
-            <div class="p3-USD-values box-number text-info">
-              {{ !possibleEarningsPlusDepositUSD
-                ? 0
-                : possibleEarningsPlusDepositUSD | formatPrice
-              }} USD
-            </div>
-          </div>
-
-          <div>
-            <div class="p1-descriptions text-info">
-              {{ $t('deposit.calculator.description4')}}
-            </div>
-            <v-slider
-              class="mt-3 slider-box"
-              min="1"
-              max="5"
-              color="#4CB163"
-              track-color="#C8DEDD"
-              tick-size="10"
-              thumb-label
-              v-model="sliderYear"
-            />
-            <div>
-              <v-col class="pa-0 d-flex justify-space-between">
-                <span class="p1-descriptions">
-                  1 {{ $t('deposit.calculator.time1')}}
-                </span>
-                <span class="p1-descriptions">
-                  5 {{ $t('deposit.calculator.time2')}}
-                </span>
-              </v-col>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-if="showModalConnectWallet">
-        <connect-wallet
-          :showModal="showModalConnectWallet"
-          @closed="outsideConnectWallet"
-        />
-      </template>
-
-      <template v-if="isLoading">
-        <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog" />
-      </template>
     </div>
+    <template v-if="tabMenu">
+
+      <v-divider class="divider"></v-divider>
+
+      <v-row class="mb-5">
+        <v-col md="4">
+          <h3 class="h3-sections-heading text-detail">
+            {{ $t('deposit.calculator.title')}}
+          </h3>
+        </v-col>
+      </v-row>
+
+      <div class="d-flex justify-space-between mb-10">
+        <div>
+          <div class="p1-descriptions text-info">
+            {{ $t('deposit.calculator.description4')}}
+          </div>
+          <v-slider
+            class="mt-3 slider-box"
+            min="1"
+            max="5"
+            color="#4CB163"
+            track-color="#C8DEDD"
+            tick-size="10"
+            thumb-label
+            v-model="sliderYear"
+          />
+          <div>
+            <v-col class="pa-0 d-flex justify-space-between">
+              <span class="p1-descriptions">
+                1 {{ $t('deposit.calculator.time1')}}
+              </span>
+              <span class="p1-descriptions">
+                5 {{ $t('deposit.calculator.time2')}}
+              </span>
+            </v-col>
+          </div>
+        </div>
+         <div class="box-earnings">
+          <div class="p1-descriptions text-info">
+            {{ $t('deposit.calculator.description1')}}
+          </div>
+          <div class="p2-reading-values box-number text-uppercase">
+              {{ !possibleEarnings ? 0 : possibleEarnings | formatDecimals }}
+              {{ info.underlyingSymbol }}
+          </div>
+          <div class="p3-USD-values box-number">
+            {{ !possibleEarningsUSD ? 0 : possibleEarningsUSD | formatPrice }} USD
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template v-if="showModalConnectWallet">
+      <connect-wallet
+        :showModal="showModalConnectWallet"
+        @closed="outsideConnectWallet"
+      />
+    </template>
+
+    <template v-if="isLoading">
+      <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog" />
+    </template>
+  </div>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
+import Dropdown from '@/components/general/Dropdown.vue';
 import * as constants from '@/store/constants';
 import {
   Comptroller,
@@ -285,11 +228,13 @@ export default {
   components: {
     ConnectWallet,
     Loading,
+    Dropdown,
   },
   data() {
     return {
       tabMenu: true,
       comptroller: null,
+      micro: '',
       constants,
       getMarkets: [],
       market: null,
@@ -503,7 +448,6 @@ export default {
         walletAddress: this.walletAddress,
         account: this.account,
       };
-
       this.$store.dispatch({
         type: constants.MARKET_GET_MARKET,
         ...data,

@@ -304,6 +304,7 @@
     "description2": "Write the amount you are going to deposit",
     "description3": "You have in your wallet",
     "description4": "Current dynamic annual profit rate",
+    "micro": "Choose your annual dynamic profit rate",
     "btn1": "Connect wallet",
     "btn2": "Deposit",
     "calculator": {
