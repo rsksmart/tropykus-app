@@ -31,6 +31,16 @@ export default class Market {
     }
   }
 
+  static async isCSat(address) {
+    const instance = new ethers.Contract(address.toLowerCase(), CTokenAbi, Vue.web3);
+    try {
+      const result = await instance.callStatic.symbol();
+      return result === constants.CSAT_SYMBOL;
+    } catch (e) {
+      return false;
+    }
+  }
+
   get name() {
     return this.instance.callStatic.name();
   }

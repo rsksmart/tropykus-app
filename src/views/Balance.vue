@@ -102,7 +102,7 @@ export default {
       });
     },
     async getData() {
-      this.marketAddresses = await this.comptroller.allMarkets;
+      this.marketAddresses = await this.comptroller.allMarkets();
       if (this.walletAddress) {
         await this.getMarkets();
 

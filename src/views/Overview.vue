@@ -82,7 +82,7 @@ export default {
     },
     async getData() {
       this.comptroller = new Comptroller(this.chainId);
-      this.markets = await this.comptroller.allMarkets;
+      this.markets = await this.comptroller.allMarkets();
       const marketData = await this.markets
         .map(async (marketAddress) => (
           Market.isCRbtc(marketAddress)
