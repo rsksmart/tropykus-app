@@ -79,7 +79,7 @@ export default {
     async load() {
       this.savings = [];
       this.debts = [];
-      this.suggestions = await this.comptroller.allMarkets;
+      this.suggestions = await this.comptroller.allMarkets();
       this.assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       let counter = 0;
       if (this.walletAddress) {

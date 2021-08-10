@@ -86,7 +86,7 @@ export default {
       this.btcToRbtcDialog = false;
     },
     async loadMarkets() {
-      this.marketAddresses = await this.comptroller.allMarkets;
+      this.marketAddresses = await this.comptroller.allMarkets();
       let counter = 0;
       await this.marketAddresses.forEach(async (marketAddress) => {
         await Market.isCRbtc(marketAddress)

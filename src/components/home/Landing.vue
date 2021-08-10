@@ -49,7 +49,7 @@ export default {
   methods: {
     async load() {
       this.comptroller = new Comptroller(this.chainId);
-      this.markets = await this.comptroller.allMarkets;
+      this.markets = await this.comptroller.allMarkets();
     },
   },
   components: {
