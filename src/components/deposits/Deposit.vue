@@ -14,6 +14,20 @@
       </div>
     </div>
 
+    <v-btn @click="firestore.saveUserAction(
+      '0x13165915AFD69924024C5BD0f7a3581913d988d3',
+      '0x9b0295f8b0De2d749546206A71833b052d78CbE9',
+      'Mint',
+      0.05,
+      'tRBTC',
+      '0x',
+      34000,
+      new Date(),
+      '0x84er65e4w',
+      )">
+      firestore
+    </v-btn>
+
     <div class="content-deposit mt-9"
       :class="(select.underlyingSymbol === 'tRBTC' && tabMenu) ? 'micro' : ''"
     >
@@ -364,24 +378,23 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
               if (from === this.walletAddress && Number(this.amount) === actualMintAmount / 1e18) {
-                // await this.firestore.saveUserAction(
-                //   this.comptroller.comptrollerAddress,
-                //   this.walletAddress,
-                //   'Mint',
-                //   actualMintAmount / 1e18,
-                //   this.info.underlyingSymbol,
-                //   this.market.marketAddress,
-                //   this.info.underlyingPrice,
-                //   new Date(),
-                //   tx.hash,
-                // );
-                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = true;
                 this.infoLoading.amount = actualMintAmount / 1e18;
+                await this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'Mint',
+                  actualMintAmount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -395,24 +408,23 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Redeem', async (from, actualRedeemAmount) => {
               if (from === this.walletAddress) {
-                // await this.firestore.saveUserAction(
-                //   this.comptroller.comptrollerAddress,
-                //   this.walletAddress,
-                //   'Redeem',
-                //   actualRedeemAmount / 1e18,
-                //   this.info.underlyingSymbol,
-                //   this.market.marketAddress,
-                //   this.info.underlyingPrice,
-                //   new Date(),
-                //   tx.hash,
-                // );
-                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = false;
                 this.infoLoading.amount = actualRedeemAmount / 1e18;
+                await this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'Redeem',
+                  actualRedeemAmount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
