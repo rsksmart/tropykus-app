@@ -260,6 +260,15 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   .v-menu__content{
     .select-menu-item{
       height: 48px;
+      .list-item{
+        position: relative;
+        .microlanding{
+          position: absolute;
+          font-size: 11px;
+          left: 47px;
+          top: 20px;
+        }
+      }
     }
     img{
       width: 26px;

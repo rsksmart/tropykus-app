@@ -413,9 +413,9 @@ export default {
         }
       });
     },
-    updateRoute(market) {
-      if (this.$route.params.id !== market.marketAddress) {
-        const to = { name: this.$route.name, params: { id: market.marketAddress } };
+    updateRoute(marketAddress) {
+      if (this.$route.params.id !== marketAddress) {
+        const to = { name: this.$route.name, params: { id: marketAddress } };
         this.$router.push(to);
       }
     },
@@ -423,6 +423,7 @@ export default {
       this.$store.dispatch({
         type: constants.MARKET_UPDATE_MARKET,
         walletAddress: this.walletAddress,
+        page: constants.ROUTE_NAMES.BORROWS,
         account: this.account,
       });
       this.reset();

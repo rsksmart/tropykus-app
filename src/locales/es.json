@@ -123,7 +123,8 @@
     "general": {
       "description1": "Tasa de",
       "description2": "anual",
-      "description3": "dinámica actual"
+      "description3": "dinámica actual",
+      "description4": "Micro ahorro en Bitcoin"
     },
     "deposits": {
       "subtitle1": "Liquidez del mercado",

@@ -15,7 +15,7 @@
     </div>
 
     <div class="content-deposit mt-9"
-      :class="select.underlyingSymbol === 'tRBTC' ? 'micro' : ''"
+      :class="(select.underlyingSymbol === 'tRBTC' && tabMenu) ? 'micro' : ''"
     >
       <div class="content-menu">
         <div class="p1-descriptions mb-3">
@@ -27,30 +27,7 @@
         <div class="p1-descriptions mb-3 text-info">
           {{ $t('deposit.micro') }}
         </div>
-        <div class="d-flex justify-space-between micro-savings">
-          <v-btn class="btn-micro"
-          :class="micro === 'micro' ? 'active' : 'inactive'"
-          @click="micro = 'micro'">
-            <div class="p4-values-filled mr-3">4%</div>
-            <div class="h3-sections-heading mt-2 mr-1">
-              Microahorro <br />
-              <div class="p1-descriptions">
-                Hasta 0.1 rBTC
-              </div>
-            </div>
-          </v-btn>
-          <v-btn class="btn-micro standar"
-            :class="micro === 'standar' ? 'active' : 'inactive'"
-            @click="micro = 'standar'">
-            <div class="p4-values-filled mr-2">0.9%</div>
-            <div class="h3-sections-heading mt-2 mr-1">
-              Estándar<br />
-              <div class="p1-descriptions">
-                Sin límite de depósito
-              </div>
-            </div>
-          </v-btn>
-        </div>
+        <savings @updateRoute="updateRoute"/>
       </div>
       <div class="content-info">
         <div>
@@ -218,6 +195,7 @@ import { mapState, mapActions } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
 import Dropdown from '@/components/general/Dropdown.vue';
+import Savings from '@/components/deposits/Savings.vue';
 import * as constants from '@/store/constants';
 import {
   Comptroller,
@@ -229,6 +207,7 @@ export default {
     ConnectWallet,
     Loading,
     Dropdown,
+    Savings,
   },
   data() {
     return {
@@ -427,9 +406,9 @@ export default {
         }
       });
     },
-    updateRoute(market) {
-      if (this.$route.params.id !== market.marketAddress) {
-        const to = { name: this.$route.name, params: { id: market.marketAddress } };
+    updateRoute(marketAddress) {
+      if (this.$route.params.id !== marketAddress) {
+        const to = { name: this.$route.name, params: { id: marketAddress } };
         this.$router.push(to);
       }
     },
@@ -438,6 +417,7 @@ export default {
         type: constants.MARKET_UPDATE_MARKET,
         marketAddress: this.$route.params.id,
         walletAddress: this.walletAddress,
+        page: constants.ROUTE_NAMES.DEPOSITS,
         account: this.account,
       });
       this.getLiquidity();
@@ -446,6 +426,7 @@ export default {
       const data = {
         marketAddress: this.$route.params.id,
         walletAddress: this.walletAddress,
+        page: constants.ROUTE_NAMES.DEPOSITS,
         account: this.account,
       };
       this.$store.dispatch({

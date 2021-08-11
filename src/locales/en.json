@@ -121,7 +121,8 @@
     "general": {
       "description1": "Current dynamic",
       "description2": "annual",
-      "description3": "rate"
+      "description3": "rate",
+      "description4": "Micro saving in Bitcoin"
     },
     "deposits": {
       "subtitle1": "Market liquidity",

@@ -17,13 +17,20 @@
     <v-list>
       <v-list-item
         v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
-        :class="market.underlyingSymbol === select.underlyingSymbol ? 'active' : ''"
+        :class="market.symbol === select.symbol ? 'active' : ''"
         @click="updateRoute(market)"
       >
-        <div class="d-flex">
-          <img :src="market.img" class="ml-2 mr-3"/>
-          <span class="h3-sections-heading text-uppercase">
-            {{ market.underlyingSymbol }}
+        <div class="list-item">
+          <div class="d-flex">
+            <img :src="market.img" class="ml-2 mr-3"/>
+            <div class="h3-sections-heading text-uppercase">
+              {{ market.underlyingSymbol }}
+            </div>
+          </div>
+          <span class="microlanding text-value">
+            {{market.marketAddress === addresses[chainId].kSAT.toLowerCase()
+              ? 'microlandig' : ''
+            }}
           </span>
         </div>
       </v-list-item>
@@ -32,6 +39,9 @@
 </div>
 </template>
 <script>
+import { addresses } from '@/middleware/constants';
+import { mapState } from 'vuex';
+
 export default {
   props: {
     select: {
@@ -43,9 +53,19 @@ export default {
       require: true,
     },
   },
+  data() {
+    return {
+      addresses,
+    };
+  },
+  computed: {
+    ...mapState({
+      chainId: (state) => state.Session.chainId,
+    }),
+  },
   methods: {
     updateRoute(market) {
-      this.$emit('updateRoute', market);
+      this.$emit('updateRoute', market.marketAddress);
     },
 
   },
