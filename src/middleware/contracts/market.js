@@ -2,10 +2,10 @@ import CTokenAbi from '@/abis/CErc20Immutable.json';
 import PriceOracleProxyAbi from '@/abis/PriceOracleProxy.json';
 import StandardTokenAbi from '@/abis/StandardToken.json';
 import TropykusLensAbi from '@/abis/TropykusLens.json';
-import { addresses } from '@/middleware/constants';
 import { ethers } from 'ethers';
 import Vue from 'vue';
 import * as constants from '@/store/constants';
+import { addresses } from './constants';
 import signer from './utils';
 
 const blocksPerDay = 2 * 60 * 24;
@@ -299,8 +299,7 @@ export default class Market {
 
   async redeem(account, amountIntended) {
     const accountSigner = signer(account);
-    const exchangeRate = await this.exchangeRateStored();
-    const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
+    const amount = await Market.getAmountDecimals(amountIntended);
     return this.instance.connect(accountSigner).redeem(amount, { gasLimit: this.gasLimit });
   }
 

@@ -185,6 +185,7 @@ import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
 import {
   Comptroller,
+  Firestore,
 } from '@/middleware';
 
 export default {
@@ -196,6 +197,7 @@ export default {
   },
   data() {
     return {
+      firestore: new Firestore(),
       isProgress: true,
       tabMenu: true,
       sliderStyle: '',
@@ -365,10 +367,21 @@ export default {
       this.infoLoading.symbol = this.select.underlyingSymbol;
       if (this.tabMenu) {
         await this.market.borrow(this.account, this.amount)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Borrow', (from, amount) => {
               if (from === this.walletAddress && Number(this.amount) === amount / 1e18) {
+                this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'Borrow',
+                  amount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
@@ -386,10 +399,21 @@ export default {
         let amountPay = this.amount;
         if (this.amount === this.info.borrowBalance) amountPay = -1;
         this.market.repay(this.account, amountPay)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('RepayBorrow', (from, _, amount) => {
               if (from === this.walletAddress) {
+                this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'RepayBorrow',
+                  amount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
@@ -404,7 +428,7 @@ export default {
           })
           .catch(console.error);
       }
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
+      this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
