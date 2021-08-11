@@ -364,17 +364,18 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
               if (from === this.walletAddress && Number(this.amount) === actualMintAmount / 1e18) {
-                await this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Mint',
-                  actualMintAmount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                // await this.firestore.saveUserAction(
+                //   this.comptroller.comptrollerAddress,
+                //   this.walletAddress,
+                //   'Mint',
+                //   actualMintAmount / 1e18,
+                //   this.info.underlyingSymbol,
+                //   this.market.marketAddress,
+                //   this.info.underlyingPrice,
+                //   new Date(),
+                //   tx.hash,
+                // );
+                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
@@ -394,17 +395,18 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Redeem', async (from, actualRedeemAmount) => {
               if (from === this.walletAddress) {
-                await this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Redeem',
-                  actualRedeemAmount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                // await this.firestore.saveUserAction(
+                //   this.comptroller.comptrollerAddress,
+                //   this.walletAddress,
+                //   'Redeem',
+                //   actualRedeemAmount / 1e18,
+                //   this.info.underlyingSymbol,
+                //   this.market.marketAddress,
+                //   this.info.underlyingPrice,
+                //   new Date(),
+                //   tx.hash,
+                // );
+                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }

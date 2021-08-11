@@ -371,17 +371,18 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Borrow', (from, amount) => {
               if (from === this.walletAddress && Number(this.amount) === amount / 1e18) {
-                this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Borrow',
-                  amount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                // this.firestore.saveUserAction(
+                //   this.comptroller.comptrollerAddress,
+                //   this.walletAddress,
+                //   'Borrow',
+                //   amount / 1e18,
+                //   this.info.underlyingSymbol,
+                //   this.market.marketAddress,
+                //   this.info.underlyingPrice,
+                //   new Date(),
+                //   tx.hash,
+                // );
+                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
@@ -403,17 +404,18 @@ export default {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('RepayBorrow', (from, _, amount) => {
               if (from === this.walletAddress) {
-                this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'RepayBorrow',
-                  amount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                // this.firestore.saveUserAction(
+                //   this.comptroller.comptrollerAddress,
+                //   this.walletAddress,
+                //   'RepayBorrow',
+                //   amount / 1e18,
+                //   this.info.underlyingSymbol,
+                //   this.market.marketAddress,
+                //   this.info.underlyingPrice,
+                //   new Date(),
+                //   tx.hash,
+                // );
+                console.log(tx.hash);
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }

@@ -39,7 +39,7 @@
 </div>
 </template>
 <script>
-import { addresses } from '@/middleware/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import { mapState } from 'vuex';
 
 export default {

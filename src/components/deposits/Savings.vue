@@ -30,7 +30,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { addresses } from '@/middleware/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   CRbtc,
 } from '@/middleware';
