@@ -138,9 +138,6 @@ export default {
       showDialogConnect: (state) => state.Session.showDialogConnect,
     }),
   },
-  created() {
-    console.log(this.drawer);
-  },
   methods: {
     changeLanguage() {
       if (this.$i18n.locale === 'es') {

@@ -199,6 +199,7 @@ import Savings from '@/components/deposits/Savings.vue';
 import * as constants from '@/store/constants';
 import {
   Comptroller,
+  Firestore,
 } from '@/middleware';
 
 export default {
@@ -211,6 +212,7 @@ export default {
   },
   data() {
     return {
+      firestore: new Firestore(),
       tabMenu: true,
       comptroller: null,
       micro: '',
@@ -358,10 +360,21 @@ export default {
           await this.comptroller.enterMarkets(this.account, allMarkets);
         }
         await this.market.supply(this.account, this.amount)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
               if (from === this.walletAddress && Number(this.amount) === actualMintAmount / 1e18) {
+                await this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'Mint',
+                  actualMintAmount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
@@ -377,16 +390,27 @@ export default {
           .catch(console.error);
       } else {
         this.market.redeem(this.account, this.amount)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
-            this.market.wsInstance.on('Redeem', async (from, actualMintAmount) => {
+            this.market.wsInstance.on('Redeem', async (from, actualRedeemAmount) => {
               if (from === this.walletAddress) {
+                await this.firestore.saveUserAction(
+                  this.comptroller.comptrollerAddress,
+                  this.walletAddress,
+                  'Redeem',
+                  actualRedeemAmount / 1e18,
+                  this.info.underlyingSymbol,
+                  this.market.marketAddress,
+                  this.info.underlyingPrice,
+                  new Date(),
+                  tx.hash,
+                );
                 if (!this.isLoading) {
                   this.isLoading = true;
                 }
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = false;
-                this.infoLoading.amount = actualMintAmount / 1e18;
+                this.infoLoading.amount = actualRedeemAmount / 1e18;
                 setTimeout(() => {
                   this.getMarket();
                 }, 1000);
@@ -396,7 +420,7 @@ export default {
           .catch(console.error);
       }
 
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
+      this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);

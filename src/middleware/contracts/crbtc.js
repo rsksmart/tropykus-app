@@ -1,6 +1,6 @@
 import CRBTCAbi from '@/abis/CRBTC.json';
-import Market from '@/middleware/market';
 import * as constants from '@/store/constants';
+import Market from './market';
 
 export default class CRbtc extends Market {
   constructor(address = '', chainId) {
