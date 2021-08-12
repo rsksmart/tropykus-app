@@ -14,20 +14,6 @@
       </div>
     </div>
 
-    <v-btn @click="firestore.saveUserAction(
-      '0x13165915AFD69924024C5BD0f7a3581913d988d3',
-      '0x9b0295f8b0De2d749546206A71833b052d78CbE9',
-      'Mint',
-      0.05,
-      'tRBTC',
-      '0x',
-      34000,
-      new Date(),
-      '0x84er65e4w',
-      )">
-      firestore
-    </v-btn>
-
     <div class="content-deposit mt-9"
       :class="(select.underlyingSymbol === 'tRBTC' && tabMenu) ? 'micro' : ''"
     >

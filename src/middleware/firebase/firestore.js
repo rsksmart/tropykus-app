@@ -27,4 +27,16 @@ export default class Firebase {
       });
     }
   }
+
+  async getUserActivity(comptrollerAddress, userAddress) {
+    const activity = [];
+    const comptroller = await this.db.collection('users-history').doc(comptrollerAddress).get();
+    if (comptroller.exists) {
+      const user = comptroller.data()[userAddress].activity;
+      Object.keys(user).forEach((key) => {
+        activity.push(user[key]);
+      });
+    }
+    return activity;
+  }
 }
