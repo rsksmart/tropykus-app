@@ -9,7 +9,7 @@ export default class Whitelist {
     this.instance = new ethers.Contract(this.whitelistAddress, WhitelistAbi, Vue.web3);
   }
 
-  get isEnabled() {
+  isEnabled() {
     return this.instance.callStatic.enabled();
   }
 

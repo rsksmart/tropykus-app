@@ -71,7 +71,7 @@ export default {
       } else {
         this.micro = 'micro';
       }
-      this.$emit('updateRoute', marketAddress);
+      this.$emit('updateRoute', marketAddress, this.micro);
     },
   },
   created() {
