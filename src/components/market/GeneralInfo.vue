@@ -5,7 +5,7 @@
     >
     <div class="">
       <div class="d-flex justify-space-between">
-        <div class="h1-title text-info text-uppercase">{{info.underlyingSymbol}}</div>
+        <div class="h1-title text-info">{{info.underlyingSymbol}}</div>
         <img v-if="symbolImg" :src="symbolImg">
       </div>
       <div class="p1-descriptions ml-1">

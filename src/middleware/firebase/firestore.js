@@ -13,7 +13,7 @@ export default class Firebase {
       event, amount, market, marketAddress, priceAt, timestamp, txHash, userAddress,
     };
     const comptroller = await this.db.collection('users-history').doc(comptrollerAddress).get();
-    if (comptroller.exists) {
+    if (comptroller?.exists) {
       await this.db.collection('users-history').doc(comptrollerAddress).update({
         [`${userAddress}.activity.${timestamp}`]: data,
       });

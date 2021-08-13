@@ -6,7 +6,7 @@
         v-bind="attrs" v-on="on">
         <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
         <div v-if="select.underlyingSymbol"
-          class="h3-sections-heading text-uppercase">
+          class="h3-sections-heading">
           {{ select.underlyingSymbol }} <br/>
           <span class="microlanding text-value">
           {{ select.symbol === 'kSAT' && lending
@@ -29,7 +29,7 @@
         <div class="list-item">
           <div class="d-flex">
             <img :src="market.img" class="ml-2 mr-3"/>
-            <div class="h3-sections-heading text-uppercase">
+            <div class="h3-sections-heading">
               {{ market.underlyingSymbol }}
             </div>
           </div>

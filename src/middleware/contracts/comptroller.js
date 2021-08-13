@@ -17,9 +17,9 @@ export default class Comptroller {
     const marketsCopy = [];
     markets.forEach((marketAddress) => {
       if (all) {
-        marketsCopy.push(marketAddress);
-      } else if (marketAddress !== this.kRBTC) {
-        marketsCopy.push(marketAddress);
+        marketsCopy.push(marketAddress.toLowerCase());
+      } else if (marketAddress.toLowerCase() !== this.kRBTC) {
+        marketsCopy.push(marketAddress.toLowerCase());
       }
     });
     return marketsCopy.reverse();
@@ -39,8 +39,13 @@ export default class Comptroller {
     return accountAddresses.length;
   }
 
-  getAssetsIn(address) {
-    return this.instance.callStatic.getAssetsIn(address);
+  async getAssetsIn(address) {
+    const assetsIn = await this.instance.callStatic.getAssetsIn(address);
+    const assetsInCopy = [];
+    assetsIn.forEach((asset) => {
+      assetsInCopy.push(asset.toLowerCase());
+    });
+    return assetsInCopy;
   }
 
   async getAccountLiquidity(address) {
