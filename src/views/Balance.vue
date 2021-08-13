@@ -30,6 +30,7 @@ import {
   CToken,
   Market,
   Comptroller,
+  Firestore,
 } from '@/middleware';
 
 export default {
@@ -44,6 +45,7 @@ export default {
     return {
       constants,
       db: this.$firebase.firestore(),
+      firestore: new Firestore(),
       counter: 0,
       isLoading: true,
       riskValue: 100,
@@ -83,6 +85,11 @@ export default {
     },
   },
   methods: {
+    async getUserActivity() {
+      const activity = await this.firestore
+        .getUserActivity(this.comptroller.comptrollerAddress, this.walletAddress);
+      console.log(activity);
+    },
     async getMarkets() {
       return new Promise((resolve, reject) => {
         let counter = 0;
@@ -195,6 +202,7 @@ export default {
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.redirect();
+    // this.getUserActivity();
     this.getData();
     this.getMarketsInfo();
   },

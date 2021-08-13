@@ -17,6 +17,14 @@
       "button1": "(Pronto)",
       "button2": "Billetera móvil"
     },
+    "pioneer": {
+      "description1": "Bienvenido al Tropykus",
+      "description2": "Donde tus Bitcoin encuentran su verdadero poder.",
+      "btn1": "Explorar",
+      "description3": "Tropykus en Mainnet llegará muy pronto...",
+      "description4": "Muy pronto podrás  probar la buena vida en el Tropykus. Te invitamos a probar Tropykus en Testnet.",
+      "btn2": "Ingresar a la app de prueba"
+    },
     "supply-redeem": {
       "title1": "Depositar",
       "title2": "Retirar",
@@ -125,7 +133,8 @@
       "description1": "Tasa de",
       "description2": "anual",
       "description3": "dinámica actual",
-      "description4": "Micro ahorro en Bitcoin"
+      "description4": "Micro ahorro en Bitcoin",
+      "micro": "microahorro"
     },
     "deposits": {
       "subtitle1": "Liquidez del mercado",
@@ -324,7 +333,13 @@
     "description5": "¿Quieres tener más posibilidades de ganar usando tus fondos?",
     "description6": "Échale un vistazo a estratégias",
     "tooltip1": "La tasa de interés varía cuando otros usuarios realizan transacciones en el protocolo.",
-    "tooltip2": "Esta calculadora solo simula las ganancias que se podrían obtener en cierto periodo de tiempo. Las cifras mostradas varian segùn la tasa anual de ganancia dinámica y los precios de las criptomonedas, por lo tanto no es una garantia de las gananicas futuras."
+    "tooltip2": "Esta calculadora solo simula las ganancias que se podrían obtener en cierto periodo de tiempo. Las cifras mostradas varian segùn la tasa anual de ganancia dinámica y los precios de las criptomonedas, por lo tanto no es una garantia de las gananicas futuras.",
+    "microsavings": {
+      "description1": "Microahorro",
+      "description2": "Hasta 0.1 rBTC",
+      "description3": "Estándar",
+      "description4": "Sin límite de depósito"
+    }
   },
   "withdraw": {
     "title": "Retirar",

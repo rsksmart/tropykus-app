@@ -17,6 +17,14 @@
       "button1": "(Soon)",
       "button2": "Mobile wallet"
     },
+    "pioneer": {
+      "description1": "Welcome to the Tropykus",
+      "description2": "Where your Bitcoin find their true power.",
+      "btn1": "Explorer",
+      "description3": "Tropykus on Mainnet is coming very soon...",
+      "description4": "Very soon you will be able to taste the good life in the Tropykus. We invite you to try Tropykus in Testnet.",
+      "btn2": "Enter the test app"
+    },
     "supply-redeem": {
       "title1": "Deposit",
       "title2": "Withdraw",
@@ -123,7 +131,8 @@
       "description1": "Current dynamic",
       "description2": "annual",
       "description3": "rate",
-      "description4": "Micro saving in Bitcoin"
+      "description4": "Micro savings in Bitcoin",
+      "micro": "microsaving"
     },
     "deposits": {
       "subtitle1": "Market liquidity",
@@ -321,7 +330,13 @@
     "description5": "Do you want to have a better chance of winning using your funds?",
     "description6": "Take a look at strategies",
     "tooltip1": "The interest rate varies when other users carry out transactions in the protocol.",
-    "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits."
+    "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits.",
+    "microsavings": {
+      "description1": "Microsaving",
+      "description2": "Up to 0.1 rBTC",
+      "description3": "Standard",
+      "description4": "No deposit limit"
+    }
   },
   "withdraw": {
     "title": "Withdraw",

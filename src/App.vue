@@ -7,14 +7,18 @@
         <router-view />
       </div>
     </div>
+
+    <template v-if="isPioneer">
+      <pioneer :showModal="isPioneer" :authorized="authorized" @closed="closeDialog" />
+    </template>
   </v-app>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
-// import LeftBar from '@/components/menu/LeftBar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
+import Pioneer from '@/components/dialog/Pioneer.vue';
 import {
   Comptroller,
   Market,
@@ -26,6 +30,11 @@ import * as constants from '@/store/constants';
 
 export default {
   name: 'App',
+  components: {
+    Navbar,
+    LeftBar,
+    Pioneer,
+  },
   data() {
     return {
       drawer: false,
@@ -35,6 +44,9 @@ export default {
       markets: [],
       dontShowWelcomeModal: false,
       whitelist: null,
+      isPioneer: false,
+      authorized: false,
+      activePioneer: false,
     };
   },
   computed: {
@@ -53,7 +65,7 @@ export default {
     },
     async activeWhitelist() {
       const active = await this.whitelist.isEnabled();
-      console.log('pioneros', active);
+      this.activePioneer = active;
     },
     async loadMarkets() {
       this.marketAddresses = await this.comptroller.allMarkets();
@@ -68,6 +80,9 @@ export default {
         if (counter === this.marketAddresses.length) this.addMarkets(this.markets);
       });
     },
+    closeDialog() {
+      this.isPioneer = false;
+    },
   },
   watch: {
     chainId(val) {
@@ -79,9 +94,13 @@ export default {
       localStorage.flag = !this.dontShowWelcomeModal;
     },
     async walletAddress() {
-      if (!this.walletAddress) return;
-      const authorized = await this.whitelist.userIsAuthorized(this.walletAddress);
-      console.log('authorized', authorized);
+      if (this.walletAddress && this.activePioneer) {
+        const authorized = await this.whitelist.userIsAuthorized(this.walletAddress);
+        const pioneer = localStorage.getItem('tropykus-pioneer');
+        if (authorized && pioneer === 'true') return;
+        this.isPioneer = true;
+        this.authorized = authorized;
+      }
     },
   },
   created() {
@@ -94,10 +113,6 @@ export default {
     if (localStorage.flag) {
       this.btcToRbtcDialog = localStorage.flag === 'true';
     }
-  },
-  components: {
-    Navbar,
-    LeftBar,
   },
 };
 </script>

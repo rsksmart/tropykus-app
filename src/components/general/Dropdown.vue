@@ -10,7 +10,7 @@
           {{ select.underlyingSymbol }} <br/>
           <span class="microlanding text-value">
           {{ select.symbol === 'kSAT' && lending
-            ? 'microlending': ''
+            ? $t('market.general.micro'): ''
           }}
 
           </span>
@@ -35,7 +35,7 @@
           </div>
           <span class="microlanding text-value">
             {{market.marketAddress === addresses[chainId].kSAT.toLowerCase()
-              ? 'microlending' : ''
+              ? $t('market.general.micro') : ''
             }}
           </span>
         </div>

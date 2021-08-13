@@ -7,9 +7,9 @@
           {{ info.rateSat }}%
         </div>
         <div class="h3-sections-heading mt-2 mr-1">
-          Microahorro <br />
+          {{$t('deposit.microsavings.description1')}}<br />
           <div class="p1-descriptions">
-            Hasta 0.1 rBTC
+            {{$t('deposit.microsavings.description2')}}
           </div>
         </div>
       </v-btn>
@@ -20,9 +20,9 @@
           {{ info.rateRbtc }}%
         </div>
         <div class="h3-sections-heading mt-2 mr-1">
-          Estándar<br />
+          {{$t('deposit.microsavings.description3')}}<br />
           <div class="p1-descriptions">
-            Sin límite de depósito
+            {{$t('deposit.microsavings.description4')}}
           </div>
         </div>
       </v-btn>
