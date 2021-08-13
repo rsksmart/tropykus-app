@@ -71,6 +71,7 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
     // height: 45px;
   // }
   .v-messages__message{
+    display: none;
     margin-top: 8px;
     color: $third-color !important;
   }
@@ -80,6 +81,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   }
   &.alert{
     border: 2px solid #F7C61A;
+    .v-messages__message{
+      display: block;
+    }
   }
 }
 
@@ -255,6 +259,13 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
         height: 11px;
         color: $primary-color;
       }
+    }
+    .microlanding{
+      position: absolute;
+      font-size: 11px;
+      left: 62px;
+      top: 27px;
+      text-transform: lowercase;
     }
   }
   .v-menu__content{

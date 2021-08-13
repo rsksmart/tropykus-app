@@ -21,7 +21,12 @@
         <div class="p1-descriptions mb-3">
           {{ tabMenu ? $t('deposit.description1') : $t('withdraw.description1') }}
         </div>
-        <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
+        <dropdown
+          :tabMenu="tabMenu"
+          :select="select"
+          :getMarkets="getMarkets"
+          @updateRoute="updateRoute"
+        />
       </div>
       <div class="content-micro">
         <div class="p1-descriptions mb-3 text-info">
@@ -42,7 +47,7 @@
             {{ !tokenBalanceUsd ? 0 : tokenBalanceUsd | formatPrice}}
           </div>
         </div>
-        <div class="content-rate">
+        <div v-if="tabMenu" class="content-rate">
           <div class="p1-descriptions text-info mb-1 d-flex">
             <div class="text-rate">
               {{ $t('deposit.description4')}}
@@ -71,25 +76,25 @@
         <div class="input-box primary-bg"
           :class="!activeButton && amount > 0 ? 'alert' : ''"
         >
-        <div class="d-flex">
-          <v-text-field
-            type="number"
-            v-model="amount"
-            :rules="[rules.leverage, rules.minBalance, rules.collateral,
-            rules.withoutBalance, rules.supplyBalance]"
-            class="h1-title text-info pa-0 ma-0"
-            background-color="#CFE7DA"
-            color="#47B25F"
-            :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
-            filled
-            rounded
-            dense
-            @input="handleAmount"
-          ></v-text-field>
-          <v-btn @click="setMaxAmount" height="40" text>
-            <span class="text-primary">MÁX</span>
-          </v-btn>
-        </div>
+          <div class="d-flex">
+            <v-text-field
+              type="number"
+              v-model="amount"
+              :rules="[rules.leverage, rules.minBalance, rules.collateral,
+              rules.withoutBalance, rules.supplyBalance, rules.typeMarket]"
+              class="h1-title text-info pa-0 ma-0"
+              background-color="#CFE7DA"
+              color="#47B25F"
+              :placeholder="'0 ' + (select.underlyingSymbol ? select.underlyingSymbol : '')"
+              filled
+              rounded
+              dense
+              @input="handleAmount"
+            ></v-text-field>
+            <v-btn @click="setMaxAmount" height="40" text>
+              <span class="text-primary">MÁX</span>
+            </v-btn>
+          </div>
         </div>
         <div class="mt-15">
           <v-slider
@@ -215,8 +220,8 @@ export default {
       firestore: new Firestore(),
       tabMenu: true,
       comptroller: null,
-      micro: '',
       constants,
+      typeMarket: '',
       getMarkets: [],
       market: null,
       isLoading: false,
@@ -252,6 +257,9 @@ export default {
         collateral: () => ((!this.tabMenu && this.amount > 0)
           ? this.amount <= this.withdraw : true)
           || this.$t('dialog.supply-redeem.rule5'),
+        typeMarket: () => (((this.typeMarket === '' && this.amount && this.account))
+          ? this.typeMarket !== '' : true)
+          || this.$t('dialog.supply-redeem.rule6'),
       },
     };
   },
@@ -302,6 +310,7 @@ export default {
     },
     activeButton() {
       return this.amount > 0 && typeof this
+        .rules.typeMarket() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
         .rules.withoutBalance() !== 'string' && typeof this
         .rules.collateral() !== 'string' && typeof this
@@ -430,11 +439,15 @@ export default {
         }
       });
     },
-    updateRoute(marketAddress) {
+    updateRoute(marketAddress, typeMarket = null) {
+      this.typeMarket = typeMarket;
       if (this.$route.params.id !== marketAddress) {
         const to = { name: this.$route.name, params: { id: marketAddress } };
         this.$router.push(to);
       }
+      if (!typeMarket) this.reset();
+      const { ...rules } = this.rules;
+      this.rules = rules;
     },
     updateMarket() {
       this.$store.dispatch({
@@ -458,7 +471,6 @@ export default {
         ...data,
       });
       this.getLiquidity();
-      this.reset();
     },
     outsideConnectWallet() {
       this.showModalConnectWallet = false;

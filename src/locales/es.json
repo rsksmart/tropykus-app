@@ -24,7 +24,8 @@
       "rule2": "No tienes fondos suficientes",
       "rule3": "No tienes suficiente depositado",
       "rule4": "Este mercado no tiene fondos suficientes",
-      "rule5": "No puedes retirar este monto, ya que tu deposito es colateral de una deuda"
+      "rule5": "No puedes retirar este monto, ya que tu deposito es colateral de una deuda",
+      "rule6": "Para poder depositar, debes seleccionar primero la tasa de ganancia que quieres obtener."
     },
     "deposit": {
       "description1": "Tienes en tu billetera:",

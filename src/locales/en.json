@@ -24,7 +24,8 @@
       "rule2": "You do not have enough funds",
       "rule3": "You do not have enough deposited",
       "rule4": "This market is underfunded",
-      "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt"
+      "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt",
+      "rule6": "In order to deposit, you must first select return rate you want to obtain."
     },
     "deposit": {
       "description1": "You have in your wallet:",

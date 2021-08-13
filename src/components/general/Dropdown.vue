@@ -5,10 +5,16 @@
       <div class="selected-item d-flex align-center"
         v-bind="attrs" v-on="on">
         <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
-        <span v-if="select.underlyingSymbol"
+        <div v-if="select.underlyingSymbol"
           class="h3-sections-heading text-uppercase">
-          {{ select.underlyingSymbol }}
-        </span>
+          {{ select.underlyingSymbol }} <br/>
+          <span class="microlanding text-value">
+          {{ select.symbol === 'kSAT' && lending
+            ? 'microlending': ''
+          }}
+
+          </span>
+        </div>
         <v-icon class="select-icon" large color="text-primary">
           mdi-chevron-down
         </v-icon>
@@ -16,7 +22,7 @@
     </template>
     <v-list>
       <v-list-item
-        v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
+        v-for="(market, index) in infoMarkets" :key="index" class="select-menu-item"
         :class="market.symbol === select.symbol ? 'active' : ''"
         @click="updateRoute(market)"
       >
@@ -29,7 +35,7 @@
           </div>
           <span class="microlanding text-value">
             {{market.marketAddress === addresses[chainId].kSAT.toLowerCase()
-              ? 'microlandig' : ''
+              ? 'microlending' : ''
             }}
           </span>
         </div>
@@ -39,8 +45,9 @@
 </div>
 </template>
 <script>
-import { addresses } from '@/middleware/contracts/constants';
 import { mapState } from 'vuex';
+import { addresses } from '@/middleware/contracts/constants';
+import * as constants from '@/store/constants';
 
 export default {
   props: {
@@ -52,10 +59,17 @@ export default {
       type: Array,
       require: true,
     },
+    tabMenu: {
+      type: Boolean,
+      require: false,
+    },
   },
   data() {
     return {
       addresses,
+      constants,
+      infoMarkets: [],
+      lending: false,
     };
   },
   computed: {
@@ -63,11 +77,35 @@ export default {
       chainId: (state) => state.Session.chainId,
     }),
   },
+  watch: {
+    tabMenu() {
+      this.updateMarkets();
+    },
+    getMarkets() {
+      this.updateMarkets();
+    },
+  },
   methods: {
+    updateMarkets() {
+      this.infoMarkets = [];
+      if (this.$route.name === constants.ROUTE_NAMES.DEPOSIT && this.tabMenu) {
+        this.lending = false;
+        this.getMarkets.forEach((market) => {
+          if (market.marketAddress !== addresses[this.chainId].kSAT.toLowerCase()) {
+            this.infoMarkets.push(market);
+          }
+        });
+      } else {
+        this.infoMarkets = this.getMarkets;
+        this.lending = true;
+      }
+    },
     updateRoute(market) {
       this.$emit('updateRoute', market.marketAddress);
     },
-
+  },
+  created() {
+    this.updateMarkets();
   },
 };
 </script>
