@@ -279,7 +279,9 @@ export default class Market {
   async supply(account, amountIntended) {
     const accountSigner = signer(account);
     const value = await Market.getAmountDecimals(amountIntended);
-    if (await Market.isCRbtc(this.marketAddress)) {
+    const isCRbtc = await Market.isCRbtc(this.marketAddress);
+    const isCSAT = await Market.isCSat(this.marketAddress);
+    if (isCRbtc || isCSAT) {
       return this.instance.connect(accountSigner).mint({ value, gasLimit: this.gasLimit });
     }
     const underlyingAsset = new ethers.Contract(

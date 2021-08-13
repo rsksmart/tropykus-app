@@ -14,6 +14,7 @@
     <history-balance v-else :dataMarkets="dataMarkets"
       :infoDeposits="infoDeposits"
       :infoBorrows="infoBorrows"
+      :dataActivity="dataActivity"
     />
   </div>
 </template>
@@ -56,6 +57,7 @@ export default {
       infoBorrows: {},
       dataMarkets: [],
       chartData: [],
+      dataActivity: [],
       borrowData: [
         ['', 0, ''],
         ['', 0, ''],
@@ -88,6 +90,19 @@ export default {
     async getUserActivity() {
       const activity = await this.firestore
         .getUserActivity(this.comptroller.comptrollerAddress, this.walletAddress);
+      activity.forEach(async (a) => {
+        let info = {};
+        const img = await this.db
+          .collection('markets-symbols')
+          .doc(a.market)
+          .get()
+          .then((response) => response.data().imageURL);
+        info = {
+          ...a,
+          img,
+        };
+        this.dataActivity.push(info);
+      });
       console.log(activity);
     },
     async getMarkets() {
@@ -202,7 +217,7 @@ export default {
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.redirect();
-    // this.getUserActivity();
+    this.getUserActivity();
     this.getData();
     this.getMarketsInfo();
   },

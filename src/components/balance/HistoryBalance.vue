@@ -1,11 +1,11 @@
 <template>
   <div class="balance-history">
     <div class="d-flex mb-2">
-      <!-- <div @click="tabMenu = 'activity'" class="mr-10">
+      <div @click="tabMenu = 'activity'" class="mr-10">
         <span class="b1-main pb-1 tab"
         :class="tabMenu === 'activity' ? 'text-detail text-active' : 'text-inactive'"
         >{{$t('balance.my-activity.activity')}}</span>
-      </div> -->
+      </div>
       <div v-if="account" @click="tabMenu = 'deposit'" class="mr-10">
         <span class="b1-main pb-1 tab"
         :class="tabMenu === 'deposit' ? 'text-detail text-active' : 'text-inactive'"
@@ -19,15 +19,7 @@
     </div>
 
     <div class="results">
-      <!-- <div class="d-flex justify-center flex-column align-center"> -->
-        <!-- <div class="p1-descriptions mb-5">
-          No tienes fondos  aún. Compra Bitcoin (BTC) o transfierelos desde plataformas como Binance
-        </div>
-        <v-btn @click="openTransfer"
-          text class="btn btn-primary"
-          ><span class="white--text">Transferir BTC a mi billetera</span></v-btn>
-      </div> -->
-      <div v-if="validate_MM_NT" class="d-flex justify-center flex-column align-center">
+      <div v-if="validate_MM_NT" class="d-flex justify-center flex-column align-center mt-10">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description1')}}
         </div>
@@ -36,7 +28,7 @@
           ><span>{{$t('balance.my-activity.validations.btn1')}}</span></v-btn>
       </div>
 
-      <div v-if="addDepositAll" class="d-flex justify-center flex-column align-center">
+      <div v-if="addDepositAll" class="d-flex justify-center flex-column align-center mt-10">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description2')}}
         </div>
@@ -46,7 +38,7 @@
         </v-btn>
       </div>
 
-      <div v-if="validate_LQ" class="d-flex justify-center flex-column align-center">
+      <div v-if="validate_LQ" class="d-flex justify-center flex-column align-center mt-10">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description3')}}
         </div>
@@ -60,7 +52,7 @@
         </div>
       </div>
 
-      <div v-if="borrowAll" class="d-flex justify-center flex-column align-center">
+      <div v-if="borrowAll" class="d-flex justify-center flex-column align-center mt-10">
         <div class="p1-descriptions mb-5">
           {{$t('balance.my-activity.validations.description4')}}
         </div>
@@ -68,6 +60,53 @@
           <span class="white--text">{{$t('balance.my-activity.validations.btn5')}}</span>
         </v-btn>
       </div>
+
+      <!-- activity -->
+      <template v-if="tabMenu === 'activity' && userActivity.length > 0">
+        <div class="d-flex justify-space-between activity mt-8"
+          v-for="activity in userActivity" :key="activity.timestamp.seconds">
+          <div class="d-flex">
+            <img :src="activity.img">
+            <div class="h2-heading">
+              <span class="text-uppercase">{{activity.market}}</span>
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.activity.description1')}} <br />
+            <div class="p6-reading-values">
+              {{eventType(activity.event)}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.activity.description2')}} <br />
+            <div class="p6-reading-values">
+              {{activity.amount | formatDecimals(activity.market)}}
+              <span class="text-uppercase">{{activity.market}}</span>
+            </div>
+            <div class="p3-USD-value">
+              {{activity.priceAt | formatPrice(activity.market)}}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.activity.description3')}} <br />
+            <div class="p6-reading-values">
+              {{ getDate(activity.timestamp.seconds) }}
+            </div>
+          </div>
+          <div class="p7-graphics">
+            {{$t('balance.table.activity.description4')}} <br />
+            <div class="d-flex">
+              <div class="p6-reading-values">
+                {{activity.txHash.substring(0, 10)}}...
+              </div>
+              <img v-if="tooltip" @click="copyhash(activity.txHash)" class="ml-7 copie"
+                src="@/assets/icons/copie.svg">
+              <img v-else class="ml-7 copie"
+              src="@/assets/icons/copied.svg">
+            </div>
+          </div>
+        </div>
+      </template>
 
       <template v-for="(market, i) in getMarkets" >
         <!-- Depositos -->
@@ -195,6 +234,10 @@ export default {
     Transfer,
   },
   props: {
+    dataActivity: {
+      type: Array,
+      require: true,
+    },
     dataMarkets: {
       type: Array,
       require: true,
@@ -210,9 +253,11 @@ export default {
   },
   data() {
     return {
+      tooltip: true,
       constants,
-      tabMenu: 'deposit',
+      tabMenu: 'activity',
       getMarkets: [],
+      userActivity: [],
       rbtc: '0xE47b7c669F96B1E0Bf537bB27fF5C6264fe0d380',
       tutorial: false,
       transfer: false,
@@ -259,6 +304,11 @@ export default {
   watch: {
     dataMarkets() {
       this.getMarkets = this.dataMarkets;
+      console.log('data market', this.getMarkets);
+    },
+    dataActivity() {
+      this.userActivity = this.dataActivity;
+      console.log('mi actividad', this.userActivity);
     },
   },
   methods: {
@@ -272,10 +322,29 @@ export default {
       }
     },
     async isRbtc() {
-      // if (!this.account) return;
+      // get data
       this.getMarkets = this.dataMarkets;
+      this.userActivity = this.dataActivity;
+
       const market = new CRbtc(this.rbtc, this.chainId);
       this.amountRbtc = await market.balanceOfUnderlyingInWallet(this.account);
+    },
+    eventType(type) {
+      if (type === 'Mint') return this.$t('balance.events.mint');
+      if (type === 'Redeem') return this.$t('balance.events.redeem');
+      if (type === 'Borrow') return this.$t('balance.events.borrow');
+      return this.$t('balance.events.repayBorrow');
+    },
+    getDate(timestamp) {
+      const date = new Date(timestamp * 1000);
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    },
+    copyhash(hash) {
+      navigator.clipboard.writeText(hash);
+      this.tooltip = false;
+      setTimeout(() => {
+        this.tooltip = true;
+      }, 2000);
     },
     openTutorial() {
       this.tutorial = true;

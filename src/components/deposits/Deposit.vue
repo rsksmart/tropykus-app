@@ -257,7 +257,8 @@ export default {
         collateral: () => ((!this.tabMenu && this.amount > 0)
           ? this.amount <= this.withdraw : true)
           || this.$t('dialog.supply-redeem.rule5'),
-        typeMarket: () => (((this.typeMarket === '' && this.amount && this.account))
+        typeMarket: () => (((this.typeMarket === '' && this.amount
+          && this.account && this.select.underlyingSymbol === 'tRBTC'))
           ? this.typeMarket !== '' : true)
           || this.$t('dialog.supply-redeem.rule6'),
       },

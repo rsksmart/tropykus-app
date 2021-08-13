@@ -105,9 +105,11 @@ const actions = {
     const { marketAddress } = data;
     const isCRbtc = await Market.isCRbtc(marketAddress);
     const isCSAT = await Market.isCSat(marketAddress);
+    console.log('isCSAT', isCSAT);
 
     const market = isCRbtc || isCSAT ? new CRbtc(marketAddress, state.chainId)
       : new CToken(marketAddress, state.chainId);
+    console.log('market', market);
 
     commit(constants.MARKET_GET_MARKET, market);
 

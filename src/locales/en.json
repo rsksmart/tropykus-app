@@ -417,7 +417,19 @@
         "description3": "Current annual interest \nrate",
         "btn1": "Borrow",
         "btn2": "Pay"
+      },
+      "activity": {
+        "description1": "Activity",
+        "description2": "Amount",
+        "description3": "Date",
+        "description4": "Hash of the transaction"
       }
+    },
+    "events": {
+      "mint": "Deposit",
+      "redeem": "Withdraw",
+      "borrow": "Borrow",
+      "repayBorrow": "Pay"
     }
   }
 }

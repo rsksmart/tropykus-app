@@ -420,7 +420,19 @@
         "description3": "Tasa de interés \nanual actual",
         "btn1": "Pedir prestado",
         "btn2": "Pagar"
-      }
+      },
+        "activity": {
+          "description1": "Actividad",
+          "description2": "Monto",
+          "description3": "Fecha",
+          "description4": "Hash de la transacción"
+        }
+    },
+    "events": {
+      "mint": "Depósito",
+      "redeem": "Retiro",
+      "borrow": "Pedir prestado",
+      "repayBorrow": "Pagar"
     }
   }
 }
