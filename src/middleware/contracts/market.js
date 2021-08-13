@@ -144,7 +144,6 @@ export default class Market {
     return Number(await this.instance.callStatic.borrowBalanceStored(address)) / factor;
   }
 
-  // ======borrow
   async borrowBalanceCurrent(address) {
     return Number(await this.instance.callStatic.borrowBalanceCurrent(address)) / factor;
   }
@@ -246,7 +245,6 @@ export default class Market {
     return Number(await this.instance.callStatic.getCash()) / factor;
   }
 
-  // == balance
   async balanceOfUnderlyingInWallet(account) {
     const address = await account.getAddress();
     const underlyingAssetSymbol = await this.underlying();
@@ -276,12 +274,10 @@ export default class Market {
     );
   }
 
-  async supply(account, amountIntended) {
+  async supply(account, amountIntended, isCRbtc = false) {
     const accountSigner = signer(account);
     const value = await Market.getAmountDecimals(amountIntended);
-    const isCRbtc = await Market.isCRbtc(this.marketAddress);
-    const isCSAT = await Market.isCSat(this.marketAddress);
-    if (isCRbtc || isCSAT) {
+    if (isCRbtc) {
       return this.instance.connect(accountSigner).mint({ value, gasLimit: this.gasLimit });
     }
     const underlyingAsset = new ethers.Contract(

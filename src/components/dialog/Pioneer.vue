@@ -70,7 +70,6 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('closed');
-      console.log(this.checkPioneer);
       if (this.checkPioneer) {
         localStorage.setItem('tropykus-pioneer', this.checkPioneer);
       }

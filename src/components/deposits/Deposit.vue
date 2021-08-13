@@ -342,6 +342,8 @@ export default {
       this.market = this.marketStore;
     },
     account() {
+      this.amount = null;
+      this.sliderAmountPercentage = null;
       if (!this.account) this.tabMenu = true;
       this.updateMarket();
     },
