@@ -20,7 +20,7 @@
     "pioneer": {
       "description1": "Welcome to the Tropykus",
       "description2": "Where your Bitcoin find their true power.",
-      "btn1": "Explorer",
+      "btn1": "Explore",
       "description3": "Tropykus on Mainnet is coming very soon...",
       "description4": "Very soon you will be able to taste the good life in the Tropykus. We invite you to try Tropykus in Testnet.",
       "btn2": "Enter the test app"
@@ -290,7 +290,7 @@
     "description6": "Settlement risk",
     "btn1": "Connect wallet",
     "btn2": "Borrow",
-    "tooltip1": "This value is your maximum loan capacity with respect to your collateral.",
+    "tooltip1": "This value is your maximum debt capacity for your collateral. Or it shows the cash available on the market.",
     "tooltip2": "The interest rate varies when other users transact on the protocol."
   },
   "pay": {

@@ -257,6 +257,9 @@ export default {
         },
       },
       rules: {
+        cash: () => ((this.tabMenu && this.account && this.amount)
+          ? Number(this.amountAsUnderlyingPrice) <= Number(this.info.cash) : true)
+          || this.$t('dialog.borrow-repay.rule2'),
         liquidity: () => ((this.tabMenu && this.account && this.amount)
           ? Number(this.amountAsUnderlyingPrice) <= Number(this.liquidity) : true)
           || this.$t('dialog.borrow-repay.rule1'),
@@ -284,17 +287,15 @@ export default {
       marketStore: (state) => state.Market.market,
       isProgressStore: (state) => state.Market.isProgress,
     }),
-    activeButtonn() {
-      return this.tabMenu
-        ? (this.amount <= this.info.underlyingBalance && this.amount > 0)
-        : (this.amount <= this.info.supplyBalance && this.amount > 0);
-    },
     borrowValueInUSD() {
       return this.amount * this.info.underlyingPrice;
     },
     tokenBalance() {
-      return this.tabMenu ? (this.liquidity / this.info
-        .underlyingPrice) : this.info.borrowBalance;
+      if (this.tabMenu) {
+        return this.liquidity > this.info.cash ? this.info.cash : this
+          .liquidity / this.info.underlyingPrice;
+      }
+      return this.info.borrowBalance;
     },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;
@@ -310,7 +311,8 @@ export default {
         .rules.liquidity() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
         .rules.payBorrow() !== 'string' && typeof this
-        .rules.borrowBalance() !== 'string';
+        .rules.borrowBalance() !== 'string' && typeof this
+        .rules.cash() !== 'string';
     },
   },
   watch: {
