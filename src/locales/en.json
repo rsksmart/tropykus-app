@@ -292,7 +292,7 @@
     "description6": "Settlement risk",
     "btn1": "Connect wallet",
     "btn2": "Borrow",
-    "tooltip1": "This value is your maximum loan capacity with respect to your collateral.",
+    "tooltip1": "This value is your maximum debt capacity for your collateral. Or it shows the cash available on the market.",
     "tooltip2": "The interest rate varies when other users transact on the protocol."
   },
   "pay": {
