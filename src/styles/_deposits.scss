@@ -4,8 +4,11 @@
   max-width: 940px;
   margin: 0 auto;
   .text-description{
-    width: 550px;
+    width: 560px;
     text-align: center;
+  }
+  .h1-title{
+    font-size: 30px;
   }
   .h2-heading {
     margin-top: 68px;
@@ -138,12 +141,12 @@
         grid-row: 1 / 2;
       }
       .content-action{
-        margin-top: 65px;
+        margin-top: 90px;
         grid-column: 2 / 3;
         grid-row: 2 / 3;
       }
       .content-info{
-        margin-top: 65px;
+        margin-top: 90px;
         grid-column: 1 / 2;
         grid-row: 2 / 3;
       }
@@ -299,8 +302,6 @@
       height: 33px !important;
       border-radius: 20px;
     }
-
-    
   }
 
   .content-pay{

@@ -9,11 +9,11 @@
       </p>
     </div>
     <div class="d-flex justify-center actions-bottons">
-      <v-btn class="btn mr-9" text>
+      <!-- <v-btn class="btn mr-9" text>
         <span class="b1-main text-primary">
           {{ $t('borrows.btn1') }}
         </span>
-      </v-btn>
+      </v-btn> -->
       <v-btn class="btn btn-secondary" text @click="redirect(constants.ROUTE_NAMES.DEPOSITS)">
         <span class="b1-main">
           {{ $t('borrows.btn2') }}

@@ -111,7 +111,6 @@ export default {
     this.comptroller = new Comptroller(this.chainId);
     this.isCRbtc()
       .then((isCRbtc) => {
-        console.log(isCRbtc);
         this.market = isCRbtc ? new CRbtc(this.marketAddress, this.chainId)
           : new CToken(this.marketAddress, this.chainId);
         this.updateMarketInfo();

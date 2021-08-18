@@ -1,29 +1,33 @@
 <template>
   <div class="d-flex justify-space-between micro-savings">
       <v-btn class="btn-micro"
-      :class="micro === 'micro' ? 'active' : 'inactive'"
+      :class="typeMarket === 'micro' ? 'active' : 'inactive'"
       @click="updateRoute(addresses[chainId].kSAT)">
-        <div class="p4-values-filled mr-3">
+        <div class="h3-sections-heading">
+          {{$t('deposit.microsavings.description1')}}
+        </div>
+        <div class="h1-title mt-2"
+          :class="typeMarket === 'micro' ? '' : 'text-bg'"
+        >
           {{ info.rateSat }}%
         </div>
-        <div class="h3-sections-heading mt-2 mr-1">
-          {{$t('deposit.microsavings.description1')}}<br />
-          <div class="p1-descriptions">
-            {{$t('deposit.microsavings.description2')}}
-          </div>
+        <div class="p1-descriptions mt-1">
+          {{$t('deposit.microsavings.description2')}}
         </div>
       </v-btn>
-      <v-btn class="btn-micro standar"
-        :class="micro === 'standar' ? 'active' : 'inactive'"
+      <v-btn class="btn-micro"
+        :class="typeMarket === 'standar' ? 'active' : 'inactive'"
         @click="updateRoute(addresses[chainId].kRBTC)">
-        <div class="p4-values-filled mr-2">
+        <div class="h3-sections-heading">
+          {{$t('deposit.microsavings.description3')}}
+        </div>
+        <div class="h1-title mt-2"
+          :class="typeMarket === 'standar' ? '' : 'text-bg'"
+        >
           {{ info.rateRbtc }}%
         </div>
-        <div class="h3-sections-heading mt-2 mr-1">
-          {{$t('deposit.microsavings.description3')}}<br />
-          <div class="p1-descriptions">
-            {{$t('deposit.microsavings.description4')}}
-          </div>
+        <div class="p1-descriptions mt-1">
+          {{$t('deposit.microsavings.description4')}}
         </div>
       </v-btn>
     </div>
@@ -36,11 +40,17 @@ import {
 } from '@/middleware';
 
 export default {
+  props: {
+    microMarket: {
+      type: String,
+    },
+  },
   data() {
     return {
       micro: '',
       info: {},
       addresses,
+      typeMarket: '',
     };
   },
   computed: {
@@ -49,6 +59,9 @@ export default {
     }),
   },
   watch: {
+    microMarket() {
+      this.typeMarket = this.microMarket;
+    },
   },
   methods: {
     async isRBTC() {
@@ -75,6 +88,7 @@ export default {
     },
   },
   created() {
+    this.micro = '';
     this.isRBTC();
   },
 };

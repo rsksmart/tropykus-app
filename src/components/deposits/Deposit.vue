@@ -5,17 +5,17 @@
       <div text @click="tabMenu = true" class="mr-10">
         <span class="h3-sections-heading pb-1 tab"
         :class="tabMenu ? 'text-detail text-active' : 'text-inactive'"
-        >Deposit</span>
+        >{{$t('deposit.subtitle1')}}</span>
       </div>
       <div v-if="account" text @click="tabMenu = false">
         <span class="h3-sections-heading pb-1 tab"
         :class="tabMenu ? 'text-inactive' : 'text-detail text-active'"
-        >{{ $t('dialog.supply-redeem.title2') }}</span>
+        >{{ $t('deposit.subtitle2') }}</span>
       </div>
     </div>
 
     <div class="content-deposit mt-9"
-      :class="(select.underlyingSymbol === 'tRBTC' && tabMenu) ? 'micro' : ''"
+      :class="(isCRBTC && tabMenu) ? 'micro' : ''"
     >
       <div class="content-menu">
         <div class="p1-descriptions mb-3">
@@ -32,19 +32,46 @@
         <div class="p1-descriptions mb-3 text-info">
           {{ $t('deposit.micro') }}
         </div>
-        <savings @updateRoute="updateRoute"/>
+        <savings @updateRoute="updateRoute" :microMarket="typeMarket" />
       </div>
       <div class="content-info">
         <div>
           <div class="p1-descriptions text-info mb-1">
             {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description3') }}
-            </div>
-          <div class="p2-reading-values text-uppercase text-info">
+          </div>
+          <div class="p2-reading-values text-info">
             {{ !tokenBalance ? 0 : tokenBalance | formatDecimals(select.underlyingSymbol) }}
             {{select.underlyingSymbol}}
           </div>
           <div class="p3-USD-values text-info">
             {{ !tokenBalanceUsd ? 0 : tokenBalanceUsd | formatPrice}}
+          </div>
+        </div>
+        <div v-if="tabMenu && marketAddress === addresses[chainId].kSAT && info.supplyBalance > 0"
+          class="mt-12">
+          <div class="d-flex">
+            <div class="p1-descriptions text-info mb-1">
+              {{ $t('withdraw.description3') }}
+            </div>
+            <div class="tooltip-info ml-7">
+              <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-img v-bind="attrs" v-on="on" width="15" height="15"
+                        src="@/assets/icons/info2.svg" contain/>
+                </template>
+                <span class="p5-feedback text-info">
+                  {{ $t('deposit.tooltip3') }}
+                </span>
+              </v-tooltip>
+            </div>
+          </div>
+          <div class="p2-reading-values text-info">
+            {{ !info.supplyBalance ? 0
+              : info.supplyBalance | formatDecimals(select.underlyingSymbol)}}
+            {{select.underlyingSymbol}}
+          </div>
+          <div class="p3-USD-values text-info">
+            {{ !info.supplyBalance ? 0 : info.supplyBalance * info.price | formatPrice}}
           </div>
         </div>
         <div v-if="tabMenu" class="content-rate">
@@ -80,7 +107,7 @@
             <v-text-field
               type="number"
               v-model="amount"
-              :rules="[rules.leverage, rules.minBalance, rules.collateral,
+              :rules="[rules.leverage, rules.minBalance, rules.collateral, rules.minkRBTC,
               rules.withoutBalance, rules.supplyBalance, rules.typeMarket]"
               class="h1-title text-info pa-0 ma-0"
               background-color="#CFE7DA"
@@ -172,7 +199,7 @@
           <div class="p1-descriptions text-info">
             {{ $t('deposit.calculator.description1')}}
           </div>
-          <div class="p2-reading-values box-number text-uppercase">
+          <div class="p2-reading-values box-number">
               {{ !possibleEarnings ? 0 : possibleEarnings | formatDecimals }}
               {{ info.underlyingSymbol }}
           </div>
@@ -202,6 +229,7 @@ import Loading from '@/components/modals/Loading.vue';
 import Dropdown from '@/components/general/Dropdown.vue';
 import Savings from '@/components/deposits/Savings.vue';
 import * as constants from '@/store/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   Comptroller,
   Firestore,
@@ -221,6 +249,7 @@ export default {
       tabMenu: true,
       comptroller: null,
       constants,
+      addresses,
       typeMarket: '',
       getMarkets: [],
       market: null,
@@ -235,6 +264,8 @@ export default {
         success: null,
       },
       select: {},
+      marketAddress: '',
+      isCRBTC: false,
       showModalConnectWallet: false,
       sliderAmountPercentage: 0,
       sliderYear: 0,
@@ -258,9 +289,13 @@ export default {
           ? this.amount <= this.withdraw : true)
           || this.$t('dialog.supply-redeem.rule5'),
         typeMarket: () => (((this.typeMarket === '' && this.amount
-          && this.account && this.select.underlyingSymbol === 'tRBTC'))
+          && this.account && this.isCRBTC))
           ? this.typeMarket !== '' : true)
           || this.$t('dialog.supply-redeem.rule6'),
+        minkRBTC: () => (this.marketAddress === addresses[this.chainId].kSAT && this.typeMarket !== ''
+          ? (this.info.supplyBalance + this.amount) <= 0.1 : true)
+          || this.$t('dialog.supply-redeem.rule7'),
+
       },
     };
   },
@@ -311,6 +346,7 @@ export default {
     },
     activeButton() {
       return this.amount > 0 && typeof this
+        .rules.minkRBTC() !== 'string' && typeof this
         .rules.typeMarket() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
         .rules.withoutBalance() !== 'string' && typeof this
@@ -442,15 +478,13 @@ export default {
         }
       });
     },
-    updateRoute(marketAddress, typeMarket = null) {
+    updateRoute(marketAddress, typeMarket = '') {
       this.typeMarket = typeMarket;
       if (this.$route.params.id !== marketAddress) {
         const to = { name: this.$route.name, params: { id: marketAddress } };
         this.$router.push(to);
       }
       if (!typeMarket) this.reset();
-      const { ...rules } = this.rules;
-      this.rules = rules;
     },
     updateMarket() {
       this.$store.dispatch({
@@ -462,7 +496,14 @@ export default {
       });
       this.getLiquidity();
     },
-    getMarket() {
+    async getMarket() {
+      this.marketAddress = this.$route.params.id;
+      const iskRBTC = addresses[this.chainId].kRBTC;
+      const iskSAT = addresses[this.chainId].kSAT;
+      // si es crbtc mostramos microsavings
+      this.isCRBTC = this.marketAddress === iskRBTC
+        || this.marketAddress === iskSAT;
+
       const data = {
         marketAddress: this.$route.params.id,
         walletAddress: this.walletAddress,
@@ -522,6 +563,7 @@ export default {
     },
   },
   created() {
+    this.marketAddress = this.$route.params.id;
     this.comptroller = new Comptroller(this.chainId);
     this.ofBalance();
     this.getMarket();

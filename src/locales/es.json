@@ -23,6 +23,7 @@
       "btn1": "Explorar",
       "description3": "Tropykus en Mainnet llegará muy pronto...",
       "description4": "Muy pronto podrás  probar la buena vida en el Tropykus. Te invitamos a probar Tropykus en Testnet.",
+      "description5": "No mostar",
       "btn2": "Ingresar a la app de prueba"
     },
     "supply-redeem": {
@@ -33,7 +34,8 @@
       "rule3": "No tienes suficiente depositado",
       "rule4": "Este mercado no tiene fondos suficientes",
       "rule5": "No puedes retirar este monto, ya que tu deposito es colateral de una deuda",
-      "rule6": "Para poder depositar, debes seleccionar primero la tasa de ganancia que quieres obtener."
+      "rule6": "Para poder depositar, debes seleccionar primero la tasa de ganancia que quieres obtener.",
+      "rule7": "No puedes depositar más de 0.1 RBTC en este mercado"
     },
     "deposit": {
       "description1": "Tienes en tu billetera:",
@@ -275,7 +277,7 @@
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",
-    "description": "Si no tienes depósitos, realiza un depósito en cualquiera de nuestros mercados.\nSi quieres pedir prestado, pero no sabes cuánto tendrás que pagar usa nuestro simulador de pago de interés",
+    "description": "Si no tienes depósitos, realiza un depósito en cualquiera de nuestros mercados para poder pedir prestado",
     "subtitle": "Criptos que puedes pedir prestadas",
     "btn1": "Simular pago de interés",
     "btn2": "Depositar"
@@ -313,7 +315,8 @@
   },
   "deposit": {
     "title": "Deposita tus criptos y obten ganancias",
-    "subtitle": "Depositar",
+    "subtitle1": "Depositar",
+    "subtitle2": "Retirar",
     "description1": "Selecciona la cripto a depositar",
     "description2": "Escribe la cantidad que vas a depositar",
     "description3": "Tienes en tu billetera",
@@ -334,6 +337,7 @@
     "description6": "Échale un vistazo a estratégias",
     "tooltip1": "La tasa de interés varía cuando otros usuarios realizan transacciones en el protocolo.",
     "tooltip2": "Esta calculadora solo simula las ganancias que se podrían obtener en cierto periodo de tiempo. Las cifras mostradas varian segùn la tasa anual de ganancia dinámica y los precios de las criptomonedas, por lo tanto no es una garantia de las gananicas futuras.",
+    "tooltip3": "Este valor corresponde al total depositado más las ganancias acumuladas hasta el momento.",
     "microsavings": {
       "description1": "Microahorro",
       "description2": "Hasta 0.1 rBTC",

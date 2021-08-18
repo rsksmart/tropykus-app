@@ -20,9 +20,10 @@
     "pioneer": {
       "description1": "Welcome to the Tropykus",
       "description2": "Where your Bitcoin find their true power.",
-      "btn1": "Explorer",
+      "btn1": "Explore",
       "description3": "Tropykus on Mainnet is coming very soon...",
-      "description4": "Very soon you will be able to taste the good life in the Tropykus. We invite you to try Tropykus in Testnet.",
+      "description4": "You will be able to taste the good life in the Tropykus very soon. We invite you to try Tropykus in Testnet.",
+      "description5": "Don't show again",
       "btn2": "Enter the test app"
     },
     "supply-redeem": {
@@ -33,7 +34,8 @@
       "rule3": "You do not have enough deposited",
       "rule4": "This market is underfunded",
       "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt",
-      "rule6": "In order to deposit, you must first select return rate you want to obtain."
+      "rule6": "In order to deposit, you must first select return rate you want to obtain.",
+      "rule7": "You cannot deposit more than 0.1 RBTC in this market"
     },
     "deposit": {
       "description1": "You have in your wallet:",
@@ -273,7 +275,7 @@
   },
   "borrows": {
     "title": "You can borrow and multiply your earnings",
-    "description": "If you don't have deposits, make a deposit in any of our markets. If you want to borrow, but do not know how much you will have to pay, use our interest payment simulator.",
+    "description": "If you don't have deposits, make a deposit in any of our markets to be able to borrow",
     "subtitle": "Cryptos that you can borrow",
     "btn1": "Simulate interest payment",
     "btn2": "Deposit"
@@ -303,14 +305,15 @@
   },
   "deposits": {
     "title": "Deposit your RBTC and earn 4% per year",
-    "description": "Get the most out of your bitcoins by converting them into RBTC or buy RBTC",
+    "description": "Get the earnings of your bitcoins by converting them into RBTC or buy RBTC",
     "subtitle": "Deposit your crypto and get profit",
     "btn1": "Convert BTC to RBTC",
     "btn2": "Buy RBTC"
   },
   "deposit": {
     "title": "Deposit your crypto and get profit",
-    "subtitle": "Deposit",
+    "subtitle1": "Deposit",
+    "subtitle2": "Withdraw",
     "description1": "Select the crypto to deposit",
     "description2": "Write the amount you are going to deposit",
     "description3": "You have in your wallet",
@@ -331,6 +334,7 @@
     "description6": "Take a look at strategies",
     "tooltip1": "The interest rate varies when other users carry out transactions in the protocol.",
     "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits.",
+    "tooltip3": "This value corresponds to the total deposited plus the accumulated earnings so far.",
     "microsavings": {
       "description1": "Microsaving",
       "description2": "Up to 0.1 rBTC",

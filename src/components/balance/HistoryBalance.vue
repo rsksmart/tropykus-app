@@ -68,7 +68,10 @@
           <div class="d-flex">
             <img :src="activity.img">
             <div class="h2-heading">
-              <span class="text-uppercase">{{activity.market}}</span>
+              <div class="">{{activity.market}}</div>
+              <div class="p1-descriptions">
+                {{ textMicroSavings(activity.marketAddress) }}
+              </div>
             </div>
           </div>
           <div class="p7-graphics">
@@ -81,7 +84,7 @@
             {{$t('balance.table.activity.description2')}} <br />
             <div class="p6-reading-values">
               {{activity.amount | formatDecimals(activity.market)}}
-              <span class="text-uppercase">{{activity.market}}</span>
+              <span class="">{{activity.market}}</span>
             </div>
             <div class="p3-USD-value">
               {{activity.priceAt | formatPrice(activity.market)}}
@@ -97,32 +100,36 @@
             {{$t('balance.table.activity.description4')}} <br />
             <div class="d-flex">
               <div class="p6-reading-values">
-                {{activity.txHash.substring(0, 10)}}...
+                {{activity.txHash.substring(0, 8)}}...{{activity.txHash.substring(64, 66)}}
               </div>
-              <img v-if="tooltip" @click="copyhash(activity.txHash)" class="ml-7 copie"
+              <img v-if="tooltip && activity.marketAddress === marketCopied"
+                class="ml-7 copie" src="@/assets/icons/copied.svg">
+              <img v-else
+                @click="copyhash(activity.txHash, activity.marketAddress)"  class="ml-7 copie"
                 src="@/assets/icons/copie.svg">
-              <img v-else class="ml-7 copie"
-              src="@/assets/icons/copied.svg">
             </div>
           </div>
         </div>
       </template>
 
+      <!-- Depositos -->
       <template v-for="(market, i) in getMarkets" >
-        <!-- Depositos -->
         <div class="d-flex justify-space-between activity mt-8" :key="i"
           v-if="market.supplyBalance > 0 && tabMenu === 'deposit'">
           <div class="d-flex">
             <img :src="market.img">
             <div class="h2-heading">
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <div class="">{{market.symbol}}</div>
+              <div class="p1-descriptions">
+                {{ textMicroSavings(market.marketAddress) }}
+              </div>
             </div>
           </div>
           <div class="p7-graphics">
             {{$t('balance.table.deposit.description1')}} <br />
             <div class="p6-reading-values">
               {{market.supplyBalance | formatDecimals(market.symbol)}}
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <span class="">{{market.symbol}}</span>
             </div>
             <div class="p3-USD-value">
               {{market.blanceUsd | formatPrice(market.symbol)}}
@@ -132,7 +139,7 @@
             {{$t('balance.table.deposit.description2')}} <br />
             <div class="p6-reading-values">
               {{market.interestBalance | formatDecimals(market.symbol)}}
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <span class="">{{market.symbol}}</span>
             </div>
             <div class="p3-USD-value">
               {{market.interesUsd | formatPrice}}
@@ -164,14 +171,17 @@
           <div class="d-flex">
             <img :src="market.img">
             <div class="h2-heading">
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <div class="">{{market.symbol}}</div>
+              <div class="p1-descriptions">
+                {{ textMicroSavings(market.marketAddress) }}
+              </div>
             </div>
           </div>
           <div class="p7-graphics">
             {{$t('balance.table.debts.description1')}}<br />
             <div class="p6-reading-values">
               {{market.borrowBalance | formatDecimals(market.symbol)}}
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <span class="">{{market.symbol}}</span>
             </div>
             <div class="p3-USD-value">
               {{market.borrowUsd | formatPrice}}
@@ -181,7 +191,7 @@
             {{$t('balance.table.debts.description2')}}<br />
             <div class="p6-reading-values">
               {{market.interestBorrow | formatDecimals(market.symbol)}}
-              <span class="text-uppercase">{{market.symbol}}</span>
+              <span class="">{{market.symbol}}</span>
             </div>
             <div class="p3-USD-value">
               {{market.interestBorrowUsd | formatPrice}}
@@ -221,6 +231,7 @@
 <script>
 import { mapState } from 'vuex';
 import * as constants from '@/store/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   CRbtc,
 } from '@/middleware';
@@ -253,11 +264,12 @@ export default {
   },
   data() {
     return {
-      tooltip: true,
+      tooltip: false,
       constants,
       tabMenu: 'activity',
       getMarkets: [],
       userActivity: [],
+      marketCopied: '',
       rbtc: '0xE47b7c669F96B1E0Bf537bB27fF5C6264fe0d380',
       tutorial: false,
       transfer: false,
@@ -294,7 +306,7 @@ export default {
       return this.wallet === this.LQ && !this.amountRbtc && !Number(this.totalDeposits);
     },
     addDepositAll() {
-      return this.amountRbtc && !Number(this.totalDeposits);
+      return this.amountRbtc && !Number(this.totalDeposits) && !this.dataActivity;
     },
     borrowAll() {
       return !Number(this.totalBorrows) && Number(this.totalDeposits) && this.amountRbtc
@@ -312,6 +324,11 @@ export default {
     },
   },
   methods: {
+    textMicroSavings(marketAddress) {
+      return addresses[this.chainId].kSAT === marketAddress
+        ? 'micro saving'
+        : '';
+    },
     redirect(routePath, marketAddress = '', menu = 'true') {
       if (marketAddress === '') {
         const to = { name: routePath };
@@ -339,11 +356,15 @@ export default {
       const date = new Date(timestamp * 1000);
       return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     },
-    copyhash(hash) {
+    copyhash(hash, marketAddress) {
       navigator.clipboard.writeText(hash);
-      this.tooltip = false;
+      this.tooltip = true;
+      this.marketCopied = marketAddress;
+      console.log('tooltip', this.tooltip);
+      console.log('market', marketAddress);
       setTimeout(() => {
-        this.tooltip = true;
+        this.tooltip = false;
+        this.marketCopied = '';
       }, 2000);
     },
     openTutorial() {

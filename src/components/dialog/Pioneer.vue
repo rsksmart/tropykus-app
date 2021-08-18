@@ -21,7 +21,7 @@
           </div>
           <v-checkbox
               v-model="checkPioneer"
-              label="No volver a mostrar"
+              :label="$t('dialog.pioneer.description5')"
               color="white"
               class="checkbox"
             ></v-checkbox>

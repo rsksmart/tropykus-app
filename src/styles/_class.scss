@@ -181,11 +181,10 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1);
   border-radius: 15px;
   width: 212px;
-  height: 71px !important;
-  text-align: left;
-  .h3-sections-heading{
-    font-size: 15px !important;
-    line-height: 12px !important;
+  height: 126px !important;
+  text-align: center;
+  .v-btn__content{
+    display: block;
   }
   .p1-descriptions{
     font-size: 11px !important;
@@ -193,10 +192,6 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   &.inactive{
     background-color: #E1F0E8 !important;
   }
-  &.standar{
-    width: 238px;
-  }
-
   &.active{
     background-color: $primary-color !important;
     color: white;
@@ -224,6 +219,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 }
 .text-value{
   color: $text-value !important;
+}
+.text-bg{
+  color: $text-bg !important;
 }
 
 //=======================

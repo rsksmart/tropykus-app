@@ -26,6 +26,7 @@ import ChartBalance from '@/components/balance/ChartBalance.vue';
 import DepositsBalance from '@/components/balance/DepositsBalance.vue';
 import DebtsBalance from '@/components/balance/DebtsBalance.vue';
 import HistoryBalance from '@/components/balance/HistoryBalance.vue';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   CRbtc,
   CToken,
@@ -63,8 +64,10 @@ export default {
         ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
+        ['', 0, ''],
       ],
       supplyData: [
+        ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
@@ -97,13 +100,15 @@ export default {
           .doc(a.market)
           .get()
           .then((response) => response.data().imageURL);
+
+        const date = new Date(a.timestamp.seconds * 1000);
         info = {
           ...a,
           img,
+          date,
         };
         this.dataActivity.push(info);
       });
-      console.log(activity);
     },
     async getMarkets() {
       return new Promise((resolve, reject) => {
@@ -186,6 +191,7 @@ export default {
             dataBorrow[2] = 'borrow';
             this.borrowData[i] = dataBorrow;
           } else {
+            dataBorrow[0] = info.symbol.toUpperCase();
             this.borrowData[i] = dataBorrow;
           }
           if (info.supplyBalance > 0) {
@@ -196,6 +202,15 @@ export default {
           } else {
             this.supplyData[i] = dataSupply;
           }
+
+          // micro
+          const ksat = addresses[this.chainId].kSAT;
+
+          if (ksat === info.marketAddress) {
+            dataBorrow[0] = `Micro-${info.symbol.toUpperCase()}`;
+            dataSupply[0] = `Micro-${info.symbol.toUpperCase()}`;
+          }
+
           this.chartData = [...this.supplyData, ...this.borrowData];
 
           data.push(info);

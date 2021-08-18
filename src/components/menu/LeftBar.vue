@@ -92,14 +92,22 @@
         <div class="d-flex pl-6 price-btc">
           <img src="https://firebasestorage.googleapis.com/v0/b/tropycofinance.appspot.com/o/markets%2FRBTC.svg?alt=media&token=65f6dd30-5bcc-42c1-bbda-7795c64cccdd" />
           <div class="ml-4 d-flex">
-            <div class="p3-USD-values white--text align-self-center">$54.000 USD</div>
+            <div class="p3-USD-values white--text align-self-center">
+              {{marketPrice | formatPrice}}
+            </div>
           </div>
         </div>
 
         <div class="d-flex justify-space-between contact-tropykus">
+          <a href="https://github.com/Tropykus/protocol">
             <v-img contain height="43" src="@/assets/icons/github.svg"/>
+          </a>
+          <a href="https://twitter.com/tropykus">
             <v-img contain height="43" src="@/assets/icons/twitter.svg"/>
+          </a>
+          <a href="https://t.me/tropykus">
             <v-img contain height="43" src="@/assets/icons/telegram.svg"/>
+          </a>
         </div>
 
     </v-navigation-drawer>
@@ -116,7 +124,11 @@
 <script>
 import { mapState } from 'vuex';
 import * as constants from '@/store/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
+import {
+  CRbtc,
+} from '@/middleware';
 
 export default {
   name: 'LeftBar',
@@ -130,11 +142,13 @@ export default {
       showDrawer: true,
       showModalConnectWallet: false,
       next: false,
+      marketPrice: 0,
     };
   },
   computed: {
     ...mapState({
       account: (state) => state.Session.account,
+      chainId: (state) => state.Session.chainId,
       showDialogConnect: (state) => state.Session.showDialogConnect,
     }),
   },
@@ -160,6 +174,11 @@ export default {
       this.showModalConnectWallet = false;
       this.$store.dispatch(constants.SESSION_SHOW_DIALOG_CONNECT, false);
     },
+    async getPrice() {
+      const rtbc = addresses[this.chainId].kRBTC;
+      const market = new CRbtc(rtbc, this.chainId);
+      this.marketPrice = await market.underlyingCurrentPrice(this.chainId);
+    },
   },
   watch: {
     account() {
@@ -182,6 +201,9 @@ export default {
         this.openConnectWallet();
       }
     },
+  },
+  created() {
+    this.getPrice();
   },
 };
 </script>
