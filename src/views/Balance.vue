@@ -93,21 +93,32 @@ export default {
     async getUserActivity() {
       const activity = await this.firestore
         .getUserActivity(this.comptroller.comptrollerAddress, this.walletAddress);
-      activity.forEach(async (a) => {
-        let info = {};
-        const img = await this.db
-          .collection('markets-symbols')
-          .doc(a.market)
-          .get()
-          .then((response) => response.data().imageURL);
+      const done = new Promise((resolve) => {
+        activity.forEach(async (a, index, array) => {
+          let info = {};
+          const img = await this.db
+            .collection('markets-symbols')
+            .doc(a.market)
+            .get()
+            .then((response) => response.data().imageURL);
 
-        const date = new Date(a.timestamp.seconds * 1000);
-        info = {
-          ...a,
-          img,
-          date,
-        };
-        this.dataActivity.push(info);
+          const date = new Date(a.timestamp.seconds * 1000);
+          info = {
+            ...a,
+            img,
+            date,
+          };
+          this.dataActivity.push(info);
+          if (index === array.length - 1) resolve();
+        });
+      });
+
+      done.then(() => {
+        this.dataActivity.sort((prev, curr) => {
+          if (prev.date.toISOString() < curr.date.toISOString()) return 1;
+          if (prev.date.toISOString() > curr.date.toISOString()) return -1;
+          return 0;
+        });
       });
     },
     async getMarkets() {
