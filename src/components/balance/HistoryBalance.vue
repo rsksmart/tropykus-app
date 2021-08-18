@@ -306,7 +306,7 @@ export default {
       return this.wallet === this.LQ && !this.amountRbtc && !Number(this.totalDeposits);
     },
     addDepositAll() {
-      return this.amountRbtc && !Number(this.totalDeposits) && !this.dataActivity;
+      return this.amountRbtc && !Number(this.totalDeposits) && this.dataActivity.length === 0;
     },
     borrowAll() {
       return !Number(this.totalBorrows) && Number(this.totalDeposits) && this.amountRbtc
