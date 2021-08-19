@@ -102,10 +102,10 @@
               <div class="p6-reading-values">
                 {{activity.txHash.substring(0, 8)}}...{{activity.txHash.substring(64, 66)}}
               </div>
-              <img v-if="tooltip && activity.marketAddress === marketCopied"
+              <img v-if="tooltip && activity.timestamp.seconds === timeHash"
                 class="ml-7 copie" src="@/assets/icons/copied.svg">
               <img v-else
-                @click="copyhash(activity.txHash, activity.marketAddress)"  class="ml-7 copie"
+                @click="copyhash(activity.txHash, activity.timestamp.seconds)"  class="ml-7 copie"
                 src="@/assets/icons/copie.svg">
             </div>
           </div>
@@ -269,7 +269,7 @@ export default {
       tabMenu: 'activity',
       getMarkets: [],
       userActivity: [],
-      marketCopied: '',
+      timeHash: '',
       rbtc: '0xE47b7c669F96B1E0Bf537bB27fF5C6264fe0d380',
       tutorial: false,
       transfer: false,
@@ -356,15 +356,15 @@ export default {
       const date = new Date(timestamp * 1000);
       return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     },
-    copyhash(hash, marketAddress) {
+    copyhash(hash, time) {
       navigator.clipboard.writeText(hash);
       this.tooltip = true;
-      this.marketCopied = marketAddress;
+      this.timeHash = time;
       console.log('tooltip', this.tooltip);
-      console.log('market', marketAddress);
+      console.log('market', time);
       setTimeout(() => {
         this.tooltip = false;
-        this.marketCopied = '';
+        this.timeHash = '';
       }, 2000);
     },
     openTutorial() {

@@ -57,7 +57,9 @@ const actions = {
           rpc: { 31: process.env.VUE_APP_RSK_NODE },
         });
         await provider.enable();
-        // console.log('name of wallet', provider.connector._peerMeta.name);
+        const { connector: { _peerMeta } } = provider;
+        const { name, url } = _peerMeta;
+        console.log('name of wallet', name, url);
         // const wallet = provider.connector._peerMeta.name;
         // console.log(wallet, 'name')
         // if(wallet === 'MetaMask'){

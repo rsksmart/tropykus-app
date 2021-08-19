@@ -197,6 +197,7 @@ export default {
   },
   data() {
     return {
+      counterAction: 0,
       firestore: new Firestore(),
       isProgress: true,
       tabMenu: true,
@@ -367,6 +368,7 @@ export default {
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
       this.infoLoading.symbol = this.select.underlyingSymbol;
+      this.counterAction = 1;
       if (this.tabMenu) {
         await this.market.borrow(this.account, this.amount)
           .then((tx) => {
@@ -379,20 +381,23 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = true;
                 this.infoLoading.amount = amount / 1e18;
-                this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Borrow',
-                  amount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                if (this.counterAction === 1) {
+                  this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'Borrow',
+                    amount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
+                this.counterAction = 0;
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })
@@ -411,20 +416,22 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = false;
                 this.infoLoading.amount = amount / 1e18;
-                this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'RepayBorrow',
-                  amount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                if (this.counterAction === 1) {
+                  this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'RepayBorrow',
+                    amount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })

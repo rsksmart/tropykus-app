@@ -245,6 +245,7 @@ export default {
   },
   data() {
     return {
+      counterAction: 0,
       firestore: new Firestore(),
       tabMenu: true,
       comptroller: null,
@@ -400,6 +401,7 @@ export default {
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
       this.infoLoading.symbol = this.select.underlyingSymbol;
+      this.counterAction = 1;
       if (this.tabMenu) {
         // colocar los mercados en assetsIn
         const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
@@ -418,20 +420,23 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = true;
                 this.infoLoading.amount = actualMintAmount / 1e18;
-                await this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Mint',
-                  actualMintAmount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                if (this.counterAction === 1) {
+                  await this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'Mint',
+                    actualMintAmount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
+                this.counterAction = 0;
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })
@@ -448,20 +453,23 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.deposit = false;
                 this.infoLoading.amount = actualRedeemAmount / 1e18;
-                await this.firestore.saveUserAction(
-                  this.comptroller.comptrollerAddress,
-                  this.walletAddress,
-                  'Redeem',
-                  actualRedeemAmount / 1e18,
-                  this.info.underlyingSymbol,
-                  this.market.marketAddress,
-                  this.info.underlyingPrice,
-                  new Date(),
-                  tx.hash,
-                );
+                if (this.counterAction === 1) {
+                  await this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'Redeem',
+                    actualRedeemAmount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
+                this.counterAction = 0;
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })
@@ -472,6 +480,7 @@ export default {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
+        this.counterAction = 0;
         if (this.walletAddress === from) {
           // this.showError();
           console.log('error');
