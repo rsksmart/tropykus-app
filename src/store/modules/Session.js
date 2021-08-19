@@ -57,12 +57,15 @@ const actions = {
           rpc: { 31: process.env.VUE_APP_RSK_NODE },
         });
         await provider.enable();
-        // console.log('name of wallet', provider.connector._peerMeta.name);
-        // const wallet = provider.connector._peerMeta.name;
-        // console.log(wallet, 'name')
-        // if(wallet === 'MetaMask'){
-        //   commit(constants.SESSION_SET_WALLET, constants.WALLET_METAMASK);
-        // }
+        const { connector: { _peerMeta: { name } } } = provider;
+        if (name === 'MetaMask') {
+          state.wallet = constants.WALLET_METAMASK;
+          commit(constants.SESSION_SET_WALLET, constants.WALLET_METAMASK);
+        }
+        if (name === 'WalletConnect Flutter Client') {
+          state.wallet = constants.WALLET_DEFIANT;
+          commit(constants.SESSION_SET_WALLET, constants.WALLET_DEFIANT);
+        }
       } else {
         return;
       }
@@ -74,7 +77,7 @@ const actions = {
       commit(constants.SESSION_SET_PROPERTY, { provider });
       commit(constants.SESSION_SET_PROPERTY, { account });
       commit(constants.SESSION_SET_PROPERTY, { walletAddress });
-      commit(constants.SESSION_SET_PROPERTY, { wallet });
+      if (wallet !== constants.WALLET_CONNECT) commit(constants.SESSION_SET_PROPERTY, { wallet });
       dispatch(constants.SESSION_GET_CHAIN_ID);
     }
   },
@@ -99,7 +102,8 @@ const actions = {
     }
   },
   [constants.SESSION_DISCONNECT_WALLET]: async ({ commit }) => {
-    if (state.wallet === constants.WALLET_CONNECT) await state.provider.disconnect();
+    if (state.wallet === constants.WALLET_METAMASK
+      || state.wallet === constants.WALLET_DEFIANT) await state.provider.disconnect();
     commit(constants.SESSION_SET_PROPERTY, { walletAddress: undefined });
     commit(constants.SESSION_SET_PROPERTY, { account: undefined });
     commit(constants.SESSION_SET_PROPERTY, { wallet: undefined });
