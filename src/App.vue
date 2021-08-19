@@ -108,6 +108,10 @@ export default {
     this.whitelist = new Whitelist(this.chainId);
     this.loadMarkets();
     this.activeWhitelist();
+    const walletconnect = localStorage.getItem('walletconnect');
+    if (walletconnect) {
+      localStorage.removeItem('walletconnect');
+    }
   },
   mounted() {
     if (localStorage.flag) {
