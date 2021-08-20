@@ -17,10 +17,7 @@
         {{info.rate}}%
       </div>
       <div class="p1-descriptions text-info mt-4" style="width: 119px">
-        {{ $t('market.general.description1') }}
         {{ rateLabel }}
-        {{ $t('market.general.description2') }}
-        {{ $t('market.general.description3') }}
       </div>
     </div>
 
@@ -67,7 +64,9 @@ export default {
       chainId: (state) => state.Session.chainId,
       account: (state) => state.Session.account,
       rateLabel() {
-        return this.$route.name === constants.ROUTE_NAMES.DEPOSITS ? this.$t('market.deposits.description1') : this.$t('market.borrow.description1');
+        return this.$route.name === constants.ROUTE_NAMES.DEPOSITS
+          ? this.$t('market.general.description1')
+          : this.$t('market.general.description2');
       },
     }),
   },

@@ -62,7 +62,7 @@
       "title2": "Pagar",
       "description1": "Escribe la cantidad que vas a",
       "rule1": "No tienes suficiente colateral",
-      "rule2": "Este mercado no tiene fondos suficientes",
+      "rule2": "Tu capacidad de préstamo supera la cantidad de dinero que tiene el mercado: ",
       "rule3": "No tienes fondos suficientes",
       "rule4": "No debes tanto",
       "rule5": "No tienes deuda en este mercado",
@@ -132,11 +132,12 @@
   "market": {
     "title": "Mercados de criptos",
     "general": {
-      "description1": "Tasa de",
-      "description2": "anual",
+      "description1": "Tasa de ganancia anual actual",
+      "description2": "Tasa de interés anual actual",
       "description3": "dinámica actual",
       "description4": "Micro ahorro en Bitcoin",
-      "micro": "microahorro"
+      "micro1": "microahorro",
+      "micro2": "micropréstamo"
     },
     "deposits": {
       "subtitle1": "Liquidez del mercado",
@@ -321,7 +322,7 @@
     "description2": "Escribe la cantidad que vas a depositar",
     "description3": "Tienes en tu billetera",
     "description4": "Tasa de ganancia anual dinámica actual",
-    "micro": "Elige tu tasa de ganancia dinámica anual",
+    "micro": "Elija su tasa de ganancia anual",
     "btn1": "Conectar billetera",
     "btn2": "Depositar",
     "calculator": {

@@ -9,10 +9,7 @@
           class="h3-sections-heading">
           {{ select.underlyingSymbol }} <br/>
           <span class="microlanding text-value">
-          {{ select.symbol === 'kSAT' && lending
-            ? $t('market.general.micro'): ''
-          }}
-
+            {{textMicro(select.marketAddress)}}
           </span>
         </div>
         <v-icon class="select-icon" large color="text-primary">
@@ -34,9 +31,7 @@
             </div>
           </div>
           <span class="microlanding text-value">
-            {{market.marketAddress === addresses[chainId].kSAT.toLowerCase()
-              ? $t('market.general.micro') : ''
-            }}
+            {{textMicro(market.marketAddress)}}
           </span>
         </div>
       </v-list-item>
@@ -86,6 +81,19 @@ export default {
     },
   },
   methods: {
+    textMicro(marketAddress) {
+      if (this.$route.name === constants.ROUTE_NAMES.DEPOSIT
+        && !this.tabMenu
+        && marketAddress === addresses[this.chainId].kSAT
+      ) {
+        return this.$t('market.general.micro1');
+      }
+      if (this.$route.name === constants.ROUTE_NAMES.BORROW
+        && marketAddress === addresses[this.chainId].kSAT) {
+        return this.$t('market.general.micro2');
+      }
+      return '';
+    },
     updateMarkets() {
       this.infoMarkets = [];
       if (this.$route.name === constants.ROUTE_NAMES.DEPOSIT && this.tabMenu) {

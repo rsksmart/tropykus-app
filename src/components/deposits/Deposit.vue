@@ -294,7 +294,7 @@ export default {
           ? this.typeMarket !== '' : true)
           || this.$t('dialog.supply-redeem.rule6'),
         minkRBTC: () => (this.marketAddress === addresses[this.chainId].kSAT && this.typeMarket !== ''
-          ? (this.info.supplyBalance + this.amount) <= 0.1 : true)
+          ? (Number(this.info.supplyBalance) + Number(this.amount)) <= 0.1 : true)
           || this.$t('dialog.supply-redeem.rule7'),
 
       },

@@ -61,7 +61,7 @@
       "title2": "Pay",
       "description1": "Write the amount you are going to",
       "rule1": "You do not have enough collateral",
-      "rule2": "This market is underfunded",
+      "rule2": "Your loan capacity exceeds the amount of money the market has: ",
       "rule3": "You do not have sufficient funds",
       "rule4": "You do not owe as much",
       "rule5": "You have no debt in this market",
@@ -130,11 +130,12 @@
   "market": {
     "title": "Crypto markets",
     "general": {
-      "description1": "Current dynamic",
-      "description2": "annual",
+      "description1": "Current annual earning rate",
+      "description2": "Current annual Interest rate",
       "description3": "rate",
       "description4": "Micro savings in Bitcoin",
-      "micro": "microsaving"
+      "micro1": "microsaving",
+      "micro2": "microborrowing"
     },
     "deposits": {
       "subtitle1": "Market liquidity",
@@ -292,7 +293,7 @@
     "description6": "Settlement risk",
     "btn1": "Connect wallet",
     "btn2": "Borrow",
-    "tooltip1": "This value is your maximum debt capacity for your collateral. Or it shows the cash available on the market.",
+    "tooltip1": "This value is your maximum debt capacity for your collateral",
     "tooltip2": "The interest rate varies when other users transact on the protocol."
   },
   "pay": {
@@ -318,7 +319,7 @@
     "description2": "Write the amount you are going to deposit",
     "description3": "You have in your wallet",
     "description4": "Current dynamic annual profit rate",
-    "micro": "Choose your annual dynamic profit rate",
+    "micro": "Choose your annual earning rate",
     "btn1": "Connect wallet",
     "btn2": "Deposit",
     "calculator": {

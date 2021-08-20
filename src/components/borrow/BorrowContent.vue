@@ -103,7 +103,7 @@
             <v-text-field
               type="number"
               v-model="amount"
-              :rules="[rules.liquidity, rules.minBalance,
+              :rules="[rules.liquidity, rules.minBalance, rules.cash,
               rules.borrowBalance, rules.payBorrow]"
               class="h1-title text-info pa-0 ma-0"
               background-color="#CFE7DA"
@@ -259,8 +259,8 @@ export default {
       },
       rules: {
         cash: () => ((this.tabMenu && this.account && this.amount)
-          ? Number(this.amountAsUnderlyingPrice) <= Number(this.info.cash) : true)
-          || this.$t('dialog.borrow-repay.rule2'),
+          ? Number(this.amount) <= Number(this.info.cash) : true)
+          || this.$t('dialog.borrow-repay.rule2') + this.info.cash + this.select.underlyingSymbol,
         liquidity: () => ((this.tabMenu && this.account && this.amount)
           ? Number(this.amountAsUnderlyingPrice) <= Number(this.liquidity) : true)
           || this.$t('dialog.borrow-repay.rule1'),
@@ -292,11 +292,8 @@ export default {
       return this.amount * this.info.underlyingPrice;
     },
     tokenBalance() {
-      if (this.tabMenu) {
-        return this.liquidity > this.info.cash ? this.info.cash : this
-          .liquidity / this.info.underlyingPrice;
-      }
-      return this.info.borrowBalance;
+      return this.tabMenu ? (this.liquidity / this.info
+        .underlyingPrice) : this.info.borrowBalance;
     },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;

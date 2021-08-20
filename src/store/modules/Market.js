@@ -90,6 +90,7 @@ const actions = {
   [constants.MARKET_UPDATE_SELECT]: async ({ commit }, market) => {
     const select = {};
 
+    select.marketAddress = market.marketAddress;
     select.symbol = await market.symbol;
     select.underlyingSymbol = await market.underlyingAssetSymbol();
     select.img = await firebase.firestore()
