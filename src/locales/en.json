@@ -133,7 +133,8 @@
       "description1": "Current annual earning rate",
       "description2": "Current annual Interest rate",
       "description3": "rate",
-      "description4": "Micro savings in Bitcoin",
+      "description4": "Micro saving in Bitcoin",
+      "description5": "Micro borrowing in Bitcoin",
       "micro1": "microsaving",
       "micro2": "microborrowing"
     },

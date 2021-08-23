@@ -136,6 +136,7 @@
       "description2": "Tasa de interés anual actual",
       "description3": "dinámica actual",
       "description4": "Micro ahorro en Bitcoin",
+      "description5": "Micro préstamo en Bitcoin",
       "micro1": "microahorro",
       "micro2": "micropréstamo"
     },

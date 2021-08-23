@@ -9,7 +9,7 @@
         <img v-if="symbolImg" :src="symbolImg">
       </div>
       <div class="p1-descriptions ml-1">
-        {{info.micro ? $t('market.general.description4') : ''}}
+        {{textMicro}}
       </div>
     </div>
     <div class="d-flex flex-column justify-space-between">
@@ -28,6 +28,7 @@
 <script>
 import { mapState } from 'vuex';
 import * as constants from '@/store/constants';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   CToken,
   CRbtc,
@@ -63,6 +64,18 @@ export default {
       walletAddress: (state) => state.Session.walletAddress,
       chainId: (state) => state.Session.chainId,
       account: (state) => state.Session.account,
+      textMicro() {
+        if (this.$route.name === constants.ROUTE_NAMES.DEPOSITS
+          && this.marketAddress === addresses[this.chainId].kSAT
+        ) {
+          return this.$t('market.general.description4');
+        }
+        if (this.$route.name === constants.ROUTE_NAMES.BORROWS
+          && this.marketAddress === addresses[this.chainId].kSAT) {
+          return this.$t('market.general.description5');
+        }
+        return '';
+      },
       rateLabel() {
         return this.$route.name === constants.ROUTE_NAMES.DEPOSITS
           ? this.$t('market.general.description1')

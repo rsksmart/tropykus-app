@@ -289,7 +289,7 @@ export default {
         collateral: () => ((!this.tabMenu && this.amount > 0)
           ? this.amount <= this.withdraw : true)
           || this.$t('dialog.supply-redeem.rule5'),
-        typeMarket: () => (((this.typeMarket === '' && this.amount
+        typeMarket: () => (((this.typeMarket === '' && this.amount && this.tabMenu
           && this.account && this.isCRBTC))
           ? this.typeMarket !== '' : true)
           || this.$t('dialog.supply-redeem.rule6'),
