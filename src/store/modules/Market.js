@@ -78,6 +78,7 @@ const actions = {
       info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(walletAddress);
       info.supplyBalance = info.supplyBalance ? info.supplyBalance : 0;
       info.borrowBalance = await market.borrowBalanceCurrent(walletAddress);
+      info.borrowBalanceStored = await market.borrowBalanceStored(walletAddress);
       info.interestBalance = await market.getEarnings(walletAddress);
     } else {
       commit(constants.MARKET_RESET_MARKET);

@@ -22,7 +22,7 @@
         <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
       </div>
       <div class="content-amunt mb-10">
-        <div class="d-flex amout">
+        <div v-if="tabMenu" class="d-flex amout">
           <div>
             <div class="p1-descriptions">
               {{ tabMenu ? $t('borrow.description2') : $t('pay.description3')}}
@@ -54,11 +54,10 @@
             <div v-if="tabMenu" class="p2-reading-values">{{ info.rate }} %</div>
             <template v-else>
               <div class="p2-reading-values">
-                {{
-                  tokenBalance | formatDecimals
+                {{ !tokenBalance ? 0 : tokenBalance | formatDecimals
                 }} {{ info.underlyingSymbol }}
               </div>
-              <div class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</div>
+              <div class="p3-USD-values">{{ !tokenPrice ? 0 : tokenPrice | formatPrice }} USD</div>
             </template>
           </div>
           <div class="tooltip-info ml-7 mt-1">
@@ -293,7 +292,7 @@ export default {
     },
     tokenBalance() {
       return this.tabMenu ? (this.liquidity / this.info
-        .underlyingPrice) : this.info.borrowBalance;
+        .underlyingPrice) : this.info.borrowBalanceStored;
     },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;

@@ -301,7 +301,7 @@
     "description1": "Select the crypto to pay",
     "description2": "Write the amount you are going to pay",
     "description3": "You borrowed",
-    "description4": "Approximate accrued interest",
+    "description4": "You must pay",
     "btn1": "Connect wallet",
     "btn2": "Pay"
   },
@@ -348,7 +348,7 @@
     "title": "Withdraw",
     "description1": "Select the crypto to withdraw",
     "description2": "Write the amount you are going to withdraw",
-    "description3": "You have deposited + earnings",
+    "description3": "You can deposit up to",
     "btn1": "Connect wallet",
     "btn2": "Withdraw"
   },

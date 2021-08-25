@@ -47,13 +47,14 @@
             {{ !tokenBalanceUsd ? 0 : tokenBalanceUsd | formatPrice}}
           </div>
         </div>
-        <div v-if="tabMenu && marketAddress === addresses[chainId].kSAT && info.supplyBalance > 0"
+        <div v-if="tabMenu && marketAddress === addresses[chainId].kSAT && info.supplyBalance > 0
+            && typeMarket === 'micro'"
           class="mt-12">
           <div class="d-flex">
             <div class="p1-descriptions text-info mb-1">
               {{ $t('withdraw.description3') }}
             </div>
-            <div class="tooltip-info ml-7">
+            <!-- <div class="tooltip-info ml-7">
               <v-tooltip right content-class="secondary-color box-shadow-tooltip" max-width="180">
                 <template v-slot:activator="{ on, attrs }">
                   <v-img v-bind="attrs" v-on="on" width="15" height="15"
@@ -63,15 +64,15 @@
                   {{ $t('deposit.tooltip3') }}
                 </span>
               </v-tooltip>
-            </div>
+            </div> -->
           </div>
           <div class="p2-reading-values text-info">
             {{ !info.supplyBalance ? 0
-              : info.supplyBalance | formatDecimals(select.underlyingSymbol)}}
+              : (0.1 - info.supplyBalance) | formatDecimals(select.underlyingSymbol)}}
             {{select.underlyingSymbol}}
           </div>
           <div class="p3-USD-values text-info">
-            {{ !info.supplyBalance ? 0 : info.supplyBalance * info.price | formatPrice}}
+            {{ !info.supplyBalance ? 0 : (0.1 - info.supplyBalance) * info.price | formatPrice}}
           </div>
         </div>
         <div v-if="tabMenu" class="content-rate">
@@ -287,7 +288,7 @@ export default {
           ? this.info.supplyBalance !== 0 : true)
           || this.$t('dialog.supply-redeem.rule4'),
         collateral: () => ((!this.tabMenu && this.amount > 0)
-          ? this.amount <= this.withdraw : true)
+          ? this.info.borrowBalance <= 0 : true)
           || this.$t('dialog.supply-redeem.rule5'),
         typeMarket: () => (((this.typeMarket === '' && this.amount && this.tabMenu
           && this.account && this.isCRBTC))
@@ -296,7 +297,6 @@ export default {
         minkRBTC: () => (this.marketAddress === addresses[this.chainId].kSAT && this.typeMarket !== ''
           ? (Number(this.info.supplyBalance) + Number(this.amount)) <= 0.1 : true)
           || this.$t('dialog.supply-redeem.rule7'),
-
       },
     };
   },
@@ -393,6 +393,13 @@ export default {
       getMarketsStore: constants.MARKET_GET_MARKETSINFO,
     }),
     async menuAction() {
+      // this.$store.dispatch({
+      //   type: constants.MARKET_UPDATE_MARKET,
+      //   marketAddress: this.$route.params.id,
+      //   walletAddress: this.walletAddress,
+      //   page: constants.ROUTE_NAMES.DEPOSITS,
+      //   account: this.account,
+      // });
       if (!this.account) {
         this.showModalConnectWallet = true;
         return;
@@ -409,6 +416,10 @@ export default {
         if (assetsIn.indexOf(this.marketAddress) === -1) {
           await this.comptroller.enterMarkets(this.account, allMarkets);
         }
+        this.$store.dispatch({
+          type: constants.USER_ACTION_MINT,
+          market: this.market,
+        });
         await this.market.supply(this.account, this.amount)
           .then((tx) => {
             this.infoLoading.wallet = false;
@@ -536,7 +547,7 @@ export default {
     },
     setMaxAmount() {
       if (this.account) {
-        this.amount = this.tabMenu ? this.info.underlyingBalance : this.info.supplyBalance;
+        this.amount = this.tabMenu ? this.info.underlyingBalance : this.withdraw;
         this.setPercentageSlider();
       }
     },

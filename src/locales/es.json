@@ -304,7 +304,7 @@
     "description1": "Selecciona la cripto a pagar",
     "description2": "Escribe la cantidad que vas a pagar",
     "description3": "Pediste prestado",
-    "description4": "Intereses acumulados aproximados",
+    "description4": "Debes pagar",
     "btn1": "Conectar billetera",
     "btn2": "Pagar"
   },
@@ -351,7 +351,7 @@
     "title": "Retirar",
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
-    "description3": "Tienes depositado + ganancinas",
+    "description3": "Puedes depositar hasta: ",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
   },
