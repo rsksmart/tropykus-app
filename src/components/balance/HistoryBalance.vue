@@ -374,8 +374,6 @@ export default {
       navigator.clipboard.writeText(hash);
       this.tooltip = true;
       this.timeHash = time;
-      console.log('tooltip', this.tooltip);
-      console.log('market', time);
       setTimeout(() => {
         this.tooltip = false;
         this.timeHash = '';

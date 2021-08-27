@@ -248,6 +248,13 @@
       "title5": "Current dynamic annual interest rate"
     }
   },
+  "notify": {
+    "description1": "You have deposited",
+    "description2": "You have withdrawn",
+    "description3": "You borrowed",
+    "description4": "You have paid",
+    "description5": "Go to RSK explorer"
+  },
   "menu": {
     "sidebar": {
       "balance": "My Balance",
@@ -348,7 +355,7 @@
     "title": "Withdraw",
     "description1": "Select the crypto to withdraw",
     "description2": "Write the amount you are going to withdraw",
-    "description3": "You can deposit up to",
+    "description3": "Remaining to the 0.1 RBTC limit is:",
     "btn1": "Connect wallet",
     "btn2": "Withdraw"
   },

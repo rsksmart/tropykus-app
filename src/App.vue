@@ -7,6 +7,7 @@
         <router-view />
       </div>
     </div>
+    <notifications-content />
 
     <template v-if="isPioneer">
       <pioneer :showModal="isPioneer" :authorized="authorized" @closed="closeDialog" />
@@ -19,6 +20,7 @@ import { mapActions, mapState } from 'vuex';
 import Navbar from '@/components/menu/Navbar.vue';
 import LeftBar from '@/components/menu/LeftBar.vue';
 import Pioneer from '@/components/dialog/Pioneer.vue';
+import NotificationsContent from '@/components/general/NotificationsContent.vue';
 import {
   Comptroller,
   Market,
@@ -34,6 +36,7 @@ export default {
     Navbar,
     LeftBar,
     Pioneer,
+    NotificationsContent,
   },
   data() {
     return {

@@ -218,15 +218,11 @@
       />
     </template>
 
-    <template v-if="isLoading">
-      <loading :showModal="isLoading" :data="infoLoading" @closed="closeDialog" />
-    </template>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
-import Loading from '@/components/modals/Loading.vue';
 import Dropdown from '@/components/general/Dropdown.vue';
 import Savings from '@/components/deposits/Savings.vue';
 import * as constants from '@/store/constants';
@@ -240,7 +236,6 @@ export default {
   name: 'Deposit',
   components: {
     ConnectWallet,
-    Loading,
     Dropdown,
     Savings,
   },
@@ -393,99 +388,21 @@ export default {
       getMarketsStore: constants.MARKET_GET_MARKETSINFO,
     }),
     async menuAction() {
-      // this.$store.dispatch({
-      //   type: constants.MARKET_UPDATE_MARKET,
-      //   marketAddress: this.$route.params.id,
-      //   walletAddress: this.walletAddress,
-      //   page: constants.ROUTE_NAMES.DEPOSITS,
-      //   account: this.account,
-      // });
       if (!this.account) {
         this.showModalConnectWallet = true;
         return;
       }
-      this.isLoading = true;
-      this.infoLoading.loading = true;
-      this.infoLoading.wallet = true;
-      this.infoLoading.symbol = this.select.underlyingSymbol;
-      this.counterAction = 1;
-      if (this.tabMenu) {
-        // colocar los mercados en assetsIn
-        const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
-        const allMarkets = await this.comptroller.allMarkets();
-        if (assetsIn.indexOf(this.marketAddress) === -1) {
-          await this.comptroller.enterMarkets(this.account, allMarkets);
-        }
-        this.$store.dispatch({
-          type: constants.USER_ACTION_MINT,
-          market: this.market,
-        });
-        await this.market.supply(this.account, this.amount)
-          .then((tx) => {
-            this.infoLoading.wallet = false;
-            this.market.wsInstance.on('Mint', async (from, actualMintAmount) => {
-              if (from === this.walletAddress && Number(this.amount) === actualMintAmount / 1e18) {
-                if (!this.isLoading) {
-                  this.isLoading = true;
-                }
-                this.infoLoading.loading = false;
-                this.infoLoading.deposit = true;
-                this.infoLoading.amount = actualMintAmount / 1e18;
-                if (this.counterAction === 1) {
-                  await this.firestore.saveUserAction(
-                    this.comptroller.comptrollerAddress,
-                    this.walletAddress,
-                    'Mint',
-                    actualMintAmount / 1e18,
-                    this.info.underlyingSymbol,
-                    this.market.marketAddress,
-                    this.info.underlyingPrice,
-                    new Date(),
-                    tx.hash,
-                  );
-                }
-                this.counterAction = 0;
-                setTimeout(() => {
-                  this.getMarket();
-                }, 2000);
-              }
-            });
-          })
-          .catch(console.error);
-      } else {
-        this.market.redeem(this.account, this.amount)
-          .then((tx) => {
-            this.infoLoading.wallet = false;
-            this.market.wsInstance.on('Redeem', async (from, actualRedeemAmount) => {
-              if (from === this.walletAddress) {
-                if (!this.isLoading) {
-                  this.isLoading = true;
-                }
-                this.infoLoading.loading = false;
-                this.infoLoading.deposit = false;
-                this.infoLoading.amount = actualRedeemAmount / 1e18;
-                if (this.counterAction === 1) {
-                  await this.firestore.saveUserAction(
-                    this.comptroller.comptrollerAddress,
-                    this.walletAddress,
-                    'Redeem',
-                    actualRedeemAmount / 1e18,
-                    this.info.underlyingSymbol,
-                    this.market.marketAddress,
-                    this.info.underlyingPrice,
-                    new Date(),
-                    tx.hash,
-                  );
-                }
-                this.counterAction = 0;
-                setTimeout(() => {
-                  this.getMarket();
-                }, 2000);
-              }
-            });
-          })
-          .catch(console.error);
-      }
+
+      this.$store.dispatch({
+        type: constants.USER_ACTION,
+        market: this.market,
+        action: this.tabMenu ? constants.USER_ACTION_MINT : constants.USER_ACTION_REDEEM,
+        amount: this.amount,
+        symbol: this.select.underlyingSymbol,
+        price: this.info.underlyingPrice,
+      });
+
+      this.reset();
 
       this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);

@@ -250,6 +250,13 @@
       "title5": "Tasa de interés anual \rdinámica actual"
     }
   },
+  "notify": {
+    "description1": "Has depositado",
+    "description2": "Has retirado",
+    "description3": "Has pedido prestado",
+    "description4": "Has pagado",
+    "description5": "Ver transacción en RSK explorer"
+  },
   "menu": {
     "sidebar": {
       "balance": "Balance General",
@@ -351,7 +358,7 @@
     "title": "Retirar",
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
-    "description3": "Puedes depositar hasta: ",
+    "description3": "El límite restante a 0.1 RBTC es:",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
   },

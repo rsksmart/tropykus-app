@@ -62,7 +62,6 @@ const actions = {
       walletAddress, account, page,
     } = data;
     const { market } = state;
-
     info.underlyingSymbol = await market.underlyingAssetSymbol();
     info.rate = page === constants.ROUTE_NAMES.DEPOSITS
       ? await market.supplyRateAPY()
