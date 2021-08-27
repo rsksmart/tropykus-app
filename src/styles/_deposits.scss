@@ -4,8 +4,11 @@
   max-width: 940px;
   margin: 0 auto;
   .text-description{
-    width: 550px;
+    width: 560px;
     text-align: center;
+  }
+  .h1-title{
+    font-size: 30px;
   }
   .h2-heading {
     margin-top: 68px;
@@ -91,13 +94,69 @@
   .text-rate{
     width: 135px;
   }
-  // .tooltip-info{
-  //   width: 12px;
-  //   height: 12px;
-  // }
   .box-number{
     max-width: 221px;
     word-wrap: break-word;
+  }
+  .box-earnings{
+    width: 217px;
+    height: 89px;
+    background-color: $primary-bg;
+    text-align: center;
+    color: #63A47B;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  .content-deposit{
+    display: grid;
+    grid-template-columns: 39% 61%;
+    grid-template-rows: 100px 1fr;
+
+    .content-menu{
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+    .content-micro{
+      display: none;
+    }
+    .content-info{
+      margin-top: 23px;
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+    .content-action{
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+    .content-rate{
+      margin-top: 48px;
+    }
+    &.micro{
+      .content-micro{
+        display: block;
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+      }
+      .content-action{
+        margin-top: 90px;
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
+      .content-info{
+        margin-top: 90px;
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+      .content-rate{
+        display: none;
+      }
+    }
+  }
+  .micro-savings{
+    width: 467px;
   }
 
   @include desktop() {
@@ -243,8 +302,6 @@
       height: 33px !important;
       border-radius: 20px;
     }
-
-    
   }
 
   .content-pay{

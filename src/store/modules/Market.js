@@ -32,6 +32,7 @@ const state = {
 
 const actions = {
 
+  // dropdown menu markets
   [constants.MARKET_GET_MARKETSINFO]: async ({ commit }, markets) => {
     const getMarkets = [];
     await markets.map(async (market) => {
@@ -58,12 +59,14 @@ const actions = {
   [constants.MARKET_UPDATE_MARKET]: async ({ commit }, data) => {
     const info = {};
     const {
-      walletAddress, account,
+      walletAddress, account, page,
     } = data;
     const { market } = state;
 
     info.underlyingSymbol = await market.underlyingAssetSymbol();
-    info.rate = await market.supplyRateAPY();
+    info.rate = page === constants.ROUTE_NAMES.DEPOSITS
+      ? await market.supplyRateAPY()
+      : await market.borrowRateAPY();
     info.rate = info.rate.toFixed(2);
     info.cash = await market.getCash();
     if (state.chainId) {
@@ -87,6 +90,7 @@ const actions = {
   [constants.MARKET_UPDATE_SELECT]: async ({ commit }, market) => {
     const select = {};
 
+    select.marketAddress = market.marketAddress;
     select.symbol = await market.symbol;
     select.underlyingSymbol = await market.underlyingAssetSymbol();
     select.img = await firebase.firestore()
@@ -101,8 +105,9 @@ const actions = {
   [constants.MARKET_GET_MARKET]: async ({ commit, dispatch }, data) => {
     const { marketAddress } = data;
     const isCRbtc = await Market.isCRbtc(marketAddress);
+    const isCSAT = await Market.isCSat(marketAddress);
 
-    const market = isCRbtc ? new CRbtc(marketAddress, state.chainId)
+    const market = isCRbtc || isCSAT ? new CRbtc(marketAddress, state.chainId)
       : new CToken(marketAddress, state.chainId);
 
     commit(constants.MARKET_GET_MARKET, market);

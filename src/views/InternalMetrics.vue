@@ -66,13 +66,13 @@
                       </div>
                       <div class="market-info">
                         <div class="name">{{market.name}}</div>
-                        <div class="id text-uppercase">{{market.symbol}}</div>
+                        <div class="id">{{market.symbol}}</div>
                       </div>
                     </div>
                       <div class="description" style="width: 139px">
                         <div class="coin">
                           {{market.reserves | formatDecimals }}
-                          <span class="text-uppercase">{{market.symbol}}</span>
+                          <span class="">{{market.symbol}}</span>
                         </div>
                         <div class="usd">
                           {{ market.reserve_usd | formatPrice }} USD

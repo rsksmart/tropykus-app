@@ -71,6 +71,7 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
     // height: 45px;
   // }
   .v-messages__message{
+    display: none;
     margin-top: 8px;
     color: $third-color !important;
   }
@@ -80,6 +81,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   }
   &.alert{
     border: 2px solid #F7C61A;
+    .v-messages__message{
+      display: block;
+    }
   }
 }
 
@@ -173,6 +177,27 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   background: $btn-wallet;
 }
 
+.btn-micro{
+  box-shadow: 0px 10px 30px rgba(52, 52, 52, 0.1);
+  border-radius: 15px;
+  width: 212px;
+  height: 126px !important;
+  text-align: center;
+  .v-btn__content{
+    display: block;
+  }
+  .p1-descriptions{
+    font-size: 11px !important;
+  }
+  &.inactive{
+    background-color: #E1F0E8 !important;
+  }
+  &.active{
+    background-color: $primary-color !important;
+    color: white;
+  }
+}
+
 //=======================
 //  text
 //=======================
@@ -194,6 +219,9 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
 }
 .text-value{
   color: $text-value !important;
+}
+.text-bg{
+  color: $text-bg !important;
 }
 
 //=======================
@@ -230,10 +258,26 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
         color: $primary-color;
       }
     }
+    .microlanding{
+      position: absolute;
+      font-size: 11px;
+      left: 62px;
+      top: 27px;
+      text-transform: lowercase;
+    }
   }
   .v-menu__content{
     .select-menu-item{
       height: 48px;
+      .list-item{
+        position: relative;
+        .microlanding{
+          position: absolute;
+          font-size: 11px;
+          left: 47px;
+          top: 20px;
+        }
+      }
     }
     img{
       width: 26px;

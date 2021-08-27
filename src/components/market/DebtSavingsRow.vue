@@ -174,7 +174,7 @@ export default {
       const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       switch (action) {
         case constants.USER_ACTION_MINT:
-          this.allMarkets = await this.comptroller.allMarkets;
+          this.allMarkets = await this.comptroller.allMarkets();
           if (assetsIn.indexOf(this.market.marketAddress) === -1) {
             await this.comptroller.enterMarkets(this.account, this.allMarkets);
           }
@@ -238,7 +238,7 @@ export default {
         default:
           break;
       }
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
+      this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
@@ -281,7 +281,7 @@ export default {
         this.info.supplyBalance = await this.market
           .currentBalanceOfCTokenInUnderlying(this.walletAddress);
         this.info.borrowBalance = await this.market
-          .borrowBalanceCurrent(this.walletAddress);
+          .borrowBalanceStored(this.walletAddress);
         this.info.totalBalance = this.inBorrowMenu
           ? this.info.borrowBalance
           : await this.market.currentBalanceOfCTokenInUnderlying(this.walletAddress);

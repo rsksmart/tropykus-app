@@ -19,37 +19,7 @@
         <div class="p1-descriptions mb-3">
           {{ tabMenu ? $t('borrow.description1') : $t('pay.description1')}}
         </div>
-        <div class="primary-bg select-box">
-          <v-menu>
-            <template v-slot:activator="{ on, attrs }">
-              <div class="selected-item d-flex align-center"
-                v-bind="attrs" v-on="on">
-                <img v-if="select.img" class="ml-6 mr-3" :src="select.img" />
-                <span v-if="select.underlyingSymbol"
-                  class="h3-sections-heading text-uppercase">
-                  {{ select.underlyingSymbol }}
-                </span>
-                <v-icon class="select-icon" large color="text-primary">
-                  mdi-chevron-down
-                </v-icon>
-              </div>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(market, index) in getMarkets" :key="index" class="select-menu-item"
-                :class="market.underlyingSymbol === select.underlyingSymbol ? 'active' : ''"
-                @click="updateRoute(market)"
-              >
-                <div class="d-flex">
-                  <img :src="market.img" class="ml-2 mr-3"/>
-                  <span class="h3-sections-heading text-uppercase">
-                    {{ market.underlyingSymbol }}
-                  </span>
-                </div>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
+        <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
       </div>
       <div class="content-amunt mb-10">
         <div class="d-flex amout">
@@ -133,7 +103,7 @@
             <v-text-field
               type="number"
               v-model="amount"
-              :rules="[rules.liquidity, rules.minBalance,
+              :rules="[rules.liquidity, rules.minBalance, rules.cash,
               rules.borrowBalance, rules.payBorrow]"
               class="h1-title text-info pa-0 ma-0"
               background-color="#CFE7DA"
@@ -208,12 +178,14 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
+import Dropdown from '@/components/general/Dropdown.vue';
 import * as constants from '@/store/constants';
 import RiskChart from '@/components/users/RiskChart.vue';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
 import {
   Comptroller,
+  Firestore,
 } from '@/middleware';
 
 export default {
@@ -221,9 +193,12 @@ export default {
     RiskChart,
     ConnectWallet,
     Loading,
+    Dropdown,
   },
   data() {
     return {
+      counterAction: 0,
+      firestore: new Firestore(),
       isProgress: true,
       tabMenu: true,
       sliderStyle: '',
@@ -283,6 +258,9 @@ export default {
         },
       },
       rules: {
+        cash: () => ((this.tabMenu && this.account && this.amount)
+          ? Number(this.amount) <= Number(this.info.cash) : true)
+          || this.$t('dialog.borrow-repay.rule2') + this.info.cash + this.select.underlyingSymbol,
         liquidity: () => ((this.tabMenu && this.account && this.amount)
           ? Number(this.amountAsUnderlyingPrice) <= Number(this.liquidity) : true)
           || this.$t('dialog.borrow-repay.rule1'),
@@ -310,11 +288,6 @@ export default {
       marketStore: (state) => state.Market.market,
       isProgressStore: (state) => state.Market.isProgress,
     }),
-    activeButtonn() {
-      return this.tabMenu
-        ? (this.amount <= this.info.underlyingBalance && this.amount > 0)
-        : (this.amount <= this.info.supplyBalance && this.amount > 0);
-    },
     borrowValueInUSD() {
       return this.amount * this.info.underlyingPrice;
     },
@@ -336,7 +309,8 @@ export default {
         .rules.liquidity() !== 'string' && typeof this
         .rules.minBalance() !== 'string' && typeof this
         .rules.payBorrow() !== 'string' && typeof this
-        .rules.borrowBalance() !== 'string';
+        .rules.borrowBalance() !== 'string' && typeof this
+        .rules.cash() !== 'string';
     },
   },
   watch: {
@@ -391,9 +365,10 @@ export default {
       this.infoLoading.loading = true;
       this.infoLoading.wallet = true;
       this.infoLoading.symbol = this.select.underlyingSymbol;
+      this.counterAction = 1;
       if (this.tabMenu) {
         await this.market.borrow(this.account, this.amount)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('Borrow', (from, amount) => {
               if (from === this.walletAddress && Number(this.amount) === amount / 1e18) {
@@ -403,9 +378,23 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = true;
                 this.infoLoading.amount = amount / 1e18;
+                if (this.counterAction === 1) {
+                  this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'Borrow',
+                    amount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
+                this.counterAction = 0;
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })
@@ -414,7 +403,7 @@ export default {
         let amountPay = this.amount;
         if (this.amount === this.info.borrowBalance) amountPay = -1;
         this.market.repay(this.account, amountPay)
-          .then(() => {
+          .then((tx) => {
             this.infoLoading.wallet = false;
             this.market.wsInstance.on('RepayBorrow', (from, _, amount) => {
               if (from === this.walletAddress) {
@@ -424,15 +413,28 @@ export default {
                 this.infoLoading.loading = false;
                 this.infoLoading.borrow = false;
                 this.infoLoading.amount = amount / 1e18;
+                if (this.counterAction === 1) {
+                  this.firestore.saveUserAction(
+                    this.comptroller.comptrollerAddress,
+                    this.walletAddress,
+                    'RepayBorrow',
+                    amount / 1e18,
+                    this.info.underlyingSymbol,
+                    this.market.marketAddress,
+                    this.info.underlyingPrice,
+                    new Date(),
+                    tx.hash,
+                  );
+                }
                 setTimeout(() => {
                   this.getMarket();
-                }, 1000);
+                }, 2000);
               }
             });
           })
           .catch(console.error);
       }
-      this.market.wsInstance.on('Failure', (from, to, amount, event) => {
+      this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
         console.log(`Error: ${error}, detail: ${detail}, info: ${info}`);
@@ -441,9 +443,9 @@ export default {
         }
       });
     },
-    updateRoute(market) {
-      if (this.$route.params.id !== market.marketAddress) {
-        const to = { name: this.$route.name, params: { id: market.marketAddress } };
+    updateRoute(marketAddress) {
+      if (this.$route.params.id !== marketAddress) {
+        const to = { name: this.$route.name, params: { id: marketAddress } };
         this.$router.push(to);
       }
     },
@@ -451,6 +453,7 @@ export default {
       this.$store.dispatch({
         type: constants.MARKET_UPDATE_MARKET,
         walletAddress: this.walletAddress,
+        page: constants.ROUTE_NAMES.BORROWS,
         account: this.account,
       });
       this.reset();

@@ -2,10 +2,10 @@ import CTokenAbi from '@/abis/CErc20Immutable.json';
 import PriceOracleProxyAbi from '@/abis/PriceOracleProxy.json';
 import StandardTokenAbi from '@/abis/StandardToken.json';
 import TropykusLensAbi from '@/abis/TropykusLens.json';
-import { addresses } from '@/middleware/constants';
 import { ethers } from 'ethers';
 import Vue from 'vue';
 import * as constants from '@/store/constants';
+import { addresses } from './constants';
 import signer from './utils';
 
 const blocksPerDay = 2 * 60 * 24;
@@ -18,7 +18,7 @@ export default class Market {
     this.lens = new ethers.Contract(addresses[chainId].tropykusLens, TropykusLensAbi, Vue.web3);
     this.instance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.marketAddress, MarketAbi, Vue.web3Ws);
-    this.gasLimit = 300000;
+    this.gasLimit = 400000;
   }
 
   static async isCRbtc(address) {
@@ -26,6 +26,16 @@ export default class Market {
     try {
       const result = await instance.callStatic.symbol();
       return result === constants.CRBTC_SYMBOL;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static async isCSat(address) {
+    const instance = new ethers.Contract(address.toLowerCase(), CTokenAbi, Vue.web3);
+    try {
+      const result = await instance.callStatic.symbol();
+      return result === constants.CSAT_SYMBOL;
     } catch (e) {
       return false;
     }
@@ -120,7 +130,11 @@ export default class Market {
     return Number(await this.instance.callStatic.balanceOf(address)) / factor;
   }
 
-  async currentBalanceOfCTokenInUnderlying(address) {
+  async currentBalanceOfCTokenInUnderlying(address, isCRbtc = false) {
+    if (isCRbtc) {
+      const supplysnapshot = await this.instance.getSupplierSnapshotStored(address);
+      return Number(supplysnapshot[1]) / factor;
+    }
     const cTokenBalance = await this.balanceOf(address);
     const exchangeRate = await this.exchangeRateStored();
     return (cTokenBalance * exchangeRate);
@@ -130,9 +144,17 @@ export default class Market {
     return Number(await this.instance.callStatic.borrowBalanceStored(address)) / factor;
   }
 
+  async borrowBalanceCurrent(address) {
+    return Number(await this.instance.callStatic.borrowBalanceCurrent(address)) / factor;
+  }
+
   async borrowBalanceInUSD(chainId, address) {
     const price = await this.underlyingCurrentPrice(chainId);
     return await this.borrowBalanceStored(address) * price;
+  }
+
+  async exchangeRateCurrent() {
+    return Number(await this.instance.callStatic.exchangeRateCurrent()) / factor;
   }
 
   async exchangeRateStored() {
@@ -146,7 +168,7 @@ export default class Market {
   async getSubsidyFound(isRbtc = false) {
     return isRbtc
       ? Number(this.instance.callStatic.subsidyFund
-      ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
+        ? await this.instance.callStatic.subsidyFund() : 0) / factor : 0;
   }
 
   async getInitialSupply(address) {
@@ -157,6 +179,7 @@ export default class Market {
       if (minter === address) addressSupplied += Number(mintAmount) / factor;
     });
     const redeemAmount = await this.getRedeems(address);
+    // const supplyBalance = await this.currentBalanceOfCTokenInUnderlying(address);
     const initial = addressSupplied - redeemAmount;
     return initial; // >= 0 ? initial : supplyBalance;
   }
@@ -179,6 +202,7 @@ export default class Market {
       if (borrower === address) addressBorrowed += Number(borrowAmount) / factor;
     });
     const repayAmount = await this.getRepays(address);
+    // const borrowBalance = await this.borrowBalanceCurrent(address);
     const initial = addressBorrowed - repayAmount;
     return initial; // >= 0 ? initial : borrowBalance;
   }
@@ -194,13 +218,13 @@ export default class Market {
   }
 
   async getDebtInterest(address) {
-    const borrowBalanceCurrent = await this.borrowBalanceStored(address);
+    const borrowBalanceStored = await this.borrowBalanceStored(address);
     const borrowAPY = await this.borrowRateAPY();
-    return borrowBalanceCurrent * (borrowAPY / 100);
+    return borrowBalanceStored * (borrowAPY / 100);
   }
 
-  async getEarnings(address) {
-    const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address);
+  async getEarnings(address, isRbtc = false) {
+    const updatedSupply = await this.currentBalanceOfCTokenInUnderlying(address, isRbtc);
     const supplyAPY = await this.supplyRateAPY();
     return updatedSupply * (supplyAPY / 100);
   }
@@ -250,10 +274,10 @@ export default class Market {
     );
   }
 
-  async supply(account, amountIntended) {
+  async supply(account, amountIntended, isCRbtc = false) {
     const accountSigner = signer(account);
     const value = await Market.getAmountDecimals(amountIntended);
-    if (await Market.isCRbtc(this.marketAddress)) {
+    if (isCRbtc) {
       return this.instance.connect(accountSigner).mint({ value, gasLimit: this.gasLimit });
     }
     const underlyingAsset = new ethers.Contract(
@@ -273,14 +297,14 @@ export default class Market {
 
   async redeem(account, amountIntended) {
     const accountSigner = signer(account);
-    const exchangeRate = await this.exchangeRateStored();
-    const amount = await Market.getAmountDecimals(amountIntended / exchangeRate);
+    const amount = await Market.getAmountDecimals(amountIntended);
     return this.instance.connect(accountSigner).redeem(amount, { gasLimit: this.gasLimit });
   }
 
   async repay(account, amountIntended) {
     const accountSigner = signer(account);
-    const value = await ethers.utils.parseEther(`${amountIntended}`);
+    const value = amountIntended === -1 ? '115792089237316195423570985008687907853269984665640564039457584007913129639935'
+      : await ethers.utils.parseEther(`${amountIntended}`);
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,

@@ -17,6 +17,15 @@
       "button1": "(Soon)",
       "button2": "Mobile wallet"
     },
+    "pioneer": {
+      "description1": "Welcome to the Tropykus",
+      "description2": "Where your Bitcoin find their true power.",
+      "btn1": "Explore",
+      "description3": "Tropykus on Mainnet is coming very soon...",
+      "description4": "You will be able to taste the good life in the Tropykus very soon. We invite you to try Tropykus in Testnet.",
+      "description5": "Don't show again",
+      "btn2": "Enter the test app"
+    },
     "supply-redeem": {
       "title1": "Deposit",
       "title2": "Withdraw",
@@ -24,7 +33,9 @@
       "rule2": "You do not have enough funds",
       "rule3": "You do not have enough deposited",
       "rule4": "This market is underfunded",
-      "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt"
+      "rule5": "You cannot withdraw this amount, since your deposit is collateral for a debt",
+      "rule6": "In order to deposit, you must first select return rate you want to obtain.",
+      "rule7": "You cannot deposit more than 0.1 RBTC in this market"
     },
     "deposit": {
       "description1": "You have in your wallet:",
@@ -50,7 +61,7 @@
       "title2": "Pay",
       "description1": "Write the amount you are going to",
       "rule1": "You do not have enough collateral",
-      "rule2": "This market is underfunded",
+      "rule2": "Your loan capacity exceeds the amount of money the market has: ",
       "rule3": "You do not have sufficient funds",
       "rule4": "You do not owe as much",
       "rule5": "You have no debt in this market",
@@ -78,8 +89,8 @@
       "tooltip3": "acumulados hasta la fecha de pago."
     },
     "loading": {
-      "description1": "waiting for transaction confirmation in your wallet",
-      "description2": "waiting for network confirmation",
+      "description1": "Waiting for the confirmation of the transaction in your wallet",
+      "description2": "Waiting for confirmation from the network",
       "description3": "You have deposited",
       "description4": "You have withdrawn",
       "description5": "You have borrowed",
@@ -119,9 +130,13 @@
   "market": {
     "title": "Crypto markets",
     "general": {
-      "description1": "Current dynamic",
-      "description2": "annual",
-      "description3": "rate"
+      "description1": "Current annual earning rate",
+      "description2": "Current annual Interest rate",
+      "description3": "rate",
+      "description4": "Micro saving in Bitcoin",
+      "description5": "Micro borrowing in Bitcoin",
+      "micro1": "microsaving",
+      "micro2": "microborrowing"
     },
     "deposits": {
       "subtitle1": "Market liquidity",
@@ -262,7 +277,7 @@
   },
   "borrows": {
     "title": "You can borrow and multiply your earnings",
-    "description": "If you don't have deposits, make a deposit in any of our markets. If you want to borrow, but do not know how much you will have to pay, use our interest payment simulator.",
+    "description": "If you don't have deposits, make a deposit in any of our markets to be able to borrow",
     "subtitle": "Cryptos that you can borrow",
     "btn1": "Simulate interest payment",
     "btn2": "Deposit"
@@ -279,7 +294,7 @@
     "description6": "Settlement risk",
     "btn1": "Connect wallet",
     "btn2": "Borrow",
-    "tooltip1": "This value is your maximum loan capacity with respect to your collateral.",
+    "tooltip1": "This value is your maximum debt capacity for your collateral",
     "tooltip2": "The interest rate varies when other users transact on the protocol."
   },
   "pay": {
@@ -292,18 +307,20 @@
   },
   "deposits": {
     "title": "Deposit your RBTC and earn 4% per year",
-    "description": "Get the most out of your bitcoins by converting them into RBTC or buy RBTC",
+    "description": "Get the earnings of your bitcoins by converting them into RBTC or buy RBTC",
     "subtitle": "Deposit your crypto and get profit",
     "btn1": "Convert BTC to RBTC",
     "btn2": "Buy RBTC"
   },
   "deposit": {
     "title": "Deposit your crypto and get profit",
-    "subtitle": "Deposit",
+    "subtitle1": "Deposit",
+    "subtitle2": "Withdraw",
     "description1": "Select the crypto to deposit",
     "description2": "Write the amount you are going to deposit",
     "description3": "You have in your wallet",
     "description4": "Current dynamic annual profit rate",
+    "micro": "Choose your annual earning rate",
     "btn1": "Connect wallet",
     "btn2": "Deposit",
     "calculator": {
@@ -318,7 +335,14 @@
     "description5": "Do you want to have a better chance of winning using your funds?",
     "description6": "Take a look at strategies",
     "tooltip1": "The interest rate varies when other users carry out transactions in the protocol.",
-    "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits."
+    "tooltip2": "This calculator only simulates the earnings that could be obtained in a certain period of time. The figures shown vary according to the annual dynamic profit rate and the prices of the cryptocurrencies, therefore it is not a guarantee of future profits.",
+    "tooltip3": "This value corresponds to the total deposited plus the accumulated earnings so far.",
+    "microsavings": {
+      "description1": "Microsaving",
+      "description2": "Up to 0.1 rBTC",
+      "description3": "Standard",
+      "description4": "No deposit limit"
+    }
   },
   "withdraw": {
     "title": "Withdraw",
@@ -399,7 +423,19 @@
         "description3": "Current annual interest \nrate",
         "btn1": "Borrow",
         "btn2": "Pay"
+      },
+      "activity": {
+        "description1": "Activity",
+        "description2": "Amount",
+        "description3": "Date",
+        "description4": "Hash of the transaction"
       }
+    },
+    "events": {
+      "mint": "Deposit",
+      "redeem": "Withdraw",
+      "borrow": "Borrow",
+      "repayBorrow": "Pay"
     }
   }
 }

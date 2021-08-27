@@ -7,12 +7,22 @@ import signer from './utils';
 export default class Comptroller {
   constructor(chainId) {
     this.comptrollerAddress = addresses[chainId].comptroller;
+    this.kRBTC = addresses[chainId].kRBTC;
     this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3Ws);
   }
 
-  get allMarkets() {
-    return this.instance.callStatic.getAllMarkets();
+  async allMarkets(all = true) {
+    const markets = await this.instance.callStatic.getAllMarkets();
+    const marketsCopy = [];
+    markets.forEach((marketAddress) => {
+      if (all) {
+        marketsCopy.push(marketAddress.toLowerCase());
+      } else if (marketAddress.toLowerCase() !== this.kRBTC) {
+        marketsCopy.push(marketAddress.toLowerCase());
+      }
+    });
+    return marketsCopy.reverse();
   }
 
   // Block: 1953603
@@ -29,8 +39,13 @@ export default class Comptroller {
     return accountAddresses.length;
   }
 
-  getAssetsIn(address) {
-    return this.instance.callStatic.getAssetsIn(address);
+  async getAssetsIn(address) {
+    const assetsIn = await this.instance.callStatic.getAssetsIn(address);
+    const assetsInCopy = [];
+    assetsIn.forEach((asset) => {
+      assetsInCopy.push(asset.toLowerCase());
+    });
+    return assetsInCopy;
   }
 
   async getAccountLiquidity(address) {
@@ -108,7 +123,7 @@ export default class Comptroller {
       markets.forEach(async (market) => {
         await Promise.all([
           market.underlyingCurrentPrice(chainId),
-          market.borrowBalanceCurrent(accountAddress),
+          market.borrowBalanceStored(accountAddress),
           market.getDebtInterest(accountAddress),
         ])
           .then(([price, totalBorrowInUnderlying, interestBorrow]) => {

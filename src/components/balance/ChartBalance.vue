@@ -2,10 +2,6 @@
   <div class="balance-cripto balance-style">
     <div class="chart d-flex justify-center">
       <img class="risk-img" src="@/assets/icons/dollar2.svg" />
-      <!-- <div v-if="!walletAddress" class="risk cripto-chart">
-        <v-progress-circular class="risk-graph" :size="125" :width="12" -->
-          <!-- :value="0" color="transparent" :rotate="270" /> -->
-      <!-- </div> -->
       <GChart class="cripto-chart" type="PieChart" style="width: 108px; height: 108px;"
         :data="chartData" :options="chartOptions"/>
     </div>
@@ -20,28 +16,35 @@
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#095223" />
             <div class="p7-graphics ml-2">
-              RBTC
+              Micro-RBTC
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#47B25F" />
             <div class="p7-graphics ml-2">
-              USDT
+              RBTC
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#8AE39E" />
             <div class="p7-graphics ml-2">
-              DOC
+              USDT
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#429A62" />
             <div class="p7-graphics ml-2">
-              Otras
+              DOC
+            </div>
+          </div>
+          <div class="cripto-info d-flex mb-1">
+            <v-progress-circular :size="7" :width="1.5"
+              :value="100" color="#79BF89" />
+            <div class="p7-graphics ml-2">
+              RIF
             </div>
           </div>
         </div>
@@ -51,28 +54,35 @@
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#EEAF0E" />
             <div class="p7-graphics ml-2">
-              RBTC
+              Micro-RBTC
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#F7C61A" />
             <div class="p7-graphics ml-2">
-              USDT
+              RBTC
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#D5D77D" />
             <div class="p7-graphics ml-2">
-              DOC
+              USDTC
             </div>
           </div>
           <div class="cripto-info d-flex mb-1">
             <v-progress-circular :size="7" :width="1.5"
               :value="100" color="#BCBE34" />
             <div class="p7-graphics ml-2">
-              Otras
+              DOC
+            </div>
+          </div>
+          <div class="cripto-info d-flex mb-1">
+            <v-progress-circular :size="7" :width="1.5"
+              :value="100" color="#A5A711" />
+            <div class="p7-graphics ml-2">
+              RIF
             </div>
           </div>
         </div>
@@ -93,14 +103,16 @@ export default {
   data() {
     return {
       slices: [
-        { color: '#095223' },
-        { color: '#47B25F' },
-        { color: '#8AE39E' },
-        { color: '#429A62' },
-        { color: '#EEAF0E' },
-        { color: '#F7C61A' },
-        { color: '#D5D77D' },
-        { color: '#BCBE34' },
+        { color: '#095223' }, // micro-rbtc deposit
+        { color: '#47B25F' }, // rbtc
+        { color: '#8AE39E' }, // usdt
+        { color: '#429A62' }, // doc
+        { color: '#79BF89' }, // rif
+        { color: '#EEAF0E' }, // micro-rbtc debts
+        { color: '#F7C61A' }, // rbtc
+        { color: '#D5D77D' }, // usdt
+        { color: '#BCBE34' }, // doc
+        { color: '#A5A711' }, // rif
       ],
       chartData: [
         ['', '', ''],

@@ -14,6 +14,7 @@
     <history-balance v-else :dataMarkets="dataMarkets"
       :infoDeposits="infoDeposits"
       :infoBorrows="infoBorrows"
+      :dataActivity="dataActivity"
     />
   </div>
 </template>
@@ -25,11 +26,13 @@ import ChartBalance from '@/components/balance/ChartBalance.vue';
 import DepositsBalance from '@/components/balance/DepositsBalance.vue';
 import DebtsBalance from '@/components/balance/DebtsBalance.vue';
 import HistoryBalance from '@/components/balance/HistoryBalance.vue';
+import { addresses } from '@/middleware/contracts/constants';
 import {
   CRbtc,
   CToken,
   Market,
   Comptroller,
+  Firestore,
 } from '@/middleware';
 
 export default {
@@ -44,6 +47,7 @@ export default {
     return {
       constants,
       db: this.$firebase.firestore(),
+      firestore: new Firestore(),
       counter: 0,
       isLoading: true,
       riskValue: 100,
@@ -54,13 +58,16 @@ export default {
       infoBorrows: {},
       dataMarkets: [],
       chartData: [],
+      dataActivity: [],
       borrowData: [
+        ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
       ],
       supplyData: [
+        ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
         ['', 0, ''],
@@ -83,6 +90,37 @@ export default {
     },
   },
   methods: {
+    async getUserActivity() {
+      const activity = await this.firestore
+        .getUserActivity(this.comptroller.comptrollerAddress, this.walletAddress);
+      const done = new Promise((resolve) => {
+        activity.forEach(async (a, index, array) => {
+          let info = {};
+          const img = await this.db
+            .collection('markets-symbols')
+            .doc(a.market)
+            .get()
+            .then((response) => response.data().imageURL);
+
+          const date = new Date(a.timestamp.seconds * 1000);
+          info = {
+            ...a,
+            img,
+            date,
+          };
+          this.dataActivity.push(info);
+          if (index === array.length - 1) resolve();
+        });
+      });
+
+      done.then(() => {
+        this.dataActivity.sort((prev, curr) => {
+          if (prev.date.toISOString() < curr.date.toISOString()) return 1;
+          if (prev.date.toISOString() > curr.date.toISOString()) return -1;
+          return 0;
+        });
+      });
+    },
     async getMarkets() {
       return new Promise((resolve, reject) => {
         let counter = 0;
@@ -102,7 +140,7 @@ export default {
       });
     },
     async getData() {
-      this.marketAddresses = await this.comptroller.allMarkets;
+      this.marketAddresses = await this.comptroller.allMarkets();
       if (this.walletAddress) {
         await this.getMarkets();
 
@@ -164,6 +202,7 @@ export default {
             dataBorrow[2] = 'borrow';
             this.borrowData[i] = dataBorrow;
           } else {
+            dataBorrow[0] = info.symbol.toUpperCase();
             this.borrowData[i] = dataBorrow;
           }
           if (info.supplyBalance > 0) {
@@ -174,6 +213,15 @@ export default {
           } else {
             this.supplyData[i] = dataSupply;
           }
+
+          // micro
+          const ksat = addresses[this.chainId].kSAT;
+
+          if (ksat === info.marketAddress) {
+            dataBorrow[0] = `Micro-${info.symbol.toUpperCase()}`;
+            dataSupply[0] = `Micro-${info.symbol.toUpperCase()}`;
+          }
+
           this.chartData = [...this.supplyData, ...this.borrowData];
 
           data.push(info);
@@ -195,6 +243,7 @@ export default {
   created() {
     this.comptroller = new Comptroller(this.chainId);
     this.redirect();
+    this.getUserActivity();
     this.getData();
     this.getMarketsInfo();
   },

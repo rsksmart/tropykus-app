@@ -2,6 +2,7 @@ export const WALLET_LIQUALITY = 'WALLET_LIQUALITY';
 export const WALLET_METAMASK = 'WALLET_METAMASK';
 export const WALLET_CONNECT = 'WALLET_CONNECT';
 export const WALLET_NIFTY = 'WALLET_NIFTY';
+export const WALLET_DEFIANT = 'WALLET_DEFIANT';
 
 export const USER_ACTION_MINT = 'USER_ACTION_MINT';
 export const USER_ACTION_BORROW = 'USER_ACTION_BORROW';
@@ -9,7 +10,8 @@ export const USER_ACTION_REDEEM = 'USER_ACTION_REDEEM';
 export const USER_ACTION_REPAY = 'USER_ACTION_REPAY';
 
 export const RBTC_SYMBOL = 'tRBTC';
-export const CRBTC_SYMBOL = 'cRBTC';
+export const CRBTC_SYMBOL = 'kRBTC';
+export const CSAT_SYMBOL = 'kSAT';
 
 export const ROUTE_NAMES = {
   BALANCE: 'Balance',

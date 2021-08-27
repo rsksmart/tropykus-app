@@ -71,10 +71,12 @@ export default {
       return this.$t('balance.risk.description.risk');
     },
     riskImage() {
-      if (this.riskRate > 60 && this.riskRate <= 100) return HappyFace;
+      if (this.riskValue === 100) return SadFace;
+      if (this.riskRate > 60 && this.riskRate < 100) return HappyFace;
       if (this.riskRate > 40 && this.riskRate <= 60) return SeriousFace;
-      if (this.riskRate >= 0 && this.riskRate <= 40) return SurpisedFace;
-      return SadFace;
+      if (this.riskRate > 0 && this.riskRate <= 40) return SurpisedFace;
+      if (this.riskValue === 0) return HappyFace;
+      return HappyFace;
     },
     chartColor() {
       if (this.riskRate === 100) return '#317440';

@@ -1,8 +1,7 @@
 <template>
     <div class="d-flex justify-center mt-1">
       <template v-if="marketsLoaded">
-        <div class=" d-flex flex-wrap mx-auto flex-row-reverse">
-          <!-- <template cols="4" > -->
+        <div class=" d-flex flex-wrap">
             <general-info
               v-for="(market, idx) in markets" :key="`market-${idx}`"
               :marketAddress="market"
@@ -49,7 +48,7 @@ export default {
   methods: {
     async load() {
       this.comptroller = new Comptroller(this.chainId);
-      this.markets = await this.comptroller.allMarkets;
+      this.markets = await this.comptroller.allMarkets(false);
     },
   },
   components: {
