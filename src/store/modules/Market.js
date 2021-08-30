@@ -62,7 +62,6 @@ const actions = {
       walletAddress, account, page,
     } = data;
     const { market } = state;
-
     info.underlyingSymbol = await market.underlyingAssetSymbol();
     info.rate = page === constants.ROUTE_NAMES.DEPOSITS
       ? await market.supplyRateAPY()
@@ -78,6 +77,7 @@ const actions = {
       info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(walletAddress);
       info.supplyBalance = info.supplyBalance ? info.supplyBalance : 0;
       info.borrowBalance = await market.borrowBalanceCurrent(walletAddress);
+      info.borrowBalanceStored = await market.borrowBalanceStored(walletAddress);
       info.interestBalance = await market.getEarnings(walletAddress);
     } else {
       commit(constants.MARKET_RESET_MARKET);

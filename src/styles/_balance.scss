@@ -57,13 +57,19 @@ $bg-balance: #E6F1EB;
         }
       }
     }
+    .p3-USD-values {
+      font-size: 12px !important;
+    }
     .balance-deposit{
       width: 287px;
       height: 140px;
       grid-column: 2 / 3;
       grid-row: 1 / 2;
-      padding: 29px 20px 24px 18px;
+      padding: 29px 20px 24px 27px;
       position: relative;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
       .tooltip-info{
         position: absolute;
         top: 15px;
@@ -75,8 +81,11 @@ $bg-balance: #E6F1EB;
       height: 140px;
       grid-column: 2 / 3;
       grid-row: 3 / 4;
-      padding: 29px 20px 24px 18px;
+      padding: 29px 20px 24px 27px;
       position: relative;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
       .tooltip-info{
         position: absolute;
         top: 15px;

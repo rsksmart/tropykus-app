@@ -104,15 +104,15 @@ export default {
     return {
       slices: [
         { color: '#095223' }, // micro-rbtc deposit
-        { color: '#47B25F' }, // rbtc
         { color: '#8AE39E' }, // usdt
-        { color: '#429A62' }, // doc
+        { color: '#47B25F' }, // rbtc
         { color: '#79BF89' }, // rif
+        { color: '#429A62' }, // doc
         { color: '#EEAF0E' }, // micro-rbtc debts
-        { color: '#F7C61A' }, // rbtc
         { color: '#D5D77D' }, // usdt
-        { color: '#BCBE34' }, // doc
+        { color: '#F7C61A' }, // rbtc
         { color: '#A5A711' }, // rif
+        { color: '#BCBE34' }, // doc
       ],
       chartData: [
         ['', '', ''],

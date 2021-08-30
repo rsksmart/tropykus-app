@@ -130,11 +130,7 @@ export default class Market {
     return Number(await this.instance.callStatic.balanceOf(address)) / factor;
   }
 
-  async currentBalanceOfCTokenInUnderlying(address, isCRbtc = false) {
-    if (isCRbtc) {
-      const supplysnapshot = await this.instance.getSupplierSnapshotStored(address);
-      return Number(supplysnapshot[1]) / factor;
-    }
+  async currentBalanceOfCTokenInUnderlying(address) {
     const cTokenBalance = await this.balanceOf(address);
     const exchangeRate = await this.exchangeRateStored();
     return (cTokenBalance * exchangeRate);

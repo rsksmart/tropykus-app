@@ -22,7 +22,7 @@
         <dropdown :select="select" :getMarkets="getMarkets" @updateRoute="updateRoute"/>
       </div>
       <div class="content-amunt mb-10">
-        <div class="d-flex amout">
+        <div v-if="tabMenu" class="d-flex amout">
           <div>
             <div class="p1-descriptions">
               {{ tabMenu ? $t('borrow.description2') : $t('pay.description3')}}
@@ -54,11 +54,10 @@
             <div v-if="tabMenu" class="p2-reading-values">{{ info.rate }} %</div>
             <template v-else>
               <div class="p2-reading-values">
-                {{
-                  tokenBalance | formatDecimals
+                {{ !tokenBalance ? 0 : tokenBalance | formatDecimals
                 }} {{ info.underlyingSymbol }}
               </div>
-              <div class="p3-USD-values">{{ tokenPrice | formatPrice }} USD</div>
+              <div class="p3-USD-values">{{ !tokenPrice ? 0 : tokenPrice | formatPrice }} USD</div>
             </template>
           </div>
           <div class="tooltip-info ml-7 mt-1">
@@ -293,7 +292,7 @@ export default {
     },
     tokenBalance() {
       return this.tabMenu ? (this.liquidity / this.info
-        .underlyingPrice) : this.info.borrowBalance;
+        .underlyingPrice) : this.info.borrowBalanceStored;
     },
     tokenPrice() {
       return this.tokenBalance * this.info.underlyingPrice;
@@ -361,79 +360,18 @@ export default {
         this.showModalConnectWallet = true;
         return;
       }
-      this.isLoading = true;
-      this.infoLoading.loading = true;
-      this.infoLoading.wallet = true;
-      this.infoLoading.symbol = this.select.underlyingSymbol;
-      this.counterAction = 1;
-      if (this.tabMenu) {
-        await this.market.borrow(this.account, this.amount)
-          .then((tx) => {
-            this.infoLoading.wallet = false;
-            this.market.wsInstance.on('Borrow', (from, amount) => {
-              if (from === this.walletAddress && Number(this.amount) === amount / 1e18) {
-                if (!this.isLoading) {
-                  this.isLoading = true;
-                }
-                this.infoLoading.loading = false;
-                this.infoLoading.borrow = true;
-                this.infoLoading.amount = amount / 1e18;
-                if (this.counterAction === 1) {
-                  this.firestore.saveUserAction(
-                    this.comptroller.comptrollerAddress,
-                    this.walletAddress,
-                    'Borrow',
-                    amount / 1e18,
-                    this.info.underlyingSymbol,
-                    this.market.marketAddress,
-                    this.info.underlyingPrice,
-                    new Date(),
-                    tx.hash,
-                  );
-                }
-                this.counterAction = 0;
-                setTimeout(() => {
-                  this.getMarket();
-                }, 2000);
-              }
-            });
-          })
-          .catch(console.error);
-      } else {
-        let amountPay = this.amount;
-        if (this.amount === this.info.borrowBalance) amountPay = -1;
-        this.market.repay(this.account, amountPay)
-          .then((tx) => {
-            this.infoLoading.wallet = false;
-            this.market.wsInstance.on('RepayBorrow', (from, _, amount) => {
-              if (from === this.walletAddress) {
-                if (!this.isLoading) {
-                  this.isLoading = true;
-                }
-                this.infoLoading.loading = false;
-                this.infoLoading.borrow = false;
-                this.infoLoading.amount = amount / 1e18;
-                if (this.counterAction === 1) {
-                  this.firestore.saveUserAction(
-                    this.comptroller.comptrollerAddress,
-                    this.walletAddress,
-                    'RepayBorrow',
-                    amount / 1e18,
-                    this.info.underlyingSymbol,
-                    this.market.marketAddress,
-                    this.info.underlyingPrice,
-                    new Date(),
-                    tx.hash,
-                  );
-                }
-                setTimeout(() => {
-                  this.getMarket();
-                }, 2000);
-              }
-            });
-          })
-          .catch(console.error);
-      }
+
+      this.$store.dispatch({
+        type: constants.USER_ACTION,
+        market: this.market,
+        action: this.tabMenu ? constants.USER_ACTION_BORROW : constants.USER_ACTION_REPAY,
+        amount: this.amount,
+        symbol: this.select.underlyingSymbol,
+        price: this.info.underlyingPrice,
+      });
+
+      this.reset();
+
       this.market.wsInstance.on('TokenFailure', (from, to, amount, event) => {
         console.info(`Failure from ${from} Event: ${JSON.stringify(event)}`);
         const { error, detail, info } = event.args;
