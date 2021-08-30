@@ -6,6 +6,7 @@ import signer from './utils';
 
 export default class Comptroller {
   constructor(chainId) {
+    this.deployBlock = addresses[chainId].deployBlock;
     this.comptrollerAddress = addresses[chainId].comptroller;
     this.kRBTC = addresses[chainId].kRBTC;
     this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
@@ -25,13 +26,12 @@ export default class Comptroller {
     return marketsCopy.reverse();
   }
 
-  // Block: 1953603
-  // BlockHash: 0x322587483502ba718dc3ac3085ec85dd1c57c2076d08dc1f3a7fee7197daed3c
   async getTotalRegisteredAddresses() {
+    const currentBlock = await Vue.web3.getBlockNumber();
+    const delta = (this.deployBlock - currentBlock);
     const events = await this.wsInstance
-      .queryFilter('MarketEntered', -5000);
+      .queryFilter('MarketEntered', delta);
     const accountAddresses = [];
-    console.log(`events length: ${events.length}`);
     events.forEach((marketEnter) => {
       const { account } = marketEnter.args;
       if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);

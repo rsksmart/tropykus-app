@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="metrics">
+      <metrics-dropdown />
       <div class="container d-flex align-center flex-column">
         <div
           class="d-flex justify-start mb-9"
@@ -13,7 +14,7 @@
         <v-card
           class="d-flex justify-center align-center"
           width="693" height="169"
-          color="#013E2F"
+          color="#47B25F"
           >
           <v-row class="mx-5">
             <v-col class="ml-7">
@@ -36,50 +37,58 @@
                     </template>
                     <span>{{ subsidy }}</span>
                   </v-tooltip>
-                  <div class="font-italic white--text">{{ subsidy_usd | formatPrice}} USD</div>
+                  <div class="p3-USD-values">{{ subsidy_usd | formatPrice}} USD</div>
                 </v-col>
               </v-row>
             </v-card>
             <v-card
-              style="width: 693px; height: 509px; border-radius: 10px;"
-              color="#013E2F"
+              style="width: 693px; border-radius: 10px;"
+              color="#47B25F"
               class="market-description"
             >
-              <div class="market-table">
-                <div class="market-table-head">
-                  <div class="title-head">
-                    {{ $t('internal-metrics.market') }}
-                  </div>
-                  <div class="title-head" style="width: 151px">
+              <div class="container">
+                <v-row class="ma-0">
+                  <v-col>
+                    <span class="p1-descriptions">
+                     {{ $t('internal-metrics.market') }}
+                    </span>
+                  </v-col>
+                  <v-col>
+                    <span class="p1-descriptions">
                     {{ $t('internal-metrics.total-reserves') }}
-                  </div>
-                </div>
-                <div class="line-market"></div>
-                <div class="market-table-body">
-                  <div class="market-table-content"
-                    v-for="market in getMarkets"
-                    :key="market.symbol"
-                    >
-                    <div class="market">
-                      <div class="img">
-                        <img :src="market.img">
-                      </div>
-                      <div class="market-info">
-                        <div class="name">{{market.name}}</div>
-                        <div class="id">{{market.symbol}}</div>
-                      </div>
-                    </div>
-                      <div class="description" style="width: 139px">
-                        <div class="coin">
+                    </span>
+                  </v-col>
+                </v-row>
+                <v-divider />
+                <v-row class="ma-0" v-for="market in getMarkets" :key="market.kTokenSymbol">
+                  <v-col>
+                    <v-col cols="auto" class="pa-0">
+                      <v-img width="30" height="30" :src="market.img" />
+                    </v-col>
+                    <v-col class="pa-0">
+                      <v-row class="ma-0">
+                        {{market.name}}
+                      </v-row>
+                      <v-row class="ma-0">
+                        {{market.symbol}}
+                      </v-row>
+                    </v-col>
+                  </v-col>
+                  <v-col>
+                    <v-tooltip bottom content-class="secondary-color box-shadow-tooltip" max-width="180">-->
+                      <template v-slot:activator="{ on, attrs }">
+                        <div class="p2-reading-values" v-bind="attrs" v-on="on">
                           {{market.reserves | formatDecimals }}
                           <span class="">{{market.symbol}}</span>
                         </div>
-                        <div class="usd">
-                          {{ market.reserve_usd | formatPrice }} USD
-                        </div>
-                      </div>
-                  </div>
-                </div>
+                      </template>
+                      <span>{{market.reserves }}</span>
+                    </v-tooltip>
+                    <div class="p3-USD-values">
+                      {{ market.reserve_usd | formatPrice }} USD
+                    </div>
+                  </v-col>
+                </v-row>
               </div>
           </v-card>
         </div>
@@ -88,6 +97,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import MetricsDropdown from '@/components/general/MetricsDropdown';
 import { Comptroller } from '@/middleware';
 import * as constants from '@/store/constants';
 
@@ -122,16 +132,17 @@ export default {
       await this.markets.map(async (market) => {
         try {
           const data = {};
+          data.kTokenSymbol = await market.symbol;
           data.symbol = await market.underlyingAssetSymbol();
           data.reserve_usd = await market.reservesInUSD(this.chainId);
           data.name = await market.underlyingAssetName();
           data.price = await market.underlyingCurrentPrice(this.chainId);
           data.reserves = await market.getReserves();
-
-          if (constants.RBTC_SYMBOL === data.symbol) {
+          if (constants.CSAT_SYMBOL === data.kTokenSymbol) {
             const subsidy = await market.getSubsidyFound();
             this.subsidy = subsidy;
             this.subsidy_usd = data.price * subsidy;
+            data.name += ' microsaving';
           }
 
           data.img = await this.db
@@ -145,9 +156,11 @@ export default {
           console.error(error);
         }
       });
-      const address = await this.comptroller.getTotalRegisteredAddresses();
-      console.log(`address : ${address}`);
+      this.users = await this.comptroller.getTotalRegisteredAddresses();
     },
+  },
+  components: {
+    MetricsDropdown,
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);

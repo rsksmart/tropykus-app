@@ -275,7 +275,13 @@
     "number-addresses": "Numero de direcciones unicas",
     "total-subsidy": "Total fondo de subsidio",
     "market": "Mercado",
-    "total-reserves": "Total Reservas"
+    "total-reserves": "Total Reservas",
+    "dropdown": [
+      "Número total de usuarios activos",
+      "Valor total almacenado",
+      "Número total de depósitos",
+      "Número total de deudas"
+    ]
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",

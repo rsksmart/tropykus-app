@@ -273,7 +273,13 @@
     "number-addresses": "Number of unique addresses",
     "total-subsidy": "Total subsidy fund",
     "market": "Market",
-    "total-reserves": "Total Reserves"
+    "total-reserves": "Total Reserves",
+    "dropdown": [
+      "Total number of active addresses",
+      "Total Value Locked",
+      "Total number of deposits",
+      "Total number of loans"
+    ]
   },
   "borrows": {
     "title": "You can borrow and multiply your earnings",
