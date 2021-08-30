@@ -99,6 +99,10 @@ export default {
       type: Array,
       require: true,
     },
+    chartColor: {
+      type: Array,
+      require: true,
+    },
   },
   data() {
     return {
@@ -117,13 +121,6 @@ export default {
       chartData: [
         ['', '', ''],
         ['empty', 100, ''],
-        // ['', 0, ''],
-        // [`DOC | ${0.097869}`, 3, '#ABD1B4'],
-        // [`Otras | ${0.097869}`, 3, '#ABD1B4'],
-        // [`RBTC | ${0.097}`, 1, '#ABD1B4'],
-        // [`USD | ${0.097869}`, 2, '#ABD1B4'],
-        // [`DOC | ${0.097869}`, 3, '#ABD1B4'],
-        // [`Otras | ${0.097869}`, 3, '#ABD1B4'],
       ],
       chartOptions: {
         pieHole: 0.79,
@@ -148,7 +145,7 @@ export default {
   watch: {
     chartInfo() {
       this.chartData = [['', '', ''], ...this.chartInfo];
-      this.chartOptions.slices = this.slices;
+      this.chartOptions.slices = this.chartColor;
       // this.chartData = this.chartInfo;
     },
   },
