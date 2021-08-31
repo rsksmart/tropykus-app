@@ -270,7 +270,6 @@ export default {
       getMarkets: [],
       userActivity: [],
       timeHash: '',
-      rbtc: '0xE47b7c669F96B1E0Bf537bB27fF5C6264fe0d380',
       tutorial: false,
       transfer: false,
       amountRbtc: 0,
@@ -357,7 +356,7 @@ export default {
       this.getMarkets = this.dataMarkets;
       this.userActivity = this.dataActivity;
 
-      const market = new CRbtc(this.rbtc, this.chainId);
+      const market = new CRbtc(addresses[this.chainId].kRBTC, this.chainId);
       this.amountRbtc = await market.balanceOfUnderlyingInWallet(this.account);
     },
     eventType(type) {
