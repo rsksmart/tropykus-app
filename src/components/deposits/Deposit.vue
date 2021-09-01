@@ -270,7 +270,7 @@ export default {
       amountEarning: null,
       info: {},
       liquidity: 0,
-      rules: {
+      rules: { // apalancamiento
         leverage: () => ((this.tabMenu && this.account && this.amount)
           ? this.info.borrowBalance <= 0 : true) || this.$t('dialog.supply-redeem.rule1'),
         minBalance: () => ((this.tabMenu && this.account && this.amount)

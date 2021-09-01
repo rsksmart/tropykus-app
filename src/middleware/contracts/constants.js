@@ -50,7 +50,7 @@ export const addresses = {
     kUSDT: '0xde2dc0aea8fc8ce567f5f48344ed44b89d6186b7',
     kRBTC: '0x7967ca03ddeb1405730563187b0706ad36b69b60',
     kSAT: '0xd1edae988e9afaf6da1b44a4d0c40c0ea03ce9c6',
-    tropykusLens: '0x0a9ff3df618aa6c3bd727efe491e5f17faaa82bc',
+    tropykusLens: '0x6bf00f6b4e06cda667cebfa1a94942d9eb739abc',
     whitelist: '0x60e7bbd1c4c6c77d829038137d1a306d5c21aeb1',
   },
 };

@@ -5,7 +5,7 @@
       <risk-balance :riskRate="riskValue" />
       <deposits-balance :infoDeposits="infoDeposits" />
       <debts-balance :infoBorrows="infoBorrows" />
-      <chart-balance :chartInfo="chartData"/>
+      <chart-balance :chartInfo="chartData" :chartColor="chartColor"/>
     </div>
     <v-row class="d-flex justify-center mt-15" v-if="isLoading">
       <v-progress-circular class="mt-5" :size="80" :width="6" indeterminate
@@ -59,6 +59,21 @@ export default {
       dataMarkets: [],
       chartData: [],
       dataActivity: [],
+      chartColor: [],
+      supplyColor: [
+        { color: '' },
+        { color: '' },
+        { color: '' },
+        { color: '' },
+        { color: '' },
+      ],
+      borrowColor: [
+        { color: '' },
+        { color: '' },
+        { color: '' },
+        { color: '' },
+        { color: '' },
+      ],
       borrowData: [
         ['', 0, ''],
         ['', 0, ''],
@@ -196,32 +211,46 @@ export default {
           // chart balance
           const dataBorrow = ['', 0, ''];
           const dataSupply = ['', 0, ''];
-          if (info.borrowBalance > 0) {
-            dataBorrow[0] = info.symbol.toUpperCase();
-            dataBorrow[1] = info.borrowBalance * info.price;
-            dataBorrow[2] = 'borrow';
-            this.borrowData[i] = dataBorrow;
-          } else {
-            dataBorrow[0] = info.symbol.toUpperCase();
-            this.borrowData[i] = dataBorrow;
-          }
+
           if (info.supplyBalance > 0) {
-            dataSupply[0] = info.symbol.toUpperCase();
+            dataSupply[0] = addresses[this.chainId].kSAT === info.marketAddress
+              ? `Micro-${info.symbol.toUpperCase()}` : info.symbol.toUpperCase();
             dataSupply[1] = info.supplyBalance * info.price;
-            dataSupply[2] = 'deposit';
+            dataSupply[2] = info.marketAddress;
             this.supplyData[i] = dataSupply;
+
+            if (addresses[this.chainId].kSAT === info.marketAddress) this.supplyColor[i] = { color: '#095223' };
+            if (addresses[this.chainId].kRBTC === info.marketAddress) this.supplyColor[i] = { color: '#47B25F' };
+            if (addresses[this.chainId].kRIF === info.marketAddress) this.supplyColor[i] = { color: '#79BF89' };
+            if (addresses[this.chainId].kDOC === info.marketAddress) this.supplyColor[i] = { color: '#429A62' };
+            if (addresses[this.chainId].kUSDT === info.marketAddress) this.supplyColor[i] = { color: '#8AE39E' };
           } else {
+            this.supplyColor[i] = { color: '' };
+            dataSupply[2] = info.marketAddress;
+            dataSupply[0] = info.symbol.toUpperCase();
             this.supplyData[i] = dataSupply;
           }
 
-          // micro
-          const ksat = addresses[this.chainId].kSAT;
+          if (info.borrowBalance > 0) {
+            dataBorrow[0] = addresses[this.chainId].kSAT === info.marketAddress
+              ? `Micro-${info.symbol.toUpperCase()}` : info.symbol.toUpperCase();
+            dataBorrow[1] = info.borrowBalance * info.price;
+            dataBorrow[2] = info.marketAddress;
+            this.borrowData[i] = dataBorrow;
 
-          if (ksat === info.marketAddress) {
-            dataBorrow[0] = `Micro-${info.symbol.toUpperCase()}`;
-            dataSupply[0] = `Micro-${info.symbol.toUpperCase()}`;
+            if (addresses[this.chainId].kSAT === info.marketAddress) this.borrowColor[i] = { color: '#EEAF0E' };
+            if (addresses[this.chainId].kRBTC === info.marketAddress) this.borrowColor[i] = { color: '#F7C61A' };
+            if (addresses[this.chainId].kRIF === info.marketAddress) this.borrowColor[i] = { color: '#A5A711' };
+            if (addresses[this.chainId].kDOC === info.marketAddress) this.borrowColor[i] = { color: '#BCBE34' };
+            if (addresses[this.chainId].kUSDT === info.marketAddress) this.borrowColor[i] = { color: '#D5D77D' };
+          } else {
+            this.borrowColor[i] = { color: '' };
+            this.borrowData[i] = dataBorrow;
+            dataBorrow[0] = info.symbol.toUpperCase();
+            dataBorrow[2] = info.marketAddress;
           }
 
+          this.chartColor = [...this.supplyColor, ...this.borrowColor];
           this.chartData = [...this.supplyData, ...this.borrowData];
 
           data.push(info);

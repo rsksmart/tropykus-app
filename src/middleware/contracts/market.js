@@ -272,7 +272,7 @@ export default class Market {
 
   async supply(account, amountIntended, isCRbtc = false) {
     const accountSigner = signer(account);
-    const value = await Market.getAmountDecimals(amountIntended);
+    const value = Market.getAmountDecimals(amountIntended);
     if (isCRbtc) {
       return this.instance.connect(accountSigner).mint({ value, gasLimit: this.gasLimit });
     }
@@ -299,17 +299,23 @@ export default class Market {
 
   async repay(account, amountIntended) {
     const accountSigner = signer(account);
-    const value = amountIntended === -1 ? '115792089237316195423570985008687907853269984665640564039457584007913129639935'
-      : await ethers.utils.parseEther(`${amountIntended}`);
+    let value = 0;
+    // : await ethers.utils.parseEther(`${amountIntended}`);
+    if (amountIntended === -1) {
+      value = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+    } else {
+      value = Market.getAmountDecimals(amountIntended);
+    }
+
+    if (await Market.isCRbtc(this.marketAddress) || await Market.isCSat(this.marketAddress)) {
+      return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit: this.gasLimit });
+    }
     const underlyingAsset = new ethers.Contract(
       await this.underlying(),
       StandardTokenAbi,
       Vue.web3,
     );
     await underlyingAsset.connect(accountSigner).approve(this.marketAddress, value);
-    if (await Market.isCRbtc(this.marketAddress)) {
-      return this.instance.connect(accountSigner).repayBorrow({ value, gasLimit: this.gasLimit });
-    }
     return this.instance.connect(accountSigner).repayBorrow(value, { gasLimit: this.gasLimit });
   }
 
