@@ -37,7 +37,7 @@
       <div class="content-info">
         <div>
           <div class="p1-descriptions text-info mb-1">
-            {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description3') }}
+            {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description4') }}
           </div>
           <div class="p2-reading-values text-info">
             {{ !tokenBalance ? 0 : tokenBalance | formatDecimals(select.underlyingSymbol) }}

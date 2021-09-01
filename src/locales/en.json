@@ -356,6 +356,7 @@
     "description1": "Select the crypto to withdraw",
     "description2": "Write the amount you are going to withdraw",
     "description3": "Remaining to the 0.1 RBTC limit is:",
+    "description4": "You have deposited:",
     "btn1": "Connect wallet",
     "btn2": "Withdraw"
   },

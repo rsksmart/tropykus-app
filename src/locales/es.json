@@ -359,6 +359,7 @@
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
     "description3": "El límite restante a 0.1 RBTC es:",
+    "description4": "Tienes depositado:",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
   },
