@@ -322,10 +322,6 @@ export default {
   },
   methods: {
     textMicroSavings(marketAddress, event = '') {
-      // return addresses[this.chainId].kSAT === marketAddress
-      //   ? 'micro saving'
-      //   : '';
-      console.log(marketAddress === addresses[this.chainId].kSAT);
       if (this.tabMenu === 'activity' && (event === 'Mint' || event === 'Redeem')
         && marketAddress === addresses[this.chainId].kSAT) {
         return 'micro saving';

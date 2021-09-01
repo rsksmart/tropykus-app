@@ -1,5 +1,16 @@
 <template>
   <div class="balance-risk balance-style">
+    <div class="tooltip-info">
+      <v-tooltip bottom
+        content-class="secondary-color box-shadow-tooltip" max-width="180">
+        <template v-slot:activator="{ on, attrs }">
+          <v-img v-bind="attrs" v-on="on" src="@/assets/icons/info2.svg" contain/>
+        </template>
+        <span class="p5-feedback text-info">
+          {{$t('balance.tooltip4')}}
+        </span>
+      </v-tooltip>
+    </div>
     <div class="risk">
       <div class="d-flex justify-center">
         <img class="risk-img" :src="riskImage" />

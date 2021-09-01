@@ -131,8 +131,6 @@ export default {
         backgroundColor: 'transparent',
         pieSliceBorderColor: 'transparent',
         pieSliceText: 'none',
-        // pieSliceText: 'label',
-        // pieResidueSliceColor: '#CFC2AC',
         slices: [
           { color: '#ABD1B4' },
         ],

@@ -363,10 +363,15 @@
     "title": "Balance Sheet",
     "tooltip1": "This value in USD is the total sum of all the cryptos that you have deposited in Tropykus.",
     "tooltip2": "This value in USD is the total sum of all the cryptos that you borrowed from Tropykus.",
+    "tooltip3": "This value corresponds to your maximum loan capacity with respect to all your deposits. It is usually between 60 and 70%, depending on the coins in which you have deposited.",
+    "tooltip4": "Your level of risk is when you approach the limit of the total of what you can borrow. That is, the higher the total amount of your debts, the more risk you have of being liquidated.",
     "deposit": {
       "description1": "You have deposited",
       "description2": "Deposited",
       "description3": "Accumulated earnings"
+    },
+    "liquidity": {
+      "description1":"You can borrow"
     },
     "debts": {
       "description1": "You must pay",
@@ -412,7 +417,7 @@
         "other": "Risk cannot be calculated"
       },
       "description": {
-        "risk": "of your deposits are committed in debts",
+        "risk": "of what you can borrow is in debt.",
         "liquidated": "of your deposits have been liquidated"
       }
     },
