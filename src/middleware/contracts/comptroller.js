@@ -11,6 +11,7 @@ export default class Comptroller {
     this.kRBTC = addresses[chainId].kRBTC;
     this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3Ws);
+    this.chainId = chainId;
   }
 
   async allMarkets(all = true) {
@@ -26,9 +27,14 @@ export default class Comptroller {
     return marketsCopy.reverse();
   }
 
-  async getTotalRegisteredAddresses() {
-    const currentBlock = await Vue.web3.getBlockNumber();
-    const delta = (this.deployBlock - currentBlock);
+  async getRegisteredAddresses(blocks = null) {
+    let delta;
+    if (blocks) {
+      delta = blocks;
+    } else {
+      const currentBlock = await Vue.web3.getBlockNumber();
+      delta = (this.deployBlock - currentBlock);
+    }
     const events = await this.wsInstance
       .queryFilter('MarketEntered', delta);
     const accountAddresses = [];
@@ -36,8 +42,27 @@ export default class Comptroller {
       const { account } = marketEnter.args;
       if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);
     });
-    return accountAddresses.length;
+    return accountAddresses;
   }
+
+  // getRetiredUsers(markets, uniqueAddresses, previousActiveUsers) {
+  //   return new Promise((resolve, reject) => {
+  //     const retiredUsers = [];
+  //     let counter = 0;
+  //     uniqueAddresses.forEach(async (userAddress) => {
+  //       await Promise.all([
+  //         this.totalDepositsByInteresesInUSD(markets, userAddress, this.chainId),
+  //         this.totalBorrowsByInteresesInUSD(markets, userAddress, this.chainId),
+  //       ])
+  //         .then(([{ totalDeposits }, { totalBorrows }]) => {
+  //           if (totalDeposits === 0 && totalBorrows === 0) retiredUsers.push(userAddress);
+  //           counter += 1;
+  //           if (counter === uniqueAddresses.length) resolve(retiredUsers);
+  //         })
+  //         .catch(reject);
+  //     });
+  //   });
+  // }
 
   async getAssetsIn(address) {
     const assetsIn = await this.instance.callStatic.getAssetsIn(address);

@@ -278,17 +278,64 @@
     }
   },
   "internal-metrics": {
-    "title": "Reservas",
-    "number-addresses": "Numero de direcciones unicas",
+    "title": "Métricas de usuario",
+    "number-addresses": "Número de direcciones unicas",
+    "number-new-addresses": "Número de usuarios ganados",
+    "number-retire-addresses": "Número de usuarios retirados",
+    "number-active-addresses": "Usuarios activos hoy",
     "total-subsidy": "Total fondo de subsidio",
     "market": "Mercado",
     "total-reserves": "Total Reservas",
     "dropdown": [
-      "Número total de usuarios activos",
-      "Valor total almacenado",
-      "Número total de depósitos",
-      "Número total de deudas"
-    ]
+      {
+        "title": "Número total de usuarios activos",
+        "index": 0
+      },
+      {
+        "title": "Valor total almacenado",
+        "index": 1
+      },
+      {
+        "title": "Número total de depósitos",
+        "index": 2
+      },
+      {
+        "title": "Número total de deudas",
+        "index": 3
+      }
+    ],
+    "graph-y-axis": [
+      {
+        "title": "Número de usuarios activos",
+        "index": 0
+      },
+      {
+        "title": "Valor almacenado",
+        "index": 1
+      },
+      {
+        "title": "Número de depósitos",
+        "index": 2
+      },
+      {
+        "title": "Número de deudas",
+        "index": 3
+      }
+    ],
+    "months": {
+      "1": "Enero",
+      "2": "Febrero",
+      "3": "Marzo",
+      "4": "Abril",
+      "5": "Mayo",
+      "6": "Junio",
+      "7": "Julio",
+      "8": "Agosto",
+      "9": "Septiembre",
+      "10": "Octubre",
+      "11": "Noviembre",
+      "12": "Diciembre"
+    }
   },
   "borrows": {
     "title": "Pide prestado y multiplica tus ganancias",

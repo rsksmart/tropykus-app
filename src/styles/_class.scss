@@ -168,6 +168,16 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
     height: 30px;
   }
 }
+//metrics select box
+.v-menu__content{
+  .metrics-select-menu-item {
+    width: auto;
+    height: 62px;
+  }
+  .active{
+    background-color: #CDE9DA;
+  }
+}
 
 .theme--light.v-list {
   color: rgba(0, 0, 0, 0.87);

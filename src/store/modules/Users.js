@@ -70,7 +70,19 @@ const actions = {
     const assetsIn = await comptroller.getAssetsIn(Session.walletAddress);
     const allMarkets = await comptroller.allMarkets();
     if (assetsIn.indexOf(market.marketAddress) === -1) {
-      await comptroller.enterMarkets(Session.account, allMarkets);
+      await comptroller.enterMarkets(Session.account, allMarkets)
+        .then((tx) => firestore.saveUserAction(
+          comptroller.comptrollerAddress,
+          Session.walletAddress,
+          'MarketEntered',
+          0,
+          null,
+          null,
+          null,
+          new Date(),
+          tx.hash,
+        ))
+        .catch();
     }
 
     await market.supply(Session.account, amount)

@@ -276,17 +276,64 @@
     }
   },
   "internal-metrics": {
-    "title": "Reserves",
+    "title": "Users metrics",
     "number-addresses": "Number of unique addresses",
+    "number-new-addresses": "Number of new users",
+    "number-retire-addresses": "Number of retire users",
+    "number-active-addresses": "Today's active users",
     "total-subsidy": "Total subsidy fund",
     "market": "Market",
     "total-reserves": "Total Reserves",
     "dropdown": [
-      "Total number of active addresses",
-      "Total Value Locked",
-      "Total number of deposits",
-      "Total number of loans"
-    ]
+      {
+        "title": "Total number of active addresses",
+        "index": 0
+      },
+      {
+        "title": "Total value Locked",
+        "index": 1
+      },
+      {
+        "title": "Total number of deposits",
+        "index": 2
+      },
+      {
+        "title": "Total number of loans",
+        "index": 3
+      }
+    ],
+    "graph-y-axis": [
+      {
+        "title": "Number of active addresses",
+        "index": 0
+      },
+      {
+        "title": "Value Locked",
+        "index": 1
+      },
+      {
+        "title": "Number of deposits",
+        "index": 2
+      },
+      {
+        "title": "Number of loans",
+        "index": 3
+      }
+    ],
+    "months": {
+      "1": "January",
+      "2": "February",
+      "3": "March",
+      "4": "April",
+      "5": "May",
+      "6": "June",
+      "7": "July",
+      "8": "August",
+      "9": "September",
+      "10": "October",
+      "11": "November",
+      "12": "December"
+    }
   },
   "borrows": {
     "title": "You can borrow and multiply your earnings",

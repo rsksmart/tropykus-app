@@ -28,6 +28,52 @@ export default class Firebase {
     }
   }
 
+  async getActiveUsers(comptrollerAddress) {
+    const now = new Date();
+    const activeUsers = [];
+    const comptroller = await this.db.collection('users-history').doc(comptrollerAddress).get();
+    if (comptroller.exists) {
+      const users = comptroller.data();
+      Object.keys(users).forEach((userAddress) => {
+        const usersWithActivity = comptroller.data()[userAddress].activity;
+        Object.keys(usersWithActivity).forEach((timestamp) => {
+          const date = new Date(timestamp);
+          if (date.getFullYear() === now.getFullYear()
+            && date.getMonth() === now.getMonth()
+            && date.getDate() === now.getDate()) {
+            if (activeUsers.indexOf(userAddress) === -1) activeUsers.push(userAddress);
+          }
+        });
+      });
+    }
+    return activeUsers;
+  }
+
+  async getNewUsers(comptrollerAddress) {
+    const now = new Date();
+    const newUsers = [];
+    const comptroller = await this.db.collection('users-history').doc(comptrollerAddress).get();
+    if (comptroller.exists) {
+      const users = comptroller.data();
+      Object.keys(users).forEach((userAddress) => {
+        const usersWithActivity = comptroller.data()[userAddress].activity;
+        Object.keys(usersWithActivity).forEach((timestamp) => {
+          const date = new Date(timestamp);
+          if(usersWithActivity[timestamp].event === 'MarketEntered'
+            && date.getFullYear() === now.getFullYear()
+            && date.getMonth() === now.getMonth()
+            && date.getDate() === now.getDate()
+          ) {
+            console.log(usersWithActivity[timestamp].event);
+            console.log(userAddress);
+            if (newUsers.indexOf(userAddress) === -1) newUsers.push(userAddress);
+          }
+        });
+      });
+    }
+    return newUsers;
+  }
+
   async getUserActivity(comptrollerAddress, userAddress) {
     const activity = [];
     const comptroller = await this.db.collection('users-history').doc(comptrollerAddress).get();
