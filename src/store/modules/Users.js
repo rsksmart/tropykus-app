@@ -288,7 +288,7 @@ const actions = {
         info.wallet = false;
         commit(constants.USER_ACTION_INFO_DIALOG, info);
         market.wsInstance.on('RepayBorrow', async (from, _, borrowAmount) => {
-          if (from === Session.walletAddress && Number(amount) === borrowAmount / 1e18) {
+          if (from === Session.walletAddress) {
             info.loading = false;
             info.borrow = false;
             info.amount = borrowAmount / 1e18;
