@@ -17,6 +17,7 @@ const state = {
     loading: true,
     deposit: true,
     success: null,
+    firstTx: false,
   },
 };
 const actions = {
@@ -64,13 +65,16 @@ const actions = {
     info.loading = true;
     info.symbol = symbol;
     info.wallet = true;
-
     commit(constants.USER_ACTION_INFO_DIALOG, info);
 
     const assetsIn = await comptroller.getAssetsIn(Session.walletAddress);
     const allMarkets = await comptroller.allMarkets();
     if (assetsIn.indexOf(market.marketAddress) === -1) {
+      info.firstTx = true;
+      commit(constants.USER_ACTION_INFO_DIALOG, info);
       await comptroller.enterMarkets(Session.account, allMarkets);
+      info.firstTx = false;
+      commit(constants.USER_ACTION_INFO_DIALOG, info);
     }
 
     await market.supply(Session.account, amount)

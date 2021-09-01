@@ -81,6 +81,31 @@
     height: 150px !important;
     font-size: 100px;
   }
+  .first-transaction {
+    width: 100%;
+    .modal-title {
+      color: $text-value;
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    .transaction-index {
+      border-radius: 100px;
+      width: 23.07px;
+      height: 23.07px;
+      border: 0.5px solid $text-value;
+      color: $text-value;
+      font-size: 9px;
+      line-height: 11px;
+      font-weight: 300;
+    }
+    .transaction-description {
+      color: $text-value;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 300;
+    }
+  }
 }
 .d-tutorial{
   max-width: 700px !important;
