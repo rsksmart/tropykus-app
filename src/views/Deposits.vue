@@ -34,7 +34,6 @@
     </v-row>
 
     <landing :inBorrowMenu="inBorrowMenu" :key="key"/>
-
   </div>
 </template>
 <script>
