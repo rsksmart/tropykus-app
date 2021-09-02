@@ -97,6 +97,14 @@
       "description6": "You have paid",
       "btn": "Continue"
     },
+    "firstTransaction": {
+      "title": "Authorize all 3 transactions",
+      "transactions": [
+        "Authorize the transaction amount",
+        "Authorize the transaction",
+        "Authorize your deposits as collateral"
+      ]
+    },
     "error": {
       "description1": "The deposit could not be completed. Please try again later.",
       "description2": "The withdrawal could not be completed. Please try again later.",
