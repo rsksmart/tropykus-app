@@ -7,8 +7,8 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>
-            <img class="mr-4 logo-tropykus"
-              src="@/assets/icons/tropykus.svg"
+            <img class="logo-tropykus"
+              src="@/assets/icons/tropykus-alpha.svg"
             />
           </v-list-item-title>
         </v-list-item-content>
@@ -111,6 +111,9 @@
           </a>
           <a href="https://t.me/tropykus">
             <v-img contain height="43" src="@/assets/icons/telegram.svg"/>
+          </a>
+          <a href="https://www.youtube.com/channel/UCUgOzJjQAsQS2sFJ0-A87eQ">
+            <v-img contain height="43" src="@/assets/icons/youtube.svg"/>
           </a>
         </div>
 
