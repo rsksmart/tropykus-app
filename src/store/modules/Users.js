@@ -286,7 +286,8 @@ const actions = {
     commit(constants.USER_ACTION_INFO_DIALOG, info);
     let amountPay = amount;
     if (Number(amount) === Market.info.borrowBalance) amountPay = -1;
-    await market.repay(Session.account, amountPay)
+    console.log('amountPay', amountPay);
+    await market.repay(Session.account, amountPay, Session.walletAddress)
       .then((tx) => {
         // console.log(tx);
         info.wallet = false;

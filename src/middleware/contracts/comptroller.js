@@ -8,6 +8,10 @@ export default class Comptroller {
   constructor(chainId) {
     this.comptrollerAddress = addresses[chainId].comptroller;
     this.kRBTC = addresses[chainId].kRBTC;
+    this.kSAT = addresses[chainId].kSAT;
+    this.kRIF = addresses[chainId].kRIF;
+    this.kDOC = addresses[chainId].kDOC;
+    this.kUSDT = addresses[chainId].kUSDT;
     this.instance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3);
     this.wsInstance = new ethers.Contract(this.comptrollerAddress, ComptrollerAbi, Vue.web3Ws);
   }
@@ -78,6 +82,33 @@ export default class Comptroller {
 
   async healthFactor(markets, chainId, address) {
     return 1 - Math.min(1, 1 / await this.healthRatio(markets, chainId, address));
+  }
+
+  async risk(markets, accountAddress, chainId) {
+    return new Promise((resolve, reject) => {
+      let risk = 0;
+      let counter = 0;
+      markets.forEach(async (market) => {
+        await Promise.all([
+          market.underlyingCurrentPrice(chainId),
+          market.currentBalanceOfCTokenInUnderlying(accountAddress),
+        ])
+          .then(async ([price, totalDeposit]) => {
+            if (market.marketAddress === this.kRBTC) risk += (totalDeposit * price) * 0.75;
+            if (market.marketAddress === this.kSAT) risk += (totalDeposit * price) * 0.50;
+            if (market.marketAddress === this.kRIF) risk += (totalDeposit * price) * 0.65;
+            if (market.marketAddress === this.kDOC) risk += (totalDeposit * price) * 0.70;
+            if (market.marketAddress === this.kUSDT) risk += (totalDeposit * price) * 0.75;
+            counter += 1;
+            if (counter === markets.length) {
+              const liquidity = await this.getAccountLiquidity(accountAddress);
+              const result = (((risk - liquidity) / risk) * 100).toFixed(0);
+              resolve(Number(result));
+            }
+          })
+          .catch(reject);
+      });
+    });
   }
 
   async hypotheticalHealthFactor(markets, chainId, address, borrowBalanceInUSD) {

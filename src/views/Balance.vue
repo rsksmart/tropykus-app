@@ -55,7 +55,7 @@ export default {
       counter: 0,
       priceRbtc: 0,
       isLoading: true,
-      riskValue: 100,
+      riskValue: 0,
       comptroller: null,
       marketAddresses: [],
       myMarkets: [],
@@ -168,8 +168,11 @@ export default {
         this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
 
         // risk value
+        // this.riskValue = await this.comptroller
+        //   .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
+        // new risk
         this.riskValue = await this.comptroller
-          .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
+          .risk(this.markets, this.walletAddress, this.chainId);
 
         // Supply
         this.infoDeposits = await this.comptroller

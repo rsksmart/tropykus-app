@@ -103,16 +103,16 @@
         </div>
 
         <div class="d-flex justify-space-between contact-tropykus">
-          <a href="https://github.com/Tropykus/protocol">
+          <a target="_blank" href="https://github.com/Tropykus/protocol">
             <v-img contain height="43" src="@/assets/icons/github.svg"/>
           </a>
-          <a href="https://twitter.com/tropykus">
+          <a target="_blank" href="https://twitter.com/tropykus">
             <v-img contain height="43" src="@/assets/icons/twitter.svg"/>
           </a>
-          <a href="https://t.me/tropykus">
+          <a target="_blank" href="https://t.me/tropykus">
             <v-img contain height="43" src="@/assets/icons/telegram.svg"/>
           </a>
-          <a href="https://www.youtube.com/channel/UCUgOzJjQAsQS2sFJ0-A87eQ">
+          <a target="_blank" href="https://www.youtube.com/channel/UCUgOzJjQAsQS2sFJ0-A87eQ">
             <v-img contain height="43" src="@/assets/icons/youtube.svg"/>
           </a>
         </div>
