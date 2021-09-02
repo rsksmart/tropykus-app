@@ -98,11 +98,11 @@
       "btn": "Continue"
     },
     "firstTransaction": {
-      "title": "Autoriza las 3 transacciones",
+      "title": "Authorize all 3 transactions",
       "transactions": [
-        "Autoriza el monto de la transacción",
-        "Autoriza la transacción",
-        "Autorizar tus depósitos como colateral"
+        "Authorize the transaction amount",
+        "Authorize the transaction",
+        "Authorize your deposits as collateral"
       ]
     },
     "error": {
