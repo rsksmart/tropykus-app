@@ -18,16 +18,15 @@
 
           <v-container v-if="state === states['chooseAChannel']" class="px-10">
             <div class="primary-title text-center mb-5">
-              ¿Necesitas ayuda?
+              {{ $t('feedback.chooseAChannel.title') }}
             </div>
             <div class="primary-paragraph mb-10">
-              Puedes pedir ayuda en nuestra comunidad de Telegram, o enviar un mensaje directo
-              al equipo Tropykus.
+              {{ $t('feedback.chooseAChannel.description') }}
             </div>
             <a href="https://t.me/joinchat/3Wn-b0_cNFs5OWYx" target="_blank" class="text-decoration-none">
               <div class="choose-option-button d-flex align-center elevation-3 mb-4">
                 <v-icon color="primary" class="mr-3">$vuetify.icons.values.telegram</v-icon>
-                Ir a Telegram
+                {{ $t('feedback.chooseAChannel.telegram') }}
               </div>
             </a>
             <div
@@ -35,39 +34,39 @@
               class="choose-option-button d-flex align-center elevation-3 mb-12"
             >
               <v-icon color="primary" class="mr-3">$vuetify.icons.values.feedbackBubble</v-icon>
-              Enviar comentario
+              {{ $t('feedback.chooseAChannel.comment') }}
             </div>
           </v-container>
 
           <v-container v-else-if="state === states['sendAComment']" class="px-13 pb-6">
             <div class="secondary-title text-center mb-3">
-              Envíanos tus comentarios
+              {{ $t('feedback.sendAComment.title') }}
             </div>
             <div class="secondary-paragraph mb-2">
-              *Obligatorio
+              *{{ $t('feedback.sendAComment.mandatory') }}
             </div>
             <div class="primary-paragraph mb-1">
-              Escribe tu email o usuario de telegram para poderte contactar*
+              {{ $t('feedback.sendAComment.emailField') }}*
             </div>
             <textarea
               v-model="email"
-              placeholder="Escribe email o telegram"
+              :placeholder="$t('feedback.sendAComment.emailPlaceholder')"
               class="custom-textarea email-textarea mb-8"
             ></textarea>
             <div class="primary-paragraph mb-1">
-              Selecciona la billetera que usaste
+              {{ $t('feedback.sendAComment.walletField') }}
             </div>
-            <buttons-group v-model="wallet" :buttons="wallets" class="buttons-group mb-4" />
+            <buttons-group v-model="wallet" :buttons="$t('feedback.sendAComment.walletOptions')" class="buttons-group mb-4" />
             <div class="primary-paragraph mb-1">
-              Elige la sección donde tuviste problemas
+              {{ $t('feedback.sendAComment.sectionField') }}
             </div>
-            <buttons-group v-model="section" :buttons="sections" class="buttons-group mb-4" />
+            <buttons-group v-model="section" :buttons="$t('feedback.sendAComment.sectionOptions')" class="buttons-group mb-4" />
             <div class="primary-paragraph mb-1">
-              Escribe el problema que estás teniendo*
+              {{ $t('feedback.sendAComment.problemField') }}*
             </div>
             <textarea
               v-model="problem"
-              placeholder="Escribe tu mensaje"
+              :placeholder="$t('feedback.sendAComment.problemPlaceholder')"
               class="custom-textarea problem-textarea mb-6"
             ></textarea>
             <v-btn
@@ -77,7 +76,7 @@
               class="white--text elevation-0"
               @click="sendFeedback()"
             >
-              Enviar
+              {{ $t('feedback.sendAComment.button') }}
             </v-btn>
           </v-container>
         </v-card>
@@ -106,18 +105,6 @@ export default {
         chooseAChannel: 0,
         sendAComment: 1,
       },
-      wallets: [
-        'Liquality',
-        'Defiant',
-        'Metamask',
-        'Nifty',
-      ],
-      sections: [
-        'Depósitos',
-        'Préstamos',
-        'Balance',
-        'Intercambios',
-      ],
 
       email: '',
       wallet: '',

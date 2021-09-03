@@ -502,5 +502,36 @@
       "borrow": "Borrow",
       "repayBorrow": "Pay"
     }
+  },
+  "feedback": {
+    "chooseAChannel": {
+      "title": "Do you need help?",
+      "description": "You can ask for help in our Telegram community, or send a direct message to the Tropykus team.",
+      "telegram": "Go to Telegram",
+      "comment": "Send comment"
+    },
+    "sendAComment": {
+      "title": "Send us your comments",
+      "mandatory": "Required",
+      "emailField": "Write your email to be able to contact you",
+      "emailPlaceholder": "Write your email",
+      "walletField": "Select the wallet you used",
+      "walletOptions": [
+        "Liquality",
+        "Defiant",
+        "Metamask",
+        "Nifty"
+      ],
+      "sectionField": "Choose the section where you had problems",
+      "sectionOptions": [
+        "Deposit",
+        "Borrow",
+        "Balance",
+        "Exchange"
+      ],
+      "problemField": "Write the problem you have",
+      "problemPlaceholder": "Write your message",
+      "button": "Send"
+    }
   }
 }

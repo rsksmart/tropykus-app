@@ -505,5 +505,36 @@
       "borrow": "Pedir prestado",
       "repayBorrow": "Pagar"
     }
+  },
+  "feedback": {
+    "chooseAChannel": {
+      "title": "¿Necesitas ayuda?",
+      "description": "Puedes pedir ayuda en nuestra comunidad de Telegram, o enviar un mensaje directo al equipo Tropykus.",
+      "telegram": "Ir a Telegram",
+      "comment": "Enviar comentario"
+    },
+    "sendAComment": {
+      "title": "Envíanos tus comentarios",
+      "mandatory": "Obligatorio",
+      "emailField": "Escribe tu email para poderte contactar",
+      "emailPlaceholder": "Escribe tu email",
+      "walletField": "Selecciona la billetera que usaste",
+      "walletOptions": [
+        "Liquality",
+        "Defiant",
+        "Metamask",
+        "Nifty"
+      ],
+      "sectionField": "Elige la sección donde tuviste problemas",
+      "sectionOptions": [
+        "Depósitos",
+        "Préstamos",
+        "Balance",
+        "Intercambios"
+      ],
+      "problemField": "Escribe el problema que estás teniendo",
+      "problemPlaceholder": "Escribe tu mensaje",
+      "button": "Enviar"
+    }
   }
 }
