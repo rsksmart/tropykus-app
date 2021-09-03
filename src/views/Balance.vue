@@ -3,8 +3,9 @@
     <h2 class="h2-heading text-detail">{{$t('balance.title')}}</h2>
     <div class="container-balance">
       <risk-balance :riskRate="riskValue" />
-      <deposits-balance :infoDeposits="infoDeposits" />
-      <debts-balance :infoBorrows="infoBorrows" />
+      <liquidity-balance :liquidityAmount="liquidity" :priceRbtc="priceRbtc"/>
+      <deposits-balance :infoDeposits="infoDeposits" :priceRbtc="priceRbtc" />
+      <debts-balance :infoBorrows="infoBorrows" :priceRbtc="priceRbtc" />
       <chart-balance :chartInfo="chartData" :chartColor="chartColor"/>
     </div>
     <v-row class="d-flex justify-center mt-15" v-if="isLoading">
@@ -26,6 +27,7 @@ import ChartBalance from '@/components/balance/ChartBalance.vue';
 import DepositsBalance from '@/components/balance/DepositsBalance.vue';
 import DebtsBalance from '@/components/balance/DebtsBalance.vue';
 import HistoryBalance from '@/components/balance/HistoryBalance.vue';
+import LiquidityBalance from '@/components/balance/LiquidityBalance.vue';
 import { addresses } from '@/middleware/contracts/constants';
 import {
   CRbtc,
@@ -42,15 +44,18 @@ export default {
     DebtsBalance,
     ChartBalance,
     HistoryBalance,
+    LiquidityBalance,
   },
   data() {
     return {
       constants,
       db: this.$firebase.firestore(),
       firestore: new Firestore(),
+      liquidity: 0,
       counter: 0,
+      priceRbtc: 0,
       isLoading: true,
-      riskValue: 100,
+      riskValue: 0,
       comptroller: null,
       marketAddresses: [],
       myMarkets: [],
@@ -159,9 +164,17 @@ export default {
       if (this.walletAddress) {
         await this.getMarkets();
 
+        // liquidity
+        this.liquidity = await this.comptroller.getAccountLiquidity(this.walletAddress);
+
         // risk value
-        this.riskValue = await this.comptroller
-          .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
+        // this.riskValue = await this.comptroller
+        //   .healthFactor(this.markets, this.chainId, this.walletAddress) * 100;
+        // new risk
+        const risk = await this.comptroller
+          .risk(this.markets, this.walletAddress, this.chainId);
+        console.log('risk', risk);
+        this.riskValue = Number(risk.result);
 
         // Supply
         this.infoDeposits = await this.comptroller
@@ -198,12 +211,14 @@ export default {
 
           // Supply
           info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(this.walletAddress);
+          info.supplyBalance = (info.supplyBalance * info.price) <= 1e-5 ? 0 : info.supplyBalance;
           info.interestBalance = await market.getEarnings(this.walletAddress);
           info.blanceUsd = info.supplyBalance * info.price;
           info.interesUsd = info.interestBalance * info.price;
 
           // Borrow
           info.borrowBalance = await market.borrowBalanceCurrent(this.walletAddress);
+          info.borrowBalance = (info.borrowBalance * info.price) <= 1e-5 ? 0 : info.borrowBalance;
           info.interestBorrow = await market.getDebtInterest(this.walletAddress);
           info.borrowUsd = info.borrowBalance * info.price;
           info.interestBorrowUsd = info.interestBorrow * info.price;
@@ -268,9 +283,16 @@ export default {
         this.$router.push(to);
       }
     },
+    async getPrice() {
+      this.rbtc = addresses[this.chainId].kRBTC;
+
+      const market = new CRbtc(this.rbtc, this.chainId);
+      this.priceRbtc = await market.underlyingCurrentPrice(this.chainId);
+    },
   },
   created() {
     this.comptroller = new Comptroller(this.chainId);
+    this.getPrice();
     this.redirect();
     this.getUserActivity();
     this.getData();

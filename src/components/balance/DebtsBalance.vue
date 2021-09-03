@@ -24,29 +24,10 @@
         </div>
       </div>
     </div>
-    <!-- <v-divider class="mt-4 mb-2"></v-divider>
-    <div class="d-flex justify-space-between">
-      <div class="p6-reading-values">
-        {{totalBorrows}} USD <br />
-        <span class="p1-descriptions">
-          {{$t('balance.debts.description2')}}
-        </span>
-      </div>
-      <div class="p6-reading-values">
-        {{totalIntereses}} USD <br />
-        <span class="p1-descriptions">
-          {{$t('balance.debts.description3')}}
-        </span>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
 import { mapState } from 'vuex';
-import { addresses } from '@/middleware/contracts/constants';
-import {
-  CRbtc,
-} from '@/middleware';
 
 export default {
   name: 'DebtsBalance',
@@ -55,11 +36,10 @@ export default {
       type: Object,
       require: true,
     },
-  },
-  data() {
-    return {
-      priceRbtc: 0,
-    };
+    priceRbtc: {
+      type: Number,
+      require: true,
+    },
   },
   computed: {
     ...mapState({
@@ -81,17 +61,6 @@ export default {
     totalRbtc() {
       return (Number(this.totalBorrowsByIntereses) / this.priceRbtc).toFixed(6);
     },
-  },
-  methods: {
-    async getPrice() {
-      this.rbtc = addresses[this.chainId].kRBTC;
-
-      const market = new CRbtc(this.rbtc, this.chainId);
-      this.priceRbtc = await market.underlyingCurrentPrice(this.chainId);
-    },
-  },
-  created() {
-    this.getPrice();
   },
 };
 </script>

@@ -17,6 +17,7 @@ const state = {
     loading: true,
     deposit: true,
     success: null,
+    firstTx: false,
   },
 };
 const actions = {
@@ -64,7 +65,6 @@ const actions = {
     info.loading = true;
     info.symbol = symbol;
     info.wallet = true;
-
     commit(constants.USER_ACTION_INFO_DIALOG, info);
 
     const assetsIn = await comptroller.getAssetsIn(Session.walletAddress);
@@ -83,6 +83,11 @@ const actions = {
           tx.hash,
         ))
         .catch();
+      info.firstTx = true;
+      commit(constants.USER_ACTION_INFO_DIALOG, info);
+      await comptroller.enterMarkets(Session.account, allMarkets);
+      info.firstTx = false;
+      commit(constants.USER_ACTION_INFO_DIALOG, info);
     }
 
     await market.supply(Session.account, amount)
@@ -294,7 +299,8 @@ const actions = {
     commit(constants.USER_ACTION_INFO_DIALOG, info);
     let amountPay = amount;
     if (Number(amount) === Market.info.borrowBalance) amountPay = -1;
-    await market.repay(Session.account, amountPay)
+    console.log('amountPay', amountPay);
+    await market.repay(Session.account, amountPay, Session.walletAddress)
       .then((tx) => {
         // console.log(tx);
         info.wallet = false;

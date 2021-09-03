@@ -99,6 +99,14 @@
       "description6": "Has pagado",
       "btn": "Continuar"
     },
+    "firstTransaction": {
+      "title": "Autoriza las 3 transacciones",
+      "transactions": [
+        "Autoriza el monto de la transacción",
+        "Autoriza la transacción",
+        "Autorizar tus depósitos como colateral"
+      ]
+    },
     "error": {
       "description1": "No se pudo completar el depósito. Intenta más tarde",
       "description2": "No se pudo completar el retiro. Intenta más tarde.",
@@ -266,7 +274,7 @@
       "school": "Escuela Tropykus",
       "markets": "Mercados",
       "protocol": "Sobre Tropykus",
-      "language": "Español",
+      "language": "English",
       "github": "Repository"
     },
     "navbar": {
@@ -361,7 +369,7 @@
   },
   "deposits": {
     "title": "Deposita tus RBTC y gana el 4% anual",
-    "description": "Saca rendimiento de tus bitcoins convirtiendolos en RBTC o compra RBTC",
+    "description": "Obtén ganancias de tus Bitcoin convirtiendolos en RBTC.",
     "subtitle": "Deposita tus criptos y obten ganancias",
     "btn1": "Convertir BTC a RBTC",
     "btn2": "Comprar RBTC"
@@ -403,6 +411,7 @@
     "description1": "Selecciona la cripto a retirar",
     "description2": "Escribe la cantidad que vas a retirar",
     "description3": "El límite restante a 0.1 RBTC es:",
+    "description4": "Tienes depositado:",
     "btn1": "Conectar billetera",
     "btn2": "Retirar"
   },
@@ -410,10 +419,15 @@
     "title": "Balance General",
     "tooltip1": "Este valor en USD es la suma total de todas las cryptos que tienes depositadas en Tropykus.",
     "tooltip2": "Este valor en USD es la suma total de todas las cryptos que pediste prestadas en Tropykus.",
+    "tooltip3": "Este valor corresponde a tu capacidad máxima de préstamo con respecto a todos tus depósitos. Suele estar entre el 60 y 70%, dependiendo de las monedas en las que hayas depositado.",
+    "tooltip4": "Tu nivel de riesgo es cuando te acercas al límite del total de lo que puedes pedir prestado. Es decir, entre más alto sea el monto total de tus deudas, más riesgo tienes de ser liquidado.",
     "deposit": {
       "description1": "Tienes depositado",
       "description2": "Depositados",
       "description3": "Ganancias acumuladas"
+    },
+    "liquidity": {
+      "description1":"Puedes pedir prestado"
     },
     "debts": {
       "description1": "Debes pagar",
@@ -459,7 +473,7 @@
         "other": "Risk cannot be calculated"
       },
       "description": {
-        "risk": "de tus depósitos están comprometidos en deudas",
+        "risk": "de lo que puedes pedir prestado está comprometido en deudas. ",
         "liquidated": "de tus depósitos han sido liquidados"
       }
     },

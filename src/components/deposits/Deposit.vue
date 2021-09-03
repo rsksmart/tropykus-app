@@ -37,7 +37,7 @@
       <div class="content-info">
         <div>
           <div class="p1-descriptions text-info mb-1">
-            {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description3') }}
+            {{ tabMenu ? $t('deposit.description3') : $t('withdraw.description4') }}
           </div>
           <div class="p2-reading-values text-info">
             {{ !tokenBalance ? 0 : tokenBalance | formatDecimals(select.underlyingSymbol) }}
@@ -457,9 +457,10 @@ export default {
       this.showModalConnectWallet = false;
     },
     setAmount() {
-      this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
-      if (this.account) {
-        this.amount = this.amount.toFixed(10);
+      if (this.sliderAmountPercentage === 100) {
+        this.amount = this.tabMenu ? this.info.underlyingBalance : this.info.supplyBalance;
+      } else {
+        this.amount = (this.sliderAmountPercentage * this.tokenBalance) / 100;
       }
     },
     setMaxAmount() {

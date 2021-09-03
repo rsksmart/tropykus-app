@@ -287,11 +287,11 @@ export default {
     }),
     totalDeposits() {
       return Object.entries(this.infoDeposits).length > 0
-        ? Number(this.infoDeposits.totalDeposits).toFixed(2) : 0;
+        ? Number(this.infoDeposits.totalDeposits) : 0;
     },
     totalBorrows() {
       return Object.entries(this.infoBorrows).length > 0
-        ? Number(this.infoBorrows.totalBorrows).toFixed(2) : 0;
+        ? Number(this.infoBorrows.totalBorrows) : 0;
     },
     validate_MM_NT() {
       return (this.wallet === this.MM || this.wallet === this.NT)
@@ -322,10 +322,6 @@ export default {
   },
   methods: {
     textMicroSavings(marketAddress, event = '') {
-      // return addresses[this.chainId].kSAT === marketAddress
-      //   ? 'micro saving'
-      //   : '';
-      console.log(marketAddress === addresses[this.chainId].kSAT);
       if (this.tabMenu === 'activity' && (event === 'Mint' || event === 'Redeem')
         && marketAddress === addresses[this.chainId].kSAT) {
         return 'micro saving';
