@@ -5,7 +5,7 @@
         <div class="selected-item d-flex align-center"
              v-bind="attrs" v-on="on">
           <div class="ml-3 b2-secondary">
-            {{ select }}
+            {{ selectedTitle }}
           </div>
           <v-icon class="select-icon" large color="text-primary">
             mdi-chevron-down
@@ -14,10 +14,10 @@
       </template>
       <v-list>
         <v-list-item
-          v-for="{ title, index } in $t('internal-metrics.dropdown')"
+          v-for="{ title, collection, index } in $t('internal-metrics.dropdown')"
           :key="index" class="metrics-select-menu-item"
-          :class="title === select ? 'active' : ''"
-          @click="setSelected(title, index)"
+          :class="collection === select ? 'active' : ''"
+          @click="setSelected({ title, collection, index })"
         >
           <div class="b2-secondary">
             {{ title }}
@@ -33,13 +33,24 @@ export default {
   name: 'Dropdown',
   data() {
     return {
-      select: null,
+      select: this.defaultSelection,
     };
   },
+  props: {
+    defaultSelection: {
+      required: true,
+      type: Object,
+    },
+  },
+  computed: {
+    selectedTitle() {
+      return this.select.title;
+    },
+  },
   methods: {
-    setSelected(title, index) {
-      this.select = title;
-      this.$emit('saveSelected', index);
+    setSelected(data) {
+      this.select = data;
+      this.$emit('saveSelected', data);
     },
   },
 };

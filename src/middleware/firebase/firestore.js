@@ -97,6 +97,18 @@ export default class Firebase {
     return news;
   }
 
+  async getMetricsData(comptrollerAddress, metricName) {
+    const metricData = [];
+    const comptroller = await this.db.collection('internal-metrics').doc(comptrollerAddress).get();
+    if (comptroller.exists) {
+      const metrics = comptroller.data()[metricName];
+      Object.keys(metrics).forEach((timestamp) => {
+        metricData.push(metrics[timestamp]);
+      });
+    }
+    return metricData;
+  }
+
   async saveMetrics(chainId) {
     const timestamp = new Date();
     const comptrollerInstance = new Comptroller(chainId);

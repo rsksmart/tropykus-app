@@ -29,41 +29,28 @@
 
 <script>
 import * as constants from '@/store/constants';
+import { Firestore, Comptroller } from '@/middleware';
+import { mapState } from 'vuex';
 
 export default {
   name: 'MetricsHistoryGraph',
   data() {
     return {
       constants,
+      firestore: new Firestore(),
+      metricData: null,
+      comptroller: null,
       period: constants.PERIOD_WEEK,
       chartData: [
-        ['', '', { role: 'style' }],
-        [this.$t('dialog.borrow.description10'), 0, '#7DCCB6'],
-        [this.$t('dialog.borrow.description11'), 0, '#47B25F'],
+        ['date', 'active users', { role: 'style' }],
       ],
       chartOptions: {
-        width: 312,
+        width: 420,
         tooltip: { isHTML: true },
         backgroundColor: 'transparent',
-        vAxis: {
-          title: this.yAxisTittle,
-          colors: ['#9575cd', '#33ac71'],
-          labelStyle: { color: '#A3B8A7' },
-          titleTextStyle: { color: '#A3B8A7' },
-          titlePosition: { position: 'right' },
-          textStyle: { color: '#042F24' },
-          gridlines: { count: 4 },
-          viewWindow: {
-            min: 0,
-          },
-        },
         bar: { groupWidth: '30%' },
         legend: {
           position: 'none',
-        },
-        hAxis: {
-          textStyle: { color: '#042F24' },
-          legend: 'none',
         },
       },
     };
@@ -71,19 +58,68 @@ export default {
   props: {
     selected: {
       required: true,
-      type: Number,
+      type: Object,
     },
   },
   computed: {
-    yAxisTittle() {
-      console.log(this.selected);
-      return this.$t('internal-metrics.graph-y-axis')[this.selected];
+    ...mapState({
+      chainId: (state) => state.Session.chainId,
+    }),
+  },
+  watch: {
+    selected() {
+      this.getChartData(this.period);
     },
   },
   methods: {
-    getChartData(period) {
+    async getChartData(period) {
       this.period = period;
+      this.metricData = await this.firestore
+        .getMetricsData(this.comptroller.comptrollerAddress, this.selected.collection);
+      this.fixMetricsData();
     },
+    fixMetricsData() {
+      const chartData = [
+        ['date', `${this.selected.title}`, { role: 'style' }],
+      ];
+      if (this.metricData) {
+        this.metricData.forEach(({ number, timestamp }) => {
+          const now = new Date();
+          let maxDays = 0;
+          const date = new Date(timestamp.seconds * 1000);
+          switch (this.period) {
+            case constants.PERIOD_WEEK:
+              maxDays = 7;
+              now.setDate(now.getDate() - maxDays);
+              break;
+            case constants.PERIOD_TWO_WEEKS:
+              maxDays = 14;
+              now.setDate(now.getDate() - maxDays);
+              break;
+            case constants.PERIOD_MONTH:
+              maxDays = 30;
+              now.setDate(now.getDate() - maxDays);
+              break;
+            case constants.PERIOD_YEAR:
+              maxDays = 365;
+              now.setDate(now.getDate() - maxDays);
+              break;
+            default:
+              break;
+          }
+          const timeDiff = date.getTime() - now.getTime();
+          const daysDiff = timeDiff / (1000 * 3600 * 24);
+          if (daysDiff > 0 && daysDiff < maxDays) {
+            chartData.push([date, number, '#7DCCB6']);
+          }
+        });
+      }
+      this.chartData = chartData;
+    },
+  },
+  created() {
+    this.comptroller = new Comptroller(this.chainId);
+    this.getChartData(this.period);
   },
 };
 </script>

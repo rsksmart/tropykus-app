@@ -8,7 +8,8 @@
         {{ $t('internal-metrics.title') }}
       </div>
       <v-card color="#E1F0E8" width="700" class="container">
-        <metrics-dropdown @saveSelected="setSelected" class="align-self-start"/>
+        <metrics-dropdown @saveSelected="setSelected"
+                          :defaultSelection="selected" class="align-self-start"/>
         <metrics-history-graph :selected="selected"/>
       </v-card>
       <v-card class="my-8 container" color="#E1F0E8" width="700">
@@ -165,11 +166,14 @@ export default {
       activeUsers: [],
       uniqueUsers: [],
       last24HUsers: [],
-      selected: 0,
+      selected: {
+        collection: 'active-users',
+        title: this.$t('internal-metrics.dropdown')[0].title,
+        index: 0,
+      },
       today: new Date(),
       symbolImg: '',
       getMarkets: [],
-      blocksPerDay: -2920,
       firestore: new Firestore(),
       microMarketData: {},
     };
@@ -194,8 +198,8 @@ export default {
     async saveMetrics() {
       await this.firestore.saveMetrics(this.chainId);
     },
-    setSelected(select) {
-      this.selected = select;
+    setSelected(data) {
+      this.selected = data;
     },
     async getMarketsInfo() {
       await this.markets.map(async (market) => {

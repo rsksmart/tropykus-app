@@ -1,4 +1,3 @@
-
 import Vue from 'vue';
 import * as constants from '../store/constants';
 
