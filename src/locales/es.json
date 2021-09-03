@@ -274,7 +274,7 @@
       "school": "Escuela Tropykus",
       "markets": "Mercados",
       "protocol": "Sobre Tropykus",
-      "language": "Español",
+      "language": "English",
       "github": "Repository"
     },
     "navbar": {
@@ -325,7 +325,7 @@
   },
   "deposits": {
     "title": "Deposita tus RBTC y gana el 4% anual",
-    "description": "Saca rendimiento de tus bitcoins convirtiendolos en RBTC o compra RBTC",
+    "description": "Obtén ganancias de tus Bitcoin convirtiendolos en RBTC.",
     "subtitle": "Deposita tus criptos y obten ganancias",
     "btn1": "Convertir BTC a RBTC",
     "btn2": "Comprar RBTC"

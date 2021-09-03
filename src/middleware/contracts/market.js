@@ -132,7 +132,7 @@ export default class Market {
 
   async currentBalanceOfCTokenInUnderlying(address) {
     const cTokenBalance = await this.balanceOf(address);
-    const exchangeRate = await this.exchangeRateStored();
+    const exchangeRate = await this.exchangeRateCurrent();
     return (cTokenBalance * exchangeRate);
   }
 

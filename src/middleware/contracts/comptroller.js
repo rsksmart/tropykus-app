@@ -86,7 +86,7 @@ export default class Comptroller {
 
   async risk(markets, accountAddress, chainId) {
     return new Promise((resolve, reject) => {
-      let risk = 0;
+      let canBorrow = 0;
       let counter = 0;
       markets.forEach(async (market) => {
         await Promise.all([
@@ -94,16 +94,17 @@ export default class Comptroller {
           market.currentBalanceOfCTokenInUnderlying(accountAddress),
         ])
           .then(async ([price, totalDeposit]) => {
-            if (market.marketAddress === this.kRBTC) risk += (totalDeposit * price) * 0.75;
-            if (market.marketAddress === this.kSAT) risk += (totalDeposit * price) * 0.50;
-            if (market.marketAddress === this.kRIF) risk += (totalDeposit * price) * 0.65;
-            if (market.marketAddress === this.kDOC) risk += (totalDeposit * price) * 0.70;
-            if (market.marketAddress === this.kUSDT) risk += (totalDeposit * price) * 0.75;
+            if (market.marketAddress === this.kRBTC) canBorrow += (totalDeposit * price) * 0.75;
+            if (market.marketAddress === this.kSAT) canBorrow += (totalDeposit * price) * 0.50;
+            if (market.marketAddress === this.kRIF) canBorrow += (totalDeposit * price) * 0.65;
+            if (market.marketAddress === this.kDOC) canBorrow += (totalDeposit * price) * 0.70;
+            if (market.marketAddress === this.kUSDT) canBorrow += (totalDeposit * price) * 0.75;
             counter += 1;
             if (counter === markets.length) {
               const liquidity = await this.getAccountLiquidity(accountAddress);
-              const result = (((risk - liquidity) / risk) * 100).toFixed(0);
-              resolve(Number(result));
+              const result = (((canBorrow - liquidity) / canBorrow) * 100).toFixed(0);
+              console.log('canBorrow', canBorrow);
+              resolve({ canBorrow, result });
             }
           })
           .catch(reject);
@@ -135,8 +136,13 @@ export default class Comptroller {
           market.getEarnings(accountAddress),
         ])
           .then(([price, totalDepositInUnderlying, interestBalance]) => {
-            totalDepositsByIntereses += totalDepositInUnderlying * price;
-            totalDeposits += (totalDepositInUnderlying - interestBalance) * price;
+            if ((totalDepositInUnderlying * price) <= 1e-5) {
+              totalDepositsByIntereses += 0;
+              totalDeposits += 0;
+            } else {
+              totalDepositsByIntereses += totalDepositInUnderlying * price;
+              totalDeposits += (totalDepositInUnderlying - interestBalance) * price;
+            }
             counter += 1;
             if (counter === markets.length) resolve({ totalDepositsByIntereses, totalDeposits });
           })
@@ -158,8 +164,13 @@ export default class Comptroller {
           market.getDebtInterest(accountAddress),
         ])
           .then(([price, totalBorrowInUnderlying, interestBorrow]) => {
-            totalBorrowsByIntereses += totalBorrowInUnderlying * price;
-            totalBorrows += (totalBorrowInUnderlying - interestBorrow) * price;
+            if ((totalBorrowInUnderlying * price) <= 1e-5) {
+              totalBorrowsByIntereses += 0;
+              totalBorrows += 0;
+            } else {
+              totalBorrowsByIntereses += totalBorrowInUnderlying * price;
+              totalBorrows += (totalBorrowInUnderlying - interestBorrow) * price;
+            }
             counter += 1;
             if (counter === markets.length) resolve({ totalBorrowsByIntereses, totalBorrows });
           })
