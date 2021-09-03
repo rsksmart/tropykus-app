@@ -1,5 +1,8 @@
 <template>
   <div class="metrics">
+    <v-btn @click="saveMetrics">
+      Save metrics
+    </v-btn>
     <div class="container d-flex align-center flex-column">
       <div class="h2-heading text-left align-self-start text-detail">
         {{ $t('internal-metrics.title') }}
@@ -117,8 +120,7 @@
                 </v-row>
               </v-col>
               <v-col cols="5">
-                <v-tooltip bottom content-class="secondary-color box-shadow-tooltip"
-                           max-width="180">
+                <v-tooltip top color="#52826E">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="p2-reading-values" v-bind="attrs" v-on="on">
                       {{ market.reserves | formatDecimals(market.symbol) }}
@@ -189,6 +191,9 @@ export default {
     },
   },
   methods: {
+    async saveMetrics() {
+      await this.firestore.saveMetrics(this.chainId);
+    },
     setSelected(select) {
       this.selected = select;
     },
@@ -227,7 +232,7 @@ export default {
       });
       this.uniqueUsers = await this.comptroller.getRegisteredAddresses();
       this.totalUsers = this.uniqueUsers.length;
-      this.last24HUsers = await this.firestore.getNewUsers(this.comptroller.comptrollerAddress);
+      this.last24HUsers = await this.firestore.getTodayNewDataForEvent('MarketEntered', this.comptroller.comptrollerAddress, new Date());
       this.totalNewUsers = this.last24HUsers.length;
       this.activeUsers = await this.firestore.getActiveUsers(this.comptroller.comptrollerAddress);
       this.totalActiveUsers = this.activeUsers.length;

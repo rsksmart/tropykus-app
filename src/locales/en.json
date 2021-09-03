@@ -287,37 +287,28 @@
     "dropdown": [
       {
         "title": "Total number of active addresses",
+        "collection": "active-users",
         "index": 0
       },
       {
         "title": "Total value Locked",
+        "collection": "value-locked",
         "index": 1
       },
       {
         "title": "Total number of deposits",
+        "collection": "new-deposits",
         "index": 2
       },
       {
         "title": "Total number of loans",
+        "collection": "new-borrows",
         "index": 3
-      }
-    ],
-    "graph-y-axis": [
-      {
-        "title": "Number of active addresses",
-        "index": 0
       },
       {
-        "title": "Value Locked",
-        "index": 1
-      },
-      {
-        "title": "Number of deposits",
-        "index": 2
-      },
-      {
-        "title": "Number of loans",
-        "index": 3
+        "title": "Number of new users",
+        "collection": "new-users",
+        "index": 4
       }
     ],
     "months": {

@@ -27,43 +27,6 @@ export default class Comptroller {
     return marketsCopy.reverse();
   }
 
-  async getRegisteredAddresses(blocks = null) {
-    let delta;
-    if (blocks) {
-      delta = blocks;
-    } else {
-      const currentBlock = await Vue.web3.getBlockNumber();
-      delta = (this.deployBlock - currentBlock);
-    }
-    const events = await this.wsInstance
-      .queryFilter('MarketEntered', delta);
-    const accountAddresses = [];
-    events.forEach((marketEnter) => {
-      const { account } = marketEnter.args;
-      if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);
-    });
-    return accountAddresses;
-  }
-
-  // getRetiredUsers(markets, uniqueAddresses, previousActiveUsers) {
-  //   return new Promise((resolve, reject) => {
-  //     const retiredUsers = [];
-  //     let counter = 0;
-  //     uniqueAddresses.forEach(async (userAddress) => {
-  //       await Promise.all([
-  //         this.totalDepositsByInteresesInUSD(markets, userAddress, this.chainId),
-  //         this.totalBorrowsByInteresesInUSD(markets, userAddress, this.chainId),
-  //       ])
-  //         .then(([{ totalDeposits }, { totalBorrows }]) => {
-  //           if (totalDeposits === 0 && totalBorrows === 0) retiredUsers.push(userAddress);
-  //           counter += 1;
-  //           if (counter === uniqueAddresses.length) resolve(retiredUsers);
-  //         })
-  //         .catch(reject);
-  //     });
-  //   });
-  // }
-
   async getAssetsIn(address) {
     const assetsIn = await this.instance.callStatic.getAssetsIn(address);
     const assetsInCopy = [];
@@ -159,6 +122,70 @@ export default class Comptroller {
           })
           .catch(reject);
       });
+    });
+  }
+
+  async getRegisteredAddresses(blocks = null) {
+    let delta;
+    if (blocks) {
+      delta = blocks;
+    } else {
+      const currentBlock = await Vue.web3.getBlockNumber();
+      delta = (this.deployBlock - currentBlock);
+    }
+    const events = await this.wsInstance
+      .queryFilter('MarketEntered', delta);
+    const accountAddresses = [];
+    events.forEach((marketEnter) => {
+      const { account } = marketEnter.args;
+      if (accountAddresses.indexOf(account) === -1) accountAddresses.push(account);
+    });
+    return accountAddresses;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async totalValueLockedInUSD(markets, chainId) {
+    return new Promise((resolve, reject) => {
+      const data = [];
+      let counter = 0;
+      let totalValueLocked = 0;
+      Promise.all(markets
+        .map((market) => Promise.all([
+          market.symbol,
+          market.getTotalSupply(),
+          market.underlyingCurrentPrice(chainId),
+        ])))
+        .then((lockedValues) => lockedValues
+          .forEach(([symbol, totalSupply, underlyingPrice]) => {
+            data.push({ symbol, totalSupply, underlyingPrice });
+            totalValueLocked += (totalSupply * underlyingPrice);
+            counter += 1;
+            if (counter === markets.length) resolve({ data, number: totalValueLocked });
+          }))
+        .catch(reject);
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async totalReservesInUSD(markets, chainId) {
+    return new Promise((resolve, reject) => {
+      const data = [];
+      let counter = 0;
+      let totalReserves = 0;
+      Promise.all(markets
+        .map((market) => Promise.all([
+          market.symbol,
+          market.getReserves(),
+          market.underlyingCurrentPrice(chainId),
+        ])))
+        .then((reservesData) => reservesData
+          .forEach(([symbol, reserves, underlyingPrice]) => {
+            data.push({ symbol, reserves, underlyingPrice });
+            totalReserves += (reserves * underlyingPrice);
+            counter += 1;
+            if (counter === markets.length) resolve({ data, number: totalReserves });
+          }))
+        .catch(reject);
     });
   }
 }

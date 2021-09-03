@@ -289,37 +289,28 @@
     "dropdown": [
       {
         "title": "Número total de usuarios activos",
+        "collection": "active-users",
         "index": 0
       },
       {
         "title": "Valor total almacenado",
+        "collection": "value-locked",
         "index": 1
       },
       {
         "title": "Número total de depósitos",
+        "collection": "total-deposits",
         "index": 2
       },
       {
         "title": "Número total de deudas",
+        "collection": "total-borrows",
         "index": 3
-      }
-    ],
-    "graph-y-axis": [
-      {
-        "title": "Número de usuarios activos",
-        "index": 0
       },
       {
-        "title": "Valor almacenado",
-        "index": 1
-      },
-      {
-        "title": "Número de depósitos",
-        "index": 2
-      },
-      {
-        "title": "Número de deudas",
-        "index": 3
+        "title": "Número de nuevos usuarios",
+        "collection": "new-users",
+        "index": 4
       }
     ],
     "months": {

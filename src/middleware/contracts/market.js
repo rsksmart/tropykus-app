@@ -157,6 +157,10 @@ export default class Market {
     return Number(await this.instance.callStatic.exchangeRateStored()) / factor;
   }
 
+  async getTotalSupply() {
+    return Number(await this.instance.callStatic.totalSupply()) / factor;
+  }
+
   async getReserves() {
     return Number(await this.instance.callStatic.totalReserves()) / factor;
   }
