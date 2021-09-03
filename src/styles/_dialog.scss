@@ -81,6 +81,21 @@
     height: 150px !important;
     font-size: 100px;
   }
+  .feedback {
+    .feedback-title {
+      color: $text-detail;
+      font-size: 15px;
+      line-height: 17px;
+      letter-spacing: 0.3px;
+      font-weight: 400;
+    }
+    .feedback-paragraph {
+      color: $third-color;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 300;
+    }
+  }
 }
 .d-tutorial{
   max-width: 700px !important;
@@ -222,7 +237,7 @@
 
 .feedback-dialog {
   .content-card {
-    background-color: white;
+    background-color: $btn-wallet;
   }
   .primary-title {
     color: $text-detail;

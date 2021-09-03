@@ -345,6 +345,27 @@ const actions = {
     }
   },
 
+  [constants.USER_FEEDBACK]: async ({ dispatch, commit }, data) => {
+    const info = {
+      type: 'feedback',
+      loading: true,
+    };
+    commit(constants.USER_ACTION_INFO_DIALOG, info);
+    dispatch(constants.USER_ACTION_DIALOG, true);
+
+    const firebase = (new Firestore()).db;
+    firebase.collection('feedback')
+      .add(data)
+      .then(() => {
+        info.loading = false;
+        info.success = true;
+        commit(constants.USER_ACTION_INFO_DIALOG, info);
+      }).catch(() => {
+        info.loading = false;
+        info.success = false;
+        commit(constants.USER_ACTION_INFO_DIALOG, info);
+      });
+  },
 };
 
 const mutations = {

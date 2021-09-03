@@ -39,8 +39,7 @@ export default {
 
   computed: {
     colSize() {
-      console.log(this.buttons);
-      return parseInt(12 / this.buttons.length);
+      return parseInt(12 / this.buttons.length, 10);
     },
   },
 
@@ -49,6 +48,6 @@ export default {
       this.selected = index;
       this.$emit('input', this.buttons[index]);
     },
-  }
+  },
 };
 </script>

@@ -89,6 +89,8 @@
 <script>
 import ButtonsGroup from '@/components/general/ButtonsGroup.vue';
 
+import * as constants from '@/store/constants';
+
 export default {
   name: 'FeedbackBubble',
 
@@ -108,7 +110,7 @@ export default {
         'Liquality',
         'Defiant',
         'Metamask',
-        "Nifty",
+        'Nifty',
       ],
       sections: [
         'Depósitos',
@@ -138,11 +140,11 @@ export default {
 
     sendButtonEnable() {
       return this.email.length > 0 && this.problem.length > 0;
-    }
+    },
   },
 
   methods: {
-    reset(){
+    reset() {
       this.showDialog = false;
       this.state = 0;
 
@@ -158,7 +160,17 @@ export default {
 
     sendFeedback() {
       if (this.sendButtonEnable) {
-        console.log('La lagartija');
+        this.$store.dispatch(
+          constants.USER_FEEDBACK,
+          {
+            email: this.email,
+            wallet: this.wallet,
+            section: this.section,
+            problem: this.problem,
+            isAnswered: false,
+          },
+        );
+        this.reset();
       }
     },
   },
