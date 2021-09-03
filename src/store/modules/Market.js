@@ -75,9 +75,6 @@ const actions = {
       info.underlyingBalance = await market.balanceOfUnderlyingInWallet(account);
       info.price = await market.underlyingCurrentPrice(state.chainId);
       info.supplyBalance = await market.currentBalanceOfCTokenInUnderlying(walletAddress);
-      console.log(info.supplyBalance);
-      console.log(info.price);
-      console.log((info.supplyBalance * info.price) <= 1e-5);
       info.supplyBalance = (info.supplyBalance * info.price) <= 1e-5 ? 0 : info.supplyBalance;
       info.borrowBalance = await market.borrowBalanceCurrent(walletAddress);
       info.borrowBalance = (info.borrowBalance * info.price) <= 1e-5 ? 0 : info.borrowBalance;

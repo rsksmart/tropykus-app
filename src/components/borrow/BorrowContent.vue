@@ -182,7 +182,7 @@ import * as constants from '@/store/constants';
 import RiskChart from '@/components/users/RiskChart.vue';
 import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
 import Loading from '@/components/modals/Loading.vue';
-import { addresses } from '@/middleware/contracts/constants';
+// import { addresses } from '@/middleware/contracts/constants';
 
 import {
   Comptroller,
@@ -504,6 +504,8 @@ export default {
       this.chartData = tempData;
       this.riskValue = 100;
       this.sliderStyle = '';
+      this.borrowCurrent = 0;
+      this.percentCurrent = 0;
     },
     closeDialog() {
       if (this.infoLoading.loading === false) {
@@ -518,34 +520,32 @@ export default {
       }
     },
     calculateRisk() {
-      console.log('calculator');
-      let factor = 0;
-      const {
-        kSAT,
-        kRBTC,
-        kDOC,
-        kRIF,
-        kUSDT,
-      } = addresses[this.chainId];
-      const { marketAddress } = this.market;
-      console.log('marketAddress', marketAddress);
-      console.log('kUSDT', kUSDT);
-      console.log(marketAddress === kUSDT);
-      console.log(this.borrowValueInUSD * 0.75);
-      if (marketAddress === kSAT) factor = this.borrowValueInUSD * 0.50;
-      if (marketAddress === kRBTC) factor = this.borrowValueInUSD * 0.75;
-      if (marketAddress === kDOC) factor = this.borrowValueInUSD * 0.70;
-      if (marketAddress === kRIF) factor = this.borrowValueInUSD * 0.65;
-      if (marketAddress === kUSDT) factor = this.borrowValueInUSD;
-      console.log('factor', factor);
-      console.log('liquidity', this.liquidity);
-      this.borrowCurrent = (this.canBorrow - this.liquidity) + factor;
+      // let factor = 0;
+      // const {
+      //   kSAT,
+      //   kRBTC,
+      //   kDOC,
+      //   kRIF,
+      //   kUSDT,
+      // } = addresses[this.chainId];
+      // const { marketAddress } = this.market;
+      // console.log('marketAddress', marketAddress);
+      // console.log('kUSDT', kUSDT);
+      // console.log(marketAddress === kUSDT);
+      // console.log(this.borrowValueInUSD * 0.75);
+      // if (marketAddress === kSAT) factor = this.borrowValueInUSD * 0.50;
+      // if (marketAddress === kRBTC) factor = this.borrowValueInUSD * 0.75;
+      // if (marketAddress === kDOC) factor = this.borrowValueInUSD * 0.70;
+      // if (marketAddress === kRIF) factor = this.borrowValueInUSD * 0.65;
+      // if (marketAddress === kUSDT) factor = this.borrowValueInUSD;
+      // console.log('factor', factor);
+      // console.log('liquidity', this.liquidity);
+      this.borrowCurrent = (this.canBorrow - this.liquidity) + this.borrowValueInUSD;
       const percent = ((this.borrowCurrent / this.canBorrow) * 100).toFixed(0);
       this.percentCurrent = Number(percent);
-      console.log('value', this.borrowCurrent);
-      console.log('percent', percent);
-      console.log('percentCurrent', this.percentCurrent);
-      // console.log('result + risk', this.risk += result);
+      // console.log('value', this.borrowCurrent);
+      // console.log('percent', percent);
+      // console.log('percentCurrent', this.percentCurrent);
     },
     async getDataRisk() {
       if (!this.walletAddress) return;
