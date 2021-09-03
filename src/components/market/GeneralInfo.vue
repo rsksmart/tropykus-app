@@ -20,7 +20,6 @@
         {{ rateLabel }}
       </div>
     </div>
-
   </v-card>
 
 </template>

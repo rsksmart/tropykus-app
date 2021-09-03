@@ -63,11 +63,15 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
-import ConnectWallet from '@/components/dialog/ConnectWallet.vue';
+
 import { Market, CRbtc, CToken } from '@/middleware';
 import Avatar from '@/assets/avatar.svg';
 import Error from '@/assets/icons/error.svg';
 import * as constants from '@/store/constants';
+import RLogin from '@rsksmart/rlogin';
+
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import Portis from '@portis/web3';
 
 export default {
   components: {
@@ -78,6 +82,31 @@ export default {
       db: this.$firebase.firestore(),
       showModalConnectWallet: false,
       markets: [],
+      rLogin: new RLogin({
+        cacheProvider: false,
+        providerOptions: {
+          walletconnect: {
+            package: WalletConnectProvider,
+            options: {
+              rpc: {
+                30: 'https://public-node.rsk.co',
+                31: 'https://public-node.testnet.rsk.co',
+              },
+            },
+          },
+          portis: {
+            package: Portis,
+            options: {
+              id: '34616571-d57b-4805-868b-2dcc7b7662d7',
+              network: {
+                nodeUrl: 'https://public-node.testnet.rsk.co',
+                chainId: 31,
+              },
+            },
+          },
+        },
+        supportedChains: [30, 31],
+      }),
     };
   },
   watch: {
@@ -86,6 +115,7 @@ export default {
         await this.loadMarketInfo(marketAddress);
       });
     },
+
   },
   computed: {
     ...mapState({
@@ -128,12 +158,17 @@ export default {
     ...mapActions({
       setDrawer: constants.SESSION_DRAWER,
       disconnectWallet: constants.SESSION_DISCONNECT_WALLET,
+      connectToWeb3: constants.SESSION_CONNECT_WEB3,
     }),
+
     outsideConnectWallet() {
       this.showModalConnectWallet = false;
     },
+
     showDialogConnectWallet() {
-      if (!this.isWalletConnected) this.showModalConnectWallet = true;
+      this.rLogin
+        .connect() // shows rLogin modal
+        .then(({ provider }) => this.connectToWeb3(provider));
     },
     disconnectAccount() {
       this.disconnectWallet();
