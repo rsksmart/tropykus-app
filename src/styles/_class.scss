@@ -332,6 +332,12 @@ input[type=number]:-ms-input-placeholder { color: #63A47B ; }
   color: $text-bg !important;
 }
 
+.buttons-group {
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 300;
+}
+
 //=======================
 //  mixins
 //=======================

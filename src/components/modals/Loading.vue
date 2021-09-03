@@ -55,6 +55,31 @@
           </div>
         </template>
       </v-card>
+      <v-card v-else-if="data.type === 'feedback'"
+        class="dialog-loading ma-0 secondary-color d-flex align-center">
+        <div v-if="data.loading" class="row ma-0 d-flex flex-column align-center">
+          <v-progress-circular class="progress-loading"
+            indeterminate color="#41A255" :width="6" :size="80"/>
+          <div v-if="data.wallet" class="text-primary s1-pop-ups text-description mt-9">
+            Enviando comentarios
+          </div>
+        </div>
+        <div v-else class="row ma-0 d-flex flex-column align-center px-16 pt-9">
+          <v-icon class="btn-close-dialog" @click="closeDialog">mdi-close</v-icon>
+          <v-img width="100" height="100" src="@/assets/dialog/success.svg" alt=""/>
+          <v-container class="feedback mt-10 px-7">
+            <div class="feedback-title text-center mb-3">
+              ¡Hemos recibido tu comentario!
+            </div>
+            <div class="feedback-paragraph mb-8">
+              Pronto recibirás un mensaje en tu correo con la respuesta a tu comentario.
+            </div>
+            <v-btn color="primary" block rounded @click="closeDialog" class="elevation-0">
+              Continuar
+            </v-btn>
+          </v-container>
+        </div>
+      </v-card>
       <v-card v-else class="dialog-loading ma-0 secondary-color d-flex align-center">
         <v-icon class="btn-close-dialog" @click="closeDialog">mdi-close</v-icon>
         <div v-if="data.loading" class="row ma-0 d-flex flex-column align-center">

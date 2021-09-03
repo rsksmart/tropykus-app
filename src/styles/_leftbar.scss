@@ -122,3 +122,11 @@
     background: rgba(136, 136, 136, 0.4);
   }
 }
+
+.feedback-bubble {
+  .feedback-button-container {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+  }
+}

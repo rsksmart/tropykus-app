@@ -70,6 +70,8 @@ const actions = {
     const assetsIn = await comptroller.getAssetsIn(Session.walletAddress);
     const allMarkets = await comptroller.allMarkets();
     if (assetsIn.indexOf(market.marketAddress) === -1) {
+      info.firstTx = true;
+      commit(constants.USER_ACTION_INFO_DIALOG, info);
       await comptroller.enterMarkets(Session.account, allMarkets)
         .then((tx) => firestore.saveUserAction(
           comptroller.comptrollerAddress,
@@ -83,9 +85,6 @@ const actions = {
           tx.hash,
         ))
         .catch();
-      info.firstTx = true;
-      commit(constants.USER_ACTION_INFO_DIALOG, info);
-      await comptroller.enterMarkets(Session.account, allMarkets);
       info.firstTx = false;
       commit(constants.USER_ACTION_INFO_DIALOG, info);
     }
@@ -363,6 +362,27 @@ const actions = {
     }
   },
 
+  [constants.USER_FEEDBACK]: async ({ dispatch, commit }, data) => {
+    const info = {
+      type: 'feedback',
+      loading: true,
+    };
+    commit(constants.USER_ACTION_INFO_DIALOG, info);
+    dispatch(constants.USER_ACTION_DIALOG, true);
+
+    const firebase = (new Firestore()).db;
+    firebase.collection('feedback')
+      .add(data)
+      .then(() => {
+        info.loading = false;
+        info.success = true;
+        commit(constants.USER_ACTION_INFO_DIALOG, info);
+      }).catch(() => {
+        info.loading = false;
+        info.success = false;
+        commit(constants.USER_ACTION_INFO_DIALOG, info);
+      });
+  },
 };
 
 const mutations = {

@@ -23,7 +23,6 @@
     </v-row>
 
     <landing />
-
   </div>
 </template>
 <script>
@@ -37,8 +36,6 @@ export default {
   },
   data() {
     return {
-      inBorrowMenu: false,
-      key: 0,
       constants,
       url: 'https://www.youtube.com/watch?v=a973Xe2e6tQ',
     };
