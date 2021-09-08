@@ -53,7 +53,7 @@ export default {
   name: 'Overview',
   data() {
     return {
-      db: this.$firebase.firestore(),
+      db: {},
       comptroller: undefined,
       markets: [],
       marketsData: [],

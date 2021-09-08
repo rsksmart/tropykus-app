@@ -244,7 +244,7 @@ export default {
       showModalConnectWallet: false,
       dialog: this.showModal,
       isInBorrowMenu: this.inBorrowMenu,
-      db: this.$firebase.firestore(),
+      db: {},
       symbolImg: null,
       rules: {
         liquidity: () => (this.isInBorrowMenu ? Number(this.amountAsUnderlyingPrice) <= Number(this

@@ -132,7 +132,7 @@ export default {
   name: 'DebtSavings',
   data() {
     return {
-      db: this.$firebase.firestore(),
+      db: {},
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
       comptroller: null,
@@ -282,12 +282,7 @@ export default {
           this.showWaiting();
           this.market.redeem(this.account, this.amount)
             .then(() => {
-              this.market.wsInstance.on('Redeem', (from) => {
-                if (from === this.walletAddress) {
-                  this.showSuccess();
-                  this.updateMarketInfo();
-                }
-              });
+              this.showSuccess();
             })
             .catch(this.showError);
           break;

@@ -54,7 +54,8 @@
       </v-col>
     </v-row>
     <v-row class="ma-0 container">
-      <v-btn depressed :color="buttonColor" width="100%" height="44" @click="supplyOrBorrow">
+      <!-- eslint-disable max-len -->
+      <v-btn depressed :color="buttonColor" width="100%" height="44" @click="supplyOrBorrow" :disabled=isDisabled>
         <span class="b1-main">{{ buttonName }}</span>
       </v-btn>
     </v-row>
@@ -106,7 +107,7 @@ export default {
   name: 'GeneralInfo',
   data() {
     return {
-      db: this.$firebase.firestore(),
+      db: {},
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address',
       info: {
@@ -150,6 +151,10 @@ export default {
       walletAddress: (state) => state.Session.walletAddress,
       chainId: (state) => state.Session.chainId,
       account: (state) => state.Session.account,
+      isDisabled() {
+        // evaluate whatever you need to determine disabled here...
+        return !this.isLoggedIn;
+      },
     }),
     ...mapGetters({
       isLoggedIn: constants.SESSION_IS_CONNECTED,
@@ -224,20 +229,31 @@ export default {
       const assetsIn = await this.comptroller.getAssetsIn(this.walletAddress);
       switch (action) {
         case constants.USER_ACTION_MINT:
+          console.log('USER_ACTION_MINT');
+          debugger;
           this.allMarkets = await this.comptroller.allMarkets;
+          debugger;
           if (assetsIn.indexOf(this.marketAddress) === -1) {
             await this.comptroller.enterMarkets(this.account, this.allMarkets);
+            debugger;
           }
           // this.txSummaryDialog = true; // TODO
+          // debugger;
           this.showWaiting();
+          // debugger;
           await this.market.supply(this.account, this.amount)
             .then(() => {
-              this.market.wsInstance.on('Mint', (from) => {
+              debugger;
+              console.log('this.market.wsInstance');
+              console.log(this.market.wsInstance);
+              this.showSuccess();
+              /* this.market.wsInstance.on('Mint', (from) => {
+                debugger;
                 if (from === this.walletAddress) {
                   this.showSuccess();
                   this.updateMarketInfo();
                 }
-              });
+              }); */
             })
             .catch(this.showError);
           break;

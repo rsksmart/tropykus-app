@@ -2,7 +2,7 @@ import store from '@/store';
 import * as constants from '@/store/constants';
 import Vue from 'vue';
 import { ethers } from 'ethers';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+// import WalletConnectProvider from '@walletconnect/web3-provider';
 
 const state = {
   walletAddress: undefined,
@@ -14,17 +14,28 @@ const state = {
 
 if (window.ethereum) {
   window.ethereum.on('accountsChanged', () => {
-    store.dispatch(constants.SESSION_CONNECT_WEB3, state.wallet);
-  });
-  window.ethereum.on('chainChanged', () => {
-    store.dispatch(constants.SESSION_CONNECT_WEB3, state.wallet);
+    store.dispatch(constants.SESSION_DISCONNECT_WALLET, state.wallet);
   });
 }
+const providerRPC = (provider, args) => provider.request(args);
+
+const getAccounts = (provider) => providerRPC(provider, { method: 'eth_accounts' });
 
 const actions = {
-  [constants.SESSION_CONNECT_WEB3]: async ({ commit, dispatch }, wallet) => {
-    let provider = null;
-    if (window.ethereum) {
+  [constants.SESSION_CONNECT_WEB3]: async ({ commit, dispatch }, provider) => {
+    console.log('casa');
+    // const provider = null;
+    console.log(commit, provider, dispatch);
+    const selectedAccounts = await getAccounts(provider);
+    // eslint-disable-next-line no-multi-assign
+    Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
+    const account = await Vue.web3.getSigner();
+
+    commit(constants.SESSION_SET_PROPERTY, { walletAddress: selectedAccounts[0] });
+    commit(constants.SESSION_SET_PROPERTY, { account });
+    commit(constants.SESSION_SET_PROPERTY, { provider });
+    dispatch(constants.SESSION_GET_CHAIN_ID);
+    /* if (window.ethereum) {
       provider = window.ethereum;
       if (wallet === constants.WALLET_LIQUALITY && window.ethereum.isLiquality) {
         provider = window.rsk;
@@ -59,12 +70,14 @@ const actions = {
       Vue.prototype.$web3 = Vue.web3 = new ethers.providers.Web3Provider(provider);
       const account = await Vue.web3.getSigner();
       const walletAddress = await account.getAddress();
+      console.log('Loco: ', walletAddress);
+      console.log({ walletAddress });
       commit(constants.SESSION_SET_PROPERTY, { provider });
       commit(constants.SESSION_SET_PROPERTY, { account });
       commit(constants.SESSION_SET_PROPERTY, { walletAddress });
       commit(constants.SESSION_SET_PROPERTY, { wallet });
       dispatch(constants.SESSION_GET_CHAIN_ID);
-    }
+    } */
   },
   [constants.SESSION_GET_CHAIN_ID]: ({ commit }) => {
     if (state.wallet === constants.WALLET_CONNECT) {

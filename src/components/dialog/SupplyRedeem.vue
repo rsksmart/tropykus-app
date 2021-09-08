@@ -238,7 +238,7 @@ export default {
       dialog: this.showModal,
       inSupplyMenu: this.inBorrowMenu,
       amount: null,
-      db: this.$firebase.firestore(),
+      db: {},
       symbolImg: null,
       data: {
         underlyingBalance: null,
