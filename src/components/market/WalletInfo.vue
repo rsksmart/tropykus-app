@@ -56,7 +56,7 @@ export default {
   name: 'WalletInfo',
   data() {
     return {
-      db: this.$firebase.firestore(),
+      db: {},
       symbolImg: null,
       baseExplorerURL: 'https://explorer.testnet.rsk.co/address/',
       underlyingBalance: 3,

@@ -262,6 +262,7 @@ export default class Market {
   async borrow(account, amountIntended) {
     const accountSigner = signer(account);
     const amount = await Market.getAmountDecimals(amountIntended);
+    debugger;
     return this.instance.connect(accountSigner).borrow(amount, { gasLimit: this.gasLimit });
   }
 
